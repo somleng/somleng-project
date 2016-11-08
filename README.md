@@ -1,6 +1,6 @@
 # The Somleng Project
 
-Welcome to project home of The Somleng Project.
+![Somleng](https://github.com/dwilkie/somleng-project/raw/gh-pages/images/talking_in_the_factory.jpg)
 
 ## What is The Somleng Project?
 
