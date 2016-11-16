@@ -19,9 +19,15 @@ $ curl -XPOST https://your-somleng-installation.com/api/2010-04-01/Accounts/{Acc
     -u 'your_account_sid:your_auth_token'
 ```
 
+You can also connect Somleng to existing applications such as [RapidPro](https://www.rapidpro.io/), or connect it your own application using any of [Twilio's Open Source libraries](https://www.twilio.com/docs/libraries).
+
 ## Project Resources
 
 The various open source tools that make up The Somleng Project are listed below. More detailed information about each technology can be found in the individual project repositories.
+
+The diagram below shows how each technology is connected together. Depending on your specific needs you may choose to use all or just some of the open source tools described below.
+
+Diagram: Coming Soon
 
 ### Twilreapi
 
@@ -49,11 +55,11 @@ A demo application that shows The Somleng Project in action. Coming Soon.
 
 ### The Somleng Project Website
 
-The [repository](https://github.com/dwilkie/somleng-project) for this website.
+The [repository](https://github.com/dwilkie/somleng-project) for [this website](http://www.somleng.org).
 
 ## Who's sponsoring The Somleng Project?
 
-Watch this space...
+[The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
 
 ## What does Somleng mean?
 
