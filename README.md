@@ -47,7 +47,7 @@ Diagram: Coming Soon
 
 ### Somleng-RTD
 
-Real time data collection tool for The Somleng Project. Coming Soon.
+[Somleng-RTD](https://github.com/dwilkie/somleng-rtd) is a Real Time Data (RTD) collection API for The Somleng Project. The API provides Real Time Data on various projects that use Somleng. The data includes project information, number of phone calls made, number of SMS messages sent and total cost savings.
 
 ### Somleng Demo
 
