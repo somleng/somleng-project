@@ -49,7 +49,7 @@ A demo application that shows The Somleng Project in action. Coming Soon.
 
 ### The Somleng Project Website
 
-The [repository](https://github.com/dwilkie/freeswitch-config) for this website.
+The [repository](https://github.com/dwilkie/somleng-project) for this website.
 
 ## Who's sponsoring The Somleng Project?
 
