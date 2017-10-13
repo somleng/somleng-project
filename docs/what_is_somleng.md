@@ -16,7 +16,5 @@ This means that you can use any of [Twilio's Helper Libraries](https://www.twili
 
 ## Why would I want to use Somleng instead of Twilio?
 
-Below are some reasons why you may or may not want to use Somleng instead of Twilio. For a more detailed comparison see [Somleng vs Twilio Comparison](https://github.com/somleng/somleng-project/blob/master/docs/somleng_twilio_comparison.md).
-
-[Twilio is a PaaS (Platform as a Service)](https://en.wikipedia.org/wiki/Twilio)
+Please see [Somleng vs Twilio Comparison](https://github.com/somleng/somleng-project/blob/master/docs/somleng_twilio_comparison.md) for a detailed comparision of Twilio vs Somleng and reasons why you may or may not want to choose Somleng instead of Twilio.
 
