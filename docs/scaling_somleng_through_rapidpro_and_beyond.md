@@ -13,3 +13,7 @@ In a nutshell, this means that you can connect your RapidPro flow to a Somleng i
 ## Limitations
 
 ## Alternatives
+
+## Case Studies
+
+Africa's Voices Foundation (AVF)
