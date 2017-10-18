@@ -31,7 +31,7 @@ A new instance of Somleng was deployed to [Amazon Web Services (AWS)](https://aw
 
 Initially Somleng was deployed to AWS (Mumbai, India) because it's the [closest available region to Somalia](https://aws.amazon.com/about-aws/global-infrastructure/). However it was discovered during the deployment that AWS (Mumbai, India) lacks support for some critical infrastructure that Somleng requires for deployment. Specifically the missing infrastructure is support for [Elastic Beanstalk Multi-Container Docker environments](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_ecs.html) (this still remains undocumented on AWS). After this was discovered Somleng was redeployed to AWS Singapore.
 
-The average [round trip (ping) time](https://en.wikipedia.org/wiki/Ping_(networking_utility)) from the [FreeSWITCH instance](https://github.com/somleng/freeswitch-config) hosted on AWS in Singapore to Shaqodoon's server hosted at [Telesom Tower, Hargeisa, Somaliland](https://www.google.com.kh/maps/place/Telesom+Tower/@9.5589495,44.0667021,20z/data=!4m12!1m6!3m5!1s0x1628bf9a0f0071e9:0x915dbb06d93f5bc!2sTelesom+Tower!8m2!3d9.5590572!4d44.067058!3m4!1s0x1628bf9a0f0071e9:0x915dbb06d93f5bc!8m2!3d9.5590572!4d44.067058?hl=en) is `~450ms`. Initially it was thought that this latency may cause an issue with quality. however after testing we discovered that because the interaction with the callee is non-conversational in nature (a conversation example would be two people talking on the phone together), latency wasn't an issue.
+The average [round trip (ping) time](https://en.wikipedia.org/wiki/Ping_(networking_utility)) from [Somleng's FreeSWITCH instance](https://github.com/somleng/freeswitch-config) hosted on AWS in Singapore to Shaqodoon's server hosted at [Telesom Tower, Hargeisa, Somaliland](https://www.google.com.kh/maps/place/Telesom+Tower/@9.5589495,44.0667021,20z/data=!4m12!1m6!3m5!1s0x1628bf9a0f0071e9:0x915dbb06d93f5bc!2sTelesom+Tower!8m2!3d9.5590572!4d44.067058!3m4!1s0x1628bf9a0f0071e9:0x915dbb06d93f5bc!8m2!3d9.5590572!4d44.067058?hl=en) is `~450ms`. Initially it was thought that this latency may cause an issue with quality. however after testing we discovered that because the interaction with the callee is non-conversational in nature (a conversation example would be two people talking on the phone together), latency wasn not an issue.
 
 #### Domain
 
@@ -57,16 +57,84 @@ If a call is triggered when an E1 line is full, [Somleng's FreeSWITCH instance](
 
 Since [RapidPro does not support retrying calls](https://github.com/rapidpro/rapidpro/issues/599), it was decided to bypass RapidPro for triggering outbound calls. Instead of using triggering outbound calls through RapidPro, AVF wrote their own retry logic which connects to [Somleng's REST API](https://github.com/somleng/twilreapi) directly.
 
-AVF ran into some technical issues with their retry logic which resulted in Somleng develping a new new product called [Somleng Simple Call Flow Manager (SCFM)](https://github.com/somleng/somleng-scfm) which is specifically designed for queuing, retrying, scheduling and analysis of calls. AVF now uses Somleng SCFM to automatically retry failed calls.
+AVF ran into some technical issues with their retry logic which resulted in Somleng develping a new new product called [Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) which is specifically designed for queuing, retrying, scheduling and analysis of calls. AVF now uses [Somleng SCFM](https://github.com/somleng/somleng-scfm) to automatically retry failed calls.
 
-#### Recording Calls
+#### Call Recording
 
+At the beginning of the project the ability to record calls was not yet supported by Somleng. When it became apparent that this was a required functionality we decided to add this feature to Somleng. The addition of this feature required a significant amount of work. Below is a summary of the work.
 
-#### DTMF Tones
+##### Technical Flow
 
-#### CIDR
+The following sequence of events describes at a high level what was implmented in Somleng to support recording calls.
 
+1. Outbound/Inbound Call is initiated/received through/by Somleng
+2. [Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) requests [TwiML](https://www.twilio.com/docs/api/twiml) from the client application.
+3. TwiML contains the `<Record>` verb.
+4. [Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) sends a `recording_started` event to [Somleng's REST API](https://github.com/somleng/twilreapi).
+5. Recording starts.
+6. Recording finishes.
+7. [Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) sends a `recording_finished` event to [Somleng's REST API](https://github.com/somleng/twilreapi).
+8. Recording is uploaded to [S3](https://aws.amazon.com/s3/).
+9. [AWS Simple Notification Service (SNS)](https://aws.amazon.com/sns/) sends a notification to [Somleng's REST API](https://github.com/somleng/twilreapi) that a new recording has been uploaded to [S3](https://aws.amazon.com/s3/).
+10. A new Recording is created in the database which links to the Phone Call and the recording.
+11. The recording is downloaded, processed then reuploaded to [S3](https://aws.amazon.com/s3/).
+12. The [recordingStatusCallback](https://www.twilio.com/docs/api/twiml/record#attributes-recording-status-callback) is sent to the client application which indicates the recording is ready.
 
+##### Phone Call Events
+
+As shown in the [technical flow](#technical-flow) above, in order for the [Record verb](https://www.twilio.com/docs/api/twiml/record) to be added to [Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) we had to first [add support for Phone Call Events](https://github.com/somleng/twilreapi/issues/20) in [Somleng's REST API](https://github.com/somleng/twilreapi).
+
+The Phone Call Events table tracks individual events on a Phone Call. For Recordings we need to keep track of the [TwiML attributes](https://www.twilio.com/docs/api/twiml/record#attributes) that the client puts in the [Record verb](https://www.twilio.com/docs/api/twiml/record). To complicate matters, each phone call may have multiple recordings, triggered by multiple [TwiML Record verbs](https://www.twilio.com/docs/api/twiml/record) and multiple recordings may be happening simultaneously across different phone calls.
+
+A `recording_started` event notifies [Somleng's REST API](https://github.com/somleng/twilreapi) that a recording has been started for a particular phone call. The event includes the [TwiML attributes](https://www.twilio.com/docs/api/twiml/record#attributes) for the Recording which will be used later in the flow. [(See also step #4 in technical flow)](#technical-flow)
+
+A `recording_finished` event notifies [Somleng's REST API](https://github.com/somleng/twilreapi) that a recording has been finished for a particular phone call. The event includes the [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier) of the recording file which will be used later in the flow. [(See also step #7 in technical flow)](#technical-flow)
+
+##### Implementation of the Record Verb in Adhearsion-Twilio
+
+The following decribes steps #3-#7 in the [technical flow](#technical-flow).
+
+[Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) (written by Somleng) is an [Adhearsion Plugin](http://adhearsion.com/docs/plugins) which translates [Twilio Markup Language (TwiML)](https://www.twilio.com/docs/api/twiml) into Adhearsion commands which get executed on [FreeSWITCH](https://github.com/somleng/freeswitch-config).
+
+[Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) is used in [Somleng's Adhearsion Application](https://github.com/somleng/somleng) which sits between [Somleng's REST API](https://github.com/somleng/twilreapi) and [FreeSWITCH](https://github.com/somleng/freeswitch-config).
+
+The [<Record/> verb](https://www.twilio.com/docs/api/twiml/record) was [implemented](https://github.com/somleng/adhearsion-twilio/issues/19) in order to intiate recordings on [FreeSWITCH](https://github.com/somleng/freeswitch-config). The [implementation](https://github.com/somleng/adhearsion-twilio/issues/19)
+
+##### Getting the Recording from Docker to S3
+
+The following describes step #8 in the [technical flow](#technical-flow).
+
+The raw recording is initially saved to file inside [FreeSWITCH's](https://github.com/somleng/freeswitch-config) docker container. Although the recording directory can be specified in the [FreeSWITCH configuration](https://github.com/somleng/freeswitch-config) it does not allow for uploading the Recording directly to [S3](https://aws.amazon.com/s3/).
+
+The [implementation](https://github.com/somleng/freeswitch-config/issues/12) uses [cron](https://en.wikipedia.org/wiki/Cron) which runs in a separate process to mount the FreeSWITCH docker container's recording directory upload new recordings to [S3](https://aws.amazon.com/s3/).
+
+##### Linking the Recording to the Phone Call
+
+The following describes steps #9-#10 in the [technical flow](#technical-flow).
+
+Once the recording has been uploaded to [S3](https://aws.amazon.com/s3/) it needs to be linked to the phone call record in the database so it can be downloaded by the client application through [Somleng's REST API](https://github.com/somleng/twilreapi).
+
+The [implementation](https://github.com/somleng/twilreapi/issues/27) uses [AWS's Simple Notification Service (SNS)](https://aws.amazon.com/sns/) which sends a notification to [Somleng's REST API](https://github.com/somleng/twilreapi) that a new recording was uploaded to [S3](https://aws.amazon.com/s3/).
+
+Somleng then finds the originating the Phone Call by matching the [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier) in the filename of the uploaded recording with what was saved from the `recording_finished` event (see step #7 in the [technical flow](#technical-flow)).
+
+##### Processing the Recording
+
+The following describes step #11 in the [technical flow](#technical-flow).
+
+After the recording has been linked to the originating phone call, it needs to be processed according to the attributes supplied in the [TwiML attributes](https://www.twilio.com/docs/api/twiml/record#attributes) by the client application. These attributes were received by Somleng's REST API in step #4 of the [technical flow](#technical-flow). The recording is downloaded from [S3](https://aws.amazon.com/s3/), processed then reuploaded.
+
+##### Notifying the client that Recording is ready for download
+
+The following describes step #12 in the [technical flow](#technical-flow).
+
+The final step in the recording flow is to notify the client application that the recording is ready for download. This is specified in the [TwiML specification](https://www.twilio.com/docs/api/twiml/record#attributes-recording-status-callback) and can be enabled by the client application by specifying the `recordingStatusCallback` attribute.
+
+##### RapidPro issues
+
+RapidPro does not follow the [Twilio Standard](https://www.twilio.com/docs/api/twiml/record) when downloading recordings. The [issue](https://github.com/rapidpro/rapidpro/issues/604) has been discussed on RapidPro.
+
+AVF uses [Somleng SCFM](https://github.com/somleng/somleng-scfm) which downloads the recordings from [Somleng's REST API](https://github.com/somleng/twilreapi) bypassing RapidPro.
 
 #### Outstanding Issues
 
@@ -76,12 +144,14 @@ AVF ran into some technical issues with their retry logic which resulted in Soml
 
 ## Outcomes
 
+RapidPro is no longer used for triggering outbound calls
+
 * Somleng SCFM
 * Recording
 * Documentation
 
 ## Cost Savings
 
-See [Real Time Data](http://rtd.somleng.org/) for an up-to-date comparison of cost savings [compared to Twilio](https://www.twilio.com/voice/pricing/so)
+See [Somleng's Real Time Data](http://rtd.somleng.org/) for an up-to-date comparison of cost savings [compared to Twilio](https://www.twilio.com/voice/pricing/so)
 
 ## Lessons Learned
