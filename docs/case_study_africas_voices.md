@@ -92,17 +92,17 @@ A `recording_finished` event notifies [Somleng's REST API](https://github.com/so
 
 ##### Implementation of the Record Verb in Adhearsion-Twilio
 
-The following describes steps #3-#7 in the [technical flow](#technical-flow).
+The following describes [steps #3-#7 in the technical flow](#technical-flow).
 
 [Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) (written by Somleng) is an [Adhearsion Plugin](http://adhearsion.com/docs/plugins) which translates [Twilio Markup Language (TwiML)](https://www.twilio.com/docs/api/twiml) into Adhearsion commands which get executed on [FreeSWITCH](https://github.com/somleng/freeswitch-config).
 
 [Adhearsion-Twilio](https://github.com/somleng/adhearsion-twilio) is used in [Somleng's Adhearsion Application](https://github.com/somleng/somleng) which sits between [Somleng's REST API](https://github.com/somleng/twilreapi) and [FreeSWITCH](https://github.com/somleng/freeswitch-config).
 
-The [<Record/> verb](https://www.twilio.com/docs/api/twiml/record) was [implemented](https://github.com/somleng/adhearsion-twilio/issues/19) in order to initiate recordings on [FreeSWITCH](https://github.com/somleng/freeswitch-config). The [implementation](https://github.com/somleng/adhearsion-twilio/issues/19)
+The [<Record/> verb](https://www.twilio.com/docs/api/twiml/record) was [implemented](https://github.com/somleng/adhearsion-twilio/issues/19) in order to initiate recordings on [FreeSWITCH](https://github.com/somleng/freeswitch-config).
 
 ##### Getting the Recording from Docker to S3
 
-The following describes step #8 in the [technical flow](#technical-flow).
+The following describes [step #8 in the technical flow](#technical-flow).
 
 The raw recording is initially saved to file inside [FreeSWITCH's](https://github.com/somleng/freeswitch-config) docker container. Although the recording directory can be specified in the [FreeSWITCH configuration](https://github.com/somleng/freeswitch-config) it does not allow for uploading the Recording directly to [S3](https://aws.amazon.com/s3/).
 
@@ -110,7 +110,7 @@ The [implementation](https://github.com/somleng/freeswitch-config/issues/12) use
 
 ##### Linking the Recording to the Phone Call
 
-The following describes steps #9-#10 in the [technical flow](#technical-flow).
+The following describes [steps #9-#10 in the technical flow](#technical-flow).
 
 Once the recording has been uploaded to [S3](https://aws.amazon.com/s3/) it needs to be linked to the phone call record in the database so it can be downloaded by the client application through [Somleng's REST API](https://github.com/somleng/twilreapi).
 
@@ -120,13 +120,13 @@ Somleng then finds the originating the Phone Call by matching the [UUID](https:/
 
 ##### Processing the Recording
 
-The following describes step #11 in the [technical flow](#technical-flow).
+The following describes [step #11 in the technical flow](#technical-flow).
 
 After the recording has been linked to the originating phone call, it needs to be processed according to the attributes supplied in the [TwiML attributes](https://www.twilio.com/docs/api/twiml/record#attributes) by the client application. These attributes were received by Somleng's REST API in step #4 of the [technical flow](#technical-flow). The recording is downloaded from [S3](https://aws.amazon.com/s3/), processed then re-uploaded.
 
 ##### Notifying the client that Recording is ready for download
 
-The following describes step #12 in the [technical flow](#technical-flow).
+The following describes [step #12 in the technical flow](#technical-flow).
 
 The final step in the recording flow is to notify the client application that the recording is ready for download. This is specified in the [TwiML specification](https://www.twilio.com/docs/api/twiml/record#attributes-recording-status-callback) and can be enabled by the client application by specifying the `recordingStatusCallback` attribute.
 
