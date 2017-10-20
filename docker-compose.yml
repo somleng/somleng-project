@@ -1,0 +1,30 @@
+version: '3'
+services:
+  twilreapi_db:
+    image: postgres
+  twilreapi_web:
+    image: dwilkie/twilreapi:spec
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      - RAILS_ENV=development
+      - DB_HOST=twilreapi_db
+      - DB_USERNAME=postgres
+    ports:
+      - "3000:3000"
+    depends_on:
+      - twilreapi_db
+      - adhearsion
+  adhearsion:
+    image: dwilkie/somleng:spec
+    environment:
+      - AHN_CORE_HTTP_ENABLE=false
+      - AHN_CORE_HOST=freeswitch
+      - AHN_CORE_PASSWORD=secret
+      - AHN_CORE_USERNAME=adhearsion@localhost
+      - AHN_ADHEARSION_DRB_PORT=9050
+    depends_on:
+      - freeswitch
+  freeswitch:
+    image: dwilkie/freeswitch-rayo
+    ports:
+      - "5060:5060"
