@@ -20,7 +20,7 @@ From: [http://rtd.somleng.org/](http://rtd.somleng.org/)
 
 1. [Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) controls scheduling, queuing, retrying and analysis of outbound calls through [Somleng's REST API](https://github.com/somleng/twilreapi). Somleng SCFM also connects to [RapidPro](https://community.rapidpro.io/) to trigger outbound SMS flows.
 2. [RapidPro](https://community.rapidpro.io/) controls SMS flows and handles inbound phone calls received from Somleng.
-3. [Somleng](https://github.com/somleng/freeswitch-config) is connected to Shaqodoon which acts as an aggrigator for the Mobile Network Operators (MNOs) in Somalia.
+3. [Somleng](https://github.com/somleng/freeswitch-config) is connected to Shaqodoon which acts as an aggregator for the Mobile Network Operators (MNOs) in Somalia.
 4. The MNOs deliver and receive calls through local mobile networks.
 
 ### Hosting
@@ -39,7 +39,7 @@ For this project the domain `unicef.io` was purchased with the intention of reus
 
 ### Shaqadoon
 
-Somleng is connected to [Shaqodoon](http://shaqodoon.org/technology/) which acts as an aggrigator for the multiple Mobile Network Operators (MNOs) in Somalia. Shaqodoon provides a [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) endpoint to an [Asterisk](http://www.asterisk.org/) server. Shaqodoon provides one [E1 line](https://en.wikipedia.org/wiki/E-carrier) to each MNO. Each E1 line can support up to 32 simultaneous calls. Shaqodoon aggregates the the following MNOs:
+Somleng is connected to [Shaqodoon](http://shaqodoon.org/technology/) which acts as an aggregator for the multiple Mobile Network Operators (MNOs) in Somalia. Shaqodoon provides a [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) endpoint to an [Asterisk](http://www.asterisk.org/) server. Shaqodoon provides one [E1 line](https://en.wikipedia.org/wiki/E-carrier) to each MNO. Each E1 line can support up to 32 simultaneous calls. Shaqodoon aggregates the the following MNOs:
 
 1. [Telesom](https://en.wikipedia.org/wiki/Telesom)
 2. [Golis](https://en.wikipedia.org/wiki/Golis_Telecom_Somalia)
@@ -51,7 +51,7 @@ Somleng is connected to [Shaqodoon](http://shaqodoon.org/technology/) which acts
 
 #### Call Throttling
 
-Since Shaqodoon (the aggrigator) only provides one [E1 line](https://en.wikipedia.org/wiki/E-carrier) to each MNO (with each line supporting 32 calls) the customer, Africa's Voices Foundation (AVF) quickly ran into issues relating to call throttling when triggering outbound calls through RapidPro.
+Since Shaqodoon (the aggregator) only provides one [E1 line](https://en.wikipedia.org/wiki/E-carrier) to each MNO (with each line supporting 32 calls) the customer, Africa's Voices Foundation (AVF) quickly ran into issues relating to call throttling when triggering outbound calls through RapidPro.
 
 If a call is triggered when an E1 line is full, [Somleng's FreeSWITCH instance](https://github.com/somleng/freeswitch-config) receives a `503` [SIP Response Code](https://en.wikipedia.org/wiki/List_of_SIP_response_codes#5xx.E2.80.94Server_Failure_Responses) from Shaqodoon. According to the [Twilio standard](https://www.twilio.com/docs/api/voice/call#call-status-values) Somleng reports this to the client (in this case RapidPro) as a `failed` call. It's then up to the client (RapidPro) to retry the call through Somleng (or not) according the the logic of the application.
 
