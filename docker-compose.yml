@@ -9,11 +9,11 @@ services:
       - RAILS_ENV=development
       - DB_HOST=twilreapi_db
       - DB_USERNAME=postgres
+      - "TWILREAPI_WORKER_JOB_OUTBOUND_CALL_JOB_DRB_URL=druby://adhearsion:9050"
     ports:
       - "3000:3000"
     depends_on:
       - twilreapi_db
-      - adhearsion
   adhearsion:
     image: dwilkie/somleng:spec
     environment:
@@ -22,9 +22,14 @@ services:
       - AHN_CORE_PASSWORD=secret
       - AHN_CORE_USERNAME=adhearsion@localhost
       - AHN_ADHEARSION_DRB_PORT=9050
+      - "AHN_SOMLENG_DEFAULT_DIAL_STRING_FORMAT=sofia/external/%{destination}@linphone"
     depends_on:
       - freeswitch
   freeswitch:
     image: dwilkie/freeswitch-rayo
-    ports:
-      - "5060:5060"
+  linphone:
+    image: dwilkie/linphone-docker
+    command: /bin/bash -c 'linphonecsh init && tail -f /dev/null'
+    volumes:
+      - /dev/snd:/dev/snd
+    privileged: true
