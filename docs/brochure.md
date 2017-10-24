@@ -1,4 +1,4 @@
-# Scaling Somleng through RapidPro and Beyond
+# Introduction to Somleng
 
 By David Wilkie, CEO and Founder, Somleng
 
