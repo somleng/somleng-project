@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://rtd.somleng.org/api/projects/6bb193d9-876e-4846-a42f-8a35db66b477/real_time_data.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Cowboy
+      Date:
+      - Tue, 24 Oct 2017 12:30:59 GMT
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"56195741e46228665782080655431abe"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 27842e43-f79b-48da-a19f-995cfb12210f
+      X-Runtime:
+      - '0.224067'
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: UTF-8
+      string: '{"date_updated":"Tue, 24 Oct 2017 12:29:32 +0000","calls_count":192432,"calls_outbound_count":79890,"calls_inbound_count":112542,"calls_minutes":309895,"calls_outbound_minutes":81074,"calls_inbound_minutes":228821,"sms_count":0,"sms_outbound_count":0,"sms_inbound_count":0,"projects_count":1,"countries_count":1,"continents_count":1,"total_amount_spent":"$2.21","total_equivalent_twilio_price":"$8,107.40","total_amount_saved":"$8,105.19"}'
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 12:30:59 GMT
+recorded_with: VCR 3.0.3

@@ -1,8 +1,11 @@
-require 'erb'
+require "erb"
+require_relative "../data_wrappers/document_data"
 
 class SomlengProject::ApplicationRenderer
+  extend ActiveSupport::DescendantsTracker
+
   DEFAULT_TEMPLATE_EXTENSION = "erb"
-  attr_accessor :date
+  attr_accessor :date, :document_data
 
   delegate :template_name,
            :template_extension,
@@ -11,6 +14,7 @@ class SomlengProject::ApplicationRenderer
            :to => :class
 
   def initialize(options = {})
+    self.document_data = options[:document_data]
     self.date = options[:date]
   end
 
@@ -19,7 +23,8 @@ class SomlengProject::ApplicationRenderer
   end
 
   def generate_doc!
-
+    FileUtils.mkdir_p(File.dirname(output_path))
+    File.open(output_path, 'w') { |file| file.write(render) }
   end
 
   def date
@@ -28,8 +33,27 @@ class SomlengProject::ApplicationRenderer
 
   private
 
+  def units
+    {
+      :thousand => "K",
+      :million => "M",
+      :billion => "B",
+      :trillion => "T",
+      :quadrillion => "Q"
+    }
+  end
+
+  def number_to_human(*args)
+    options = args.extract_options!
+    ActiveSupport::NumberHelper.number_to_human(*args, {:units => units}.merge(options))
+  end
+
   def template
     @template ||= File.read(template_path)
+  end
+
+  def document_data
+    @document_data ||= SomlengProject::DocumentData.new
   end
 
   def self.template_extension
@@ -46,5 +70,9 @@ class SomlengProject::ApplicationRenderer
 
   def self.template_path
     File.expand_path("../templates/#{template_name}.#{template_extension}", File.dirname(__FILE__))
+  end
+
+  def self.render?
+    true
   end
 end

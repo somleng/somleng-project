@@ -11,10 +11,25 @@ class SomlengProject::IntroductionForDevelopmentOrganizationsRenderer < SomlengP
 
   def initialize(options = {})
     super
-    self.ews_inbound_calls = options[:ews_inbound_calls]
-    self.ews_inbound_minutes = options[:ews_inbound_minutes]
-    self.ews_outbound_calls = options[:ews_outbound_calls]
-    self.ews_outbound_minutes = options[:ews_outbound_minutes]
-    self.ews_total_amount_saved = options[:ews_total_amount_saved]
+  end
+
+  def ews_inbound_calls
+    @ews_inbound_calls ||= number_to_human(document_data.ews_data.calls_inbound_count)
+  end
+
+  def ews_inbound_minutes
+    @ews_inbound_minutes ||= number_to_human(document_data.ews_data.calls_inbound_minutes)
+  end
+
+  def ews_outbound_calls
+    @ews_outbound_calls ||= number_to_human(document_data.ews_data.calls_outbound_count)
+  end
+
+  def ews_outbound_minutes
+    @ews_outbound_minutes ||= number_to_human(document_data.ews_data.calls_outbound_minutes)
+  end
+
+  def ews_total_amount_saved
+    @ews_total_amount_saved ||= document_data.ews_data.total_amount_saved
   end
 end

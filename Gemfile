@@ -5,9 +5,14 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem "rake"
 gem "activesupport"
+gem "httparty"
 
 group :test do
   gem "rspec"
   gem "pry"
+  gem "vcr"
+  gem "webmock"
+  gem "fakefs"
 end
