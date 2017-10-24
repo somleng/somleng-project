@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide is intended to give you instant gratification.
+This guide is intended to get you up and running with Somleng on your machine.
 
 ## Prerequisites
 
@@ -8,11 +8,11 @@ Install [Docker](https://docs.docker.com/engine/installation), [docker-compose](
 
 ## Clone the repository using git
 
-Or download `docker-compose.yml` manually [here](https://raw.githubusercontent.com/somleng/somleng-project/master/docker-compose.yml)
-
 ```
 $ git clone https://github.com/somleng/somleng-project --depth 1 && cd somleng-project
 ```
+
+Or download `docker-compose.yml` manually [here](https://raw.githubusercontent.com/somleng/somleng-project/master/docker-compose.yml)
 
 ## Pull the latest images
 

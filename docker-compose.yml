@@ -35,7 +35,7 @@ services:
     image: dwilkie/freeswitch-rayo
     # expose the ports below if you want to use with a softphone registered on the host
     # ports:
-      # - "5060:5060"
+      # - "5060:5060/udp"
   # can remove linphone if you want to use a softphone registered on the host
   linphone:
     image: dwilkie/linphone-docker
