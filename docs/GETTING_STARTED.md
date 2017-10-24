@@ -41,7 +41,7 @@ In another terminal...
 ### Get the Account SID and Auth Token
 
 ```
-$ IFS=: read ACCOUNT_SID AUTH_TOKEN <<< $(docker-compose run --rm -e FORMAT=basic_auth twilreapi /bin/bash -c './bin/rails db:seed') && echo "Account SID: $ACCOUNT_SID" && echo "Auth Token: $AUTH_TOKEN"
+$ IFS=: read ACCOUNT_SID AUTH_TOKEN <<< $(docker-compose run --rm -e FORMAT=basic_auth twilreapi /bin/bash -c './bin/rails db:seed') && echo "Account SID: $ACCOUNT_SID" && echo "Auth Token:  $AUTH_TOKEN"
 ```
 
 ### Initiate a call with CURL
