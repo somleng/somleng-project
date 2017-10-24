@@ -23,7 +23,25 @@ With the pieces of the puzzle coming together the problems that still remained w
 1. How to connect RapidPro to the MNOs for user registration?
 2. How to send out automated alerts to people in at risk in the event of an emergency?
 
-### Somleng
+### Introduction to Somleng
+
+[Somleng](http://www.somleng.org/) is an [Open Source](https://en.wikipedia.org/wiki/Open-source_software) implementation of [Twilio](https://www.twilio.com/). Unlike Twilio, Somleng gives you complete control over where it's connected to. Somleng can connect to [MNOs](https://en.wikipedia.org/wiki/Mobile_network_operator), [Telcos](https://en.wikipedia.org/wiki/Telephone_company), Aggregators or even your [own hardware](https://en.wikipedia.org/wiki/SIM_box).
+
+Because [Somleng's REST API](https://github.com/somleng/twilreapi) is an open source implementation of [Twilio's REST API](https://www.twilio.com/docs/api/rest) you can swap Twilio out for Somleng in your existing applications seamlessly.
+
+There's no monthly or per-minute fees for using Somleng and all the code is Open Source and available on [Github](https://github.com/somleng).
+
+### Registrations through RapidPro and Somleng
+
+People in Need (PIN) use RapidPro to design callflows for registering for the Early Warning System. RapidPro connects to Somleng out of the box and Somleng connects to the MNOs to handle inbound registrations through the short code 1294.
+
+### Automated Alerts through Somleng Simple Call Flow Manager (Somleng SCFM)
+
+[Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) is an Open Source call flow manager specifically designed for queuing, retrying, scheduling and analysis of calls. It comes complete with it's own REST API for managing contacts, callouts and phone calls. Flood sensors which detect water level heights are connected to Somelng SCFM, which then triggers automated alerts thorugh Somleng.
+
+### Results
+
+Since the beginning of the project Somleng has processed around <%= ews_inbound_calls %> (<%= ews_inbound_minutes %>) for inbound registrations and <%= ews_outbound_calls %> (<%= ews_outbound_minutes %>) outbound alerts, resulting in a total cost saving of around <%= ews_total_amount_saved %> if comparted to Twilio.
 
 ## Somalia
 
@@ -56,5 +74,6 @@ In Somalia Returnee households from Dadaab refugee camp in Kenya and vulnerable 
 * numbers
 * comparison
 
-<a name="footnote-ews-article">1</a>: [New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
-<a name="footnote-somleng-rtd">2</a>: [Somleng Real Time Data](rtd.somleng.org)
+<a name="footnote-ews-article"><sup>1</sup></a>: [New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
+
+<a name="footnote-somleng-rtd"><sup>2</sup></a>: [Somleng Real Time Data](rtd.somleng.org)
