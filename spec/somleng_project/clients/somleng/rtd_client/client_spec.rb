@@ -1,7 +1,8 @@
 require 'spec_helper'
-require 'somleng_project/clients/real_time_data_client'
+require 'somleng_project/clients/somleng/rtd_client'
+require 'somleng_project/clients/somleng/rtd_client/client'
 
-describe SomlengProject::RealTimeDataClient do
+describe Somleng::RTDClient::Client do
   describe "fetching real time data", :vcr do
     let(:real_time_data_helper) { SomlengProject::SpecHelpers::RealTimeDataHelper.new }
 

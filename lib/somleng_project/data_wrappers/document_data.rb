@@ -1,5 +1,5 @@
-require_relative "../clients/real_time_data_client"
-require_relative "real_time_data"
+require_relative "../clients/somleng/rtd_client"
+require_relative "../clients/somleng/rtd_client/request/project"
 
 class SomlengProject::DocumentData
   delegate :ews_project_id,
@@ -7,17 +7,33 @@ class SomlengProject::DocumentData
            :to => :class
 
   def ews_data
-    @ews_data ||= fetch_real_time_data!(ews_project_id)
+    @ews_data ||= ews_project_request.fetch_real_time_data!
   end
 
   def avf_data
-    @avf_data ||= fetch_real_time_data!(avf_project_id)
+    @avf_data ||= avf_project_request.fetch_real_time_data!
+  end
+
+  def ews_project
+    @ews_project ||= ews_project_request.fetch!
+  end
+
+  def avf_project
+    @avf_project ||= avf_project_request.fetch!
   end
 
   private
 
-  def fetch_real_time_data!(project_id)
-    SomlengProject::RealTimeData.new(client.fetch_project_real_time_data!(project_id))
+  def ews_project_request
+    @ews_project_request ||= build_project_request(ews_project_id)
+  end
+
+  def avf_project_request
+   @avf_project_request ||= build_project_request(avf_project_id)
+  end
+
+  def build_project_request(project_id)
+    Somleng::RTDClient::Request::Project.new(project_id)
   end
 
   def self.ews_project_id
@@ -26,9 +42,5 @@ class SomlengProject::DocumentData
 
   def self.avf_project_id
     ENV["AVF_PROJECT_ID"]
-  end
-
-  def client
-    @client ||= SomlengProject::RealTimeDataClient.new
   end
 end

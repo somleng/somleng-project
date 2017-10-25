@@ -37,6 +37,14 @@ class SomlengProject::SpecHelpers::RealTimeDataHelper
         :avf => {
           :project_id => "11d41773-cb37-4614-883d-602bb4e1824e",
           :env_var_key =>  "AVF_PROJECT_ID",
+          :real_time_data_assertions => {
+            :content => [
+              "$0.7680 per minute",
+              "$31,130.88",
+              "https://www.twilio.com/voice/pricing/so"
+            ],
+            :asserted_in => "SomlengProject::IntroductionForDevelopmentOrganizationsRenderer"
+          }
         },
         :ews => {
           :project_id => "6bb193d9-876e-4846-a42f-8a35db66b477",
@@ -47,7 +55,8 @@ class SomlengProject::SpecHelpers::RealTimeDataHelper
               "229 K minutes",
               "79.9 K calls",
               "81.1 K minutes",
-              "$8,105.19"
+              "$8,105.19",
+              "https://www.twilio.com/voice/pricing/kh"
             ],
             :data => {
               "calls_count" => 192432

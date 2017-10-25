@@ -2,7 +2,7 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: <%= @date %>. Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/case_study_africas_voices.md). [Improvements](https://github.com/somleng/somleng-project/pulls) welcome.
+Last updated: <%= @date %>. Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
 ## Cambodia
 
@@ -35,17 +35,31 @@ There's no monthly or per-minute fees for using Somleng and all the code is Open
 
 People in Need (PIN) use RapidPro to design callflows for registering for the Early Warning System. RapidPro connects to Somleng out of the box and Somleng connects to the MNOs to handle inbound registrations through the short code 1294.
 
-### Automated Alerts through Somleng Simple Call Flow Manager (Somleng SCFM)
+### Automated Alerts through Somleng Simple Call Flow Manager
 
 [Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) is an Open Source call flow manager specifically designed for queuing, retrying, scheduling and analysis of calls. It comes complete with it's own REST API for managing contacts, callouts and phone calls. Flood sensors which detect water level heights are connected to Somelng SCFM, which then triggers automated alerts thorugh Somleng.
 
 ### Results
 
-Since the beginning of the project Somleng has processed around <%= ews_inbound_calls %> calls (<%= ews_inbound_minutes %> minutes) for inbound registrations and <%= ews_outbound_calls %> calls (<%= ews_outbound_minutes %> minutes) for outbound alerts, resulting in a total cost saving of around <%= ews_total_amount_saved %> if comparted to Twilio.
+Somleng collects [Real Time Data](rtd.somleng.org) from the Early Warning System and other projects which is available at [rtd.somleng.org](rtd.somleng.org).
+
+Since the beginning of the project Somleng has processed around [<%= ews_inbound_calls %> calls (<%= ews_inbound_minutes %> minutes)](rtd.somleng.org) for inbound registrations and [<%= ews_outbound_calls %> calls (<%= ews_outbound_minutes %> minutes)](rtd.somleng.org) for outbound alerts, resulting in a total cost saving of around [<%= ews_total_amount_saved %>](rtd.somleng.org) if [compared with Twilio](<%= ews_twilio_price_voice_url %>).
+
+### More Info
+
+Our [technical write up](https://github.com/somleng/somleng-project/blob/master/docs/case_study_ews.md) contains more information about the project from a technical perspective.
 
 ## Somalia
 
-In Somalia Returnee households from Dadaab refugee camp in Kenya and vulnerable households in Bay and Bakool received emergency unconditional cash-based transfer assistance package to help them meet their needs during the current drought period. In order to share information about the program and get feedback voice-based messaging is used.
+In Somalia returnee households from Dadaab refugee camp in Kenya and vulnerable households in Bay and Bakool received emergency unconditional cash-based transfer assistance package to help them meet their needs during the current drought period.
+
+In order to share information and get feedback about the program, a voice-based messaging solution was proposed. Voice messages were recorded in the [Somali language](https://en.wikipedia.org/wiki/Somali_language) and call flows were designed using [RapidPro](http://rapidpro.io/) by [Africa's Voices Foundation (AVF)](http://www.africasvoices.org/) in collaboration with [UNICEF Somalia](https://www.unicef.org/somalia/).
+
+The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is a whopping [<%= avf_twilio_price_voice %> per minute](<%= avf_twilio_price_voice_url %>) which would put the total cost at <%= avf_total_equivalent_twilio_price %>
+
+### More Info
+
+Our [technical write up](https://github.com/somleng/somleng-project/blob/master/docs/case_study_africas_voices.md) contains more information about the project from a technical perspective.
 
 * Communication
 * Cost
@@ -74,6 +88,6 @@ In Somalia Returnee households from Dadaab refugee camp in Kenya and vulnerable 
 * numbers
 * comparison
 
-<a name="footnote-ews-article"><sup>1</sup></a>: [New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
+<a name="footnote-ews-article"><sup>1</sup></a>[New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
 
-<a name="footnote-somleng-rtd"><sup>2</sup></a>: [Somleng Real Time Data](rtd.somleng.org)
+<a name="footnote-somleng-rtd"><sup>2</sup></a>[Somleng Real Time Data](rtd.somleng.org)
