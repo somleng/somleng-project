@@ -46,6 +46,6 @@ class SomlengProject::IntroductionForDevelopmentOrganizationsRenderer < SomlengP
   end
 
   def avf_twilio_price_voice
-    document_data.avf_project.twilio_price.outbound_voice_price.sub(/0{1,}+$/, "0")
+    document_data.avf_project.twilio_price.outbound_voice_price.sub(/0{1,}$/, "0")
   end
 end
