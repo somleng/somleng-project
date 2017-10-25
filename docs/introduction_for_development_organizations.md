@@ -41,9 +41,9 @@ People in Need (PIN) use RapidPro to design callflows for registering for the Ea
 
 ### Results
 
-Somleng collects [Real Time Data](rtd.somleng.org) from the Early Warning System and other projects which is available at [rtd.somleng.org](rtd.somleng.org).
+Somleng collects [Real Time Data](http://rtd.somleng.org) from the Early Warning System and other projects which is available at [http://rtd.somleng.org](http://rtd.somleng.org).
 
-Since the beginning of the project Somleng has processed around [113 K calls (229 K minutes)](rtd.somleng.org) for inbound registrations and [79.9 K calls (81.1 K minutes)](rtd.somleng.org) for outbound alerts, resulting in a total cost saving of around [$8,105.19](rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
+Since the beginning of the project Somleng has processed around [113 K calls (229 K minutes)](http://rtd.somleng.org) for inbound registrations and [79.9 K calls (81.1 K minutes)](http://rtd.somleng.org) for outbound alerts, resulting in a total cost saving of around [$8,105.19](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
 
 ### More Info
 
@@ -55,7 +55,7 @@ In Somalia returnee households from Dadaab refugee camp in Kenya and vulnerable 
 
 In order to share information and get feedback about the program, a voice-based messaging solution was proposed. Voice messages were recorded in the [Somali language](https://en.wikipedia.org/wiki/Somali_language) and call flows were designed using [RapidPro](http://rapidpro.io/) by [Africa's Voices Foundation (AVF)](http://www.africasvoices.org/) in collaboration with [UNICEF Somalia](https://www.unicef.org/somalia/).
 
-The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is a whopping [$0.7680 per minute](https://www.twilio.com/voice/pricing/so) which would put the total cost at $31,144.70
+The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is a whopping [$0.7680 per minute](https://www.twilio.com/voice/pricing/so) which would put the total cost at [$31,144.70](http://rtd.somleng.org)
 
 ### More Info
 
@@ -88,6 +88,6 @@ Our [technical write up](https://github.com/somleng/somleng-project/blob/master/
 * numbers
 * comparison
 
-<a name="footnote-ews-article"><sup>1</sup></a>[New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
+<a name="footnote-ews-article"><sup>1</sup></a> [New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
 
-<a name="footnote-somleng-rtd"><sup>2</sup></a>[Somleng Real Time Data](rtd.somleng.org)
+<a name="footnote-somleng-rtd"><sup>2</sup></a> [Somleng Real Time Data](http://rtd.somleng.org)
