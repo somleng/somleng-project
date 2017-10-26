@@ -1,5 +1,5 @@
-require_relative "../clients/somleng/rtd_client"
-require_relative "../clients/somleng/rtd_client/request/project"
+require "somleng/rtd_client"
+require "somleng/rtd_client/request/project"
 
 class SomlengProject::DocumentData
   delegate :ews_project_id,

@@ -8,6 +8,7 @@ end
 gem "rake"
 gem "activesupport"
 gem "httparty"
+gem "somleng-rtd_client", :github => "somleng/somleng-rtd_client"
 
 group :test do
   gem "rspec"

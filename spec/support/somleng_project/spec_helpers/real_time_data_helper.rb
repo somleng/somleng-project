@@ -32,17 +32,4 @@ class SomlengProject::SpecHelpers::RealTimeDataHelper
       ]
     }
   end
-
-  def data_assertions
-    @data_assertions ||= {
-      :aggregate => {
-        :calls_count => 235736
-      },
-      :projects => {
-        :ews => {
-          :calls_count => 192432
-        }
-      }
-    }
-  end
 end
