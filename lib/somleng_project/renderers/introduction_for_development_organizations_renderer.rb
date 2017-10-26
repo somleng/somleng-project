@@ -3,14 +3,8 @@ require_relative "application_renderer"
 class SomlengProject::IntroductionForDevelopmentOrganizationsRenderer < SomlengProject::ApplicationRenderer
   TEMPLATE_NAME = "introduction_for_development_organizations.md"
 
-  attr_accessor :ews_inbound_calls,
-                :ews_inbound_minutes,
-                :ews_outbound_calls,
-                :ews_outbound_minutes,
-                :ews_total_amount_saved
-
-  def initialize(options = {})
-    super
+  def last_updated_at
+    Date.today.to_time.strftime("%d %B %Y")
   end
 
   def ews_inbound_calls
@@ -47,5 +41,17 @@ class SomlengProject::IntroductionForDevelopmentOrganizationsRenderer < SomlengP
 
   def avf_twilio_price_voice
     document_data.avf_project.twilio_price.outbound_voice_price.sub(/0{1,}$/, "0")
+  end
+
+  def avf_outbound_calls
+    number_to_human(document_data.avf_data.calls_outbound_count)
+  end
+
+  def avf_total_amount_saved
+    document_data.avf_data.total_amount_saved
+  end
+
+  def avf_outbound_minutes
+    number_to_human(document_data.avf_data.calls_outbound_minutes)
   end
 end

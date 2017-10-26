@@ -5,7 +5,7 @@ class SomlengProject::ApplicationRenderer
   extend ActiveSupport::DescendantsTracker
 
   DEFAULT_TEMPLATE_EXTENSION = "erb"
-  attr_accessor :date, :document_data
+  attr_accessor :content, :document_data
 
   delegate :template_name,
            :template_extension,
@@ -14,8 +14,8 @@ class SomlengProject::ApplicationRenderer
            :to => :class
 
   def initialize(options = {})
+    self.content = options[:content]
     self.document_data = options[:document_data]
-    self.date = options[:date]
   end
 
   def render
@@ -27,8 +27,8 @@ class SomlengProject::ApplicationRenderer
     File.open(output_path, 'w') { |file| file.write(render) }
   end
 
-  def date
-    @date ||= Date.today
+  def content
+    @content ||= {}
   end
 
   private

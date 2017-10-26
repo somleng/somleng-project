@@ -21,7 +21,7 @@ describe Somleng::RTDClient::Client do
     describe "#fetch_aggregate_real_time_data!", :cassette => :fetch_real_time_data do
       let(:results) { subject.fetch_aggregate_real_time_data! }
       let(:asserted_calls_count) {
-        real_time_data_helper.aggregate_data_assertions[:real_time_data_assertions][:data]["calls_count"]
+        real_time_data_helper.data_assertions[:aggregate][:calls_count]
       }
 
       it { assert_fetch_real_time_data! }
@@ -32,7 +32,7 @@ describe Somleng::RTDClient::Client do
       let(:project_id) { real_time_data_helper.project_assertions[:ews][:project_id] }
       let(:results) { subject.fetch_project_real_time_data!(project_id) }
       let(:asserted_calls_count) {
-        real_time_data_helper.project_assertions[:ews][:real_time_data_assertions][:data]["calls_count"]
+        real_time_data_helper.data_assertions[:projects][:ews][:calls_count]
       }
       it { assert_fetch_real_time_data! }
     end

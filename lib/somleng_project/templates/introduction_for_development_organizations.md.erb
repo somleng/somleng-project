@@ -2,7 +2,9 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: <%= @date %>. Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Improvements [welcome](https://github.com/somleng/somleng-project/pulls).
+Last updated: <%= last_updated_at %>
+
+Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Contributions and improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
 ## Cambodia
 
@@ -43,7 +45,7 @@ People in Need (PIN) use RapidPro to design callflows for registering for the Ea
 
 Somleng collects [Real Time Data](http://rtd.somleng.org) from the Early Warning System and other projects which is available at [http://rtd.somleng.org](http://rtd.somleng.org).
 
-Since the beginning of the project Somleng has processed around [<%= ews_inbound_calls %> calls (<%= ews_inbound_minutes %> minutes)](http://rtd.somleng.org) for inbound registrations and [<%= ews_outbound_calls %> calls (<%= ews_outbound_minutes %> minutes)](http://rtd.somleng.org) for outbound alerts, resulting in a total cost saving of around [<%= ews_total_amount_saved %>](http://rtd.somleng.org) if [compared with Twilio](<%= ews_twilio_price_voice_url %>).
+Since the beginning of the project Somleng has processed around [<%= ews_inbound_minutes %>](http://rtd.somleng.org) minutes worth of registrations and [<%= ews_outbound_minutes %>](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of around [<%= ews_total_amount_saved %>](http://rtd.somleng.org) if [compared with Twilio](<%= ews_twilio_price_voice_url %>).
 
 ### More Info
 
@@ -51,42 +53,48 @@ Our [technical write up](https://github.com/somleng/somleng-project/blob/master/
 
 ## Somalia
 
+### Cash Assistance Package
+
 In Somalia returnee households from Dadaab refugee camp in Kenya and vulnerable households in Bay and Bakool received emergency unconditional cash-based transfer assistance package to help them meet their needs during the current drought period.
 
-In order to share information and get feedback about the program, a voice-based messaging solution was proposed. Voice messages were recorded in the [Somali language](https://en.wikipedia.org/wiki/Somali_language) and call flows were designed using [RapidPro](http://rapidpro.io/) by [Africa's Voices Foundation (AVF)](http://www.africasvoices.org/) in collaboration with [UNICEF Somalia](https://www.unicef.org/somalia/).
+In order to share information and get feedback about the program, a voice-based messaging solution was proposed. In the proposal voice messages and surveys would be recorded in the [Somali language](https://en.wikipedia.org/wiki/Somali_language) and delivered to the household head by mobile phone calls.
 
-The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is a whopping [<%= avf_twilio_price_voice %> per minute](<%= avf_twilio_price_voice_url %>) which would put the total cost at [<%= avf_total_equivalent_twilio_price %>](http://rtd.somleng.org)
+### Cost Concerns
+
+The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [<%= avf_twilio_price_voice %> per minute](<%= avf_twilio_price_voice_url %>). To date AVF have sent around [<%= avf_outbound_minutes %>](http://rtd.somleng.org) minutes worth of calls which would equate to around [<%= avf_total_equivalent_twilio_price %>](http://rtd.somleng.org) on Twilio.
+
+In order to reduce costs and promote local businesses, AVF partnered with [Shaqodoon](http://shaqodoon.org/technology/), a local company which provides aggregation for Mobile Network Operators (MNOs) in Somalia. In comparison, Shaqodoon's pricing is between $0.04 and $0.07 per minute depending on the MNO.
+
+With a potential solution to the economic feasibility of the project, the problems that still remained were:
+
+1. How to design call flows
+2. How to deliver calls through Shaqodoon
+
+### RapidPro
+
+In order to solve the first problem, AVF partnered with [UNICEF](https://www.unicef.org/somalia) and was given access to [RapidPro](http://rapidpro.io/) which can be used as a graphical interface for designing call flows.
+
+### Somleng
+
+The final problem that remained was how to deliver the calls through Shaqodoon.
+
+Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved around [<%= avf_total_amount_saved %>](http://rtd.somleng.org) if [compared with Twilio](<%= avf_twilio_price_voice_url %>).
+
+### Scaling Issues
+
+After using the RapidPro -> Somleng -> Shaqodoon solution for some time AVF ran into some scaling issues. The first problem was a [limitation in Shaqodoon](https://github.com/somleng/somleng-project/blob/master/docs/case_study_africas_voices.md#shaqadoon) that restricted callouts to a maximum of 32 simultaneous calls per MNO.
+
+The obvious solution would be to retry failed calls through RapidPro but unfortunately RapidPro [does not yet have a solution](https://github.com/rapidpro/rapidpro/issues/599) for this.
+
+The second problem was that AVF wanted to have more control over when the calls were sent out. In particular they wanted to pause calls during certain times of the day (e.g. prayer time) and at night.
+
+### Solutions
+
+[Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) was developed specifically to solve the aforementioned problems. Somleng SCFM connects to Somleng directly (bypassing RapidPro) and controls the retrying and scheduling of calls. This gives the user complete control over which calls are retried and when, as well as when they will be scheduled. AVF still uses RapidPro to trigger SMS flows which are scheduled by Somleng SCFM.
 
 ### More Info
 
 Our [technical write up](https://github.com/somleng/somleng-project/blob/master/docs/case_study_africas_voices.md) contains more information about the project from a technical perspective.
-
-* Communication
-* Cost
-* Integration with Existing systems
-
-## Solution
-
-* Somleng (plugs into RapidPro and Somleng SCFM)
-* Cost savings
-
-## Pilots
-
-* Somalia
-* Cambodia
-
-## Results
-
-## Numbers
-
-## Comparison with Twilio
-
-* problem
-* solution
-* pilots
-* results
-* numbers
-* comparison
 
 <a name="footnote-ews-article"><sup>1</sup></a> [New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
 
