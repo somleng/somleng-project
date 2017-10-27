@@ -1,5 +1,11 @@
+require 'active_support'
+
 class IntroductionForDevelopmentOrganizationsRenderer < Dynamizer::Renderer
-  TEMPLATE_NAME = "docs/introduction_for_development_organizations.md"
+  TEMPLATE_NAME = "introduction_for_development_organizations.md"
+
+  def self.template_name
+    TEMPLATE_NAME
+  end
 
   def last_updated_at
     Date.today.to_time.strftime("%d %B %Y")
