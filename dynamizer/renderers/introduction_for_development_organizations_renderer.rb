@@ -1,7 +1,9 @@
-require 'active_support'
+require 'active_support/dependencies/autoload'
+require 'active_support/number_helper'
+require 'active_support/core_ext/array/extract_options'
 
 class IntroductionForDevelopmentOrganizationsRenderer < Dynamizer::Renderer
-  TEMPLATE_NAME = "introduction_for_development_organizations.md"
+  TEMPLATE_NAME = "docs/introduction_for_development_organizations.md"
 
   def self.template_name
     TEMPLATE_NAME
@@ -57,5 +59,22 @@ class IntroductionForDevelopmentOrganizationsRenderer < Dynamizer::Renderer
 
   def avf_outbound_minutes
     number_to_human(data.avf_data.calls_outbound_minutes)
+  end
+
+  private
+
+  def number_to_human(*args)
+    options = args.extract_options!
+    ActiveSupport::NumberHelper.number_to_human(*args, {:units => units}.merge(options))
+  end
+
+  def units
+    {
+      :thousand => "K",
+      :million => "M",
+      :billion => "B",
+      :trillion => "T",
+      :quadrillion => "Q"
+    }
   end
 end
