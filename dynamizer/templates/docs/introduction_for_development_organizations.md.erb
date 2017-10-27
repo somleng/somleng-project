@@ -100,6 +100,8 @@ Our [technical write up](https://github.com/somleng/somleng-project/blob/master/
 
 For more information about Somleng please contact David Wilkie at [dave@somleng.org](mailto:dave@somleng.org)
 
+## References
+
 <a name="footnote-ews-article"><sup>1</sup></a> [New innovations protecting lives in flood-prone Cambodia](http://unicefstories.org/2017/06/20/new-innovations-protecting-lives-in-flood-prone-cambodia/)
 
 <a name="footnote-somleng-rtd"><sup>2</sup></a> [Somleng Real Time Data](http://rtd.somleng.org)
