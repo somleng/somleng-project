@@ -2,7 +2,7 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: 22 November 2017
+Last updated: 23 November 2017
 
 Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Contributions and improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
@@ -45,7 +45,7 @@ People in Need (PIN) use RapidPro to design callflows for registering for the Ea
 
 Somleng collects [Real Time Data](http://rtd.somleng.org) from the Early Warning System and other projects which is available at [http://rtd.somleng.org](http://rtd.somleng.org).
 
-Since the beginning of the project Somleng has processed around [249 K](http://rtd.somleng.org) minutes worth of registrations and [81.6 K](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of around [$8,155.79](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
+Since the beginning of the project Somleng has processed around [250 K](http://rtd.somleng.org) minutes worth of registrations and [81.7 K](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of around [$8,164.89](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
 
 ## Somalia
 
@@ -57,7 +57,7 @@ In order to share information and get feedback about the program, a voice-based 
 
 ### Cost Concerns
 
-The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [$0.7680 per minute](https://www.twilio.com/voice/pricing/so). To date AVF have sent around [45.5 K](http://rtd.somleng.org) minutes worth of calls which would equate to around [$34,979.33](http://rtd.somleng.org) on Twilio.
+The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [$0.7680 per minute](https://www.twilio.com/voice/pricing/so). To date AVF have sent around [47.1 K](http://rtd.somleng.org) minutes worth of calls which would equate to around [$36,187.39](http://rtd.somleng.org) on Twilio.
 
 In order to reduce costs and promote local businesses, AVF partnered with [Shaqodoon](http://shaqodoon.org/technology/), a local company which provides aggregation for Mobile Network Operators (MNOs) in Somalia. In comparison, Shaqodoon's pricing is between $0.04 and $0.07 per minute depending on the MNO.
 
@@ -74,7 +74,7 @@ In order to solve the first problem, AVF partnered with [UNICEF](https://www.uni
 
 The final problem that remained was how to deliver the calls through Shaqodoon.
 
-Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved around [$33,021.16](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/so).
+Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved around [$34,168.80](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/so).
 
 ### Scaling Issues
 
