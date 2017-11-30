@@ -2,7 +2,7 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: 20 November 2017
+Last updated: 29 November 2017
 
 Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Contributions and improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
@@ -12,18 +12,18 @@ Previous diffs and versions are available [here](https://github.com/somleng/soml
 
 Cambodia is a country consistently ranked as one of the most vulnerable to the effects of natural disasters.
 
-In order to deliver timely and potentially lifesaving information to people in disaster prone areas an Early Warning System (EWS) was conceived by the organization [People In Need (PIN)](https://www.clovekvtisni.cz/en/what-we-do/humanitarian-aid-and-development/cambodia) <sup>[1](#footnote-ews-article)</sup>.
+In order to deliver timely and potentially lifesaving information to people in disaster prone areas, an Early Warning System (EWS) was conceived by the organization, [People In Need (PIN)](https://www.clovekvtisni.cz/en/what-we-do/humanitarian-aid-and-development/cambodia) <sup>[1](#footnote-ews-article)</sup>.
 
 [PIN](https://www.clovekvtisni.cz/en/what-we-do/humanitarian-aid-and-development/cambodia) realized that the EWS needs to be accessible to all Cambodians, regardless of literacy and Internet connectivity issues.
 
-They decided to look into solution which uses voice based messaging for alerts and [(IVR)](https://en.wikipedia.org/wiki/Interactive_voice_response) for registration. In collaboration with [UNICEF](https://www.unicef.org/cambodia), they decided to use [RapidPro](http://rapidpro.io/), an open-source platform of applications that delivers rapid and vital real-time information, to manage the registration of users into the system.
+They decided to look into a solution which uses voice based messaging for alerts and [Interactie Voice Response (IVR)](https://en.wikipedia.org/wiki/Interactive_voice_response) for registration. In collaboration with [UNICEF](https://www.unicef.org/cambodia), they decided to use [RapidPro](http://rapidpro.io/), an open-source platform of applications that delivers rapid and vital real-time information, to manage the registration of users into the system.
 
-With help from the Royal Cambodian Government, the [Telecommunication Regulator of Cambodia (TRC)](https://www.trc.gov.kh) and the [National Committee for Disaster Management (NCDM)](http://www.ncdm.gov.kh/) regulated that the Early Warning System must be provided free of charge by the [Mobile Network Operators (MNOs)](https://en.wikipedia.org/wiki/Mobile_network_operator) in Cambodia.
+With help from the Royal Cambodian Government, the [Telecommunication Regulator of Cambodia (TRC)](https://www.trc.gov.kh) and the [National Committee for Disaster Management (NCDM)](http://www.ncdm.gov.kh/), it was regulated that the Early Warning System must be provided free of charge by the [Mobile Network Operators (MNOs)](https://en.wikipedia.org/wiki/Mobile_network_operator) in Cambodia.
 
 With the pieces of the puzzle coming together the problems that still remained were:
 
 1. How to connect RapidPro to the MNOs for user registration?
-2. How to send out automated alerts to people in at risk in the event of an emergency?
+2. How to send out automated alerts to people at risk in the event of an emergency?
 
 ### Introduction to Somleng
 
@@ -31,7 +31,7 @@ With the pieces of the puzzle coming together the problems that still remained w
 
 Because [Somleng's REST API](https://github.com/somleng/twilreapi) is an open source implementation of [Twilio's REST API](https://www.twilio.com/docs/api/rest) you can swap Twilio out for Somleng in your existing applications seamlessly.
 
-There's no monthly or per-minute fees for using Somleng and all the code is Open Source and available on [Github](https://github.com/somleng).
+Unlike Twilio, there's no monthly or per-minute fees for using Somleng and all the code is Open Source and available on [Github](https://github.com/somleng).
 
 ### Registrations through RapidPro and Somleng
 
@@ -45,11 +45,7 @@ People in Need (PIN) use RapidPro to design callflows for registering for the Ea
 
 Somleng collects [Real Time Data](http://rtd.somleng.org) from the Early Warning System and other projects which is available at [http://rtd.somleng.org](http://rtd.somleng.org).
 
-Since the beginning of the project Somleng has processed around [246 K](http://rtd.somleng.org) minutes worth of registrations and [81.2 K](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of around [$8,121.89](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
-
-### More Info
-
-Our [technical write up](https://github.com/somleng/somleng-project/blob/master/docs/case_study_ews.md) contains more information about the project from a technical perspective.
+Since the beginning of the project Somleng has processed around [258 K](http://rtd.somleng.org) minutes worth of registrations and [83.5 K](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of around [$8,349.89](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
 
 ## Somalia
 
@@ -61,7 +57,7 @@ In order to share information and get feedback about the program, a voice-based 
 
 ### Cost Concerns
 
-The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [$0.7680 per minute](https://www.twilio.com/voice/pricing/so). To date AVF have sent around [44 K](http://rtd.somleng.org) minutes worth of calls which would equate to around [$33,757.44](http://rtd.somleng.org) on Twilio.
+The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [$0.7680 per minute](https://www.twilio.com/voice/pricing/so). To date AVF have sent around [50.6 K](http://rtd.somleng.org) minutes worth of calls which would equate to around [$38,823.94](http://rtd.somleng.org) on Twilio.
 
 In order to reduce costs and promote local businesses, AVF partnered with [Shaqodoon](http://shaqodoon.org/technology/), a local company which provides aggregation for Mobile Network Operators (MNOs) in Somalia. In comparison, Shaqodoon's pricing is between $0.04 and $0.07 per minute depending on the MNO.
 
@@ -78,7 +74,7 @@ In order to solve the first problem, AVF partnered with [UNICEF](https://www.uni
 
 The final problem that remained was how to deliver the calls through Shaqodoon.
 
-Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved around [$31,845.71](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/so).
+Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved around [$36,701.32](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/so).
 
 ### Scaling Issues
 
@@ -90,11 +86,7 @@ The second problem was that AVF wanted to have more control over when the calls 
 
 ### Solutions
 
-[Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) was developed specifically to solve the aforementioned problems. Somleng SCFM connects to Somleng directly (bypassing RapidPro) and controls the retrying and scheduling of calls. This gives the user complete control over which calls are retried and when, as well as when they will be scheduled. AVF still uses RapidPro to trigger SMS flows which are scheduled by Somleng SCFM.
-
-### More Info
-
-Our [technical write up](https://github.com/somleng/somleng-project/blob/master/docs/case_study_africas_voices.md) contains more information about the project from a technical perspective.
+[Somleng Simple Call Flow Manager (Somleng SCFM)](https://github.com/somleng/somleng-scfm) was developed specifically to solve the aforementioned problems. Somleng SCFM connects to Somleng directly (bypassing RapidPro) and controls the retrying and scheduling of calls. This gives the user complete control over which calls are retried and when, as well as when they will be scheduled. AVF still uses RapidPro to trigger SMS flows which are scheduled by Somleng SCFM. Our [technical write up](https://github.com/somleng/somleng-project/blob/master/docs/case_study_africas_voices.md) contains more information about the project from a technical perspective.
 
 ## Contact
 
