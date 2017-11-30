@@ -33,6 +33,14 @@ class IntroductionForDevelopmentOrganizationsRenderer < Dynamizer::Renderer
     data.ews_data.total_amount_saved
   end
 
+  def ews_total_equivalent_twilio_price
+    data.ews_data.total_equivalent_twilio_price
+  end
+
+  def ews_total_amount_saved_percentage
+    percentage_saved(ews_total_amount_saved, ews_total_equivalent_twilio_price)
+  end
+
   def ews_twilio_price_voice_url
     data.ews_project.twilio_price.voice_url
   end
@@ -57,11 +65,36 @@ class IntroductionForDevelopmentOrganizationsRenderer < Dynamizer::Renderer
     data.avf_data.total_amount_saved
   end
 
+  def avf_total_amount_saved_percentage
+    percentage_saved(avf_total_amount_saved, avf_total_equivalent_twilio_price)
+  end
+
   def avf_outbound_minutes
     number_to_human(data.avf_data.calls_outbound_minutes)
   end
 
   private
+
+  def percentage_saved(actual, total)
+    number_to_percentage(
+      (
+        human_to_number(
+          actual
+        ) / human_to_number(
+          total
+        )
+      ) * 100
+    )
+  end
+
+  def human_to_number(human)
+    human.gsub(/[^\d\.]/, "").to_f
+  end
+
+  def number_to_percentage(*args)
+    options = args.extract_options!
+    ActiveSupport::NumberHelper.number_to_percentage(*args, {:precision => 0}.merge(options))
+  end
 
   def number_to_human(*args)
     options = args.extract_options!
