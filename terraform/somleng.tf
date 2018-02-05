@@ -17,100 +17,98 @@ resource "aws_vpc" "somleng" {
   }
 }
 
-# resource "aws_subnet" "live-private-1a" {
-#   vpc_id            = "${aws_vpc.bongloy.id}"
-#   availability_zone = "ap-southeast-1a"
-#   cidr_block        = "${cidrsubnet(aws_vpc.bongloy.cidr_block, 8, 9)}"
-#
-#   tags {
-#     Name = "${terraform.workspace}-live-private-1a"
-#   }
-# }
-#
-# resource "aws_subnet" "live-private-1b" {
-#   vpc_id            = "${aws_vpc.bongloy.id}"
-#   availability_zone = "ap-southeast-1b"
-#   cidr_block        = "${cidrsubnet(aws_vpc.bongloy.cidr_block, 8, 10)}"
-#
-#   tags {
-#     Name = "${terraform.workspace}-live-private-1b"
-#   }
-# }
-#
-# resource "aws_subnet" "live-private-1c" {
-#   vpc_id            = "${aws_vpc.bongloy.id}"
-#   availability_zone = "ap-southeast-1c"
-#   cidr_block        = "${cidrsubnet(aws_vpc.bongloy.cidr_block, 8, 11)}"
-#
-#   tags {
-#     Name = "${terraform.workspace}-live-private-1c"
-#   }
-# }
-#
-# resource "aws_subnet" "public-1a" {
-#   vpc_id            = "${aws_vpc.bongloy.id}"
-#   availability_zone = "ap-southeast-1a"
-#   cidr_block        = "${cidrsubnet(aws_vpc.bongloy.cidr_block, 8, 12)}"
-#
-#   tags {
-#     Name = "${terraform.workspace}-public-1a"
-#   }
-# }
-#
-# resource "aws_subnet" "public-1b" {
-#   vpc_id            = "${aws_vpc.bongloy.id}"
-#   availability_zone = "ap-southeast-1b"
-#   cidr_block        = "${cidrsubnet(aws_vpc.bongloy.cidr_block, 8, 13)}"
-#
-#   tags {
-#     Name = "${terraform.workspace}-public-1b"
-#   }
-# }
-#
-# resource "aws_subnet" "public-1c" {
-#   vpc_id            = "${aws_vpc.bongloy.id}"
-#   availability_zone = "ap-southeast-1c"
-#   cidr_block        = "${cidrsubnet(aws_vpc.bongloy.cidr_block, 8, 14)}"
-#
-#   tags {
-#     Name = "${terraform.workspace}-public-1c"
-#   }
-# }
-#
-# resource "aws_internet_gateway" "gw" {
-#   vpc_id = "${aws_vpc.bongloy.id}"
-#   tags {
-#     Name = "${terraform.workspace}"
-#   }
-# }
-#
-# resource "aws_route_table" "public_route_table" {
-#   vpc_id = "${aws_vpc.bongloy.id}"
-#
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     gateway_id = "${aws_internet_gateway.gw.id}"
-#   }
-#
-#   tags {
-#     Name = "${terraform.workspace}-public"
-#   }
-# }
-#
-# resource "aws_route_table_association" "public-1a" {
-#   subnet_id      = "${aws_subnet.public-1a.id}"
-#   route_table_id = "${aws_route_table.public_route_table.id}"
-# }
-#
-# resource "aws_route_table_association" "public-1b" {
-#   subnet_id      = "${aws_subnet.public-1b.id}"
-#   route_table_id = "${aws_route_table.public_route_table.id}"
-# }
-#
-# resource "aws_route_table_association" "public-1c" {
-#   subnet_id      = "${aws_subnet.public-1c.id}"
-#   route_table_id = "${aws_route_table.public_route_table.id}"
-# }
+resource "aws_subnet" "public-1a" {
+  vpc_id            = "${aws_vpc.somleng.id}"
+  availability_zone = "ap-southeast-1a"
+  cidr_block        = "${cidrsubnet(aws_vpc.somleng.cidr_block, 8, 0)}"
+
+  tags {
+    Name = "public-1a"
+  }
+}
+
+resource "aws_subnet" "public-1b" {
+  vpc_id            = "${aws_vpc.somleng.id}"
+  availability_zone = "ap-southeast-1b"
+  cidr_block        = "${cidrsubnet(aws_vpc.somleng.cidr_block, 8, 1)}"
+
+  tags {
+    Name = "public-1b"
+  }
+}
+
+resource "aws_subnet" "public-1c" {
+  vpc_id            = "${aws_vpc.somleng.id}"
+  availability_zone = "ap-southeast-1c"
+  cidr_block        = "${cidrsubnet(aws_vpc.somleng.cidr_block, 8, 4)}"
+
+  tags {
+    Name = "public-1c"
+  }
+}
+
+resource "aws_subnet" "private-1a" {
+  vpc_id            = "${aws_vpc.somleng.id}"
+  availability_zone = "ap-southeast-1a"
+  cidr_block        = "${cidrsubnet(aws_vpc.somleng.cidr_block, 8, 2)}"
+
+  tags {
+    Name = "private-1a"
+  }
+}
+
+resource "aws_subnet" "private-1b" {
+  vpc_id            = "${aws_vpc.somleng.id}"
+  availability_zone = "ap-southeast-1b"
+  cidr_block        = "${cidrsubnet(aws_vpc.somleng.cidr_block, 8, 3)}"
+
+  tags {
+    Name = "private-1b"
+  }
+}
+
+resource "aws_subnet" "private-1c" {
+  vpc_id            = "${aws_vpc.somleng.id}"
+  availability_zone = "ap-southeast-1c"
+  cidr_block        = "${cidrsubnet(aws_vpc.somleng.cidr_block, 8, 5)}"
+
+  tags {
+    Name = "private-1c"
+  }
+}
+
+resource "aws_internet_gateway" "gw" {
+  vpc_id = "${aws_vpc.somleng.id}"
+}
+
+resource "aws_route_table" "public_route_table" {
+  vpc_id = "${aws_vpc.somleng.id}"
+
+  tags {
+    Name = "public-subnets"
+  }
+}
+
+resource "aws_route" "igw" {
+  route_table_id            = "${aws_route_table.public_route_table.id}"
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id                = "${aws_internet_gateway.gw.id}"
+}
+
+resource "aws_route_table_association" "public-1a" {
+  subnet_id      = "${aws_subnet.public-1a.id}"
+  route_table_id = "${aws_route_table.public_route_table.id}"
+}
+
+resource "aws_route_table_association" "public-1b" {
+  subnet_id      = "${aws_subnet.public-1b.id}"
+  route_table_id = "${aws_route_table.public_route_table.id}"
+}
+
+resource "aws_route_table_association" "public-1c" {
+  subnet_id      = "${aws_subnet.public-1c.id}"
+  route_table_id = "${aws_route_table.public_route_table.id}"
+}
 #
 # resource "aws_eip" "nat_gateway_eip" {
 #   vpc      = true
