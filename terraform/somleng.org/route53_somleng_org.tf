@@ -30,6 +30,30 @@ resource "aws_route53_record" "somleng_org_txt" {
   ]
 }
 
+# naked redirection bucket
+resource "aws_s3_bucket" "somleng_org_redirection" {
+  bucket = "somleng.org"
+  acl    = "private"
+
+  website {
+    redirect_all_requests_to = "http://www.somleng.org"
+  }
+}
+
+# naked redirection alias
+resource "aws_route53_record" "somleng_org_alias" {
+  zone_id = "${aws_route53_zone.somleng_org.zone_id}"
+  name    = ""
+  type    = "A"
+
+  alias {
+    name                   = "${aws_s3_bucket.somleng_org_redirection.website_domain}"
+    zone_id                = "${aws_s3_bucket.somleng_org_redirection.hosted_zone_id}"
+    evaluate_target_health = false
+  }
+}
+
+### www CNAME
 resource "aws_route53_record" "somleng_org_www" {
   zone_id = "${aws_route53_zone.somleng_org.zone_id}"
   name    = "www"
@@ -41,7 +65,8 @@ resource "aws_route53_record" "somleng_org_www" {
   ]
 }
 
-resource "aws_route53_record" "somlng_org_rtd" {
+# rtd CNAME
+resource "aws_route53_record" "somleng_org_rtd" {
   zone_id = "${aws_route53_zone.somleng_org.zone_id}"
   name    = "rtd"
   type    = "CNAME"
