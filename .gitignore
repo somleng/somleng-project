@@ -14,5 +14,5 @@
 .env
 
 # terraform
-terraform/terraform.tfstate.d/
-terraform/.terraform
+terraform.tfstate.d/
+.terraform

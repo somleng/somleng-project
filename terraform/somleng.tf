@@ -4,9 +4,9 @@ variable "aws_region" {
 }
 
 provider "aws" {
-  region = "${var.aws_region}"
-  shared_credentials_file = "${var.aws_shared_credentials_file}"
+  shared_credentials_file = "~/.aws/credentials"
   profile                 = "${terraform.workspace}-terraform"
+  region                  = "${var.aws_region}"
 }
 
 resource "aws_vpc" "somleng" {
