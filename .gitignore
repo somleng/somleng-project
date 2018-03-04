@@ -12,3 +12,7 @@
 /dynamizer/bundler/vendor
 /dynamizer/bundler/.bundle
 .env
+
+# terraform
+terraform.tfstate.d/
+.terraform
