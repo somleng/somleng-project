@@ -26,7 +26,7 @@ resource "aws_s3_bucket" "terraform_bucket" {
 
 terraform {
   backend "s3" {
-    bucket = "terraform.bongloy.com"
+    bucket = "terraform.somleng.org"
     key    = "terraform.tfstate"
     encrypt = true
   }
