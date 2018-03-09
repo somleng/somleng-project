@@ -61,6 +61,11 @@ resource "aws_iam_group_policy_attachment" "terraform_route_53" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
 }
 
+resource "aws_iam_group_policy_attachment" "terraform_kms" {
+  group      = "${aws_iam_group.terraform.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSKeyManagementServicePowerUser"
+}
+
 resource "aws_iam_user" "terraform" {
   name = "terraform"
 }
