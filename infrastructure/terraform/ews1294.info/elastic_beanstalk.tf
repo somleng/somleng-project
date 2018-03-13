@@ -123,3 +123,16 @@ resource "aws_elastic_beanstalk_configuration_template" "scfm" {
     value = "48"
   }
 }
+
+# resource "aws_elastic_beanstalk_environment" "scfm_web" {
+#   name                = "scfm-web"
+#   application         = "${aws_elastic_beanstalk_application.scfm.name}"
+#   tier                = "WebServer"
+#   template_name = "${aws_elastic_beanstalk_configuration_template.scfm.name}"
+#
+#   setting {
+#     namespace = "aws:autoscaling:launchconfiguration"
+#     name = "InstanceType"
+#     value = "t2.micro"
+#   }
+# end

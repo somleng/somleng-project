@@ -51,8 +51,12 @@ resource "aws_kms_key" "master" {
 }
 
 resource "aws_kms_alias" "master" {
-  name          = "alias/master"
+  name          = "alias/pin-master"
   target_key_id = "${aws_kms_key.master.key_id}"
+}
+
+output "aws_kms_key_master" {
+  value = "${aws_kms_key.master.id}"
 }
 
 # data "aws_kms_secret" "scfm_db" {
