@@ -17,3 +17,8 @@ output "public_subnets" {
   description = "List of IDs of public subnets"
   value       = "${module.vpc.public_subnets}"
 }
+
+output "database_subnets" {
+  description = "List of database subnet ids"
+  value       = "${module.vpc.database_subnets}"
+}
