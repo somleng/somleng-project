@@ -18,10 +18,10 @@ data "aws_kms_secret" "this" {
     payload = "${local.twilreapi_db_master_password}"
   }
 
-  # secret {
-  #   name    = "twilreapi_rails_master_key"
-  #   payload = "${local.twilreapi_rails_master_key}"
-  # }
+  secret {
+    name    = "twilreapi_rails_master_key"
+    payload = "${local.twilreapi_rails_master_key}"
+  }
   #
   # secret {
   #   name    = "scfm_db_master_password"
