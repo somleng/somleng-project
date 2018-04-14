@@ -26,8 +26,8 @@ module "eb_web" {
   source = "../eb_env"
 
   app_name            = "${var.app_name}"
+  env_identifier      = "${var.env_identifier}"
   tier                = "WebServer"
-  name                = "${var.env_identifier}-web"
   instance_type       = "${var.instance_type}"
   solution_stack_name = "${var.solution_stack_name}"
 
