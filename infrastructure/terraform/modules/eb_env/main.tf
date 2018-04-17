@@ -4,11 +4,10 @@ locals {
   # Workaround for worker tier
   default_namespace = "aws:elasticbeanstalk:application:environment"
   default_env_name  = "UNUSED_ENV_VAR"
-  name = "${var.name == "" ? "${var.env_identifier}-${lower(var.tier)}" : "${var.name}"}"
 }
 
 resource "aws_elastic_beanstalk_environment" "eb_env" {
-  name                = "${local.name}"
+  name                = "${var.env_identifier}-${lower(var.tier)}"
   application         = "${var.app_name}"
   tier                = "${var.tier}"
   solution_stack_name = "${var.solution_stack_name}"
@@ -136,6 +135,25 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     value     = "${var.cloudwatch_retention_in_days}"
   }
 
+  ################### Default Process ###################
+  # https://amzn.to/2HcmWaG
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:process:default"
+    name      = "Port"
+    value     = "80"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:process:default"
+    name      = "Protocol"
+    value     = "HTTP"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:process:default"
+    name      = "HealthCheckPath"
+    value     = "/health_checks"
+  }
+
   ################### EB Environment ###################
   # https://amzn.to/2FR9RTu
   setting {
@@ -147,30 +165,37 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   setting {
     namespace = "${local.is_web_tier ? "aws:elasticbeanstalk:environment" : local.default_namespace}"
     name      = "${local.is_web_tier ? "LoadBalancerType" : local.default_env_name}"
-    value     = "${local.is_web_tier ? "classic" : ""}"
+    value     = "${local.is_web_tier ? "application" : ""}"
   }
 
   ################### Listener ###################
   # https://amzn.to/2GzHQiB
   setting {
-    namespace = "${local.is_web_tier ? "aws:elb:listener:default" : local.default_namespace}"
+    namespace = "${local.is_web_tier ? "aws:elbv2:listener:default" : local.default_namespace}"
     name      = "${local.is_web_tier ? "ListenerEnabled" : local.default_env_name}"
     value     = "${local.is_web_tier ? "true" : ""}"
   }
   setting {
-    namespace = "${local.is_web_tier ? "aws:elb:listener:443" : local.default_namespace}"
+    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
     name      = "${local.is_web_tier ? "ListenerEnabled" : local.default_env_name}"
     value     = "${local.is_web_tier ? "true" : ""}"
   }
   setting {
-    namespace = "${local.is_web_tier ? "aws:elb:listener:443" : local.default_namespace}"
+    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
     name      = "${local.is_web_tier ? "Protocol" : local.default_env_name}"
     value     = "${local.is_web_tier ? "HTTPS" : ""}"
   }
   setting {
-    namespace = "${local.is_web_tier ? "aws:elb:listener:443" : local.default_namespace}"
+    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
     name      = "${local.is_web_tier ? "SSLCertificateArns" : local.default_env_name}"
     value     = "${local.is_web_tier ? var.ssl_certificate_id : ""}"
+  }
+  # Security Policies
+  # https://amzn.to/2q742us
+  setting {
+    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
+    name      = "${local.is_web_tier ? "SSLPolicy" : local.default_env_name}"
+    value     = "${local.is_web_tier ? "ELBSecurityPolicy-TLS-1-1-2017-01" : ""}"
   }
 
   ################### ENV Vars ###################
@@ -230,8 +255,8 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AWS_SQS_QUEUE_URL"
-    value     = "${var.aws_sqs_queue_url}"
+    name      = "DEFAULT_QUEUE_URL"
+    value     = "${var.default_queue_url}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -242,5 +267,15 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_S3_SECRET_ACCESS_KEY"
     value     = "${var.s3_secret_access_key}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "UPLOADS_BUCKET"
+    value     = "${var.uploads_bucket}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "OUTBOUND_CALL_DRB_URI"
+    value     = "${var.outbound_call_drb_uri}"
   }
 }

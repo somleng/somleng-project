@@ -9,25 +9,16 @@ variable "tier" {
 }
 
 variable "env_identifier" {
-  default = ""
   description = "ENV identifier to use when naming resources"
-}
-
-variable "name" {
-  default = ""
 }
 
 variable "rails_env" {
   default = "production"
 }
 
-variable "default_url_host" {
-  default = ""
-}
+variable "default_url_host" {}
 
-variable "aws_region" {
-  default = ""
-}
+variable "aws_region" {}
 
 variable "vpc_id" {
   description = "The ID of the VPC"
@@ -72,6 +63,10 @@ variable "security_groups" {
   default = []
 }
 
+variable "outbound_call_drb_uri" {
+  default = ""
+}
+
 variable "database_url" {
   default = ""
 }
@@ -80,7 +75,7 @@ variable "rails_master_key" {
   default = ""
 }
 
-variable "aws_sqs_queue_url" {
+variable "default_queue_url" {
   default = ""
 }
 
@@ -92,12 +87,16 @@ variable "s3_secret_access_key" {
   default = ""
 }
 
+variable "uploads_bucket" {
+  default = ""
+}
+
 variable "ssl_certificate_id" {
   default = ""
 }
 
 variable "cloudwatch_enabled" {
-  default = "false"
+  default = "true"
 }
 
 variable "cloudwatch_delete_on_terminate" {

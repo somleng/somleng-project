@@ -19,7 +19,11 @@ module "eb_worker" {
   aws_region                  = "${var.aws_region}"
   db_pool                     = "${var.db_pool}"
   process_active_elastic_jobs = "true"
+  s3_access_key_id            = "${var.s3_access_key_id}"
+  s3_secret_access_key        = "${var.s3_secret_access_key}"
+  uploads_bucket              = "${var.uploads_bucket}"
   default_url_host            = "${var.default_url_host}"
+  outbound_call_drb_uri        = "${var.outbound_call_drb_uri}"
 }
 
 module "eb_web" {
@@ -42,10 +46,12 @@ module "eb_web" {
   rails_master_key             = "${var.rails_master_key}"
   aws_region                   = "${var.aws_region}"
   db_pool                      = "${var.db_pool}"
-  aws_sqs_queue_url            = "${module.eb_worker.aws_sqs_queue_url}"
+  default_queue_url            = "${module.eb_worker.aws_sqs_queue_url}"
   s3_access_key_id             = "${var.s3_access_key_id}"
   s3_secret_access_key         = "${var.s3_secret_access_key}"
+  uploads_bucket              = "${var.uploads_bucket}"
   ssl_certificate_id           = "${var.ssl_certificate_id}"
   rails_skip_asset_compilation = "false"
   default_url_host             = "${var.default_url_host}"
+  outbound_call_drb_uri        = "${var.outbound_call_drb_uri}"
 }

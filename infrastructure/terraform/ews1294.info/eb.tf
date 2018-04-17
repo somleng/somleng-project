@@ -1,6 +1,6 @@
 resource "aws_elastic_beanstalk_application" "twilreapi" {
-  name = "twilreapi"
-  description = "Twilio REST API instance"
+  name = "somleng-twilreapi"
+  description = "Somleng Twilio REST API instance"
 }
 
 module "twilreapi_eb_app_env" {
@@ -25,5 +25,7 @@ module "twilreapi_eb_app_env" {
 
   s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
   s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
   ssl_certificate_id   = "${data.aws_acm_certificate.ews1294.arn}"
+  outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
 }

@@ -32,7 +32,7 @@ variable "ec2_instance_role" {
 }
 
 variable "db_pool" {
-  default = "48"
+  default = "32"
 }
 
 variable "instance_type" {
@@ -41,28 +41,20 @@ variable "instance_type" {
 }
 
 variable "security_groups" {
-  default = []
+  type = "list"
 }
 
-variable "database_url" {
-  default = ""
-}
+variable "outbound_call_drb_uri" {}
 
-variable "rails_master_key" {
-  default = ""
-}
+variable "database_url" {}
 
-variable "s3_access_key_id" {
-  default = ""
-}
+variable "rails_master_key" {}
 
-variable "s3_secret_access_key" {
-  default = ""
-}
+variable "s3_access_key_id" {}
 
-variable "uploads_bucket" {
-  default = ""
-}
+variable "s3_secret_access_key" {}
+
+variable "uploads_bucket" {}
 
 variable "asset_host" {
   default = ""
