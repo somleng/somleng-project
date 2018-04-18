@@ -38,7 +38,6 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     value     = "false"
   }
 
-
   ################### EC2 Settings ###################
   # http://amzn.to/2FjIpj6
   setting {
@@ -124,11 +123,13 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "StreamLogs"
     value     = "${var.cloudwatch_enabled}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:cloudwatch:logs"
     name      = "DeleteOnTerminate"
     value     = "${var.cloudwatch_delete_on_terminate}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:cloudwatch:logs"
     name      = "RetentionInDays"
@@ -142,6 +143,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "Port"
     value     = "80"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "Protocol"
@@ -175,21 +177,25 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${local.is_web_tier ? "ListenerEnabled" : local.default_env_name}"
     value     = "${local.is_web_tier ? "true" : ""}"
   }
+
   setting {
     namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
     name      = "${local.is_web_tier ? "ListenerEnabled" : local.default_env_name}"
     value     = "${local.is_web_tier ? "true" : ""}"
   }
+
   setting {
     namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
     name      = "${local.is_web_tier ? "Protocol" : local.default_env_name}"
     value     = "${local.is_web_tier ? "HTTPS" : ""}"
   }
+
   setting {
     namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
     name      = "${local.is_web_tier ? "SSLCertificateArns" : local.default_env_name}"
     value     = "${local.is_web_tier ? var.ssl_certificate_id : ""}"
   }
+
   # Security Policies
   # https://amzn.to/2q742us
   setting {
@@ -223,86 +229,103 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "DATABASE_URL"
     value     = "${var.database_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RAILS_MASTER_KEY"
     value     = "${var.rails_master_key}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_REGION"
     value     = "${var.aws_region}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RACK_ENV"
     value     = "${var.rails_env}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RAILS_ENV"
     value     = "${var.rails_env}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DEFAULT_URL_HOST"
     value     = "${var.default_url_host}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DB_POOL"
     value     = "${var.db_pool}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DEFAULT_QUEUE_URL"
     value     = "${var.default_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_SNS_MESSAGE_PROCESSOR_JOB_QUEUE_URL"
     value     = "${var.aws_sns_message_processor_job_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CALL_DATA_RECORD_JOB_QUEUE_URL"
     value     = "${var.call_data_record_job_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "OUTBOUND_CALL_JOB_QUEUE_URL"
     value     = "${var.outbound_call_job_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RECORDING_PROCESSOR_JOB_QUEUE_URL"
     value     = "${var.recording_processor_job_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RECORDING_STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"
     value     = "${var.recording_status_callback_notifier_job_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"
     value     = "${var.status_callback_notifier_job_queue_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_S3_ACCESS_KEY_ID"
     value     = "${var.s3_access_key_id}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_S3_SECRET_ACCESS_KEY"
     value     = "${var.s3_secret_access_key}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "UPLOADS_BUCKET"
     value     = "${var.uploads_bucket}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "OUTBOUND_CALL_DRB_URI"

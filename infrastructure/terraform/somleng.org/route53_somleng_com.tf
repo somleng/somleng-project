@@ -14,7 +14,7 @@ resource "aws_route53_record" "somleng_com_mx" {
     "5 ALT1.ASPMX.L.GOOGLE.COM",
     "5 ALT2.ASPMX.L.GOOGLE.COM",
     "10 ALT3.ASPMX.L.GOOGLE.COM",
-    "10 ALT4.ASPMX.L.GOOGLE.COM"
+    "10 ALT4.ASPMX.L.GOOGLE.COM",
   ]
 }
 
@@ -26,7 +26,7 @@ resource "aws_route53_record" "somleng_com_txt" {
   ttl     = "3600"
 
   records = [
-    "google-site-verification=H1Qxp7StJYRB32sBQE6jlWECLB3sqT_EeJwZcs4bpwE"
+    "google-site-verification=H1Qxp7StJYRB32sBQE6jlWECLB3sqT_EeJwZcs4bpwE",
   ]
 }
 

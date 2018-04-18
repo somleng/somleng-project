@@ -1,6 +1,6 @@
 module "pin_vpc" {
-  source               = "../modules/vpc"
-  name                 = "${local.vpc_name}"
+  source = "../modules/vpc"
+  name   = "${local.vpc_name}"
 
   # PIN specific options
   cidr                 = "10.0.0.0/16"

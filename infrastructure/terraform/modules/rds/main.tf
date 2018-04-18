@@ -7,9 +7,9 @@ locals {
 }
 
 resource "aws_security_group" "db" {
-  name =   "${local.security_group_name}"
+  name        = "${local.security_group_name}"
   description = "${var.security_group_description}"
-  vpc_id = "${var.vpc_id}"
+  vpc_id      = "${var.vpc_id}"
 
   ingress {
     from_port = "${var.port}"
@@ -46,5 +46,5 @@ module "db" {
   backup_window             = "${var.backup_window}"
 
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
-  create_db_parameter_group = false
+  create_db_parameter_group   = false
 }

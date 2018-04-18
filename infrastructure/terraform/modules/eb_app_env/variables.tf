@@ -32,7 +32,7 @@ variable "ec2_instance_role" {
 }
 
 variable "outbound_call_job_queue_url" {
-  default = ""
+  default     = ""
   description = "SQS Queue URL for outbound call worker"
 }
 

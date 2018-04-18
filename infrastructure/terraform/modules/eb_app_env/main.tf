@@ -23,7 +23,7 @@ module "eb_worker" {
   s3_secret_access_key        = "${var.s3_secret_access_key}"
   uploads_bucket              = "${var.uploads_bucket}"
   default_url_host            = "${var.default_url_host}"
-  outbound_call_drb_uri        = "${var.outbound_call_drb_uri}"
+  outbound_call_drb_uri       = "${var.outbound_call_drb_uri}"
   outbound_call_job_queue_url = "${var.outbound_call_job_queue_url}"
 }
 
@@ -50,10 +50,10 @@ module "eb_web" {
   default_queue_url            = "${module.eb_worker.aws_sqs_queue_url}"
   s3_access_key_id             = "${var.s3_access_key_id}"
   s3_secret_access_key         = "${var.s3_secret_access_key}"
-  uploads_bucket              = "${var.uploads_bucket}"
+  uploads_bucket               = "${var.uploads_bucket}"
   ssl_certificate_id           = "${var.ssl_certificate_id}"
   rails_skip_asset_compilation = "false"
   default_url_host             = "${var.default_url_host}"
   outbound_call_drb_uri        = "${var.outbound_call_drb_uri}"
-  outbound_call_job_queue_url = "${var.outbound_call_job_queue_url}"
+  outbound_call_job_queue_url  = "${var.outbound_call_job_queue_url}"
 }

@@ -1,6 +1,6 @@
 resource "aws_kms_key" "master" {
-  description             = "Master Key"
-  enable_key_rotation     = true
+  description         = "Master Key"
+  enable_key_rotation = true
 
   tags {
     Name = "terraform-master-key"
@@ -22,6 +22,7 @@ data "aws_kms_secret" "this" {
     name    = "twilreapi_rails_master_key"
     payload = "${local.twilreapi_rails_master_key}"
   }
+
   #
   # secret {
   #   name    = "scfm_db_master_password"

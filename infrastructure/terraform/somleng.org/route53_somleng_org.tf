@@ -14,7 +14,7 @@ resource "aws_route53_record" "somleng_org_mx" {
     "5 ALT1.ASPMX.L.GOOGLE.COM",
     "5 ALT2.ASPMX.L.GOOGLE.COM",
     "10 ALT3.ASPMX.L.GOOGLE.COM",
-    "10 ALT4.ASPMX.L.GOOGLE.COM"
+    "10 ALT4.ASPMX.L.GOOGLE.COM",
   ]
 }
 
@@ -26,7 +26,7 @@ resource "aws_route53_record" "somleng_org_txt" {
   ttl     = "3600"
 
   records = [
-    "google-site-verification=rTfaXAmUN4J7FWHKFGg--fFAv3_Gj9nyGrdA2MsOqbU"
+    "google-site-verification=rTfaXAmUN4J7FWHKFGg--fFAv3_Gj9nyGrdA2MsOqbU",
   ]
 }
 
@@ -61,7 +61,7 @@ resource "aws_route53_record" "somleng_org_www" {
   ttl     = "3600"
 
   records = [
-    "dwilkie.github.io"
+    "dwilkie.github.io",
   ]
 }
 
@@ -73,6 +73,6 @@ resource "aws_route53_record" "somleng_org_rtd" {
   ttl     = "3600"
 
   records = [
-    "somleng-rtd.herokuapp.com"
+    "somleng-rtd.herokuapp.com",
   ]
 }

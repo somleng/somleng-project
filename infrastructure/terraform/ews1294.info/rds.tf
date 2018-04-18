@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "twilreapi" {
-  name = "default-vpc-93669bf7"
+  name       = "default-vpc-93669bf7"
   subnet_ids = ["${module.pin_vpc.database_subnets}"]
 }
 
@@ -13,10 +13,10 @@ module "twilreapi_db" {
   db_subnet_group_name = "${aws_db_subnet_group.twilreapi.name}"
 
   # PIN Specific Options
-  identifier           =  "twilreapi-pin-production"
-  username             =  "twilreapi"
-  security_group_name = "rds-launch-wizard-1"
+  identifier                 = "twilreapi-pin-production"
+  username                   = "twilreapi"
+  security_group_name        = "rds-launch-wizard-1"
   security_group_description = "Created from the RDS Management Console"
-  engine_version = "9.5.10"
-  allocated_storage = 20
+  engine_version             = "9.5.10"
+  allocated_storage          = 20
 }

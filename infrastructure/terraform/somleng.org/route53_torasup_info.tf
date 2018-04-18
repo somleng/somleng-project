@@ -14,7 +14,7 @@ resource "aws_route53_record" "torasup_info_mx" {
     "5 ALT1.ASPMX.L.GOOGLE.COM",
     "5 ALT2.ASPMX.L.GOOGLE.COM",
     "10 ALT3.ASPMX.L.GOOGLE.COM",
-    "10 ALT4.ASPMX.L.GOOGLE.COM"
+    "10 ALT4.ASPMX.L.GOOGLE.COM",
   ]
 }
 
@@ -26,7 +26,7 @@ resource "aws_route53_record" "torasup_info_txt" {
   ttl     = "3600"
 
   records = [
-    "google-site-verification=Kf691ZADEehIruLEaA9fEWXNFbt5e280fjX6fdfzCos"
+    "google-site-verification=Kf691ZADEehIruLEaA9fEWXNFbt5e280fjX6fdfzCos",
   ]
 }
 
@@ -61,6 +61,6 @@ resource "aws_route53_record" "torasup_info_www" {
   ttl     = "3600"
 
   records = [
-    "torasup.herokuapp.com"
+    "torasup.herokuapp.com",
   ]
 }

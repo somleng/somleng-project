@@ -1,5 +1,5 @@
 resource "aws_elastic_beanstalk_application" "twilreapi" {
-  name = "somleng-twilreapi"
+  name        = "somleng-twilreapi"
   description = "Somleng Twilio REST API instance"
 }
 
@@ -23,11 +23,11 @@ module "twilreapi_eb_app_env" {
   aws_region       = "${var.aws_region}"
   db_pool          = "32"
 
-  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
-  ssl_certificate_id   = "${data.aws_acm_certificate.ews1294.arn}"
-  outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
+  s3_access_key_id            = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key        = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket              = "${aws_s3_bucket.uploads.id}"
+  ssl_certificate_id          = "${data.aws_acm_certificate.ews1294.arn}"
+  outbound_call_drb_uri       = "${local.twilreapi_outbound_call_drb_uri}"
   outbound_call_job_queue_url = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
 }
 
@@ -53,9 +53,9 @@ module "twilreapi_eb_outbound_call_worker_env" {
   aws_region       = "${var.aws_region}"
   db_pool          = "32"
 
-  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
-  ssl_certificate_id   = "${data.aws_acm_certificate.ews1294.arn}"
+  s3_access_key_id      = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key  = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket        = "${aws_s3_bucket.uploads.id}"
+  ssl_certificate_id    = "${data.aws_acm_certificate.ews1294.arn}"
   outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
 }

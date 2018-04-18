@@ -1,5 +1,5 @@
 module "terraform_iam" {
-  source      = "../modules/terraform_iam"
+  source = "../modules/terraform_iam"
 }
 
 module "eb_iam" {
