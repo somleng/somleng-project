@@ -7,7 +7,7 @@ locals {
   twilreapi_identifier = "somleng-twilreapi"
   twilreapi_url_host = "https://somleng.ews1294.info"
   twilreapi_route53_record_name = "somleng"
-  twilreapi_db_master_password = "AQICAHh5ylDKuj3jGBOphV/NIPGWxWaKQ5XSe4/KMCjtwW8boQEcnR7BnH68i203YgnzCHi/AAAAeDB2BgkqhkiG9w0BBwagaTBnAgEAMGIGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM/mMu7y/b3cYmnv+GAgEQgDVZ59Gz995YjX1SZ3YsgHg2i6NwcqQbSwjzOm+g5U98UvaZcodoBDE+ht6Gql7x9mbrE7Fi3g=="
+  twilreapi_db_master_password = "AQICAHh5ylDKuj3jGBOphV/NIPGWxWaKQ5XSe4/KMCjtwW8boQEXQB916s9eTm27WPFvO7D1AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMoaT4QaCnv6YCkoOCAgEQgDsDP2Vu4howWLbVsSLAH91oXEJpe23yGP1QPcR8Rd49x3Ef1nn37P4uWTfLmSQbwUO9VrpoYVewcTzbrw=="
   twilreapi_rails_master_key = "AQICAHh5ylDKuj3jGBOphV/NIPGWxWaKQ5XSe4/KMCjtwW8boQH8yUs4O6M24hSmrBkZMe2jAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtJFSalilQVqpDrkrAgEQgDtqyhqv/s2cRHiyWLSIqEn6JkTpN9RzhSkNchtAmwdFbcoLHfGGgfNqPaDEw4JmZEBzWlTMrOMd7ORYaA=="
   # change me when somleng-adhearsion is terraformed
   twilreapi_outbound_call_drb_uri = "druby://somleng-production.ap-southeast-1.elasticbeanstalk.com:9050"

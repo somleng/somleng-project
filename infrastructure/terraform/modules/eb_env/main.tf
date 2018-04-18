@@ -260,6 +260,36 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AWS_SNS_MESSAGE_PROCESSOR_JOB_QUEUE_URL"
+    value     = "${var.aws_sns_message_processor_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CALL_DATA_RECORD_JOB_QUEUE_URL"
+    value     = "${var.call_data_record_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "OUTBOUND_CALL_JOB_QUEUE_URL"
+    value     = "${var.outbound_call_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "RECORDING_PROCESSOR_JOB_QUEUE_URL"
+    value     = "${var.recording_processor_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "RECORDING_STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"
+    value     = "${var.recording_status_callback_notifier_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"
+    value     = "${var.status_callback_notifier_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_S3_ACCESS_KEY_ID"
     value     = "${var.s3_access_key_id}"
   }

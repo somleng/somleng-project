@@ -24,6 +24,7 @@ module "eb_worker" {
   uploads_bucket              = "${var.uploads_bucket}"
   default_url_host            = "${var.default_url_host}"
   outbound_call_drb_uri        = "${var.outbound_call_drb_uri}"
+  outbound_call_job_queue_url = "${var.outbound_call_job_queue_url}"
 }
 
 module "eb_web" {
@@ -54,4 +55,5 @@ module "eb_web" {
   rails_skip_asset_compilation = "false"
   default_url_host             = "${var.default_url_host}"
   outbound_call_drb_uri        = "${var.outbound_call_drb_uri}"
+  outbound_call_job_queue_url = "${var.outbound_call_job_queue_url}"
 }

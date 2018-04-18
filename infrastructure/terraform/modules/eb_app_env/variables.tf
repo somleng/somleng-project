@@ -31,6 +31,11 @@ variable "ec2_instance_role" {
   description = "EB EC2 role"
 }
 
+variable "outbound_call_job_queue_url" {
+  default = ""
+  description = "SQS Queue URL for outbound call worker"
+}
+
 variable "db_pool" {
   default = "32"
 }
