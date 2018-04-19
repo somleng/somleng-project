@@ -7,6 +7,8 @@ locals {
 }
 
 resource "aws_elastic_beanstalk_environment" "eb_env" {
+  # General Settings
+
   name                = "${var.env_identifier}-${lower(var.tier)}"
   application         = "${var.app_name}"
   tier                = "${var.tier}"
@@ -206,129 +208,122 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
 
   ################### ENV Vars ###################
   # https://amzn.to/2Ez6CgW
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "RAILS_SKIP_ASSET_COMPILATION"
-    value     = "${var.rails_skip_asset_compilation}"
-  }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "EB_TIER"
-    value     = "${var.tier}"
-  }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "PROCESS_ACTIVE_ELASTIC_JOBS"
-    value     = "${var.process_active_elastic_jobs}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "DATABASE_URL"
-    value     = "${var.database_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "RAILS_MASTER_KEY"
-    value     = "${var.rails_master_key}"
-  }
+  # Defaults
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_REGION"
     value     = "${var.aws_region}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "EB_TIER"
+    value     = "${var.tier}"
+  }
+
+  # Rails Specific
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "RACK_ENV"
+    name      = "${var.rails_skip_asset_compilation == "" ? local.default_env_name : "RAILS_SKIP_ASSET_COMPILATION"}"
+    value     = "${var.rails_skip_asset_compilation}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.rails_env == "" ? local.default_env_name : "RAILS_ENV"}"
     value     = "${var.rails_env}"
   }
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "RAILS_ENV"
+    name      = "${var.rails_env == "" ? local.default_env_name : "RACK_ENV"}"
     value     = "${var.rails_env}"
   }
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "DEFAULT_URL_HOST"
-    value     = "${var.default_url_host}"
+    name      = "${var.database_url == "" ? local.default_env_name : "DATABASE_URL"}"
+    value     = "${var.database_url}"
   }
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "DB_POOL"
+    name      = "${var.rails_master_key == "" ? local.default_env_name : "RAILS_MASTER_KEY"}"
+    value     = "${var.rails_master_key}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.db_pool == "" ? local.default_env_name : "DB_POOL"}"
     value     = "${var.db_pool}"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "DEFAULT_QUEUE_URL"
-    value     = "${var.default_queue_url}"
-  }
+  # Application Specific
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AWS_SNS_MESSAGE_PROCESSOR_JOB_QUEUE_URL"
-    value     = "${var.aws_sns_message_processor_job_queue_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CALL_DATA_RECORD_JOB_QUEUE_URL"
-    value     = "${var.call_data_record_job_queue_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "OUTBOUND_CALL_JOB_QUEUE_URL"
-    value     = "${var.outbound_call_job_queue_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "RECORDING_PROCESSOR_JOB_QUEUE_URL"
-    value     = "${var.recording_processor_job_queue_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "RECORDING_STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"
-    value     = "${var.recording_status_callback_notifier_job_queue_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"
-    value     = "${var.status_callback_notifier_job_queue_url}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AWS_S3_ACCESS_KEY_ID"
+    name      = "${var.s3_access_key_id == "" ? local.default_env_name : "AWS_S3_ACCESS_KEY_ID"}"
     value     = "${var.s3_access_key_id}"
   }
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AWS_S3_SECRET_ACCESS_KEY"
+    name      = "${var.s3_secret_access_key == "" ? local.default_env_name : "AWS_S3_SECRET_ACCESS_KEY"}"
     value     = "${var.s3_secret_access_key}"
   }
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "UPLOADS_BUCKET"
+    name      = "${var.uploads_bucket == "" ? local.default_env_name : "UPLOADS_BUCKET"}"
     value     = "${var.uploads_bucket}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.process_active_elastic_jobs == "" ? local.default_env_name : "PROCESS_ACTIVE_ELASTIC_JOBS"}"
+    value     = "${var.process_active_elastic_jobs}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.default_url_host == "" ? local.default_env_name : "DEFAULT_URL_HOST"}"
+    value     = "${var.default_url_host}"
+  }
+
+  # Twilreapi Specific
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "OUTBOUND_CALL_DRB_URI"
+    name      = "${var.outbound_call_drb_uri == "" ? local.default_env_name : "OUTBOUND_CALL_DRB_URI"}"
     value     = "${var.outbound_call_drb_uri}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.default_queue_url == "" ? local.default_env_name : "DEFAULT_QUEUE_URL"}"
+    value     = "${var.default_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.aws_sns_message_processor_job_queue_url == "" ? local.default_env_name : "AWS_SNS_MESSAGE_PROCESSOR_JOB_QUEUE_URL"}"
+    value     = "${var.aws_sns_message_processor_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.call_data_record_job_queue_url == "" ? local.default_env_name : "CALL_DATA_RECORD_JOB_QUEUE_URL"}"
+    value     = "${var.call_data_record_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.outbound_call_job_queue_url == "" ? local.default_env_name : "OUTBOUND_CALL_JOB_QUEUE_URL"}"
+    value     = "${var.outbound_call_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.recording_processor_job_queue_url == "" ? local.default_env_name : "RECORDING_PROCESSOR_JOB_QUEUE_URL"}"
+    value     = "${var.recording_processor_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.recording_status_callback_notifier_job_queue_url == "" ? local.default_env_name : "RECORDING_STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
+    value     = "${var.recording_status_callback_notifier_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.status_callback_notifier_job_queue_url == "" ? local.default_env_name : "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
+    value     = "${var.status_callback_notifier_job_queue_url}"
   }
 }

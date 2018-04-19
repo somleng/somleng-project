@@ -13,6 +13,7 @@ locals {
 
   # change me when somleng-adhearsion is terraformed
   twilreapi_outbound_call_drb_uri = "druby://somleng-production.ap-southeast-1.elasticbeanstalk.com:9050"
+  twilreapi_db_pool               = "32"
 
   scfm_major_ruby_version = "2.5"
   scfm_identifier         = "scfm"

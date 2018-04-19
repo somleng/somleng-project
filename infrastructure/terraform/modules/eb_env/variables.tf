@@ -1,28 +1,22 @@
+# General Settings
+
 variable "app_name" {
-  description = "EB application name"
+  description = "Elastic Beanstalk application name"
 }
 
 variable "solution_stack_name" {}
 
-variable "tier" {
-  description = "EB tier"
-}
-
 variable "env_identifier" {
-  description = "ENV identifier to use when naming resources"
+  description = "Identifier to use when naming Elastic Beanstalk environments"
 }
 
-variable "rails_env" {
-  default = "production"
+variable "tier" {
+  description = "Elastic Beanstalk tier"
 }
 
-variable "default_url_host" {}
+# VPC Settings
 
-variable "aws_region" {}
-
-variable "vpc_id" {
-  description = "The ID of the VPC"
-}
+variable "vpc_id" {}
 
 variable "private_subnets" {
   type        = "list"
@@ -34,16 +28,10 @@ variable "public_subnets" {
   description = "ELB subnets"
 }
 
-variable "service_role" {
-  description = "EB service role"
-}
+# EC2 Settings
 
-variable "ec2_instance_role" {
-  description = "EB EC2 role"
-}
-
-variable "db_pool" {
-  default = "48"
+variable "security_groups" {
+  default = []
 }
 
 variable "instance_type" {
@@ -51,23 +39,49 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "rails_skip_asset_compilation" {
+variable "ec2_instance_role" {
+  description = "Elastic Beanstalk EC2 role"
+}
+
+# CloudWatch Logs
+
+variable "cloudwatch_enabled" {
   default = "true"
 }
 
-variable "process_active_elastic_jobs" {
+variable "cloudwatch_delete_on_terminate" {
   default = "false"
 }
 
-variable "security_groups" {
-  default = []
+variable "cloudwatch_retention_in_days" {
+  default = "30"
 }
 
-variable "outbound_call_drb_uri" {
+# Elastic Beanstalk Environment
+
+variable "service_role" {
+  description = "Elastic Beanstalk service role"
+}
+
+# Listener
+
+variable "ssl_certificate_id" {
   default = ""
 }
 
-variable "database_url" {
+# ENV Vars
+
+## Defaults
+
+variable "aws_region" {}
+
+## Rails Specific
+
+variable "rails_skip_asset_compilation" {
+  default = ""
+}
+
+variable "rails_env" {
   default = ""
 }
 
@@ -75,7 +89,44 @@ variable "rails_master_key" {
   default = ""
 }
 
+variable "database_url" {
+  default = ""
+}
+
+variable "db_pool" {
+  default = ""
+}
+
+## Application Specific
+
+variable "s3_access_key_id" {
+  default = ""
+}
+
+variable "s3_secret_access_key" {
+  default = ""
+}
+
+variable "uploads_bucket" {
+  default = ""
+}
+
+variable "process_active_elastic_jobs" {
+  default = ""
+}
+
 variable "default_queue_url" {
+  default = ""
+}
+
+variable "default_url_host" {
+  description = "URL Host of Application. e.g. https://www.example.com"
+  default     = ""
+}
+
+### Twilreapi
+
+variable "outbound_call_drb_uri" {
   default = ""
 }
 
@@ -101,32 +152,4 @@ variable "recording_status_callback_notifier_job_queue_url" {
 
 variable "status_callback_notifier_job_queue_url" {
   default = ""
-}
-
-variable "s3_access_key_id" {
-  default = ""
-}
-
-variable "s3_secret_access_key" {
-  default = ""
-}
-
-variable "uploads_bucket" {
-  default = ""
-}
-
-variable "ssl_certificate_id" {
-  default = ""
-}
-
-variable "cloudwatch_enabled" {
-  default = "true"
-}
-
-variable "cloudwatch_delete_on_terminate" {
-  default = "false"
-}
-
-variable "cloudwatch_retention_in_days" {
-  default = "30"
 }
