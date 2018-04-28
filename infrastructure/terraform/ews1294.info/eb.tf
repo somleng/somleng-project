@@ -88,3 +88,56 @@ module "twilreapi_eb_outbound_call_worker_env" {
   ### Twilreapi Specific
   outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
 }
+
+resource "aws_elastic_beanstalk_application" "scfm" {
+  name        = "scfm"
+  description = "Somleng Simple Call Flow Manager"
+}
+
+module "scfm_eb_web" {
+  source = "../modules/eb_env"
+
+  # General Settings
+  app_name            = "${aws_elastic_beanstalk_application.scfm.name}"
+  solution_stack_name = "${module.scfm_eb_solution_stack.ruby_name}"
+  env_identifier      = "${local.scfm_identifier}"
+  tier                = "WebServer"
+
+  # VPC
+  vpc_id          = "${module.pin_vpc.vpc_id}"
+  private_subnets = "${module.pin_vpc.private_subnets}"
+  public_subnets  = "${module.pin_vpc.public_subnets}"
+
+  default_url_host = "${local.scfm_url_host}"
+
+  # EC2 Settings
+  security_groups   = ["${module.scfm_db.security_group}"]
+  instance_type     = "t2.micro"
+  ec2_instance_role = "${module.eb_iam.eb_ec2_instance_role}"
+
+  # Elastic Beanstalk Environment
+  service_role = "${module.eb_iam.eb_service_role}"
+
+  # Listener
+  ssl_certificate_id = "${data.aws_acm_certificate.ews1294.arn}"
+
+  # ENV Vars
+  ## Defaults
+  aws_region = "${var.aws_region}"
+
+  ## Rails Specific
+  rails_env        = "production"
+  rails_master_key = "${data.aws_kms_secret.this.scfm_rails_master_key}"
+  database_url     = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
+  db_pool          = "${local.scfm_db_pool}"
+  rails_skip_asset_compilation = "false"
+}
+
+module "scfm_deploy" {
+  source = "../modules/deploy"
+
+  eb_env_id    = "${module.scfm_eb_web.id}"
+  repo         = "${local.scfm_deploy_repo}"
+  branch       = "${local.scfm_deploy_branch}"
+  travis_token = "${var.travis_token}"
+}

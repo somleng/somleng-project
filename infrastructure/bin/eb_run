@@ -3,11 +3,15 @@
 require "json"
 require "optparse"
 
+RAILS_RUNNER_MODE = "rails_runner".freeze
+BASH_MODE = "bash"
+VALID_MODES = [RAILS_RUNNER_MODE, BASH_MODE, "rake"].freeze
+
 command_to_run = ARGV[0].dup
 
 options = {
   output: "stdout",
-  mode: "rails_runner",
+  mode: BASH_MODE,
   aws_options: []
 }
 
@@ -22,7 +26,7 @@ OptionParser.new do |opts|
     options[:output] = output
   end
 
-  opts.on("-m", "--mode mode", "rails_runner or bash (defaults to rails_runner)") do |mode|
+  opts.on("-m", "--mode mode", "#{VALID_MODES.join(', ')} (defaults to #{BASH_MODE})") do |mode|
     options[:mode] = mode
   end
 
@@ -36,7 +40,11 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-command = options.fetch(:mode) == "bash" ? command_to_run : <<-HEREDOC
+unless VALID_MODES.include?(options.fetch(:mode))
+  abort "Invalid mode specified. You specified #{options.fetch(:mode)}. Valid modes are #{VALID_MODES.join(', ')}"
+end
+
+command = options.fetch(:mode) == BASH_MODE ? command_to_run : <<-HEREDOC
   sudo su
 
   set -xe
@@ -50,7 +58,7 @@ command = options.fetch(:mode) == "bash" ? command_to_run : <<-HEREDOC
 
   cd $EB_APP_DEPLOY_DIR
 
-  bundle exec rails runner "#{command_to_run.gsub('"', '\\"')}"
+  bundle exec rails #{'runner' if options.fetch(:mode) == RAILS_RUNNER_MODE} "#{command_to_run.gsub('"', '\\"')}"
 HEREDOC
 
 commands = { "commands" => [command] }
@@ -79,7 +87,7 @@ loop do
 
   if cmd_response.fetch("Status") != "InProgress"
     cmd_response = execute_aws_command!(
-      "aws ssm get-command-invocation --command-id \"#{command_id.strip}\" --instance-id #{cmd_response.fetch("InstanceId")}",
+      "aws ssm get-command-invocation --command-id \"#{command_id.strip}\" --instance-id #{cmd_response.fetch('InstanceId')}",
       options
     )
 

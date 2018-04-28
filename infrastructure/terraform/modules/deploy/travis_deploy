@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require "uri"
+require "net/http"
+require "net/https"
+require "json"
+require "cgi"
+
+class TravisClient
+  TRAVIS_ORG_ENDPOINT = "https://api.travis-ci.org".freeze
+  TRAVIS_PRO_ENDPOINT = "https://api.travis-ci.com".freeze
+  TRAVIS_CONTENT_TYPE = "application/json".freeze
+  TRAVIS_API_VERSION  = "3".freeze
+
+  attr_accessor :token, :endpoint, :content_type, :api_version
+
+  def initialize(options = {})
+    self.token = options[:token]
+    self.endpoint = (options[:travis_pro] && TRAVIS_PRO_ENDPOINT) || TRAVIS_ORG_ENDPOINT
+    self.content_type = TRAVIS_CONTENT_TYPE
+    self.api_version =  TRAVIS_API_VERSION
+  end
+
+  def create_request!(repo_name, branch)
+    uri = URI.parse(requests_endpoint(repo_name))
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = true
+    req = Net::HTTP::Post.new(uri.path, request_headers)
+    req.body = request_body(branch)
+    res = https.request(req)
+    abort(res.body) unless res.is_a?(Net::HTTPSuccess)
+  end
+
+  private
+
+  def request_headers
+    {
+      "Content-Type" => content_type,
+      "Accept" => content_type,
+      "Travis-API-Version" => api_version,
+      "Authorization" => "token #{token}"
+    }
+  end
+
+  def request_body(branch)
+    { "request" => { "branch" => branch } }.to_json
+  end
+
+  def requests_endpoint(repo_name)
+    endpoint + "/repo/#{CGI.escape(repo_name)}/requests"
+  end
+end
+
+options = {
+  travis_pro: false
+}
+repo_name = ARGV[0]
+branch_name = ARGV[1]
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: travis_deploy repo branch_name --token TRAVIS_TOKEN --pro"
+
+  opts.on("-t", "--token TRAVIS_TOKEN", "Travis API Token") do |travis_token|
+    options[:travis_token] = travis_token
+  end
+
+  opts.on("-p", "--pro", "Travis Pro") do
+    options[:travis_pro] = true
+  end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+end.parse!
+
+abort("You must specify a repo name") if repo_name.empty?
+abort("You must specify a branch name") if branch_name.to_s.empty?
+
+travis_client = TravisClient.new(
+  token: options.fetch(:travis_token),
+  travis_pro: options.fetch(:travis_pro)
+)
+travis_client.create_request!(repo_name, branch_name)
