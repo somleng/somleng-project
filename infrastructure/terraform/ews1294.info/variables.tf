@@ -1,9 +1,10 @@
 locals {
   terraform_bucket = "terraform.ews1294.info"
   vpc_name         = "pin-production"
-  eb_zone_id       = "Z16FZ9L249IFLT"
-
   # For ap-southeast-1. See complete list: http://amzn.to/2E5LUdw
+  eb_zone_id       = "Z16FZ9L249IFLT"
+  route53_domain_name = "ews1294.info"
+
   twilreapi_major_ruby_version  = "2.5"
   twilreapi_identifier          = "somleng-twilreapi"
   twilreapi_url_host            = "https://somleng.ews1294.info"

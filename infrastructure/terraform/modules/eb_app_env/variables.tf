@@ -30,8 +30,13 @@ variable "security_groups" {
   type = "list"
 }
 
-variable "instance_type" {
-  description = "EC2 instance type"
+variable "web_instance_type" {
+  description = "EC2 instance type for Web Server"
+  default     = "t2.micro"
+}
+
+variable "worker_instance_type" {
+  description = "EC2 instance type for Worker"
   default     = "t2.micro"
 }
 

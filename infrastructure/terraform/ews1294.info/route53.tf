@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "ews1294_info" {
-  name = "ews1294.info."
+  name = "${local.route53_domain_name}."
 }
 
 module "route53_record_somleng_twilreapi" {
@@ -16,6 +16,6 @@ module "route53_record_scfm" {
 
   hosted_zone_id       = "${aws_route53_zone.ews1294_info.zone_id}"
   record_name          = "${local.scfm_route53_record_name}"
-  alias_dns_name       = "${module.scfm_eb_web.cname}"
+  alias_dns_name       = "${module.scfm_eb_app_env.web_cname}"
   alias_hosted_zone_id = "${local.eb_zone_id}"
 }

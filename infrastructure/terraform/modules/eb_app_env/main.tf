@@ -14,7 +14,7 @@ module "eb_worker" {
 
   # EC2 Settings
   security_groups   = "${var.security_groups}"
-  instance_type     = "${var.instance_type}"
+  instance_type     = "${var.worker_instance_type}"
   ec2_instance_role = "${var.ec2_instance_role}"
 
   # Elastic Beanstalk Environment
@@ -59,7 +59,7 @@ module "eb_web" {
 
   # EC2 Settings
   security_groups   = "${var.security_groups}"
-  instance_type     = "${var.instance_type}"
+  instance_type     = "${var.web_instance_type}"
   ec2_instance_role = "${var.ec2_instance_role}"
 
   # Elastic Beanstalk Environment
