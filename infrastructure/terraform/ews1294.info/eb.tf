@@ -41,6 +41,15 @@ module "twilreapi_eb_app_env" {
   uploads_bucket       = "${aws_s3_bucket.uploads.id}"
   default_url_host     = "${local.twilreapi_url_host}"
 
+  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  action_mailer_delivery_method = "${module.ses.delivery_method}"
+  smtp_address = "${module.ses.smtp_address}"
+  smtp_port = "${module.ses.smtp_port}"
+  smtp_username = "${module.ses.smtp_username}"
+  smtp_password = "${module.ses.smtp_password}"
+  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
+
   ### Twilreapi Specific
   outbound_call_drb_uri       = "${local.twilreapi_outbound_call_drb_uri}"
   outbound_call_job_queue_url = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
@@ -84,6 +93,15 @@ module "twilreapi_eb_outbound_call_worker_env" {
   s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
   s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
   uploads_bucket       = "${aws_s3_bucket.cdr.id}"
+
+  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  action_mailer_delivery_method = "${module.ses.delivery_method}"
+  smtp_address = "${module.ses.smtp_address}"
+  smtp_port = "${module.ses.smtp_port}"
+  smtp_username = "${module.ses.smtp_username}"
+  smtp_password = "${module.ses.smtp_password}"
+  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
 
   ### Twilreapi Specific
   outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
@@ -135,6 +153,15 @@ module "scfm_eb_app_env" {
   s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
   s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
   uploads_bucket       = "${aws_s3_bucket.uploads.id}"
+
+  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  action_mailer_delivery_method = "${module.ses.delivery_method}"
+  smtp_address = "${module.ses.smtp_address}"
+  smtp_port = "${module.ses.smtp_port}"
+  smtp_username = "${module.ses.smtp_username}"
+  smtp_password = "${module.ses.smtp_password}"
+  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
 }
 
 module "scfm_deploy" {

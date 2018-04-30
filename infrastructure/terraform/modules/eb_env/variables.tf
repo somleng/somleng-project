@@ -124,6 +124,38 @@ variable "default_url_host" {
   default     = ""
 }
 
+variable "mailer_sender" {
+  default = ""
+}
+
+variable "action_mailer_delivery_method" {
+  default = ""
+}
+
+variable "smtp_address" {
+  default = ""
+}
+
+variable "smtp_port" {
+  default = ""
+}
+
+variable "smtp_username" {
+  default = ""
+}
+
+variable "smtp_password" {
+  default = ""
+}
+
+variable "smtp_authentication_method" {
+  default = ""
+}
+
+variable "smtp_enable_starttls_auto" {
+  default = ""
+}
+
 ### Twilreapi
 
 variable "outbound_call_drb_uri" {
@@ -151,5 +183,19 @@ variable "recording_status_callback_notifier_job_queue_url" {
 }
 
 variable "status_callback_notifier_job_queue_url" {
+  default = ""
+}
+
+### SCFM
+
+variable "fetch_remote_call_job_queue_url" {
+  default = ""
+}
+
+variable "queue_remote_call_job_queue_url" {
+  default = ""
+}
+
+variable "run_batch_operation_job_queue_url" {
   default = ""
 }

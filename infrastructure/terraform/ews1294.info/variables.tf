@@ -4,6 +4,7 @@ locals {
   # For ap-southeast-1. See complete list: http://amzn.to/2E5LUdw
   eb_zone_id       = "Z16FZ9L249IFLT"
   route53_domain_name = "ews1294.info"
+  mailer_sender = "no-reply"
 
   twilreapi_major_ruby_version  = "2.5"
   twilreapi_identifier          = "somleng-twilreapi"

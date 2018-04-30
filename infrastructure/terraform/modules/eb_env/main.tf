@@ -283,6 +283,46 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.default_url_host == "" ? local.default_env_name : "DEFAULT_URL_HOST"}"
     value     = "${var.default_url_host}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.mailer_sender == "" ? local.default_env_name : "MAILER_SENDER"}"
+    value     = "${var.mailer_sender}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.action_mailer_delivery_method == "" ? local.default_env_name : "ACTION_MAILER_DELIVERY_METHOD"}"
+    value     = "${var.action_mailer_delivery_method}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.smtp_address == "" ? local.default_env_name : "SMTP_ADDRESS"}"
+    value     = "${var.smtp_address}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.smtp_port == "" ? local.default_env_name : "SMTP_PORT"}"
+    value     = "${var.smtp_port}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.smtp_username == "" ? local.default_env_name : "SMTP_USERNAME"}"
+    value     = "${var.smtp_username}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.smtp_password == "" ? local.default_env_name : "SMTP_PASSWORD"}"
+    value     = "${var.smtp_password}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.smtp_authentication_method == "" ? local.default_env_name : "SMTP_AUTHENTICATION_METHOD"}"
+    value     = "${var.smtp_authentication_method}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.smtp_enable_starttls_auto == "" ? local.default_env_name : "SMTP_ENABLE_STARTTLS_AUTO"}"
+    value     = "${var.smtp_enable_starttls_auto}"
+  }
 
   # Twilreapi Specific
 
@@ -325,5 +365,23 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.status_callback_notifier_job_queue_url == "" ? local.default_env_name : "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
     value     = "${var.status_callback_notifier_job_queue_url}"
+  }
+
+  # SCFM Specific
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.fetch_remote_call_job_queue_url == "" ? local.default_env_name : "FETCH_REMOTE_CALL_JOB_QUEUE_URL"}"
+    value     = "${var.fetch_remote_call_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.queue_remote_call_job_queue_url == "" ? local.default_env_name : "QUEUE_REMOTE_CALL_JOB_QUEUE_URL"}"
+    value     = "${var.queue_remote_call_job_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.run_batch_operation_job_queue_url == "" ? local.default_env_name : "RUN_BATCH_OPERATION_JOB_QUEUE_URL"}"
+    value     = "${var.run_batch_operation_job_queue_url}"
   }
 }
