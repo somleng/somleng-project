@@ -38,7 +38,7 @@ module "twilreapi_eb_app_env" {
   ## Application Specific
   s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
   s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
+  uploads_bucket       = "${aws_s3_bucket.cdr.id}"
   default_url_host     = "${local.twilreapi_url_host}"
 
   mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
