@@ -199,3 +199,7 @@ variable "queue_remote_call_job_queue_url" {
 variable "run_batch_operation_job_queue_url" {
   default = ""
 }
+
+variable "scheduler_job_queue_url" {
+  default = ""
+}

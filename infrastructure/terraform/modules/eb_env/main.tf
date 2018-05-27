@@ -384,4 +384,9 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.run_batch_operation_job_queue_url == "" ? local.default_env_name : "RUN_BATCH_OPERATION_JOB_QUEUE_URL"}"
     value     = "${var.run_batch_operation_job_queue_url}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.scheduler_job_queue_url == "" ? local.default_env_name : "SCHEDULER_JOB_QUEUE_URL"}"
+    value     = "${var.scheduler_job_queue_url}"
+  }
 }
