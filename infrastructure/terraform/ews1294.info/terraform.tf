@@ -9,9 +9,9 @@ provider "aws" {
 }
 
 provider "aws" {
-  profile                 = "${var.terraform_profile}"
-  region                  = "us-east-1"
-  alias                   = "us-east-1"
+  profile = "${var.terraform_profile}"
+  region  = "us-east-1"
+  alias   = "us-east-1"
 }
 
 terraform {

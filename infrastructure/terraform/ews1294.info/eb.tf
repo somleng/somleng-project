@@ -36,19 +36,18 @@ module "twilreapi_eb_app_env" {
   db_pool          = "${local.twilreapi_db_pool}"
 
   ## Application Specific
-  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.cdr.id}"
-  default_url_host     = "${local.twilreapi_url_host}"
-
-  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket                = "${aws_s3_bucket.cdr.id}"
+  default_url_host              = "${local.twilreapi_url_host}"
+  mailer_sender                 = "${local.mailer_sender}@${local.route53_domain_name}"
   action_mailer_delivery_method = "${module.ses.delivery_method}"
-  smtp_address = "${module.ses.smtp_address}"
-  smtp_port = "${module.ses.smtp_port}"
-  smtp_username = "${module.ses.smtp_username}"
-  smtp_password = "${module.ses.smtp_password}"
-  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
-  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
+  smtp_address                  = "${module.ses.smtp_address}"
+  smtp_port                     = "${module.ses.smtp_port}"
+  smtp_username                 = "${module.ses.smtp_username}"
+  smtp_password                 = "${module.ses.smtp_password}"
+  smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
 
   ### Twilreapi Specific
   outbound_call_drb_uri       = "${local.twilreapi_outbound_call_drb_uri}"
@@ -69,8 +68,6 @@ module "twilreapi_eb_outbound_call_worker_env" {
   private_subnets = "${module.pin_vpc.private_subnets}"
   public_subnets  = "${module.pin_vpc.public_subnets}"
 
-  default_url_host = "${local.twilreapi_url_host}"
-
   # EC2 Settings
   security_groups   = ["${module.twilreapi_db.security_group}"]
   instance_type     = "t2.nano"
@@ -90,18 +87,19 @@ module "twilreapi_eb_outbound_call_worker_env" {
   db_pool          = "${local.twilreapi_db_pool}"
 
   ## Application Specific
-  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.cdr.id}"
-
-  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket                = "${aws_s3_bucket.cdr.id}"
+  process_active_elastic_jobs   = "true"
+  default_url_host              = "${local.twilreapi_url_host}"
+  mailer_sender                 = "${local.mailer_sender}@${local.route53_domain_name}"
   action_mailer_delivery_method = "${module.ses.delivery_method}"
-  smtp_address = "${module.ses.smtp_address}"
-  smtp_port = "${module.ses.smtp_port}"
-  smtp_username = "${module.ses.smtp_username}"
-  smtp_password = "${module.ses.smtp_password}"
-  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
-  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
+  smtp_address                  = "${module.ses.smtp_address}"
+  smtp_port                     = "${module.ses.smtp_port}"
+  smtp_username                 = "${module.ses.smtp_username}"
+  smtp_password                 = "${module.ses.smtp_password}"
+  smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
 
   ### Twilreapi Specific
   outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
@@ -125,13 +123,11 @@ module "scfm_eb_app_env" {
   private_subnets = "${module.pin_vpc.private_subnets}"
   public_subnets  = "${module.pin_vpc.public_subnets}"
 
-  default_url_host = "${local.scfm_url_host}"
-
   # EC2 Settings
-  security_groups   = ["${module.scfm_db.security_group}"]
-  web_instance_type     = "t2.micro"
-  worker_instance_type     = "t2.nano"
-  ec2_instance_role = "${module.eb_iam.eb_ec2_instance_role}"
+  security_groups      = ["${module.scfm_db.security_group}"]
+  web_instance_type    = "t2.micro"
+  worker_instance_type = "t2.nano"
+  ec2_instance_role    = "${module.eb_iam.eb_ec2_instance_role}"
 
   # Elastic Beanstalk Environment
   service_role = "${module.eb_iam.eb_service_role}"
@@ -150,21 +146,21 @@ module "scfm_eb_app_env" {
   db_pool          = "${local.scfm_db_pool}"
 
   ## Application Specific
-  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
-
-  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket                = "${aws_s3_bucket.uploads.id}"
+  default_url_host              = "${local.scfm_url_host}"
+  mailer_sender                 = "${local.mailer_sender}@${local.route53_domain_name}"
   action_mailer_delivery_method = "${module.ses.delivery_method}"
-  smtp_address = "${module.ses.smtp_address}"
-  smtp_port = "${module.ses.smtp_port}"
-  smtp_username = "${module.ses.smtp_username}"
-  smtp_password = "${module.ses.smtp_password}"
-  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
-  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
+  smtp_address                  = "${module.ses.smtp_address}"
+  smtp_port                     = "${module.ses.smtp_port}"
+  smtp_username                 = "${module.ses.smtp_username}"
+  smtp_password                 = "${module.ses.smtp_password}"
+  smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
 
   # SCFM Specific
-  scheduler_job_queue_url = "${module.scfm_eb_batch_operation_worker.aws_sqs_queue_url}"
+  run_batch_operation_job_queue_url = "${module.scfm_eb_batch_operation_worker.aws_sqs_queue_url}"
 }
 
 module "scfm_eb_batch_operation_worker" {
@@ -181,8 +177,6 @@ module "scfm_eb_batch_operation_worker" {
   private_subnets = "${module.pin_vpc.private_subnets}"
   public_subnets  = "${module.pin_vpc.public_subnets}"
 
-  default_url_host = "${local.scfm_url_host}"
-
   # EC2 Settings
   security_groups   = ["${module.scfm_db.security_group}"]
   instance_type     = "t2.micro"
@@ -196,25 +190,27 @@ module "scfm_eb_batch_operation_worker" {
   aws_region = "${var.aws_region}"
 
   ## Rails Specific
-  rails_env        = "production"
-  rails_master_key = "${data.aws_kms_secret.this.scfm_rails_master_key}"
-  database_url     = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
-  db_pool          = "${local.scfm_db_pool}"
+  rails_skip_asset_compilation = "true"
+  rails_env                    = "production"
+  rails_master_key             = "${data.aws_kms_secret.this.scfm_rails_master_key}"
+  database_url                 = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
+  db_pool                      = "${local.scfm_db_pool}"
 
   ## Application Specific
-  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
-
-  mailer_sender = "${local.mailer_sender}@${local.route53_domain_name}"
+  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket                = "${aws_s3_bucket.uploads.id}"
+  process_active_elastic_jobs   = "true"
+  default_url_host              = "${local.scfm_url_host}"
+  mailer_sender                 = "${local.mailer_sender}@${local.route53_domain_name}"
   action_mailer_delivery_method = "${module.ses.delivery_method}"
-  smtp_address = "${module.ses.smtp_address}"
-  smtp_port = "${module.ses.smtp_port}"
-  smtp_username = "${module.ses.smtp_username}"
-  smtp_password = "${module.ses.smtp_password}"
-  smtp_authentication_method = "${module.ses.smtp_authentication_method}"
-  smtp_enable_starttls_auto = "${module.ses.smtp_enable_starttls_auto}"
-  default_queue_url = "${module.scfm_eb_app_env.worker_queue_url}"
+  smtp_address                  = "${module.ses.smtp_address}"
+  smtp_port                     = "${module.ses.smtp_port}"
+  smtp_username                 = "${module.ses.smtp_username}"
+  smtp_password                 = "${module.ses.smtp_password}"
+  smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
+  smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
+  default_queue_url             = "${module.scfm_eb_app_env.worker_queue_url}"
 }
 
 module "scfm_deploy" {
