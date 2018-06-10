@@ -158,59 +158,6 @@ module "scfm_eb_app_env" {
   smtp_password                 = "${module.ses.smtp_password}"
   smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
   smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
-
-  # SCFM Specific
-  run_batch_operation_job_queue_url = "${module.scfm_eb_batch_operation_worker.aws_sqs_queue_url}"
-}
-
-module "scfm_eb_batch_operation_worker" {
-  source = "../modules/eb_env"
-
-  # General Settings
-  app_name            = "${aws_elastic_beanstalk_application.scfm.name}"
-  solution_stack_name = "${module.scfm_eb_solution_stack.ruby_name}"
-  env_identifier      = "${local.scfm_identifier}-batch-operation-worker"
-  tier                = "Worker"
-
-  # VPC
-  vpc_id          = "${module.pin_vpc.vpc_id}"
-  private_subnets = "${module.pin_vpc.private_subnets}"
-  public_subnets  = "${module.pin_vpc.public_subnets}"
-
-  # EC2 Settings
-  security_groups   = ["${module.scfm_db.security_group}"]
-  instance_type     = "t2.micro"
-  ec2_instance_role = "${module.eb_iam.eb_ec2_instance_role}"
-
-  # Elastic Beanstalk Environment
-  service_role = "${module.eb_iam.eb_service_role}"
-
-  # ENV Vars
-  ## Defaults
-  aws_region = "${var.aws_region}"
-
-  ## Rails Specific
-  rails_skip_asset_compilation = "true"
-  rails_env                    = "production"
-  rails_master_key             = "${data.aws_kms_secret.this.scfm_rails_master_key}"
-  database_url                 = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
-  db_pool                      = "${local.scfm_db_pool}"
-
-  ## Application Specific
-  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket                = "${aws_s3_bucket.uploads.id}"
-  process_active_elastic_jobs   = "true"
-  default_url_host              = "${local.scfm_url_host}"
-  mailer_sender                 = "${local.mailer_sender}@${local.route53_domain_name}"
-  action_mailer_delivery_method = "${module.ses.delivery_method}"
-  smtp_address                  = "${module.ses.smtp_address}"
-  smtp_port                     = "${module.ses.smtp_port}"
-  smtp_username                 = "${module.ses.smtp_username}"
-  smtp_password                 = "${module.ses.smtp_password}"
-  smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
-  smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
-  default_queue_url             = "${module.scfm_eb_app_env.worker_queue_url}"
 }
 
 module "scfm_deploy" {
