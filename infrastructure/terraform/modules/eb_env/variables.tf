@@ -203,3 +203,7 @@ variable "run_batch_operation_job_queue_url" {
 variable "scheduler_job_queue_url" {
   default = ""
 }
+
+variable "audio_bucket" {
+  default = ""
+}

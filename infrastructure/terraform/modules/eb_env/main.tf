@@ -389,4 +389,9 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.scheduler_job_queue_url == "" ? local.default_env_name : "SCHEDULER_JOB_QUEUE_URL"}"
     value     = "${var.scheduler_job_queue_url}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.audio_bucket == "" ? local.default_env_name : "AUDIO_BUCKET"}"
+    value     = "${var.audio_bucket}"
+  }
 }

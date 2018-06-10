@@ -49,6 +49,9 @@ module "eb_worker" {
   ## Twilreapi Specific
   outbound_call_drb_uri       = "${var.outbound_call_drb_uri}"
   outbound_call_job_queue_url = "${var.outbound_call_job_queue_url}"
+
+  ## SCFM Specific
+  audio_bucket = "${var.audio_bucket}"
 }
 
 module "eb_web" {
@@ -111,4 +114,5 @@ module "eb_web" {
   queue_remote_call_job_queue_url   = "${var.queue_remote_call_job_queue_url}"
   run_batch_operation_job_queue_url = "${var.run_batch_operation_job_queue_url}"
   scheduler_job_queue_url           = "${var.scheduler_job_queue_url}"
+  audio_bucket                      = "${var.audio_bucket}"
 }

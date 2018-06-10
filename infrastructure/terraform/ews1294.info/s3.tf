@@ -22,3 +22,24 @@ resource "aws_s3_bucket" "uploads" {
     max_age_seconds = 3000
   }
 }
+
+resource "aws_s3_bucket" "audio" {
+  bucket = "audio.ews1294.info"
+  acl    = "public-read"
+  region = "${var.aws_region}"
+
+  policy = <<POLICY
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"AddPerm",
+      "Effect":"Allow",
+      "Principal": "*",
+      "Action":["s3:GetObject"],
+      "Resource":["arn:aws:s3:::audio.ews1294.info/*"]
+    }
+  ]
+}
+  POLICY
+}

@@ -158,6 +158,9 @@ module "scfm_eb_app_env" {
   smtp_password                 = "${module.ses.smtp_password}"
   smtp_authentication_method    = "${module.ses.smtp_authentication_method}"
   smtp_enable_starttls_auto     = "${module.ses.smtp_enable_starttls_auto}"
+
+  ### SCFM Specific
+  audio_bucket = "${aws_s3_bucket.audio.id}"
 }
 
 module "scfm_deploy" {
