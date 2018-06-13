@@ -2,7 +2,7 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: 12 June 2018
+Last updated: 13 June 2018
 
 Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Contributions and improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
@@ -45,7 +45,7 @@ People in Need (PIN) use RapidPro to design callflows for registering for the Ea
 
 Somleng collects [Real Time Data](http://rtd.somleng.org) from the Early Warning System and other projects which is available at [http://rtd.somleng.org](http://rtd.somleng.org).
 
-Since the beginning of the project Somleng has processed around [326 K](http://rtd.somleng.org) minutes worth of registrations and [87.5 K](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of [$8,749.99 (100%)](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
+Since the beginning of the project Somleng has processed around [327 K](http://rtd.somleng.org) minutes worth of registrations and [87.5 K](http://rtd.somleng.org) minutes worth of alerts, resulting in a total cost saving of [$8,749.99 (100%)](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/kh).
 
 ## Somalia
 
