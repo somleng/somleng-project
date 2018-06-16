@@ -323,6 +323,11 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.smtp_enable_starttls_auto == "" ? local.default_env_name : "SMTP_ENABLE_STARTTLS_AUTO"}"
     value     = "${var.smtp_enable_starttls_auto}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DEFAULT_QUEUE_URL"
+    value     = "${local.is_web_tier ? "${var.default_queue_url}" : "`{\"Ref\" : \"AWSEBWorkerQueue\"}`"}"
+  }
 
   # Twilreapi Specific
 
@@ -330,11 +335,6 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.outbound_call_drb_uri == "" ? local.default_env_name : "OUTBOUND_CALL_DRB_URI"}"
     value     = "${var.outbound_call_drb_uri}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.default_queue_url == "" ? local.default_env_name : "DEFAULT_QUEUE_URL"}"
-    value     = "${var.default_queue_url}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
