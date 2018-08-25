@@ -17,6 +17,10 @@ module "eb_worker" {
   instance_type     = "${var.worker_instance_type}"
   ec2_instance_role = "${var.ec2_instance_role}"
 
+  # AutoScaling
+  autoscaling_group_min_size = "${var.autoscaling_group_worker_min_size}"
+  autoscaling_group_max_size = "${var.autoscaling_group_worker_max_size}"
+
   # Elastic Beanstalk Environment
   service_role = "${var.service_role}"
 
@@ -75,6 +79,12 @@ module "eb_web" {
 
   # Elastic Beanstalk Environment
   service_role = "${var.service_role}"
+
+  # AutoScaling
+  autoscaling_group_min_size        = "${var.autoscaling_group_web_min_size}"
+  autoscaling_group_max_size        = "${var.autoscaling_group_web_max_size}"
+  autoscaling_scale_up_recurrence   = "${var.autoscaling_scale_up_recurrence}"
+  autoscaling_scale_down_recurrence = "${var.autoscaling_scale_down_recurrence}"
 
   # Listener
   ssl_certificate_id = "${var.ssl_certificate_id}"

@@ -12,3 +12,7 @@ output "aws_sqs_queue_url" {
 output "cname" {
   value = "${aws_elastic_beanstalk_environment.eb_env.cname}"
 }
+
+output "autoscaling_groups" {
+  value = "${aws_elastic_beanstalk_environment.eb_env.autoscaling_groups}"
+}

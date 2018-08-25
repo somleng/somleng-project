@@ -69,6 +69,24 @@ variable "ssl_certificate_id" {
   default = ""
 }
 
+# Autoscaling
+
+variable "autoscaling_group_min_size" {
+  default = "1"
+}
+
+variable "autoscaling_group_max_size" {
+  default = "4"
+}
+
+variable "autoscaling_scale_up_recurrence" {
+  default = ""
+}
+
+variable "autoscaling_scale_down_recurrence" {
+  default = ""
+}
+
 # ENV Vars
 
 ## Defaults
