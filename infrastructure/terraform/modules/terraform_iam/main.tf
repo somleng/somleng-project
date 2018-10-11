@@ -47,6 +47,11 @@ resource "aws_iam_group_policy_attachment" "terraform_s3" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
+resource "aws_iam_group_policy_attachment" "terraform_acm" {
+  group      = "${aws_iam_group.terraform.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
+}
+
 resource "aws_iam_user" "terraform" {
   name = "terraform"
 }

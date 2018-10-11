@@ -62,70 +62,77 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
 
   ################### Auto Scaling Group Settings ###################
   # https://amzn.to/2o7M1uD
-   setting {
-     namespace = "aws:autoscaling:asg"
-     name      = "MinSize"
-     value     = "${var.autoscaling_group_min_size}"
-   }
-   setting {
-     namespace = "aws:autoscaling:asg"
-     name      = "MaxSize"
-     value     = "${var.autoscaling_group_max_size}"
-   }
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name      = "MinSize"
+    value     = "${var.autoscaling_group_min_size}"
+  }
 
-   ################### Auto Scaling Scheduled Action ###################
-   # https://amzn.to/2LohqlC
-   # ScheduledScaleDown
-   setting {
-     namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleDown"
-     name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "Recurrence"}"
-     value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "${var.autoscaling_scale_down_recurrence}"}"
-   }
-   setting {
-     namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleDown"
-     name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "DesiredCapacity"}"
-     value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "0"}"
-   }
-   setting {
-     namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleDown"
-     name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "MinSize"}"
-     value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "0"}"
-   }
-   setting {
-     namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleDown"
-     name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "MaxSize"}"
-     value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "${var.autoscaling_group_max_size}"}"
-   }
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name      = "MaxSize"
+    value     = "${var.autoscaling_group_max_size}"
+  }
 
-   # ScheduledScaleUp
-   setting {
-     namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleUp"
-     name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "Recurrence"}"
-     value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_scale_up_recurrence}"}"
-   }
-   setting {
-     namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleUp"
-     name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "DesiredCapacity"}"
-     value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_group_min_size}"}"
-   }
-   setting {
-     namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleUp"
-     name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "MinSize"}"
-     value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_group_min_size}"}"
-   }
-   setting {
-     namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
-     resource  = "ScheduledScaleUp"
-     name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "MaxSize"}"
-     value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_group_max_size}"}"
-   }
+  ################### Auto Scaling Scheduled Action ###################
+  # https://amzn.to/2LohqlC
+  # ScheduledScaleDown
+  setting {
+    namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleDown"
+    name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "Recurrence"}"
+    value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "${var.autoscaling_scale_down_recurrence}"}"
+  }
+
+  setting {
+    namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleDown"
+    name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "DesiredCapacity"}"
+    value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "0"}"
+  }
+
+  setting {
+    namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleDown"
+    name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "MinSize"}"
+    value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "0"}"
+  }
+
+  setting {
+    namespace = "${var.autoscaling_scale_down_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleDown"
+    name      = "${var.autoscaling_scale_down_recurrence == "" ? local.default_env_name : "MaxSize"}"
+    value     = "${var.autoscaling_scale_down_recurrence == "" ? "" : "${var.autoscaling_group_max_size}"}"
+  }
+
+  # ScheduledScaleUp
+  setting {
+    namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleUp"
+    name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "Recurrence"}"
+    value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_scale_up_recurrence}"}"
+  }
+
+  setting {
+    namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleUp"
+    name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "DesiredCapacity"}"
+    value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_group_min_size}"}"
+  }
+
+  setting {
+    namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleUp"
+    name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "MinSize"}"
+    value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_group_min_size}"}"
+  }
+
+  setting {
+    namespace = "${var.autoscaling_scale_up_recurrence == "" ? local.default_namespace : "aws:autoscaling:scheduledaction"}"
+    resource  = "ScheduledScaleUp"
+    name      = "${var.autoscaling_scale_up_recurrence == "" ? local.default_env_name : "MaxSize"}"
+    value     = "${var.autoscaling_scale_up_recurrence == "" ? "" : "${var.autoscaling_group_max_size}"}"
+  }
 
   ################### Code Deployment Settings ###################
   # http://amzn.to/2thpK2U

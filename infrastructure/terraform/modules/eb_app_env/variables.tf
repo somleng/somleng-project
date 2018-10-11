@@ -69,19 +69,24 @@ variable "service_role" {
 variable "autoscaling_group_worker_min_size" {
   default = "1"
 }
- variable "autoscaling_group_worker_max_size" {
+
+variable "autoscaling_group_worker_max_size" {
   default = "4"
 }
- variable "autoscaling_group_web_min_size" {
+
+variable "autoscaling_group_web_min_size" {
   default = "1"
 }
- variable "autoscaling_group_web_max_size" {
+
+variable "autoscaling_group_web_max_size" {
   default = "4"
 }
- variable "autoscaling_scale_up_recurrence" {
+
+variable "autoscaling_scale_up_recurrence" {
   default = ""
 }
- variable "autoscaling_scale_down_recurrence" {
+
+variable "autoscaling_scale_down_recurrence" {
   default = ""
 }
 
