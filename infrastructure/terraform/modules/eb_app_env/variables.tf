@@ -132,13 +132,33 @@ variable "action_mailer_delivery_method" {
   default = "smtp"
 }
 
-variable "mailer_sender" {}
-variable "smtp_address" {}
-variable "smtp_port" {}
-variable "smtp_username" {}
-variable "smtp_password" {}
-variable "smtp_authentication_method" {}
-variable "smtp_enable_starttls_auto" {}
+variable "mailer_sender" {
+  default = ""
+}
+
+variable "smtp_address" {
+  default = ""
+}
+
+variable "smtp_port" {
+  default = ""
+}
+
+variable "smtp_username" {
+  default = ""
+}
+
+variable "smtp_password" {
+  default = ""
+}
+
+variable "smtp_authentication_method" {
+  default = "plain"
+}
+
+variable "smtp_enable_starttls_auto" {
+  default = "true"
+}
 
 ### Twilreapi
 

@@ -47,4 +47,5 @@ module "db" {
 
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
   create_db_parameter_group   = false
+  apply_immediately           = "${var.apply_immediately}"
 }

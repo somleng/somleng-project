@@ -75,6 +75,11 @@ variable "storage_encrypted" {
   default     = false
 }
 
+variable "apply_immediately" {
+  description = "Apply changes immediately"
+  default     = true
+}
+
 variable "skip_final_snapshot" {
   description = "Determines whether a final DB snapshot is created before the DB instance is deleted. If true is specified, no DBSnapshot is created. If false is specified, a DB snapshot is created before the DB instance is deleted, using the value from final_snapshot_identifier"
   default     = true
