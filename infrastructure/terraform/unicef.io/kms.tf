@@ -22,4 +22,9 @@ data "aws_kms_secrets" "secrets" {
     name    = "twilreapi_rails_master_key"
     payload = "${local.twilreapi_rails_master_key}"
   }
+
+  secret {
+    name    = "somleng_adhearsion_core_password"
+    payload = "${local.somleng_adhearsion_core_password}"
+  }
 }

@@ -40,6 +40,12 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     value     = "false"
   }
 
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "ELBScheme"
+    value     = "${var.elb_scheme}"
+  }
+
   ################### EC2 Settings ###################
   # http://amzn.to/2FjIpj6
   setting {
@@ -217,19 +223,19 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "Port"
-    value     = "80"
+    value     = "${var.default_process_port}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "Protocol"
-    value     = "HTTP"
+    value     = "${var.default_process_protocol}"
   }
 
   setting {
-    namespace = "aws:elasticbeanstalk:environment:process:default"
-    name      = "HealthCheckPath"
-    value     = "/health_checks"
+    namespace = "${var.health_check_path == "" || var.load_balancer_type == "network" ? local.default_namespace : "aws:elasticbeanstalk:environment:process:default"}"
+    name      = "${var.health_check_path == "" || var.load_balancer_type == "network" ? local.default_env_name : "HealthCheckPath"}"
+    value     = "${var.health_check_path == "" || var.load_balancer_type == "network" ? "" : "${var.health_check_path}"}"
   }
 
   ################### EB Environment ###################
@@ -241,43 +247,56 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
 
   setting {
-    namespace = "${local.is_web_tier ? "aws:elasticbeanstalk:environment" : local.default_namespace}"
-    name      = "${local.is_web_tier ? "LoadBalancerType" : local.default_env_name}"
-    value     = "${local.is_web_tier ? "application" : ""}"
+    namespace = "${var.load_balancer_type == "" || !local.is_web_tier ? local.default_namespace : "aws:elasticbeanstalk:environment"}"
+    name      = "${var.load_balancer_type == "" || !local.is_web_tier ? local.default_env_name : "LoadBalancerType"}"
+    value     = "${var.load_balancer_type}"
   }
 
   ################### Listener ###################
   # https://amzn.to/2GzHQiB
+  # Default Listener
   setting {
-    namespace = "${local.is_web_tier ? "aws:elbv2:listener:default" : local.default_namespace}"
-    name      = "${local.is_web_tier ? "ListenerEnabled" : local.default_env_name}"
-    value     = "${local.is_web_tier ? "true" : ""}"
+    namespace = "${!local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:default"}"
+    name      = "${!local.is_web_tier ? local.default_env_name : "ListenerEnabled"}"
+    value     = "${!local.is_web_tier ? "" : "${var.default_listener_enabled}"}"
   }
 
-  setting {
-    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
-    name      = "${local.is_web_tier ? "ListenerEnabled" : local.default_env_name}"
-    value     = "${local.is_web_tier ? "true" : ""}"
-  }
+  # SSL Listener
 
   setting {
-    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
-    name      = "${local.is_web_tier ? "Protocol" : local.default_env_name}"
-    value     = "${local.is_web_tier ? "HTTPS" : ""}"
+    namespace = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:443"}"
+    name      = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "ListenerEnabled"}"
+    value     = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.ssl_listener_enabled}"}"
   }
-
   setting {
-    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
-    name      = "${local.is_web_tier ? "SSLCertificateArns" : local.default_env_name}"
-    value     = "${local.is_web_tier ? var.ssl_certificate_id : ""}"
+    namespace = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:443"}"
+    name      = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "Protocol"}"
+    value     = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.ssl_listener_protocol}"}"
   }
-
+  setting {
+    namespace = "${var.ssl_certificate_id == "" ? local.default_namespace : "aws:elbv2:listener:443"}"
+    name      = "${var.ssl_certificate_id == "" ? local.default_env_name : "SSLCertificateArns"}"
+    value     = "${var.ssl_certificate_id}"
+  }
   # Security Policies
   # https://amzn.to/2q742us
   setting {
-    namespace = "${local.is_web_tier ? "aws:elbv2:listener:443" : local.default_namespace}"
-    name      = "${local.is_web_tier ? "SSLPolicy" : local.default_env_name}"
-    value     = "${local.is_web_tier ? "ELBSecurityPolicy-TLS-1-1-2017-01" : ""}"
+    namespace = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:443"}"
+    name      = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "SSLPolicy"}"
+    value     = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.ssl_security_policy}"}"
+  }
+
+  # Custom Listener
+
+  setting {
+    namespace = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:${var.custom_listener_port}"}"
+    name      = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "ListenerEnabled"}"
+    value     = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.custom_listener_enabled}"}"
+  }
+  setting {
+    namespace = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:${var.custom_listener_port}"}"
+    name      = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "Protocol"}"
+    value     = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.custom_listener_protocol}"}"
   }
 
   ################### ENV Vars ###################
@@ -467,5 +486,48 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.audio_bucket == "" ? local.default_env_name : "AUDIO_BUCKET"}"
     value     = "${var.audio_bucket}"
+  }
+
+  # Somleng Adhearsion Specific
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_env == "" ? local.default_env_name : "AHN_ENV"}"
+    value     = "${var.adhearsion_env}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_core_host == "" ? local.default_env_name : "AHN_CORE_HOST"}"
+    value     = "${var.adhearsion_core_host}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_core_port == "" ? local.default_env_name : "AHN_CORE_PORT"}"
+    value     = "${var.adhearsion_core_port}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_core_username == "" ? local.default_env_name : "AHN_CORE_USERNAME"}"
+    value     = "${var.adhearsion_core_username}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_core_password == "" ? local.default_env_name : "AHN_CORE_PASSWORD"}"
+    value     = "${var.adhearsion_core_password}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_drb_port == "" ? local.default_env_name : "AHN_ADHEARSION_DRB_PORT"}"
+    value     = "${var.adhearsion_drb_port}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_twilio_rest_api_phone_calls_url == "" ? local.default_env_name : "AHN_TWILIO_REST_API_PHONE_CALLS_URL"}"
+    value     = "${var.adhearsion_twilio_rest_api_phone_calls_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.adhearsion_app == "false" || var.adhearsion_twilio_rest_api_phone_call_events_url == "" ? local.default_env_name : "AHN_TWILIO_REST_API_PHONE_CALL_EVENTS_URL"}"
+    value     = "${var.adhearsion_twilio_rest_api_phone_call_events_url}"
   }
 }

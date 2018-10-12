@@ -28,6 +28,10 @@ variable "public_subnets" {
   description = "ELB subnets"
 }
 
+variable "elb_scheme" {
+  default = "public"
+}
+
 # EC2 Settings
 
 variable "security_groups" {
@@ -63,9 +67,55 @@ variable "service_role" {
   description = "Elastic Beanstalk service role"
 }
 
-# Listener
+variable "load_balancer_type" {
+  default = "application"
+}
+
+# Default Process
+
+variable "default_process_port" {
+  default = "80"
+}
+
+variable "default_process_protocol" {
+  default = "HTTP"
+}
+
+variable "health_check_path" {
+  default = "/health_checks"
+}
+
+# Listeners
+
+variable "default_listener_enabled" {
+  default = "true"
+}
+
+variable "ssl_listener_enabled" {
+  default = "true"
+}
+
+variable "ssl_listener_protocol" {
+  default = "HTTPS"
+}
 
 variable "ssl_certificate_id" {
+  default = ""
+}
+
+variable "ssl_security_policy" {
+  default = "ELBSecurityPolicy-TLS-1-1-2017-01"
+}
+
+variable "custom_listener_enabled" {
+  default = "false"
+}
+
+variable "custom_listener_protocol" {
+  default = "TCP"
+}
+
+variable "custom_listener_port" {
   default = ""
 }
 
@@ -223,5 +273,43 @@ variable "scheduler_job_queue_url" {
 }
 
 variable "audio_bucket" {
+  default = ""
+}
+
+### Somleng Adhearsion
+
+variable "adhearsion_app" {
+  default = "false"
+}
+
+variable "adhearsion_env" {
+  default = "production"
+}
+
+variable "adhearsion_core_host" {
+  default = ""
+}
+
+variable "adhearsion_core_port" {
+  default = ""
+}
+
+variable "adhearsion_core_username" {
+  default = ""
+}
+
+variable "adhearsion_core_password" {
+  default = ""
+}
+
+variable "adhearsion_drb_port" {
+  default = ""
+}
+
+variable "adhearsion_twilio_rest_api_phone_calls_url" {
+  default = ""
+}
+
+variable "adhearsion_twilio_rest_api_phone_call_events_url" {
   default = ""
 }

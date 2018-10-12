@@ -44,17 +44,8 @@ module "twilreapi_eb_app_env" {
   smtp_password        = "${module.ses.smtp_password}"
 
   ### Twilreapi Specific
-  outbound_call_drb_uri       = "${local.twilreapi_outbound_call_drb_uri}"
+  outbound_call_drb_uri       = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
   outbound_call_job_queue_url = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
-}
-
-module "twilreapi_deploy" {
-  source = "../modules/deploy"
-
-  eb_env_id    = "${module.twilreapi_eb_app_env.web_id}"
-  repo         = "${local.twilreapi_deploy_repo}"
-  branch       = "${local.twilreapi_deploy_branch}"
-  travis_token = "${var.travis_token}"
 }
 
 module "twilreapi_eb_outbound_call_worker_env" {
@@ -99,5 +90,78 @@ module "twilreapi_eb_outbound_call_worker_env" {
   smtp_password               = "${module.ses.smtp_password}"
 
   ### Twilreapi Specific
-  outbound_call_drb_uri = "${local.twilreapi_outbound_call_drb_uri}"
+  outbound_call_drb_uri = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
+}
+
+module "twilreapi_deploy" {
+  source = "../modules/deploy"
+
+  eb_env_id    = "${module.twilreapi_eb_app_env.web_id}"
+  repo         = "${local.twilreapi_deploy_repo}"
+  branch       = "${local.twilreapi_deploy_branch}"
+  travis_token = "${var.travis_token}"
+}
+
+resource "aws_elastic_beanstalk_application" "somleng_adhearsion" {
+  name        = "somleng-adhearsion"
+  description = "Somleng Adhearsion"
+}
+
+module "somleng_adhearsion_webserver" {
+  source = "../modules/eb_env"
+
+  # General Settings
+  app_name            = "${aws_elastic_beanstalk_application.somleng_adhearsion.name}"
+  solution_stack_name = "${module.somleng_adhearsion_eb_solution_stack.multi_container_docker_name}"
+  env_identifier      = "${local.somleng_adhearsion_identifier}"
+  tier                = "WebServer"
+
+  # VPC
+  vpc_id          = "${module.vpc.vpc_id}"
+  private_subnets = "${module.vpc.private_subnets}"
+  public_subnets  = "${module.vpc.intra_subnets}"
+  elb_scheme      = "internal"
+
+  # EC2 Settings
+  instance_type     = "t2.micro"
+  ec2_instance_role = "${module.eb_iam.eb_ec2_instance_role}"
+
+  # Elastic Beanstalk Environment
+  service_role       = "${module.eb_iam.eb_service_role}"
+  load_balancer_type = "network"
+
+  # Listener
+  default_listener_enabled = "false"
+  ssl_listener_enabled     = "false"
+
+  custom_listener_enabled = "true"
+  custom_listener_port    = "${local.somleng_adhearsion_drb_port}"
+
+  # Default Process
+  default_process_protocol = "TCP"
+  default_process_port     = "${local.somleng_adhearsion_drb_port}"
+
+  # ENV Vars
+  ## Defaults
+  aws_region = "${var.aws_region}"
+
+  # Somleng Adhearsion Specific
+  adhearsion_app                                   = "true"
+  adhearsion_env                                   = "production"
+  adhearsion_core_host                             = "${local.somleng_adhearsion_core_host}"
+  adhearsion_core_port                             = "${local.somleng_adhearsion_core_port}"
+  adhearsion_core_username                         = "${local.somleng_adhearsion_core_username}"
+  adhearsion_core_password                         = "${data.aws_kms_secrets.secrets.plaintext["somleng_adhearsion_core_password"]}"
+  adhearsion_drb_port                              = "${local.somleng_adhearsion_drb_port}"
+  adhearsion_twilio_rest_api_phone_calls_url       = "${local.twilreapi_url_host}/api/admin/phone_calls"
+  adhearsion_twilio_rest_api_phone_call_events_url = "${local.twilreapi_url_host}/api/admin/phone_call_events"
+}
+
+module "somleng_adhearsion_deploy" {
+  source = "../modules/deploy"
+
+  eb_env_id    = "${module.somleng_adhearsion_webserver.id}"
+  repo         = "${local.somleng_adhearsion_deploy_repo}"
+  branch       = "${local.somleng_adhearsion_deploy_branch}"
+  travis_token = "${var.travis_token}"
 }

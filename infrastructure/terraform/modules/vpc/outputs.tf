@@ -22,3 +22,8 @@ output "database_subnets" {
   description = "List of database subnet ids"
   value       = "${module.vpc.database_subnets}"
 }
+
+output "intra_subnets" {
+  description = "List of IDs of internal subnets"
+  value       = "${module.vpc.intra_subnets}"
+}
