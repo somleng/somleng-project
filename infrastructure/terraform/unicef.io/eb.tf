@@ -186,11 +186,10 @@ module "somleng_freeswitch_webserver" {
   tier                = "WebServer"
 
   # VPC
-  vpc_id                      = "${module.vpc.vpc_id}"
-  elb_subnets                 = "${module.vpc.intra_subnets}"
-  ec2_subnets                 = "${module.vpc.private_subnets}"
-  associate_public_ip_address = "true"
-  elb_scheme                  = "internal"
+  vpc_id      = "${module.vpc.vpc_id}"
+  elb_subnets = "${module.vpc.intra_subnets}"
+  ec2_subnets = "${module.vpc.private_subnets}"
+  elb_scheme  = "internal"
 
   # EC2 Settings
   instance_type     = "t2.micro"
@@ -216,19 +215,19 @@ module "somleng_freeswitch_webserver" {
   aws_region = "${var.aws_region}"
 }
 
-module "somleng_freeswitch_load_balancer" {
-  source = "../modules/eb_env"
-
-  # General Settings
-  app_name            = "${aws_elastic_beanstalk_application.somleng_freeswitch.name}"
-  solution_stack_name = "${module.somleng_freeswitch_load_balancer_eb_solution_stack.lastest_ruby_name}"
-  env_identifier      = "${local.somleng_freeswitch_load_balancer_identifier}"
-  tier                = "WebServer"
-
-  # VPC
-  vpc_id      = "${module.vpc.vpc_id}"
-  ec2_subnets = "${module.vpc.private_subnets}"
-}
+# module "somleng_freeswitch_load_balancer" {
+#   source = "../modules/eb_env"
+#
+#   # General Settings
+#   app_name            = "${aws_elastic_beanstalk_application.somleng_freeswitch.name}"
+#   solution_stack_name = "${module.somleng_freeswitch_load_balancer_eb_solution_stack.lastest_ruby_name}"
+#   env_identifier      = "${local.somleng_freeswitch_load_balancer_identifier}"
+#   tier                = "WebServer"
+#
+#   # VPC
+#   vpc_id          = "${module.vpc.vpc_id}"
+#   ec2_subnets     = "${module.vpc.private_subnets}"
+# }
 
 module "somleng_freeswitch_deploy" {
   source = "../modules/deploy"
