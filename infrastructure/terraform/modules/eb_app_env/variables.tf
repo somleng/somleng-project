@@ -14,14 +14,12 @@ variable "env_identifier" {
 
 variable "vpc_id" {}
 
-variable "private_subnets" {
-  type        = "list"
-  description = "EC2 subnets"
+variable "ec2_subnets" {
+  type = "list"
 }
 
-variable "public_subnets" {
-  type        = "list"
-  description = "ELB subnets"
+variable "elb_subnets" {
+  default = []
 }
 
 # EC2 Settings

@@ -1,3 +1,9 @@
+locals {
+  twilreapi_url_host          = "https://${local.twilreapi_route53_record_name}.${local.route53_domain_name}"
+  twilreapi_db_host           = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
+  somleng_adhearsion_drb_host = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
+}
+
 resource "aws_elastic_beanstalk_application" "twilreapi" {
   name        = "somleng-twilreapi"
   description = "Somleng Twilio REST API"
@@ -12,9 +18,9 @@ module "twilreapi_eb_app_env" {
   env_identifier      = "${local.twilreapi_identifier}"
 
   # VPC
-  vpc_id          = "${module.vpc.vpc_id}"
-  private_subnets = "${module.vpc.private_subnets}"
-  public_subnets  = "${module.vpc.public_subnets}"
+  vpc_id      = "${module.vpc.vpc_id}"
+  elb_subnets = "${module.vpc.public_subnets}"
+  ec2_subnets = "${module.vpc.private_subnets}"
 
   # EC2 Settings
   security_groups   = ["${module.twilreapi_db.security_group}"]
@@ -32,7 +38,7 @@ module "twilreapi_eb_app_env" {
 
   ## Rails Specific
   rails_master_key = "${data.aws_kms_secrets.secrets.plaintext["twilreapi_rails_master_key"]}"
-  database_url     = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
+  database_url     = "${local.twilreapi_db_host}"
   db_pool          = "${local.twilreapi_db_pool}"
 
   ## Application Specific
@@ -44,7 +50,7 @@ module "twilreapi_eb_app_env" {
   smtp_password        = "${module.ses.smtp_password}"
 
   ### Twilreapi Specific
-  outbound_call_drb_uri       = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
+  outbound_call_drb_uri       = "${local.somleng_adhearsion_drb_host}"
   outbound_call_job_queue_url = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
 }
 
@@ -58,9 +64,8 @@ module "twilreapi_eb_outbound_call_worker_env" {
   tier                = "Worker"
 
   # VPC
-  vpc_id          = "${module.vpc.vpc_id}"
-  private_subnets = "${module.vpc.private_subnets}"
-  public_subnets  = "${module.vpc.public_subnets}"
+  vpc_id      = "${module.vpc.vpc_id}"
+  ec2_subnets = "${module.vpc.private_subnets}"
 
   # EC2 Settings
   security_groups   = ["${module.twilreapi_db.security_group}"]
@@ -77,7 +82,7 @@ module "twilreapi_eb_outbound_call_worker_env" {
   ## Rails Specific
   rails_env        = "production"
   rails_master_key = "${data.aws_kms_secrets.secrets.plaintext["twilreapi_rails_master_key"]}"
-  database_url     = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
+  database_url     = "${local.twilreapi_db_host}"
   db_pool          = "${local.twilreapi_db_pool}"
 
   ## Application Specific
@@ -90,7 +95,7 @@ module "twilreapi_eb_outbound_call_worker_env" {
   smtp_password               = "${module.ses.smtp_password}"
 
   ### Twilreapi Specific
-  outbound_call_drb_uri = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
+  outbound_call_drb_uri = "${local.somleng_adhearsion_drb_host}"
 }
 
 module "twilreapi_deploy" {
@@ -117,10 +122,10 @@ module "somleng_adhearsion_webserver" {
   tier                = "WebServer"
 
   # VPC
-  vpc_id          = "${module.vpc.vpc_id}"
-  private_subnets = "${module.vpc.private_subnets}"
-  public_subnets  = "${module.vpc.intra_subnets}"
-  elb_scheme      = "internal"
+  vpc_id      = "${module.vpc.vpc_id}"
+  elb_subnets = "${module.vpc.intra_subnets}"
+  ec2_subnets = "${module.vpc.private_subnets}"
+  elb_scheme  = "internal"
 
   # EC2 Settings
   instance_type     = "t2.micro"
@@ -134,8 +139,8 @@ module "somleng_adhearsion_webserver" {
   default_listener_enabled = "false"
   ssl_listener_enabled     = "false"
 
-  custom_listener_enabled = "true"
-  custom_listener_port    = "${local.somleng_adhearsion_drb_port}"
+  drb_listener_enabled = "true"
+  drb_listener_port    = "${local.somleng_adhearsion_drb_port}"
 
   # Default Process
   default_process_protocol = "TCP"
@@ -163,5 +168,73 @@ module "somleng_adhearsion_deploy" {
   eb_env_id    = "${module.somleng_adhearsion_webserver.id}"
   repo         = "${local.somleng_adhearsion_deploy_repo}"
   branch       = "${local.somleng_adhearsion_deploy_branch}"
+  travis_token = "${var.travis_token}"
+}
+
+resource "aws_elastic_beanstalk_application" "somleng_freeswitch" {
+  name        = "somleng-freeswitch"
+  description = "Somleng FreeSWITCH"
+}
+
+module "somleng_freeswitch_webserver" {
+  source = "../modules/eb_env"
+
+  # General Settings
+  app_name            = "${aws_elastic_beanstalk_application.somleng_freeswitch.name}"
+  solution_stack_name = "${module.somleng_freeswitch_eb_solution_stack.multi_container_docker_name}"
+  env_identifier      = "${local.somleng_freeswitch_identifier}"
+  tier                = "WebServer"
+
+  # VPC
+  vpc_id                      = "${module.vpc.vpc_id}"
+  elb_subnets                 = "${module.vpc.intra_subnets}"
+  ec2_subnets                 = "${module.vpc.private_subnets}"
+  associate_public_ip_address = "true"
+  elb_scheme                  = "internal"
+
+  # EC2 Settings
+  instance_type     = "t2.micro"
+  ec2_instance_role = "${module.eb_iam.eb_ec2_instance_role}"
+
+  # Elastic Beanstalk Environment
+  service_role       = "${module.eb_iam.eb_service_role}"
+  load_balancer_type = "network"
+
+  # Listener
+  default_listener_enabled = "false"
+  ssl_listener_enabled     = "false"
+
+  xmpp_listener_enabled = "true"
+  xmpp_listener_port    = "${local.somleng_freeswitch_xmpp_port}"
+
+  # Default Process
+  default_process_protocol = "TCP"
+  default_process_port     = "${local.somleng_freeswitch_xmpp_port}"
+
+  # ENV Vars
+  ## Defaults
+  aws_region = "${var.aws_region}"
+}
+
+module "somleng_freeswitch_load_balancer" {
+  source = "../modules/eb_env"
+
+  # General Settings
+  app_name            = "${aws_elastic_beanstalk_application.somleng_freeswitch.name}"
+  solution_stack_name = "${module.somleng_freeswitch_load_balancer_eb_solution_stack.lastest_ruby_name}"
+  env_identifier      = "${local.somleng_freeswitch_load_balancer_identifier}"
+  tier                = "WebServer"
+
+  # VPC
+  vpc_id      = "${module.vpc.vpc_id}"
+  ec2_subnets = "${module.vpc.private_subnets}"
+}
+
+module "somleng_freeswitch_deploy" {
+  source = "../modules/deploy"
+
+  eb_env_id    = "${module.somleng_freeswitch_webserver.id}"
+  repo         = "${local.somleng_freeswitch_deploy_repo}"
+  branch       = "${local.somleng_freeswitch_deploy_branch}"
   travis_token = "${var.travis_token}"
 }

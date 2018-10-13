@@ -18,18 +18,20 @@ variable "tier" {
 
 variable "vpc_id" {}
 
-variable "private_subnets" {
-  type        = "list"
-  description = "EC2 subnets"
+variable "ec2_subnets" {
+  type = "list"
 }
 
-variable "public_subnets" {
-  type        = "list"
-  description = "ELB subnets"
+variable "elb_subnets" {
+  default = []
 }
 
 variable "elb_scheme" {
   default = "public"
+}
+
+variable "associate_public_ip_address" {
+  default = "false"
 }
 
 # EC2 Settings
@@ -62,6 +64,10 @@ variable "cloudwatch_retention_in_days" {
 }
 
 # Elastic Beanstalk Environment
+
+variable "environment_type" {
+  default = "LoadBalanced"
+}
 
 variable "service_role" {
   description = "Elastic Beanstalk service role"
@@ -107,15 +113,27 @@ variable "ssl_security_policy" {
   default = "ELBSecurityPolicy-TLS-1-1-2017-01"
 }
 
-variable "custom_listener_enabled" {
+variable "drb_listener_enabled" {
   default = "false"
 }
 
-variable "custom_listener_protocol" {
+variable "drb_listener_protocol" {
   default = "TCP"
 }
 
-variable "custom_listener_port" {
+variable "drb_listener_port" {
+  default = ""
+}
+
+variable "xmpp_listener_enabled" {
+  default = "false"
+}
+
+variable "xmpp_listener_protocol" {
+  default = "TCP"
+}
+
+variable "xmpp_listener_port" {
   default = ""
 }
 

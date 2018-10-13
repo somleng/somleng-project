@@ -25,19 +25,19 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${join(",", var.private_subnets)}"
+    value     = "${join(",", var.ec2_subnets)}"
   }
 
   setting {
-    namespace = "aws:ec2:vpc"
-    name      = "ELBSubnets"
-    value     = "${join(",", var.public_subnets)}"
+    namespace = "${length(var.elb_subnets) == 0 ? local.default_namespace : "aws:ec2:vpc"}"
+    name      = "${length(var.elb_subnets) == 0 ? local.default_env_name : "ELBSubnets"}"
+    value     = "${join(",", var.elb_subnets)}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "AssociatePublicIpAddress"
-    value     = "false"
+    value     = "${var.associate_public_ip_address}"
   }
 
   setting {
@@ -240,18 +240,22 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
 
   ################### EB Environment ###################
   # https://amzn.to/2FR9RTu
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name      = "EnvironmentType"
+    value     = "${var.environment_type}"
+  }
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name      = "ServiceRole"
     value     = "${var.service_role}"
   }
-
   setting {
     namespace = "${var.load_balancer_type == "" || !local.is_web_tier ? local.default_namespace : "aws:elasticbeanstalk:environment"}"
     name      = "${var.load_balancer_type == "" || !local.is_web_tier ? local.default_env_name : "LoadBalancerType"}"
     value     = "${var.load_balancer_type}"
   }
-
   ################### Listener ###################
   # https://amzn.to/2GzHQiB
   # Default Listener
@@ -260,9 +264,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${!local.is_web_tier ? local.default_env_name : "ListenerEnabled"}"
     value     = "${!local.is_web_tier ? "" : "${var.default_listener_enabled}"}"
   }
-
   # SSL Listener
-
   setting {
     namespace = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:443"}"
     name      = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "ListenerEnabled"}"
@@ -285,26 +287,31 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "SSLPolicy"}"
     value     = "${var.ssl_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.ssl_security_policy}"}"
   }
-
-  # Custom Listener
-
+  # DRb Listener
   setting {
-    namespace = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:${var.custom_listener_port}"}"
-    name      = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "ListenerEnabled"}"
-    value     = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.custom_listener_enabled}"}"
+    namespace = "${var.drb_listener_enabled == "false" ? local.default_namespace : "aws:elbv2:listener:${var.drb_listener_port}"}"
+    name      = "${var.drb_listener_enabled == "false" ? local.default_env_name : "ListenerEnabled"}"
+    value     = "${var.drb_listener_enabled == "false" ? "" : "${var.drb_listener_enabled}"}"
   }
   setting {
-    namespace = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_namespace : "aws:elbv2:listener:${var.custom_listener_port}"}"
-    name      = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? local.default_env_name : "Protocol"}"
-    value     = "${var.custom_listener_enabled == "false" || !local.is_web_tier ? "" : "${var.custom_listener_protocol}"}"
+    namespace = "${var.drb_listener_enabled == "false" ? local.default_namespace : "aws:elbv2:listener:${var.drb_listener_port}"}"
+    name      = "${var.drb_listener_enabled == "false" ? local.default_env_name : "Protocol"}"
+    value     = "${var.drb_listener_enabled == "false" ? "" : "${var.drb_listener_protocol}"}"
   }
-
+  # XMPP Listener
+  setting {
+    namespace = "${var.xmpp_listener_enabled == "false" ? local.default_namespace : "aws:elbv2:listener:${var.xmpp_listener_port}"}"
+    name      = "${var.xmpp_listener_enabled == "false" ? local.default_env_name : "ListenerEnabled"}"
+    value     = "${var.xmpp_listener_enabled == "false" ? "" : "${var.xmpp_listener_enabled}"}"
+  }
+  setting {
+    namespace = "${var.xmpp_listener_enabled == "false" ? local.default_namespace : "aws:elbv2:listener:${var.xmpp_listener_port}"}"
+    name      = "${var.xmpp_listener_enabled == "false" ? local.default_env_name : "Protocol"}"
+    value     = "${var.xmpp_listener_enabled == "false" ? "" : "${var.xmpp_listener_protocol}"}"
+  }
   ################### ENV Vars ###################
   # https://amzn.to/2Ez6CgW
-
-
   # Defaults
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AWS_REGION"
@@ -315,9 +322,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "EB_TIER"
     value     = "${var.tier}"
   }
-
   # Rails Specific
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.rails_skip_asset_compilation == "" ? local.default_env_name : "RAILS_SKIP_ASSET_COMPILATION"}"
@@ -348,9 +353,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.db_pool == "" ? local.default_env_name : "DB_POOL"}"
     value     = "${var.db_pool}"
   }
-
   # Application Specific
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.s3_access_key_id == "" ? local.default_env_name : "AWS_S3_ACCESS_KEY_ID"}"
@@ -421,9 +424,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "DEFAULT_QUEUE_URL"
     value     = "${local.is_web_tier ? "${var.default_queue_url}" : "`{\"Ref\" : \"AWSEBWorkerQueue\"}`"}"
   }
-
   # Twilreapi Specific
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.outbound_call_drb_uri == "" ? local.default_env_name : "OUTBOUND_CALL_DRB_URI"}"
@@ -459,9 +460,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.status_callback_notifier_job_queue_url == "" ? local.default_env_name : "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
     value     = "${var.status_callback_notifier_job_queue_url}"
   }
-
   # SCFM Specific
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.fetch_remote_call_job_queue_url == "" ? local.default_env_name : "FETCH_REMOTE_CALL_JOB_QUEUE_URL"}"
@@ -487,9 +486,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.audio_bucket == "" ? local.default_env_name : "AUDIO_BUCKET"}"
     value     = "${var.audio_bucket}"
   }
-
   # Somleng Adhearsion Specific
-
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.adhearsion_app == "false" || var.adhearsion_env == "" ? local.default_env_name : "AHN_ENV"}"

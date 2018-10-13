@@ -8,9 +8,8 @@ module "eb_worker" {
   tier                = "Worker"
 
   # VPC
-  vpc_id          = "${var.vpc_id}"
-  private_subnets = "${var.private_subnets}"
-  public_subnets  = "${var.public_subnets}"
+  vpc_id      = "${var.vpc_id}"
+  ec2_subnets = "${var.ec2_subnets}"
 
   # EC2 Settings
   security_groups   = "${var.security_groups}"
@@ -68,9 +67,9 @@ module "eb_web" {
   tier                = "WebServer"
 
   # VPC
-  vpc_id          = "${var.vpc_id}"
-  private_subnets = "${var.private_subnets}"
-  public_subnets  = "${var.public_subnets}"
+  vpc_id      = "${var.vpc_id}"
+  elb_subnets = "${var.elb_subnets}"
+  ec2_subnets = "${var.ec2_subnets}"
 
   # EC2 Settings
   security_groups   = "${var.security_groups}"

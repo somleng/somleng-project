@@ -8,7 +8,6 @@ locals {
   twilreapi_identifier          = "somleng-twilreapi"
   twilreapi_major_ruby_version  = "2.5"
   twilreapi_route53_record_name = "somleng"
-  twilreapi_url_host            = "https://${local.twilreapi_route53_record_name}.${local.route53_domain_name}"
   twilreapi_db_pool             = "32"
 
   twilreapi_db_master_password = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gGjECePCTl7S3tMcnMtc3V9AAAAdTBzBgkqhkiG9w0BBwagZjBkAgEAMF8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMcs3PCKpQF+68Gb/9AgEQgDLfOVD4Iz3at8TmcWZ4rpecR19IrJ0ydBHtQo3t3RZVT7V/U/iWlza82UJrVIHqyNiz8w=="
@@ -20,13 +19,21 @@ locals {
 locals {
   somleng_adhearsion_route53_record_name = "somleng-adhearsion"
   somleng_adhearsion_identifier          = "somleng-adhearsion"
-  somleng_adhearsion_core_host           = "13.228.195.243"                                                                                                                                                                                                                                           # change me
+  somleng_adhearsion_core_host           = "13.228.195.243"
   somleng_adhearsion_core_port           = "5222"
-  somleng_adhearsion_core_username       = "adhearsion@rayo.unicef.io"                                                                                                                                                                                                                                # change me
-  somleng_adhearsion_core_password       = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gG+QcUcAPqVJnQBvfWSa6wSAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAtHDfHreuPO4dLJBAgEQgDt97ajlIvCma05ag+7JonZ4r5RlPyJQu6CwOuR4IxxmvPWBkUzhtvNOckmrAb4dBMwsaUgMuuGA3P6xDw==" # change me
+  somleng_adhearsion_core_username       = "adhearsion@rayo.unicef.io"
+  somleng_adhearsion_core_password       = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gG+QcUcAPqVJnQBvfWSa6wSAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAtHDfHreuPO4dLJBAgEQgDt97ajlIvCma05ag+7JonZ4r5RlPyJQu6CwOuR4IxxmvPWBkUzhtvNOckmrAb4dBMwsaUgMuuGA3P6xDw=="
   somleng_adhearsion_drb_port            = "9050"
   somleng_adhearsion_deploy_repo         = "somleng/somleng-adhearsion"
   somleng_adhearsion_deploy_branch       = "somleng.unicef.io"
+}
+
+locals {
+  somleng_freeswitch_identifier               = "somleng-freeswitch"
+  somleng_freeswitch_xmpp_port                = "5222"
+  somleng_freeswitch_deploy_repo              = "somleng/freeswitch-config"
+  somleng_freeswitch_deploy_branch            = "somleng.unicef.io"
+  somleng_freeswitch_load_balancer_identifier = "sflb"
 }
 
 locals {
