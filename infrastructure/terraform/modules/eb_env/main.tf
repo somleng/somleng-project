@@ -460,6 +460,16 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.status_callback_notifier_job_queue_url == "" ? local.default_env_name : "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
     value     = "${var.status_callback_notifier_job_queue_url}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.twilreapi_admin_basic_auth_user == "" ? local.default_env_name : "ADMIN_BASIC_AUTH_USER"}"
+    value     = "${var.twilreapi_admin_basic_auth_user}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.twilreapi_admin_basic_auth_password == "" ? local.default_env_name : "ADMIN_BASIC_AUTH_PASSWORD"}"
+    value     = "${var.twilreapi_admin_basic_auth_password}"
+  }
   # SCFM Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -526,5 +536,46 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.adhearsion_app == "false" || var.adhearsion_twilio_rest_api_phone_call_events_url == "" ? local.default_env_name : "AHN_TWILIO_REST_API_PHONE_CALL_EVENTS_URL"}"
     value     = "${var.adhearsion_twilio_rest_api_phone_call_events_url}"
+  }
+  # Somleng FreeSWITCH Specific
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_external_ip == "" ? local.default_env_name : "FS_EXTERNAL_IP"}"
+    value     = "${var.fs_external_ip}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_rayo_port == "" ? local.default_env_name : "FS_MOD_RAYO_PORT"}"
+    value     = "${var.fs_mod_rayo_port}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_rayo_domain_name == "" ? local.default_env_name : "FS_MOD_RAYO_DOMAIN_NAME"}"
+    value     = "${var.fs_mod_rayo_domain_name}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_rayo_user == "" ? local.default_env_name : "FS_MOD_RAYO_USER"}"
+    value     = "${var.fs_mod_rayo_user}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_rayo_password == "" ? local.default_env_name : "FS_MOD_RAYO_PASSWORD"}"
+    value     = "${var.fs_mod_rayo_password}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_rayo_shared_secret == "" ? local.default_env_name : "FS_MOD_RAYO_SHARED_SECRET"}"
+    value     = "${var.fs_mod_rayo_shared_secret}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_json_cdr_url == "" ? local.default_env_name : "FS_MOD_JSON_CDR_URL"}"
+    value     = "${var.fs_mod_json_cdr_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_mod_json_cdr_cred == "" ? local.default_env_name : "FS_MOD_JSON_CDR_CRED"}"
+    value     = "${var.fs_mod_json_cdr_cred}"
   }
 }

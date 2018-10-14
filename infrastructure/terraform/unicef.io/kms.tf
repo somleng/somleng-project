@@ -24,7 +24,17 @@ data "aws_kms_secrets" "secrets" {
   }
 
   secret {
-    name    = "somleng_adhearsion_core_password"
-    payload = "${local.somleng_adhearsion_core_password}"
+    name    = "somleng_freeswitch_mod_rayo_password"
+    payload = "${local.somleng_freeswitch_mod_rayo_encrypted_password}"
+  }
+
+  secret {
+    name    = "somleng_freeswitch_mod_rayo_shared_secret"
+    payload = "${local.somleng_freeswitch_mod_rayo_encrypted_shared_secret}"
+  }
+
+  secret {
+    name    = "twilreapi_admin_basic_auth_password"
+    payload = "${local.twilreapi_admin_basic_auth_encrypted_password}"
   }
 }

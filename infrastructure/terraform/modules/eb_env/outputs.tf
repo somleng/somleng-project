@@ -16,3 +16,7 @@ output "cname" {
 output "autoscaling_groups" {
   value = "${aws_elastic_beanstalk_environment.eb_env.autoscaling_groups}"
 }
+
+output "instances" {
+  value = "${aws_elastic_beanstalk_environment.eb_env.instances}"
+}

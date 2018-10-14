@@ -272,6 +272,14 @@ variable "status_callback_notifier_job_queue_url" {
   default = ""
 }
 
+variable "twilreapi_admin_basic_auth_user" {
+  default = ""
+}
+
+variable "twilreapi_admin_basic_auth_password" {
+  default = ""
+}
+
 ### SCFM
 
 variable "fetch_remote_call_job_queue_url" {
@@ -329,5 +337,43 @@ variable "adhearsion_twilio_rest_api_phone_calls_url" {
 }
 
 variable "adhearsion_twilio_rest_api_phone_call_events_url" {
+  default = ""
+}
+
+# Somleng FreeSWITCH
+
+variable "freeswitch_app" {
+  default = "false"
+}
+
+variable "fs_external_ip" {
+  default = ""
+}
+
+variable "fs_mod_rayo_port" {
+  default = ""
+}
+
+variable "fs_mod_rayo_domain_name" {
+  default = ""
+}
+
+variable "fs_mod_rayo_user" {
+  default = ""
+}
+
+variable "fs_mod_rayo_password" {
+  default = ""
+}
+
+variable "fs_mod_rayo_shared_secret" {
+  default = ""
+}
+
+variable "fs_mod_json_cdr_url" {
+  default = ""
+}
+
+variable "fs_mod_json_cdr_cred" {
   default = ""
 }

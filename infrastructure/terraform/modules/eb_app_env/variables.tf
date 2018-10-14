@@ -188,6 +188,14 @@ variable "status_callback_notifier_job_queue_url" {
   default = ""
 }
 
+variable "twilreapi_admin_basic_auth_user" {
+  default = ""
+}
+
+variable "twilreapi_admin_basic_auth_password" {
+  default = ""
+}
+
 ### SCFM
 
 variable "fetch_remote_call_job_queue_url" {

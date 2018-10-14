@@ -24,3 +24,12 @@ module "route53_record_somleng_adhearsion" {
   alias_dns_name       = "${module.somleng_adhearsion_webserver.cname}"
   alias_hosted_zone_id = "${local.eb_zone_id}"
 }
+
+module "route53_record_somleng_freeswitch" {
+  source = "../modules/route53_alias_record"
+
+  hosted_zone_id       = "${aws_route53_zone.internal.zone_id}"
+  record_name          = "${local.somleng_freeswitch_route53_record_name}"
+  alias_dns_name       = "${module.somleng_freeswitch_webserver.cname}"
+  alias_hosted_zone_id = "${local.eb_zone_id}"
+}
