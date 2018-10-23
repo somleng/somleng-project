@@ -188,11 +188,11 @@ variable "status_callback_notifier_job_queue_url" {
   default = ""
 }
 
-variable "twilreapi_admin_basic_auth_user" {
+variable "twilreapi_internal_api_http_auth_user" {
   default = ""
 }
 
-variable "twilreapi_admin_basic_auth_password" {
+variable "twilreapi_internal_api_http_auth_password" {
   default = ""
 }
 

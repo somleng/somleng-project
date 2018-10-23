@@ -10,12 +10,12 @@ locals {
   twilreapi_route53_record_name = "somleng"
   twilreapi_db_pool             = "32"
 
-  twilreapi_db_master_password                  = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gGjECePCTl7S3tMcnMtc3V9AAAAdTBzBgkqhkiG9w0BBwagZjBkAgEAMF8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMcs3PCKpQF+68Gb/9AgEQgDLfOVD4Iz3at8TmcWZ4rpecR19IrJ0ydBHtQo3t3RZVT7V/U/iWlza82UJrVIHqyNiz8w=="
-  twilreapi_rails_master_key                    = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gHMMf0HnYWU760xBU3k2XCBAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMk8+tXcuR3lNUJfmeAgEQgDuDe0ZuQD24V9SwqCkASfU56nkmJeJqe7f9z9nqum6f0L1jrzEK3WubzCjhJq9YS7RjFOAs04anIzx5aA=="
-  twilreapi_deploy_repo                         = "somleng/twilreapi"
-  twilreapi_deploy_branch                       = "somleng.unicef.io"
-  twilreapi_admin_basic_auth_user               = "admin"
-  twilreapi_admin_basic_auth_encrypted_password = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gGyh4ynRy7SuVvRcw7YGE2EAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMh1TYHbWstMbnhdumAgEQgDtVF8kpJSLTEBVJ+S0+euGMeiSO0UBN39m/v7iLlyMs2HxVQ97KVP5wAi8JLTyEhWrlrghvQsXBn29BoQ=="
+  twilreapi_db_master_password                        = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gGjECePCTl7S3tMcnMtc3V9AAAAdTBzBgkqhkiG9w0BBwagZjBkAgEAMF8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMcs3PCKpQF+68Gb/9AgEQgDLfOVD4Iz3at8TmcWZ4rpecR19IrJ0ydBHtQo3t3RZVT7V/U/iWlza82UJrVIHqyNiz8w=="
+  twilreapi_rails_master_key                          = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gHMMf0HnYWU760xBU3k2XCBAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMk8+tXcuR3lNUJfmeAgEQgDuDe0ZuQD24V9SwqCkASfU56nkmJeJqe7f9z9nqum6f0L1jrzEK3WubzCjhJq9YS7RjFOAs04anIzx5aA=="
+  twilreapi_deploy_repo                               = "somleng/twilreapi"
+  twilreapi_deploy_branch                             = "somleng.unicef.io"
+  twilreapi_internal_api_http_auth_user               = "admin"
+  twilreapi_internal_api_http_auth_encrypted_password = "AQICAHgs11zuKnnKl+eQEK6tg6GtBF2O7KMpmfiRNwqCJR1W5gGyh4ynRy7SuVvRcw7YGE2EAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMh1TYHbWstMbnhdumAgEQgDtVF8kpJSLTEBVJ+S0+euGMeiSO0UBN39m/v7iLlyMs2HxVQ97KVP5wAi8JLTyEhWrlrghvQsXBn29BoQ=="
 }
 
 locals {

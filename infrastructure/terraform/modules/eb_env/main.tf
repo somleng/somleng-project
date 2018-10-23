@@ -462,13 +462,13 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.twilreapi_admin_basic_auth_user == "" ? local.default_env_name : "ADMIN_BASIC_AUTH_USER"}"
-    value     = "${var.twilreapi_admin_basic_auth_user}"
+    name      = "${var.twilreapi_internal_api_http_auth_user == "" ? local.default_env_name : "INTERNAL_API_HTTP_AUTH_USER"}"
+    value     = "${var.twilreapi_internal_api_http_auth_user}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.twilreapi_admin_basic_auth_password == "" ? local.default_env_name : "ADMIN_BASIC_AUTH_PASSWORD"}"
-    value     = "${var.twilreapi_admin_basic_auth_password}"
+    name      = "${var.twilreapi_internal_api_http_auth_password == "" ? local.default_env_name : "INTERNAL_API_HTTP_AUTH_PASSWORD"}"
+    value     = "${var.twilreapi_internal_api_http_auth_password}"
   }
   # SCFM Specific
   setting {

@@ -116,9 +116,9 @@ module "eb_web" {
   smtp_enable_starttls_auto     = "${var.smtp_enable_starttls_auto}"
 
   ## Twilreapi Specific
-  outbound_call_job_queue_url         = "${var.outbound_call_job_queue_url}"
-  twilreapi_admin_basic_auth_user     = "${var.twilreapi_admin_basic_auth_user}"
-  twilreapi_admin_basic_auth_password = "${var.twilreapi_admin_basic_auth_password}"
+  outbound_call_job_queue_url               = "${var.outbound_call_job_queue_url}"
+  twilreapi_internal_api_http_auth_user     = "${var.twilreapi_internal_api_http_auth_user}"
+  twilreapi_internal_api_http_auth_password = "${var.twilreapi_internal_api_http_auth_password}"
 
   ## SCFM Specific
   fetch_remote_call_job_queue_url   = "${var.fetch_remote_call_job_queue_url}"

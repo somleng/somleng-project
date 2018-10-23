@@ -1,7 +1,7 @@
 locals {
   twilreapi_url_host                        = "https://${local.twilreapi_route53_record_name}.${local.route53_domain_name}"
   twilreapi_db_host                         = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
-  twilreapi_admin_basic_auth_password       = "${data.aws_kms_secrets.secrets.plaintext["twilreapi_admin_basic_auth_password"]}"
+  twilreapi_internal_api_http_auth_password = "${data.aws_kms_secrets.secrets.plaintext["twilreapi_internal_api_http_auth_password"]}"
   somleng_adhearsion_drb_host               = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
   somleng_freeswitch_xmpp_host              = "${module.route53_record_somleng_freeswitch.fqdn}"
   somleng_freeswitch_mod_rayo_password      = "${data.aws_kms_secrets.secrets.plaintext["somleng_freeswitch_mod_rayo_password"]}"
@@ -54,10 +54,10 @@ module "twilreapi_eb_app_env" {
   smtp_password        = "${module.ses.smtp_password}"
 
   ### Twilreapi Specific
-  outbound_call_drb_uri               = "${local.somleng_adhearsion_drb_host}"
-  outbound_call_job_queue_url         = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
-  twilreapi_admin_basic_auth_user     = "${local.twilreapi_admin_basic_auth_user}"
-  twilreapi_admin_basic_auth_password = "${local.twilreapi_admin_basic_auth_password}"
+  outbound_call_drb_uri                     = "${local.somleng_adhearsion_drb_host}"
+  outbound_call_job_queue_url               = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
+  twilreapi_internal_api_http_auth_user     = "${local.twilreapi_internal_api_http_auth_user}"
+  twilreapi_internal_api_http_auth_password = "${local.twilreapi_internal_api_http_auth_password}"
 }
 
 module "twilreapi_eb_outbound_call_worker_env" {
@@ -227,15 +227,15 @@ module "somleng_freeswitch_webserver" {
 
   # FreeSWITCH Specific
 
-  freeswitch_app = "true"
-  fs_external_ip = "${aws_eip.freeswitch.public_ip}"
+  freeswitch_app            = "true"
+  fs_external_ip            = "${aws_eip.freeswitch.public_ip}"
   fs_mod_rayo_port          = "${local.somleng_freeswitch_xmpp_port}"
   fs_mod_rayo_domain_name   = "${local.somleng_freeswitch_mod_rayo_domain_name}"
   fs_mod_rayo_user          = "${local.somleng_freeswitch_mod_rayo_user}"
   fs_mod_rayo_password      = "${local.somleng_freeswitch_mod_rayo_password}"
   fs_mod_rayo_shared_secret = "${local.somleng_freeswitch_mod_rayo_shared_secret}"
-  fs_mod_json_cdr_url  = "${local.twilreapi_url_host}/api/admin/call_data_records"
-  fs_mod_json_cdr_cred = "${local.twilreapi_admin_basic_auth_user}:${local.twilreapi_admin_basic_auth_password}"
+  fs_mod_json_cdr_url       = "${local.twilreapi_url_host}/api/admin/call_data_records"
+  fs_mod_json_cdr_cred      = "${local.twilreapi_internal_api_http_auth_user}:${local.twilreapi_internal_api_http_auth_password}"
 }
 
 module "somleng_freeswitch_deploy" {

@@ -34,7 +34,7 @@ data "aws_kms_secrets" "secrets" {
   }
 
   secret {
-    name    = "twilreapi_admin_basic_auth_password"
-    payload = "${local.twilreapi_admin_basic_auth_encrypted_password}"
+    name    = "twilreapi_internal_api_http_auth_password"
+    payload = "${local.twilreapi_internal_api_http_auth_encrypted_password}"
   }
 }
