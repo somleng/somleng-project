@@ -1,5 +1,6 @@
 locals {
   twilreapi_url_host                        = "https://${local.twilreapi_route53_record_name}.${local.route53_domain_name}"
+  twilreapi_internal_api_host               = "https://${local.twilreapi_internal_api_http_auth_user}:${local.twilreapi_internal_api_http_auth_password}@${local.twilreapi_route53_record_name}.${local.route53_domain_name}/api/internal"
   twilreapi_db_host                         = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
   twilreapi_internal_api_http_auth_password = "${data.aws_kms_secrets.secrets.plaintext["twilreapi_internal_api_http_auth_password"]}"
   somleng_adhearsion_drb_host               = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
@@ -164,8 +165,8 @@ module "somleng_adhearsion_webserver" {
   adhearsion_core_username                         = "${local.somleng_adhearsion_core_username}"
   adhearsion_core_password                         = "${local.somleng_freeswitch_mod_rayo_password}"
   adhearsion_drb_port                              = "${local.somleng_adhearsion_drb_port}"
-  adhearsion_twilio_rest_api_phone_calls_url       = "${local.twilreapi_url_host}/api/admin/phone_calls"
-  adhearsion_twilio_rest_api_phone_call_events_url = "${local.twilreapi_url_host}/api/admin/phone_call_events"
+  adhearsion_twilio_rest_api_phone_calls_url       = "${local.twilreapi_internal_api_host}/phone_calls"
+  adhearsion_twilio_rest_api_phone_call_events_url = "${local.twilreapi_internal_api_host}/phone_call_events"
 }
 
 module "somleng_adhearsion_deploy" {
