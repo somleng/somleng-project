@@ -235,7 +235,7 @@ module "somleng_freeswitch_webserver" {
   fs_mod_rayo_user          = "${local.somleng_freeswitch_mod_rayo_user}"
   fs_mod_rayo_password      = "${local.somleng_freeswitch_mod_rayo_password}"
   fs_mod_rayo_shared_secret = "${local.somleng_freeswitch_mod_rayo_shared_secret}"
-  fs_mod_json_cdr_url       = "${local.twilreapi_url_host}/api/admin/call_data_records"
+  fs_mod_json_cdr_url       = "${local.twilreapi_url_host}/api/internal/call_data_records"
   fs_mod_json_cdr_cred      = "${local.twilreapi_internal_api_http_auth_user}:${local.twilreapi_internal_api_http_auth_password}"
 }
 
