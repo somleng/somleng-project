@@ -1,6 +1,7 @@
 locals {
-  twilreapi_url_host                        = "https://${local.twilreapi_route53_record_name}.${local.route53_domain_name}"
-  twilreapi_internal_api_host               = "https://${local.twilreapi_internal_api_http_auth_user}:${local.twilreapi_internal_api_http_auth_password}@${local.twilreapi_route53_record_name}.${local.route53_domain_name}/api/internal"
+  twilreapi_fqdn                            = "${local.twilreapi_route53_record_name}.${local.route53_domain_name}"
+  twilreapi_internal_api_fqdn               = "${local.twilreapi_fqdn}/api/internal"
+  twilreapi_internal_api_credentials        = "${local.twilreapi_internal_api_http_auth_user}:${local.twilreapi_internal_api_http_auth_password}"
   twilreapi_db_host                         = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
   twilreapi_internal_api_http_auth_password = "${data.aws_kms_secrets.secrets.plaintext["twilreapi_internal_api_http_auth_password"]}"
   somleng_adhearsion_drb_host               = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
@@ -50,7 +51,7 @@ module "twilreapi_eb_app_env" {
   s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
   s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
   uploads_bucket       = "${aws_s3_bucket.cdr.id}"
-  default_url_host     = "${local.twilreapi_url_host}"
+  default_url_host     = "https://${local.twilreapi_fqdn}"
   smtp_username        = "${module.ses.smtp_username}"
   smtp_password        = "${module.ses.smtp_password}"
 
@@ -97,7 +98,7 @@ module "twilreapi_eb_outbound_call_worker_env" {
   s3_secret_access_key        = "${module.s3_iam.s3_secret_access_key}"
   uploads_bucket              = "${aws_s3_bucket.cdr.id}"
   process_active_elastic_jobs = "true"
-  default_url_host            = "${local.twilreapi_url_host}"
+  default_url_host            = "https://${local.twilreapi_fqdn}"
   smtp_username               = "${module.ses.smtp_username}"
   smtp_password               = "${module.ses.smtp_password}"
 
@@ -165,8 +166,8 @@ module "somleng_adhearsion_webserver" {
   adhearsion_core_username                         = "${local.somleng_adhearsion_core_username}"
   adhearsion_core_password                         = "${local.somleng_freeswitch_mod_rayo_password}"
   adhearsion_drb_port                              = "${local.somleng_adhearsion_drb_port}"
-  adhearsion_twilio_rest_api_phone_calls_url       = "${local.twilreapi_internal_api_host}/phone_calls"
-  adhearsion_twilio_rest_api_phone_call_events_url = "${local.twilreapi_internal_api_host}/phone_call_events"
+  adhearsion_twilio_rest_api_phone_calls_url       = "https://${local.twilreapi_internal_api_credentials}@${local.twilreapi_internal_api_fqdn}/phone_calls"
+  adhearsion_twilio_rest_api_phone_call_events_url = "https://${local.twilreapi_internal_api_credentials}@${local.twilreapi_internal_api_fqdn}/phone_call_events"
 }
 
 module "somleng_adhearsion_deploy" {
@@ -235,8 +236,8 @@ module "somleng_freeswitch_webserver" {
   fs_mod_rayo_user          = "${local.somleng_freeswitch_mod_rayo_user}"
   fs_mod_rayo_password      = "${local.somleng_freeswitch_mod_rayo_password}"
   fs_mod_rayo_shared_secret = "${local.somleng_freeswitch_mod_rayo_shared_secret}"
-  fs_mod_json_cdr_url       = "${local.twilreapi_url_host}/api/internal/call_data_records"
-  fs_mod_json_cdr_cred      = "${local.twilreapi_internal_api_http_auth_user}:${local.twilreapi_internal_api_http_auth_password}"
+  fs_mod_json_cdr_url       = "https://${local.twilreapi_internal_api_fqdn}/call_data_records"
+  fs_mod_json_cdr_cred      = "${local.twilreapi_internal_api_credentials}"
 }
 
 module "somleng_freeswitch_deploy" {
