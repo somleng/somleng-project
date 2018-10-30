@@ -2,7 +2,7 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: 29 October 2018
+Last updated: 30 October 2018
 
 Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Contributions and improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
@@ -57,7 +57,7 @@ In order to share information and get feedback about the program, a voice-based 
 
 ### Cost Concerns
 
-The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [$0.7680 per minute](https://www.twilio.com/voice/pricing/so). To date AVF have sent around [75.1 K](http://rtd.somleng.org) minutes worth of calls which would equate to [$57,676.80](http://rtd.somleng.org) on Twilio.
+The price for terminating a call through [Twilio](https://www.twilio.com/) in Somalia is [$0.7680 per minute](https://www.twilio.com/voice/pricing/so). To date AVF have sent around [75.3 K](http://rtd.somleng.org) minutes worth of calls which would equate to [$57,857.28](http://rtd.somleng.org) on Twilio.
 
 In order to reduce costs and promote local businesses, AVF partnered with [Shaqodoon](http://shaqodoon.org/technology/), a local company which provides aggregation for Mobile Network Operators (MNOs) in Somalia. In comparison, Shaqodoon's pricing is between $0.04 and $0.07 per minute depending on the MNO.
 
@@ -74,7 +74,7 @@ In order to solve the first problem, AVF partnered with [UNICEF](https://www.uni
 
 The final problem that remained was how to deliver the calls through Shaqodoon.
 
-Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved [$54,312.57 (94%)](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/so).
+Somleng is the missing piece of the puzzle. Somleng (which RapidPro connects out of the box) allows you to connect to the MNO, Telco or Aggregator of your choice. AVF used Somleng to connect Shaqodoon and have so far saved [$54,493.05 (94%)](http://rtd.somleng.org) if [compared with Twilio](https://www.twilio.com/voice/pricing/so).
 
 ### Scaling Issues
 
