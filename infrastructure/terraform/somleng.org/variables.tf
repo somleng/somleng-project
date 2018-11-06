@@ -5,11 +5,12 @@ locals {
 }
 
 locals {
-  twilreapi_identifier          = "somleng-twilreapi"
-  twilreapi_major_ruby_version  = "2.5"
-  twilreapi_route53_record_name = "twilreapi"
-  twilreapi_db_pool             = "32"
+  rails_db_pool = "32"
+}
 
+locals {
+  twilreapi_identifier          = "somleng-twilreapi"
+  twilreapi_route53_record_name = "twilreapi"
   twilreapi_deploy_repo                 = "somleng/twilreapi"
   twilreapi_deploy_branch               = "master"
   twilreapi_internal_api_http_auth_user = "admin"
@@ -32,6 +33,11 @@ locals {
   somleng_adhearsion_drb_port            = "9050"
   somleng_adhearsion_deploy_repo         = "somleng/somleng-adhearsion"
   somleng_adhearsion_deploy_branch       = "master"
+}
+
+locals {
+  scfm_route53_record_name =     "scfm"
+  scfm_identifier          = "somleng-scfm"
 }
 
 locals {

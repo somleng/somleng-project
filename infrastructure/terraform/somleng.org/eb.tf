@@ -5,16 +5,30 @@ locals {
   twilreapi_db_host                         = "postgres://${module.twilreapi_db.db_username}:${module.twilreapi_db.db_password}@${module.twilreapi_db.db_instance_endpoint}/${module.twilreapi_db.db_instance_name}"
   twilreapi_internal_api_http_auth_password = "${data.aws_ssm_parameter.twilreapi_rails_internal_api_http_auth_password.value}"
   twilreapi_rails_master_key                = "${data.aws_ssm_parameter.twilreapi_rails_master_key.value}"
+}
+
+locals {
   somleng_adhearsion_drb_host               = "druby://${module.route53_record_somleng_adhearsion.fqdn}:${local.somleng_adhearsion_drb_port}"
   somleng_freeswitch_xmpp_host              = "${module.route53_record_somleng_freeswitch.fqdn}"
   somleng_freeswitch_mod_rayo_password      = "${data.aws_ssm_parameter.freeswitch_mod_rayo_password.value}"
   somleng_freeswitch_mod_rayo_shared_secret = "${data.aws_ssm_parameter.freeswitch_mod_rayo_shared_secret.value}"
 }
 
+locals {
+  scfm_fqdn = "${local.scfm_route53_record_name}.${local.route53_domain_name}"
+  scfm_rails_master_key = "${data.aws_ssm_parameter.scfm_rails_master_key.value}"
+  scfm_db_host                         = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
+}
+
+module "eb_solution_stack" {
+  source             = "../modules/eb_solution_stacks"
+  major_ruby_version = "2.5"
+}
+
 module "twilreapi_eb_app" {
   source = "../modules/eb_app"
 
-  app_identifier   = "somleng-twilreapi"
+  app_identifier   = "${local.twilreapi_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
@@ -23,7 +37,7 @@ module "twilreapi_eb_app_env" {
 
   # General Settings
   app_name            = "${module.twilreapi_eb_app.app_name}"
-  solution_stack_name = "${module.twilreapi_eb_solution_stack.ruby_name}"
+  solution_stack_name = "${module.eb_solution_stack.ruby_name}"
   env_identifier      = "${local.twilreapi_identifier}"
 
   # VPC
@@ -48,7 +62,7 @@ module "twilreapi_eb_app_env" {
   ## Rails Specific
   rails_master_key = "${local.twilreapi_rails_master_key}"
   database_url     = "${local.twilreapi_db_host}"
-  db_pool          = "${local.twilreapi_db_pool}"
+  db_pool          = "${local.rails_db_pool}"
 
   ## Application Specific
   s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
@@ -70,7 +84,7 @@ module "twilreapi_eb_outbound_call_worker_env" {
 
   # General Settings
   app_name            = "${module.twilreapi_eb_app.app_name}"
-  solution_stack_name = "${module.twilreapi_eb_solution_stack.ruby_name}"
+  solution_stack_name = "${module.eb_solution_stack.ruby_name}"
   env_identifier      = "${local.twilreapi_identifier}-caller"
   tier                = "Worker"
 
@@ -94,7 +108,7 @@ module "twilreapi_eb_outbound_call_worker_env" {
   rails_env        = "production"
   rails_master_key = "${local.twilreapi_rails_master_key}"
   database_url     = "${local.twilreapi_db_host}"
-  db_pool          = "${local.twilreapi_db_pool}"
+  db_pool          = "${local.rails_db_pool}"
 
   ## Application Specific
   s3_access_key_id            = "${module.s3_iam.s3_access_key_id}"
@@ -121,7 +135,7 @@ module "twilreapi_deploy" {
 module "somleng_adhearsion_eb_app" {
   source = "../modules/eb_app"
 
-  app_identifier   = "somleng-adhearsion"
+  app_identifier   = "${local.somleng_adhearsion_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
@@ -130,7 +144,7 @@ module "somleng_adhearsion_webserver" {
 
   # General Settings
   app_name            = "${module.somleng_adhearsion_eb_app.app_name}"
-  solution_stack_name = "${module.somleng_adhearsion_eb_solution_stack.multi_container_docker_name}"
+  solution_stack_name = "${module.eb_solution_stack.multi_container_docker_name}"
   env_identifier      = "${local.somleng_adhearsion_identifier}"
   tier                = "WebServer"
 
@@ -187,7 +201,7 @@ module "somleng_adhearsion_deploy" {
 module "somleng_freeswitch_eb_app" {
   source = "../modules/eb_app"
 
-  app_identifier   = "somleng-freeswitch"
+  app_identifier   = "${local.somleng_freeswitch_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
@@ -196,7 +210,7 @@ module "somleng_freeswitch_webserver" {
 
   # General Settings
   app_name            = "${module.somleng_freeswitch_eb_app.app_name}"
-  solution_stack_name = "${module.somleng_freeswitch_eb_solution_stack.multi_container_docker_name}"
+  solution_stack_name = "${module.eb_solution_stack.multi_container_docker_name}"
   env_identifier      = "${local.somleng_freeswitch_identifier}"
   tier                = "WebServer"
 
@@ -253,5 +267,68 @@ module "somleng_freeswitch_deploy" {
   eb_env_id    = "${module.somleng_freeswitch_webserver.id}"
   repo         = "${local.somleng_freeswitch_deploy_repo}"
   branch       = "${local.somleng_freeswitch_deploy_branch}"
+  travis_token = "${var.travis_token}"
+}
+
+module "scfm_eb_app" {
+  source = "../modules/eb_app"
+
+  app_identifier   = "${local.scfm_identifier}"
+  service_role_arn = "${module.eb_iam.eb_service_role_arn}"
+}
+
+module "scfm_eb_app_env" {
+  source = "../modules/eb_app_env"
+
+  # General Settings
+  app_name            = "${module.scfm_eb_app.app_name}"
+  solution_stack_name = "${module.eb_solution_stack.ruby_name}"
+  env_identifier      = "${local.scfm_identifier}"
+
+  # VPC
+  vpc_id          = "${module.vpc.vpc_id}"
+  ec2_subnets  = "${module.vpc.private_subnets}"
+  elb_subnets  = "${module.vpc.public_subnets}"
+
+  # EC2 Settings
+  security_groups      = ["${module.scfm_db.security_group}"]
+  web_instance_type    = "t2.micro"
+  worker_instance_type = "t2.small"
+  ec2_instance_role    = "${module.eb_iam.eb_ec2_instance_role}"
+
+  # Elastic Beanstalk Environment
+  service_role = "${module.eb_iam.eb_service_role}"
+
+  # Listener
+  ssl_certificate_id = "${aws_acm_certificate.certificate.arn}"
+
+  # ENV Vars
+  ## Defaults
+  aws_region = "${var.aws_region}"
+
+  ## Rails Specific
+  rails_env        = "production"
+  rails_master_key = "${local.scfm_rails_master_key}"
+  database_url     = "${local.scfm_db_host}"
+  db_pool          = "${local.rails_db_pool}"
+
+  ## Application Specific
+  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket                = "${aws_s3_bucket.uploads.id}"
+  default_url_host              = "https://${local.scfm_fqdn}"
+  smtp_username                 = "${module.ses.smtp_username}"
+  smtp_password                 = "${module.ses.smtp_password}"
+
+  ### SCFM Specific
+  audio_bucket = "${aws_s3_bucket.audio.id}"
+}
+
+module "scfm_deploy" {
+  source = "../modules/deploy"
+
+  eb_env_id    = "${module.scfm_eb_app_env.web_id}"
+  repo         = "${local.scfm_deploy_repo}"
+  branch       = "${local.scfm_deploy_branch}"
   travis_token = "${var.travis_token}"
 }

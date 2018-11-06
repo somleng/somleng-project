@@ -8,3 +8,14 @@ module "twilreapi_db" {
   vpc_id               = "${module.vpc.vpc_id}"
   db_subnet_group_name = "${module.vpc.database_subnet_group}"
 }
+
+module "scfm_db" {
+  source = "../modules/rds"
+
+  env_identifier = "${local.scfm_identifier}"
+
+  master_password = "${data.aws_ssm_parameter.scfm_db_master_password.value}"
+
+  vpc_id               = "${module.vpc.vpc_id}"
+  db_subnet_group_name = "${module.vpc.database_subnet_group}"
+}
