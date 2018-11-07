@@ -38,6 +38,8 @@ locals {
 locals {
   scfm_route53_record_name =     "scfm"
   scfm_identifier          = "somleng-scfm"
+  scfm_deploy_repo = "somleng/somleng-scfm"
+  scfm_deploy_branch = "master"
 }
 
 locals {
