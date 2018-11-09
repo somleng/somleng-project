@@ -34,6 +34,15 @@ module "route53_record_somleng_freeswitch" {
   alias_hosted_zone_id = "${local.eb_zone_id}"
 }
 
+module "route53_record_scfm" {
+  source = "../modules/route53_alias_record"
+
+  hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
+  record_name          = "${local.scfm_route53_record_name}"
+  alias_dns_name       = "${module.scfm_eb_app_env.web_cname}"
+  alias_hosted_zone_id = "${local.eb_zone_id}"
+}
+
 # For GSuite
 resource "aws_route53_record" "somleng_org_mx" {
   zone_id = "${aws_route53_zone.somleng_org.zone_id}"
