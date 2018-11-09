@@ -186,7 +186,7 @@ module "somleng_adhearsion_webserver" {
   adhearsion_core_password                         = "${local.somleng_freeswitch_mod_rayo_password}"
   adhearsion_drb_port                              = "${local.somleng_adhearsion_drb_port}"
   adhearsion_twilio_rest_api_phone_calls_url       = "https://${local.twilreapi_internal_api_credentials}@${local.twilreapi_internal_api_fqdn}/phone_calls"
-  adhearsion_twilio_rest_api_phone_call_events_url = "https://${local.twilreapi_internal_api_credentials}@${local.twilreapi_internal_api_fqdn}/phone_call_events"
+  adhearsion_twilio_rest_api_phone_call_events_url = "https://${local.twilreapi_internal_api_credentials}@${local.twilreapi_internal_api_fqdn}/phone_calls/:phone_call_id/phone_call_events"
 }
 
 module "somleng_adhearsion_deploy" {
