@@ -155,7 +155,7 @@ module "somleng_adhearsion_webserver" {
   elb_scheme  = "internal"
 
   # EC2 Settings
-  instance_type     = "t2.micro"
+  instance_type     = "t2.small"
   ec2_instance_role = "${module.eb_iam.eb_ec2_instance_role}"
 
   # Elastic Beanstalk Environment
