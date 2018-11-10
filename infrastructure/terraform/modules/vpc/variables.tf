@@ -40,3 +40,11 @@ variable "enable_dns_hostnames" {
 variable "enable_dns_support" {
   default = true
 }
+
+variable "enable_nat_gateway" {
+  default = true
+}
+
+variable "single_nat_gateway" {
+  default = true
+}

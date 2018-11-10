@@ -8,4 +8,5 @@ module "vpc" {
   private_subnets  = "${local.vpc_private_subnet_cidr_blocks}"
   public_subnets   = "${local.vpc_public_subnet_cidr_blocks}"
   database_subnets = "${local.vpc_database_subnet_cidr_blocks}"
+  enable_nat_gateway = false
 }
