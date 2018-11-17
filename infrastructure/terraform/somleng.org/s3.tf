@@ -3,10 +3,17 @@ locals {
   cdr_bucket = "cdr.${local.route53_domain_name}"
   audio_bucket = "audio.${local.route53_domain_name}"
   uploads_bucket = "uploads.${local.route53_domain_name}"
+  backups_bucket = "backups.${local.route53_domain_name}"
 }
 
 resource "aws_s3_bucket" "ci_deploy" {
   bucket = "${local.deploy_bucket}"
+  acl    = "private"
+  region = "${var.aws_region}"
+}
+
+resource "aws_s3_bucket" "backups" {
+  bucket = "${local.backups_bucket}"
   acl    = "private"
   region = "${var.aws_region}"
 }

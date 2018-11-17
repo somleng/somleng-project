@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+EB_RUN_BINARY = "eb_run".freeze
+PG_CLIENT_VERSION = "postgresql96".freeze
+
+LOCAL_ENV_IDENTIFIER = "local".freeze
+ENV_IDENTIFIERS = ["scfm"].freeze
+VALID_TARGET_ENV_IDENTIFIERS = [LOCAL_ENV_IDENTIFIER].freeze
+
+require "optparse"
+
+options = {
+  env_identifier: ENV_IDENTIFIERS.first,
+  target_env_identifier: LOCAL_ENV_IDENTIFIER
+}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: db_sync [-e environment-identifier]"
+
+  opts.on("-e", "--env environment-identifier", "e.g. #{ENV_IDENTIFIERS.join(', ')} (default: #{ENV_IDENTIFIERS.first})") do |env_identifier|
+    options[:env_identifier] = env_identifier
+  end
+
+  opts.on("-t", "--target environment-identifier", "e.g. #{VALID_TARGET_ENV_IDENTIFIERS.join(', ')} (default: #{LOCAL_ENV_IDENTIFIER})") do |target_env_identifier|
+    options[:target_env_identifier] = target_env_identifier
+  end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+end.parse!
+
+unless ENV_IDENTIFIERS.include?(options.fetch(:env_identifier))
+  abort "Invalid environment-identifier specified. You specified: #{options.fetch(:env_identifier)}, valid identifiers are: #{ENV_IDENTIFIERS.join(', ')}"
+end
+
+unless VALID_TARGET_ENV_IDENTIFIERS.include?(options.fetch(:target_env_identifier))
+  abort "Invalid target environment-identifier specified. You specified: #{options.fetch(:target_env_identifier)}, valid identifiers are: #{VALID_TARGET_ENV_IDENTIFIERS.join(', ')}"
+end
+
+pg_dump_filename = [
+  options.fetch(:env_identifier),
+  Time.now.to_i
+].join("_") + ".dump"
+
+s3_file_path = "s3://backups.somleng.org/db/#{pg_dump_filename}"
+local_dump_file = "/tmp/#{pg_dump_filename}"
+
+setup_remote_commands = [
+  "sudo yum -y install #{PG_CLIENT_VERSION}",
+  "EB_SUPPORT_DIR=$(/opt/elasticbeanstalk/bin/get-config container -k support_dir)",
+  "EB_SCRIPT_DIR=$(/opt/elasticbeanstalk/bin/get-config container -k script_dir)",
+  "EB_APP_DEPLOY_DIR=$(/opt/elasticbeanstalk/bin/get-config container -k app_deploy_dir)",
+  "source $EB_SUPPORT_DIR/envvars",
+  "source $EB_SCRIPT_DIR/use-app-ruby.sh"
+]
+download_db_dump_command = "aws s3 cp #{s3_file_path} #{local_dump_file}"
+
+def instance_name(env_identifier)
+  "somleng-#{env_identifier}-webserver"
+end
+
+def eb_run(commands, instance_name)
+  `#{__dir__}/#{EB_RUN_BINARY} '#{Array(commands).join(" && ")}' -n #{instance_name} -m bash`
+end
+
+def restore_db_command(database_url, local_dump_file)
+  # don't care about the result of pg_restore
+  "pg_restore --verbose --clean --no-acl --no-owner -d #{database_url} #{local_dump_file}; echo"
+end
+
+puts eb_run(
+  setup_remote_commands + [
+    "pg_dump -Fc $DATABASE_URL > latest.dump",
+    "aws s3 cp latest.dump #{s3_file_path}",
+    "rm latest.dump"
+  ],
+  instance_name(options.fetch(:env_identifier))
+)
+
+if options.fetch(:target_env_identifier) == LOCAL_ENV_IDENTIFIER
+  `#{download_db_dump_command} && #{restore_db_command("postgres://localhost:5432/somleng_#{options.fetch(:env_identifier)}_development", local_dump_file)}`
+else
+  puts eb_run(
+    setup_remote_commands + [
+      download_db_dump_command,
+      restore_db_command("$DATABASE_URL", local_dump_file),
+      "cd $EB_APP_DEPLOY_DIR && ./bin/rails db:migrate",
+      "rm #{local_dump_file}",
+      "echo done"
+    ],
+    instance_name(options.fetch(:target_env_identifier))
+  )
+end
