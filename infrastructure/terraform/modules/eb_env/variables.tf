@@ -377,3 +377,7 @@ variable "fs_mod_json_cdr_url" {
 variable "fs_mod_json_cdr_cred" {
   default = ""
 }
+
+variable "fs_core_loglevel" {
+  default = "notice"
+}

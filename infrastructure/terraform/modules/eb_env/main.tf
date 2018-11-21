@@ -578,4 +578,9 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "${var.freeswitch_app == "false" || var.fs_mod_json_cdr_cred == "" ? local.default_env_name : "FS_MOD_JSON_CDR_CRED"}"
     value     = "${var.fs_mod_json_cdr_cred}"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.freeswitch_app == "false" || var.fs_core_loglevel == "" ? local.default_env_name : "FS_CORE_LOGLEVEL"}"
+    value     = "${var.freeswitch_app == "false" ? "" : var.fs_core_loglevel}"
+  }
 }
