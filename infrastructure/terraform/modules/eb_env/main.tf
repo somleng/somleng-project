@@ -317,6 +317,12 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
     name      = "AWS_REGION"
     value     = "${var.aws_region}"
   }
+  # For AWS CLI https://docs.aws.amazon.com/cli/latest/userguide/cli-environment.html
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AWS_DEFAULT_REGION"
+    value     = "${var.aws_region}"
+  }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "EB_TIER"
