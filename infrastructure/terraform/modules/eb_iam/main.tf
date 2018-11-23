@@ -86,3 +86,8 @@ resource "aws_iam_role_policy_attachment" "ssm" {
   role       = "${aws_iam_role.eb_ec2_instance_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
+
+resource "aws_iam_role_policy_attachment" "polly" {
+  role       = "${aws_iam_role.eb_ec2_instance_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonPollyFullAccess"
+}
