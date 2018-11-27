@@ -438,33 +438,8 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.aws_sns_message_processor_job_queue_url == "" ? local.default_env_name : "AWS_SNS_MESSAGE_PROCESSOR_JOB_QUEUE_URL"}"
-    value     = "${var.aws_sns_message_processor_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.call_data_record_job_queue_url == "" ? local.default_env_name : "CALL_DATA_RECORD_JOB_QUEUE_URL"}"
-    value     = "${var.call_data_record_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.outbound_call_job_queue_url == "" ? local.default_env_name : "OUTBOUND_CALL_JOB_QUEUE_URL"}"
-    value     = "${var.outbound_call_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.recording_processor_job_queue_url == "" ? local.default_env_name : "RECORDING_PROCESSOR_JOB_QUEUE_URL"}"
-    value     = "${var.recording_processor_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.recording_status_callback_notifier_job_queue_url == "" ? local.default_env_name : "RECORDING_STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
-    value     = "${var.recording_status_callback_notifier_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.status_callback_notifier_job_queue_url == "" ? local.default_env_name : "STATUS_CALLBACK_NOTIFIER_JOB_QUEUE_URL"}"
-    value     = "${var.status_callback_notifier_job_queue_url}"
+    name      = "${var.initiate_outbound_call_queue_url == "" ? local.default_env_name : "INITIATE_OUTBOUND_CALL_QUEUE_URL"}"
+    value     = "${var.initiate_outbound_call_queue_url}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"

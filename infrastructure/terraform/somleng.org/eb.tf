@@ -15,9 +15,9 @@ locals {
 }
 
 locals {
-  scfm_fqdn = "${local.scfm_route53_record_name}.${local.route53_domain_name}"
+  scfm_fqdn             = "${local.scfm_route53_record_name}.${local.route53_domain_name}"
   scfm_rails_master_key = "${data.aws_ssm_parameter.scfm_rails_master_key.value}"
-  scfm_db_host                         = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
+  scfm_db_host          = "postgres://${module.scfm_db.db_username}:${module.scfm_db.db_password}@${module.scfm_db.db_instance_endpoint}/${module.scfm_db.db_instance_name}"
 }
 
 module "eb_solution_stack" {
@@ -74,7 +74,7 @@ module "twilreapi_eb_app_env" {
 
   ### Twilreapi Specific
   outbound_call_drb_uri                     = "${local.somleng_adhearsion_drb_host}"
-  outbound_call_job_queue_url               = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
+  initiate_outbound_call_queue_url          = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
   twilreapi_internal_api_http_auth_user     = "${local.twilreapi_internal_api_http_auth_user}"
   twilreapi_internal_api_http_auth_password = "${local.twilreapi_internal_api_http_auth_password}"
 }
@@ -286,9 +286,9 @@ module "scfm_eb_app_env" {
   env_identifier      = "${local.scfm_identifier}"
 
   # VPC
-  vpc_id          = "${module.vpc.vpc_id}"
-  ec2_subnets  = "${module.vpc.private_subnets}"
-  elb_subnets  = "${module.vpc.public_subnets}"
+  vpc_id      = "${module.vpc.vpc_id}"
+  ec2_subnets = "${module.vpc.private_subnets}"
+  elb_subnets = "${module.vpc.public_subnets}"
 
   # EC2 Settings
   security_groups      = ["${module.scfm_db.security_group}"]
@@ -313,12 +313,12 @@ module "scfm_eb_app_env" {
   db_pool          = "${local.rails_db_pool}"
 
   ## Application Specific
-  s3_access_key_id              = "${module.s3_iam.s3_access_key_id}"
-  s3_secret_access_key          = "${module.s3_iam.s3_secret_access_key}"
-  uploads_bucket                = "${aws_s3_bucket.uploads.id}"
-  default_url_host              = "https://${local.scfm_fqdn}"
-  smtp_username                 = "${module.ses.smtp_username}"
-  smtp_password                 = "${module.ses.smtp_password}"
+  s3_access_key_id     = "${module.s3_iam.s3_access_key_id}"
+  s3_secret_access_key = "${module.s3_iam.s3_secret_access_key}"
+  uploads_bucket       = "${aws_s3_bucket.uploads.id}"
+  default_url_host     = "https://${local.scfm_fqdn}"
+  smtp_username        = "${module.ses.smtp_username}"
+  smtp_password        = "${module.ses.smtp_password}"
 
   ### SCFM Specific
   audio_bucket = "${aws_s3_bucket.audio.id}"

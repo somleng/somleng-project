@@ -1,7 +1,7 @@
 locals {
-  deploy_bucket = "deploy.${local.route53_domain_name}"
-  cdr_bucket = "cdr.${local.route53_domain_name}"
-  audio_bucket = "audio.${local.route53_domain_name}"
+  deploy_bucket  = "deploy.${local.route53_domain_name}"
+  cdr_bucket     = "cdr.${local.route53_domain_name}"
+  audio_bucket   = "audio.${local.route53_domain_name}"
   uploads_bucket = "uploads.${local.route53_domain_name}"
   backups_bucket = "backups.${local.route53_domain_name}"
 }

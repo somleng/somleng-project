@@ -9,8 +9,8 @@ locals {
 }
 
 locals {
-  twilreapi_identifier          = "somleng-twilreapi"
-  twilreapi_route53_record_name = "twilreapi"
+  twilreapi_identifier                  = "somleng-twilreapi"
+  twilreapi_route53_record_name         = "twilreapi"
   twilreapi_deploy_repo                 = "somleng/twilreapi"
   twilreapi_deploy_branch               = "master"
   twilreapi_internal_api_http_auth_user = "admin"
@@ -36,10 +36,10 @@ locals {
 }
 
 locals {
-  scfm_route53_record_name =     "scfm"
+  scfm_route53_record_name = "scfm"
   scfm_identifier          = "somleng-scfm"
-  scfm_deploy_repo = "somleng/somleng-scfm"
-  scfm_deploy_branch = "master"
+  scfm_deploy_repo         = "somleng/somleng-scfm"
+  scfm_deploy_branch       = "master"
 }
 
 locals {
