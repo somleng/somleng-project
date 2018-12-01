@@ -443,6 +443,11 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "${var.initiate_outbound_call_queue_url == "" ? local.default_env_name : "OUTBOUND_CALL_JOB_QUEUE_URL"}"
+    value     = "${var.initiate_outbound_call_queue_url}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.twilreapi_internal_api_http_auth_user == "" ? local.default_env_name : "INTERNAL_API_HTTP_AUTH_USER"}"
     value     = "${var.twilreapi_internal_api_http_auth_user}"
   }

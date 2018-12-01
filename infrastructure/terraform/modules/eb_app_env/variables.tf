@@ -164,27 +164,7 @@ variable "outbound_call_drb_uri" {
   default = ""
 }
 
-variable "aws_sns_message_processor_job_queue_url" {
-  default = ""
-}
-
-variable "call_data_record_job_queue_url" {
-  default = ""
-}
-
-variable "outbound_call_job_queue_url" {
-  default = ""
-}
-
-variable "recording_processor_job_queue_url" {
-  default = ""
-}
-
-variable "recording_status_callback_notifier_job_queue_url" {
-  default = ""
-}
-
-variable "status_callback_notifier_job_queue_url" {
+variable "initiate_outbound_call_queue_url" {
   default = ""
 }
 

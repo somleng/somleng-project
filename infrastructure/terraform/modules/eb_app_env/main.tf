@@ -50,8 +50,8 @@ module "eb_worker" {
   smtp_enable_starttls_auto     = "${var.smtp_enable_starttls_auto}"
 
   ## Twilreapi Specific
-  outbound_call_drb_uri       = "${var.outbound_call_drb_uri}"
-  outbound_call_job_queue_url = "${var.outbound_call_job_queue_url}"
+  outbound_call_drb_uri            = "${var.outbound_call_drb_uri}"
+  initiate_outbound_call_queue_url = "${var.initiate_outbound_call_queue_url}"
 
   ## SCFM Specific
   audio_bucket = "${var.audio_bucket}"
@@ -116,7 +116,7 @@ module "eb_web" {
   smtp_enable_starttls_auto     = "${var.smtp_enable_starttls_auto}"
 
   ## Twilreapi Specific
-  outbound_call_job_queue_url               = "${var.outbound_call_job_queue_url}"
+  initiate_outbound_call_queue_url          = "${var.initiate_outbound_call_queue_url}"
   twilreapi_internal_api_http_auth_user     = "${var.twilreapi_internal_api_http_auth_user}"
   twilreapi_internal_api_http_auth_password = "${var.twilreapi_internal_api_http_auth_password}"
 
