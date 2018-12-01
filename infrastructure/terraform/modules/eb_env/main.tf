@@ -443,8 +443,8 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.outbound_call_job_queue_url == "" ? local.default_env_name : "OUTBOUND_CALL_JOB_QUEUE_URL"}"
-    value     = "${var.outbound_call_job_queue_url}"
+    name      = "${var.initiate_outbound_call_queue_url == "" ? local.default_env_name : "OUTBOUND_CALL_JOB_QUEUE_URL"}"
+    value     = "${var.initiate_outbound_call_queue_url}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
