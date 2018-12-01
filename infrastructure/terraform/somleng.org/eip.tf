@@ -12,5 +12,5 @@ resource "aws_eip_association" "freeswitch" {
 }
 
 module "associate_eip" {
-  source                            = "../modules/associate_eip"
+  source = "../modules/associate_eip"
 }

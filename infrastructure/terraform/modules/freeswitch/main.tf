@@ -26,7 +26,7 @@ resource "aws_security_group" "sg" {
 }
 
 module "eb_solution_stack" {
-  source             = "../eb_solution_stacks"
+  source = "../eb_solution_stacks"
 }
 
 module "eb_env" {
@@ -104,7 +104,7 @@ resource "aws_autoscaling_lifecycle_hook" "terminate_instance" {
 
 resource "aws_cloudwatch_event_rule" "terminate_instance" {
   name        = "${var.env_identifier}-associate-eip"
-  description =  "Associate Elastic IP"
+  description = "Associate Elastic IP"
 
   event_pattern = <<PATTERN
 {

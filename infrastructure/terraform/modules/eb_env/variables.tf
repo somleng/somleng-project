@@ -252,10 +252,6 @@ variable "initiate_outbound_call_queue_url" {
   default = ""
 }
 
-variable "outbound_call_job_queue_url" {
-  default = ""
-}
-
 variable "twilreapi_internal_api_http_auth_user" {
   default = ""
 }
