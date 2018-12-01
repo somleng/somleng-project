@@ -71,7 +71,6 @@ resource "aws_lambda_function" "associate_eip" {
 
   environment {
     variables = {
-      EIP_ALLOCATION_ID = "${var.eip_allocation_id}"
       EVENT_DETAIL_TYPE = "${local.event_detail_type}"
     }
   }
@@ -83,43 +82,8 @@ data "archive_file" "associate_eip_source_code" {
   output_path = "${local.path_to_lambda_archive}"
 }
 
-resource "aws_autoscaling_lifecycle_hook" "terminate_instance" {
-  name                   = "terminate-instance-hook"
-  autoscaling_group_name = "${var.autoscaling_group}"
-  default_result         = "CONTINUE"
-  heartbeat_timeout      = 120
-  lifecycle_transition   = "autoscaling:EC2_INSTANCE_TERMINATING"
-}
-
-resource "aws_cloudwatch_event_rule" "terminate_instance" {
-  name        = "${var.cloudwatch_event_rule_name}"
-  description = "${var.cloudwatch_event_rule_description}"
-
-  event_pattern = <<PATTERN
-{
-  "source": [
-    "aws.autoscaling"
-  ],
-  "detail-type": [
-    "${local.event_detail_type}"
-  ],
-  "detail": {
-    "AutoScalingGroupName": [
-      "${var.autoscaling_group}"
-    ]
-  }
-}
-PATTERN
-}
-
 resource "aws_lambda_permission" "cloudwatch_events" {
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.associate_eip.function_name}"
   principal     = "events.amazonaws.com"
-  source_arn    = "${aws_cloudwatch_event_rule.terminate_instance.arn}"
-}
-
-resource "aws_cloudwatch_event_target" "lambda" {
-  rule = "${aws_cloudwatch_event_rule.terminate_instance.name}"
-  arn  = "${aws_lambda_function.associate_eip.arn}"
 }

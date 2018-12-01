@@ -13,8 +13,4 @@ resource "aws_eip_association" "freeswitch" {
 
 module "associate_eip" {
   source                            = "../modules/associate_eip"
-  eip_allocation_id                 = "${aws_eip.freeswitch.id}"
-  autoscaling_group                 = "${element(module.somleng_freeswitch_webserver.autoscaling_groups, 0)}"
-  cloudwatch_event_rule_name        = "freeswitch-instance-terminated"
-  cloudwatch_event_rule_description = "Runs when a FreeSWITCH instance is terminated by the autoscaling group"
 }

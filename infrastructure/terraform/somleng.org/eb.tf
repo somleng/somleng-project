@@ -75,6 +75,7 @@ module "twilreapi_eb_app_env" {
   ### Twilreapi Specific
   outbound_call_drb_uri                     = "${local.somleng_adhearsion_drb_host}"
   initiate_outbound_call_queue_url          = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
+  outbound_call_job_queue_url               = "${module.twilreapi_eb_outbound_call_worker_env.aws_sqs_queue_url}"
   twilreapi_internal_api_http_auth_user     = "${local.twilreapi_internal_api_http_auth_user}"
   twilreapi_internal_api_http_auth_password = "${local.twilreapi_internal_api_http_auth_password}"
 }

@@ -172,6 +172,10 @@ variable "call_data_record_job_queue_url" {
   default = ""
 }
 
+variable "initiate_outbound_call_queue_url" {
+  default = ""
+}
+
 variable "outbound_call_job_queue_url" {
   default = ""
 }
