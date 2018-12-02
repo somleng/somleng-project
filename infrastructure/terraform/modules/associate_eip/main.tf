@@ -50,6 +50,7 @@ resource "aws_iam_role_policy" "lambda_associate_eip" {
       "Action": [
         "ec2:AssociateAddress",
         "ec2:DescribeAddresses",
+        "ec2:DescribeInstances",
         "autoscaling:DescribeAutoScalingGroups",
         "autoscaling:CompleteLifecycleAction"
       ],
