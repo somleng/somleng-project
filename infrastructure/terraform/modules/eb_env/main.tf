@@ -13,6 +13,7 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   application         = "${var.app_name}"
   tier                = "${var.tier}"
   solution_stack_name = "${var.solution_stack_name}"
+  tags                = "${var.tags}"
 
   ################### VPC ###################
   # https://amzn.to/2JzNUcK

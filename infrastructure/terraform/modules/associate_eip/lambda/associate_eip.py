@@ -13,29 +13,42 @@ def lambda_handler(event, context):
   if event["detail-type"] != os.environ['EVENT_DETAIL_TYPE']:
     return
 
-  log("Processing Event")
+  log("Processing Cloudwatch Event")
 
   instance_id = event['detail']['EC2InstanceId']
-  LifecycleHookName=event['detail']['LifecycleHookName']
-  AutoScalingGroupName=event['detail']['AutoScalingGroupName']
+  lifecycle_hook_name = event['detail']['LifecycleHookName']
+  autoscaling_group_name = event['detail']['AutoScalingGroupName']
 
   in_service_instance_id = get_in_service_instance_id(AutoScalingGroupName)
+  tag_allocation_id = get_instance_tag(in_service_instance_id, os.environ.get('EIP_ALLOCATION_ID_TAG_KEY'))
+  allocation_id = tag_allocation_id or os.environ['EIP_ALLOCATION_ID']
+
   associate_address(in_service_instance_id)
 
-  complete_lifecycle_action_success(LifecycleHookName, AutoScalingGroupName, instance_id)
+  complete_lifecycle_action_success(lifecycle_hook_name, autoscaling_group_name, instance_id)
 
 def get_in_service_instance_id(asg_group_name):
   response = asg_client.describe_auto_scaling_groups(
-  AutoScalingGroupNames=[asg_group_name]
+    AutoScalingGroupNames=[asg_group_name]
   )
 
   in_service_instances = filter(lambda x: x["LifecycleState"] == "InService", response['AutoScalingGroups'][0]['Instances'])
 
   return in_service_instances[0]["InstanceId"] if in_service_instances else None
 
-def associate_address(instance_id):
+def get_instance_tag(instance_id, tag_key):
+  if tag_key is None:
+    return None
+
+  instance_details = ec2_client.describe_instances(InstanceIds=[instance_id])
+  tags = instance_details["Reservations"][0]["Instances"][0]["Tags"]
+  filtered_tags = filter(lambda t: t["Key"] == tag_key, tags)
+
+  return filtered_tags[0]["Value"] if filtered_tags else None
+
+def associate_address(instance_id, allocation_id):
   response = ec2_client.associate_address(
-    AllocationId=os.environ['EIP_ALLOCATION_ID'],
+    AllocationId=allocation_id,
     InstanceId=instance_id
   )
 
