@@ -17,13 +17,14 @@ locals {
 }
 
 locals {
-  somleng_freeswitch_route53_record_name  = "somleng-freeswitch"
-  somleng_freeswitch_identifier           = "somleng-freeswitch"
-  somleng_freeswitch_xmpp_port            = "5222"
-  somleng_freeswitch_mod_rayo_domain_name = "rayo.somleng.org"
-  somleng_freeswitch_mod_rayo_user        = "rayo"
-  somleng_freeswitch_deploy_repo          = "somleng/freeswitch-config"
-  somleng_freeswitch_deploy_branch        = "master"
+  somleng_freeswitch_route53_record_name     = "somleng-freeswitch"
+  somleng_freeswitch_identifier              = "somleng-freeswitch"
+  somleng_freeswitch_xmpp_port               = "5222"
+  somleng_freeswitch_mod_rayo_domain_name    = "rayo.somleng.org"
+  somleng_freeswitch_mod_rayo_user           = "rayo"
+  somleng_freeswitch_deploy_repo             = "somleng/freeswitch-config"
+  somleng_freeswitch_deploy_branch           = "master"
+  somleng_freeswitch_simulator_deploy_branch = "simulator"
 }
 
 locals {

@@ -23,7 +23,7 @@ module "freeswitch_simulator" {
   eip_allocation_id_tag_key       = "${module.associate_eip.eip_allocation_id_tag_key}"
 
   deploy_repo   = "${local.somleng_freeswitch_deploy_repo}"
-  deploy_branch = "${local.somleng_freeswitch_deploy_branch}"
+  deploy_branch = "${local.somleng_freeswitch_simulator_deploy_branch}"
   travis_token  = "${var.travis_token}"
 }
 
