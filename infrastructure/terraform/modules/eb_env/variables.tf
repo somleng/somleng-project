@@ -14,6 +14,11 @@ variable "tier" {
   description = "Elastic Beanstalk tier"
 }
 
+variable "tags" {
+  default = {}
+  type = "map"
+}
+
 # VPC Settings
 
 variable "vpc_id" {}

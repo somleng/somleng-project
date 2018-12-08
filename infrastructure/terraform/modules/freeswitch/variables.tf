@@ -15,6 +15,7 @@ variable "ec2_instance_role" {}
 variable "eb_service_role" {}
 variable "associate_eip_event_detail_type" {}
 variable "associate_eip_lambda_arn" {}
+variable "eip_allocation_id_tag_key" {}
 
 variable "elb_scheme" {
   default = "internal"

@@ -13,7 +13,7 @@ def lambda_handler(event, context):
   if event["detail-type"] != os.environ['EVENT_DETAIL_TYPE']:
     return
 
-  log("Processing Event")
+  log("Processing Cloudwatch Event")
 
   instance_id = event['detail']['EC2InstanceId']
   lifecycle_hook_name = event['detail']['LifecycleHookName']

@@ -37,6 +37,9 @@ module "eb_env" {
   solution_stack_name = "${module.eb_solution_stack.multi_container_docker_name}"
   env_identifier      = "${var.env_identifier}"
   tier                = "WebServer"
+  tags = {
+    "${var.eip_allocation_id_tag_key}" = "${aws_eip.eip.id}"
+  }
 
   # VPC
   vpc_id                      = "${var.vpc_id}"

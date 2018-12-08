@@ -7,6 +7,7 @@ locals {
   path_to_lambda_source  = "${path.module}/lambda/associate_eip.py"
   path_to_lambda_archive = "${path.module}/lambda/associate_eip.zip"
   event_detail_type      = "EC2 Instance-terminate Lifecycle Action"
+  eip_allocation_id_tag_key = "eip:allocation_id"
 }
 
 resource "aws_iam_role" "lambda_associate_eip" {
@@ -73,6 +74,7 @@ resource "aws_lambda_function" "associate_eip" {
   environment {
     variables = {
       EVENT_DETAIL_TYPE = "${local.event_detail_type}"
+      EIP_ALLOCATION_ID_TAG_KEY = "${local.eip_allocation_id_tag_key}"
     }
   }
 }

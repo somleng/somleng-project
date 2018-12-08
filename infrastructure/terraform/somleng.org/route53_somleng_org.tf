@@ -30,7 +30,7 @@ module "route53_record_somleng_freeswitch" {
 
   hosted_zone_id       = "${aws_route53_zone.internal.zone_id}"
   record_name          = "${local.somleng_freeswitch_route53_record_name}"
-  alias_dns_name       = "${module.somleng_freeswitch_webserver.cname}"
+  alias_dns_name       = "${module.freeswitch_main.cname}"
   alias_hosted_zone_id = "${local.eb_zone_id}"
 }
 
