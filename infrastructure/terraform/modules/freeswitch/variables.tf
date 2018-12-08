@@ -17,6 +17,10 @@ variable "associate_eip_event_detail_type" {}
 variable "associate_eip_lambda_arn" {}
 variable "eip_allocation_id_tag_key" {}
 
+variable "deploy_repo" {}
+variable "deploy_branch" {}
+variable "travis_token" {}
+
 variable "elb_scheme" {
   default = "internal"
 }

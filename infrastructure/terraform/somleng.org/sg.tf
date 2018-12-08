@@ -3,10 +3,10 @@ resource "aws_security_group_rule" "freeswitch_main" {
   from_port   = 5060
   to_port     = 5060
   protocol    = "udp"
-  cidr_blocks = ["${module.freeswitch_simulator.public_ip}/32"]
+  cidr_blocks = ["${module.freeswitch_main.public_ip}/32"]
   description = "FreeSWITCH Main"
 
-  security_group_id = "${module.freeswitch_main.security_group_id}"
+  security_group_id = "${module.freeswitch_simulator.security_group_id}"
 }
 
 resource "aws_security_group_rule" "telesom" {

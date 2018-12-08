@@ -16,7 +16,7 @@ variable "tier" {
 
 variable "tags" {
   default = {}
-  type = "map"
+  type    = "map"
 }
 
 # VPC Settings
