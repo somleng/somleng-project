@@ -79,6 +79,7 @@ module "eb_env" {
   # FreeSWITCH Specific
 
   freeswitch_app            = "true"
+  fs_simulator              = "${var.simulator}"
   fs_external_ip            = "${aws_eip.eip.public_ip}"
   fs_mod_rayo_port          = "${var.xmpp_port}"
   fs_mod_rayo_domain_name   = "${var.mod_rayo_domain_name}"

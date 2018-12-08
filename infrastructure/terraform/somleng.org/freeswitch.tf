@@ -25,6 +25,7 @@ module "freeswitch_simulator" {
   deploy_repo   = "${local.somleng_freeswitch_deploy_repo}"
   deploy_branch = "${local.somleng_freeswitch_simulator_deploy_branch}"
   travis_token  = "${var.travis_token}"
+  simulator     = "true"
 }
 
 module "freeswitch_main" {

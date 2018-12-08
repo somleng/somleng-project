@@ -366,3 +366,7 @@ variable "fs_mod_json_cdr_cred" {
 variable "fs_core_loglevel" {
   default = "notice"
 }
+
+variable "fs_simulator" {
+  default = ""
+}

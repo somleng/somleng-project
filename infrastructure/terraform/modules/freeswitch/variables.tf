@@ -21,6 +21,10 @@ variable "deploy_repo" {}
 variable "deploy_branch" {}
 variable "travis_token" {}
 
+variable "simulator" {
+  default = "false"
+}
+
 variable "elb_scheme" {
   default = "internal"
 }
