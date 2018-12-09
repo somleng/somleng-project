@@ -178,22 +178,6 @@ variable "twilreapi_internal_api_http_auth_password" {
 
 ### SCFM
 
-variable "fetch_remote_call_job_queue_url" {
-  default = ""
-}
-
-variable "queue_remote_call_job_queue_url" {
-  default = ""
-}
-
-variable "run_batch_operation_job_queue_url" {
-  default = ""
-}
-
-variable "scheduler_job_queue_url" {
-  default = ""
-}
-
 variable "audio_bucket" {
   default = ""
 }

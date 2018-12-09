@@ -460,26 +460,6 @@ resource "aws_elastic_beanstalk_environment" "eb_env" {
   # SCFM Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.fetch_remote_call_job_queue_url == "" ? local.default_env_name : "FETCH_REMOTE_CALL_JOB_QUEUE_URL"}"
-    value     = "${var.fetch_remote_call_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.queue_remote_call_job_queue_url == "" ? local.default_env_name : "QUEUE_REMOTE_CALL_JOB_QUEUE_URL"}"
-    value     = "${var.queue_remote_call_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.run_batch_operation_job_queue_url == "" ? local.default_env_name : "RUN_BATCH_OPERATION_JOB_QUEUE_URL"}"
-    value     = "${var.run_batch_operation_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "${var.scheduler_job_queue_url == "" ? local.default_env_name : "SCHEDULER_JOB_QUEUE_URL"}"
-    value     = "${var.scheduler_job_queue_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "${var.audio_bucket == "" ? local.default_env_name : "AUDIO_BUCKET"}"
     value     = "${var.audio_bucket}"
   }

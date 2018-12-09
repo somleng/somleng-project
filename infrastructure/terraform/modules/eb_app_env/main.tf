@@ -121,9 +121,5 @@ module "eb_web" {
   twilreapi_internal_api_http_auth_password = "${var.twilreapi_internal_api_http_auth_password}"
 
   ## SCFM Specific
-  fetch_remote_call_job_queue_url   = "${var.fetch_remote_call_job_queue_url}"
-  queue_remote_call_job_queue_url   = "${var.queue_remote_call_job_queue_url}"
-  run_batch_operation_job_queue_url = "${var.run_batch_operation_job_queue_url}"
-  scheduler_job_queue_url           = "${var.scheduler_job_queue_url}"
-  audio_bucket                      = "${var.audio_bucket}"
+  audio_bucket = "${var.audio_bucket}"
 }
