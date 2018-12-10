@@ -19,11 +19,10 @@ def lambda_handler(event, context):
   lifecycle_hook_name = event['detail']['LifecycleHookName']
   autoscaling_group_name = event['detail']['AutoScalingGroupName']
 
-  in_service_instance_id = get_in_service_instance_id(AutoScalingGroupName)
-  tag_allocation_id = get_instance_tag(in_service_instance_id, os.environ.get('EIP_ALLOCATION_ID_TAG_KEY'))
-  allocation_id = tag_allocation_id or os.environ['EIP_ALLOCATION_ID']
+  in_service_instance_id = get_in_service_instance_id(autoscaling_group_name)
+  allocation_id = get_instance_tag(in_service_instance_id, os.environ.get('EIP_ALLOCATION_ID_TAG_KEY'))
 
-  associate_address(in_service_instance_id)
+  associate_address(in_service_instance_id, allocation_id)
 
   complete_lifecycle_action_success(lifecycle_hook_name, autoscaling_group_name, instance_id)
 
