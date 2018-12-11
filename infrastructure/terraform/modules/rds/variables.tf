@@ -1,5 +1,9 @@
 variable "env_identifier" {}
 
+variable "snapshot_identifier" {
+  default = ""
+}
+
 variable "vpc_id" {
   description = "The ID of the VPC"
 }
@@ -17,7 +21,7 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  default = "9.6.6"
+  default = "10.5"
 }
 
 variable "allocated_storage" {

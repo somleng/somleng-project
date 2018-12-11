@@ -39,6 +39,7 @@ module "db" {
   vpc_security_group_ids = ["${aws_security_group.db.id}"]
   db_subnet_group_name   = "${var.db_subnet_group_name}"
 
+  snapshot_identifier       = "${var.snapshot_identifier}"
   skip_final_snapshot       = "${var.skip_final_snapshot}"
   final_snapshot_identifier = "${var.env_identifier}"
   backup_retention_period   = "${var.backup_retention_period}"
