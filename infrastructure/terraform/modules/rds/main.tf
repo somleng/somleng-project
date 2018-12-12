@@ -6,6 +6,10 @@ locals {
   security_group_name = "${var.security_group_name == "" ? "${local.identifier}-rds" : "${var.security_group_name}"}"
 }
 
+locals {
+  db_name = "${var.db_name == "" ? "${replace(local.identifier, "-", "_")}" : "${var.db_name}"}"
+}
+
 resource "aws_security_group" "db" {
   name        = "${local.security_group_name}"
   description = "${var.security_group_description}"
@@ -31,7 +35,7 @@ module "db" {
   multi_az          = "${var.multi_az}"
   storage_encrypted = "${var.storage_encrypted}"
 
-  name     = "${replace(local.identifier, "-", "_")}"
+  name     = "${local.db_name}"
   username = "${var.username}"
   password = "${var.master_password}"
   port     = "${var.port}"

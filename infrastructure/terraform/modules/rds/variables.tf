@@ -4,6 +4,10 @@ variable "snapshot_identifier" {
   default = ""
 }
 
+variable "db_name" {
+  default = ""
+}
+
 variable "vpc_id" {
   description = "The ID of the VPC"
 }
