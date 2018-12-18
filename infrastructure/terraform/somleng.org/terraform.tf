@@ -21,3 +21,9 @@ terraform {
     encrypt = true
   }
 }
+
+module "terraform" {
+  source                     = "../modules/terraform"
+  bastion_host_subnet_id     = "${element(module.vpc.private_subnets, 0)}"
+  infrastructure_source_repo = "https://github.com/somleng/somleng-project"
+}

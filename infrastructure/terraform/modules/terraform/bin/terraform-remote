@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+mode="$1"
+
+ssm_run_binary="$( cd "$(dirname "${BASH_SOURCE[0]}")/../../ssm_run/bin" ; pwd -P )/ssm_run"
+bastion_host_name="${2:-bastion-host}"
+
+if [ "$mode" == "install" ]; then
+  install_cmd="yum -y update && yum -y install jq git && curl "$(echo "https://releases.hashicorp.com/terraform/$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M ".current_version")/terraform_$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M ".current_version")_linux_amd64.zip")" > /tmp/terraform.zip && unzip -o /tmp/terraform.zip -d /usr/local/bin && terraform -version"
+
+  "$ssm_run_binary" "$install_cmd" -m bash -n "$bastion_host_name"
+else
+  git_remote_url="$(git config --get remote.origin.url)"
+  git_repo_name="$(basename -s .git $git_remote_url)"
+  if [ ! -d "/home/ec2-user/$git_repo_name" ]; then
+    clone_cmd="git clone "$git_remote_url" "/home/ec2-user/$git_repo_name""
+    "$ssm_run_binary" "$clone_cmd" -m bash -n "$bastion_host_name"
+  fi
+fi
