@@ -2,7 +2,7 @@
 
 By David Wilkie, CEO and Founder, Somleng
 
-Last updated: 15 May 2019
+Last updated: 16 May 2019
 
 Previous diffs and versions are available [here](https://github.com/somleng/somleng-project/commits/master/docs/introduction_for_development_organizations.md). Contributions and improvements [welcome](https://github.com/somleng/somleng-project/pulls).
 
