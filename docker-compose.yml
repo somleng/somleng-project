@@ -3,10 +3,10 @@ services:
   db:
     image: postgres
   twilreapi:
-    image: dwilkie/twilreapi:spec
+    image: somleng/twilreapi
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     environment:
-      - RAILS_ENV=development
+      - RAILS_ENV=production
       - DB_HOST=db
       - DB_USERNAME=postgres
       - "TWILREAPI_WORKER_JOB_OUTBOUND_CALL_JOB_DRB_URL=druby://adhearsion:9050"
@@ -17,7 +17,7 @@ services:
     # ports:
       # - "3000:3000"
   adhearsion:
-    image: dwilkie/somleng:spec
+    image: somleng/somleng-adhearsion
     environment:
       - AHN_CORE_HTTP_ENABLE=false
       - AHN_CORE_HOST=freeswitch
@@ -36,7 +36,7 @@ services:
     depends_on:
       - freeswitch
   freeswitch:
-    image: dwilkie/freeswitch-rayo
+    image: somleng/somleng-freeswitch
     # expose the ports below if you want to use with a softphone registered on the host
     # ports:
       # - "5060:5060"
