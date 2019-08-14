@@ -25,7 +25,7 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  default = "10.5"
+  default = "11.4"
 }
 
 variable "allocated_storage" {
