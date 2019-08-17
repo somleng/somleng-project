@@ -1,8 +1,3 @@
-module "terraform_s3_bucket" {
-  source = "../modules/terraform_s3_bucket"
-  bucket = "${local.terraform_bucket}"
-}
-
 provider "aws" {
   profile = "${var.terraform_profile}"
   region  = "${var.aws_region}"
@@ -16,7 +11,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket  = "terraform.somleng.org" # cannot interpolate here
+    bucket  = "infrastructure.somleng.org"
     key     = "terraform.tfstate"
     encrypt = true
   }
