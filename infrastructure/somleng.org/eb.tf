@@ -22,7 +22,7 @@ locals {
 
 module "eb_solution_stack" {
   source             = "../modules/eb_solution_stacks"
-  major_ruby_version = "2.5"
+  major_ruby_version = "2.6"
 }
 
 module "twilreapi_eb_app" {
@@ -123,15 +123,6 @@ module "twilreapi_eb_outbound_call_worker_env" {
   outbound_call_drb_uri = "${local.somleng_adhearsion_drb_host}"
 }
 
-module "twilreapi_deploy" {
-  source = "../modules/deploy"
-
-  eb_env_id    = "${module.twilreapi_eb_app_env.web_id}"
-  repo         = "${local.twilreapi_deploy_repo}"
-  branch       = "${local.twilreapi_deploy_branch}"
-  travis_token = "${var.travis_token}"
-}
-
 module "somleng_adhearsion_eb_app" {
   source = "../modules/eb_app"
 
@@ -189,15 +180,6 @@ module "somleng_adhearsion_webserver" {
   adhearsion_twilio_rest_api_phone_call_events_url = "https://${local.twilreapi_internal_api_credentials}@${local.twilreapi_internal_api_fqdn}/phone_calls/:phone_call_id/phone_call_events"
 }
 
-module "somleng_adhearsion_deploy" {
-  source = "../modules/deploy"
-
-  eb_env_id    = "${module.somleng_adhearsion_webserver.id}"
-  repo         = "${local.somleng_adhearsion_deploy_repo}"
-  branch       = "${local.somleng_adhearsion_deploy_branch}"
-  travis_token = "${var.travis_token}"
-}
-
 module "scfm_eb_app" {
   source = "../modules/eb_app"
 
@@ -250,13 +232,4 @@ module "scfm_eb_app_env" {
 
   ### SCFM Specific
   audio_bucket = "${aws_s3_bucket.audio.id}"
-}
-
-module "scfm_deploy" {
-  source = "../modules/deploy"
-
-  eb_env_id    = "${module.scfm_eb_app_env.web_id}"
-  repo         = "${local.scfm_deploy_repo}"
-  branch       = "${local.scfm_deploy_branch}"
-  travis_token = "${var.travis_token}"
 }

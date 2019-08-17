@@ -71,6 +71,10 @@ resource "aws_lambda_function" "associate_eip" {
   role             = "${aws_iam_role.lambda_associate_eip.arn}"
   source_code_hash = "${data.archive_file.associate_eip_source_code.output_base64sha256}"
 
+  lifecycle {
+    ignore_changes = ["filename", "last_modified"]
+  }
+
   environment {
     variables = {
       EVENT_DETAIL_TYPE         = "${local.event_detail_type}"

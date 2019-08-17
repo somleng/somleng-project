@@ -123,12 +123,3 @@ resource "aws_cloudwatch_event_target" "lambda" {
   rule = "${aws_cloudwatch_event_rule.terminate_instance.name}"
   arn  = "${var.associate_eip_lambda_arn}"
 }
-
-module "deploy" {
-  source = "../deploy"
-
-  eb_env_id    = "${module.eb_env.id}"
-  repo         = "${var.deploy_repo}"
-  branch       = "${var.deploy_branch}"
-  travis_token = "${var.travis_token}"
-}

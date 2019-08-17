@@ -15,4 +15,6 @@ terraform {
     key     = "terraform.tfstate"
     encrypt = true
   }
+
+  required_version = "~> 0.11.14"
 }

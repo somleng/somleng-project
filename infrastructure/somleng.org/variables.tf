@@ -54,12 +54,6 @@ locals {
   vpc_private_subnet_cidr_blocks       = "${concat(local.vpc_twilreapi_ec2_subnet_cidr_blocks)}"
 }
 
-variable "travis_token" {}
-
-locals {
-  terraform_bucket = "terraform.somleng.org"
-}
-
 variable "aws_region" {
   default = "ap-southeast-1"
 }
