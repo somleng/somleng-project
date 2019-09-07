@@ -93,7 +93,7 @@ module "eb_web" {
   aws_region = "${var.aws_region}"
 
   # Rails Specific
-  rails_skip_asset_compilation = "false"
+  rails_skip_asset_compilation = "true"
   rails_env                    = "${var.rails_env}"
   rails_master_key             = "${var.rails_master_key}"
   database_url                 = "${var.database_url}"
