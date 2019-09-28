@@ -9,7 +9,8 @@ resource "aws_iam_policy" "ci_deploy" {
       "Effect": "Allow",
       "Action": [
         "elasticbeanstalk:UpdateEnvironment",
-        "elasticbeanstalk:CreateApplicationVersion"
+        "elasticbeanstalk:CreateApplicationVersion",
+        "cloudfront:CreateInvalidation"
       ],
       "Resource": "*"
     },
@@ -20,7 +21,8 @@ resource "aws_iam_policy" "ci_deploy" {
         "s3:GetObject"
       ],
       "Resource": [
-        "arn:aws:s3:::${aws_s3_bucket.ci_deploy.id}/*"
+        "arn:aws:s3:::${aws_s3_bucket.ci_deploy.id}/*",
+        "arn:aws:s3:::${aws_s3_bucket.docs.id}/*"
       ]
     },
     {

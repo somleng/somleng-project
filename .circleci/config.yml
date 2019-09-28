@@ -1,5 +1,6 @@
 version: 2.1
 orbs:
+  aws-cli: circleci/aws-cli@0.1.15
   aws-s3: circleci/aws-s3@1.0.11
 executors:
   deploy_documentation_environment:
@@ -57,6 +58,24 @@ jobs:
             cp public/docs/index.html docs_src
             cp public/images/somleng_logo.png docs_src/logo.png
             cp -R public/images/favicon/* docs_src
+
+      - aws-cli/install
+      - aws-cli/configure
+
+      - run:
+          name: Assume Role
+          command: |
+              deploy_role=$(aws sts assume-role --role-arn "$AWS_DEPLOY_ROLE_ARN" --role-session-name "Deploy") && \
+              echo "export AWS_ACCESS_KEY_ID='$(echo $deploy_role | jq .Credentials.AccessKeyId | xargs)'" >> $BASH_ENV && \
+              echo "export AWS_SECRET_ACCESS_KEY='$(echo $deploy_role | jq .Credentials.SecretAccessKey | xargs)'" >> $BASH_ENV && \
+              echo "export AWS_SESSION_TOKEN='$(echo $deploy_role | jq .Credentials.SessionToken | xargs)'" >> $BASH_ENV
+
+      - run:
+          name: Configure Session Token
+          command: |
+              aws configure set aws_session_token "$DEPLOY_SESSION_TOKEN" --profile default && \
+              cat ~/.aws/config && \
+              cat ~/.aws/credentials
 
       - aws-s3/sync:
           from: docs_src
