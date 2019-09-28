@@ -59,6 +59,9 @@ jobs:
             cp public/images/somleng_logo.png docs_src/logo.png
             cp -R public/images/favicon/* docs_src
 
+      - aws-cli/install
+      - aws-cli/configure
+
       - run:
           name: Assume Role
           command: |
