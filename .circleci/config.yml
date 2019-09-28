@@ -1,0 +1,77 @@
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.11
+executors:
+  deploy_documentation_environment:
+    docker:
+      - image: 'circleci/python:2.7'
+
+jobs:
+  deploy-docs:
+    working_directory: ~/somleng-docs
+    executor:
+      name: deploy_documentation_environment
+
+    steps:
+      - checkout
+
+      - run:
+          name: Prepare Build Directory
+          command: |
+            mkdir -p docs_build
+
+      - run:
+          name: Download Twitter Bootstrap
+          command: |
+            cd docs_build
+            export TWBS_RELEASES_URL="https://api.github.com/repos/twbs/bootstrap/releases/latest"
+            export TWBS_ASSETS_METADATA=$(curl -sL -u dwilkie: $TWBS_RELEASES_URL | jq -r '.assets[]')
+            export TWBS_DOWNLOAD_URL=$(echo $TWBS_ASSETS_METADATA | jq -r '.browser_download_url')
+            export TWBS_ARCHIVE_NAME=$(echo $TWBS_ASSETS_METADATA | jq -r '.name')
+            export TWBS_SOURCE_DIR=docs_build/$(basename docs_build/$TWBS_ARCHIVE_NAME .zip)
+            echo "export TWBS_SOURCE_DIR=$TWBS_SOURCE_DIR" >> $BASH_ENV
+            curl -sL "$TWBS_DOWNLOAD_URL" > "$TWBS_ARCHIVE_NAME"
+            unzip "$TWBS_ARCHIVE_NAME"
+
+      - run:
+          name: Download Font Awesome
+          command: |
+            cd docs_build
+            export FA_RELEASES_URL="https://api.github.com/repos/FortAwesome/Font-Awesome/releases/latest"
+            export FA_ASSETS_METADATA=$(curl -sL -u dwilkie: $FA_RELEASES_URL | jq -r '.assets[] | select(.name|test("web"))')
+            export FA_DOWNLOAD_URL=$(echo $FA_ASSETS_METADATA | jq -r '.browser_download_url')
+            export FA_ARCHIVE_NAME=$(echo $FA_ASSETS_METADATA | jq -r '.name')
+            export FA_SOURCE_DIR=docs_build/$(basename "docs_build/$FA_ARCHIVE_NAME" .zip)
+            echo "export FA_SOURCE_DIR=$FA_SOURCE_DIR" >> $BASH_ENV
+            curl -sL "$FA_DOWNLOAD_URL" > "$FA_ARCHIVE_NAME"
+            unzip "$FA_ARCHIVE_NAME"
+
+      - run:
+          name: Prepare Documentation Source
+          command: |
+            mkdir -p docs_src/css/fontawesome
+            mkdir -p docs_src/css/webfonts
+            cp $TWBS_SOURCE_DIR/css/bootstrap.min.css docs_src/css
+            cp $FA_SOURCE_DIR/css/all.min.css docs_src/css/fontawesome
+            cp -R $FA_SOURCE_DIR/webfonts/* docs_src/css/webfonts
+            cp public/docs/index.html docs_src
+            cp public/images/somleng_logo.png docs_src/logo.png
+            cp -R public/images/favicon/* docs_src
+
+      - aws-s3/sync:
+          from: docs_src
+          to: 's3://docs.somleng.org'
+
+      - run:
+          name: "Invalidate Docs CDN"
+          command: |
+            aws cloudfront create-invalidation --distribution-id $SOMLENG_DOCS_DISTRIBUTION_ID --paths /\*
+
+workflows:
+  build-deploy:
+    jobs:
+      - deploy-docs:
+          context: Somleng
+          filters:
+            branches:
+              only: master
