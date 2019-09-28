@@ -93,4 +93,4 @@ workflows:
           context: Somleng
           filters:
             branches:
-              only: setup_docs
+              only: master
