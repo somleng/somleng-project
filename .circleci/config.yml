@@ -76,7 +76,7 @@ jobs:
           aws-access-key-id: DEPLOY_ACCESS_KEY_ID
           aws-secret-access-key: DEPLOY_SECRET_ACCESS_KEY
           arguments: |
-                  --session-token $DEPLOY_SESSION_TOKEN
+                  --session-token "$DEPLOY_SESSION_TOKEN"
 
       - run:
           name: "Invalidate Docs CDN"
