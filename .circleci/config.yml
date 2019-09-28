@@ -80,8 +80,6 @@ jobs:
       - aws-s3/sync:
           from: docs_src
           to: 's3://docs.somleng.org'
-          arguments: |
-            --debug
 
       - run:
           name: "Invalidate Docs CDN"
