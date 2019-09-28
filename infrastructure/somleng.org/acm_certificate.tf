@@ -5,12 +5,8 @@ resource "aws_acm_certificate" "certificate" {
 
 resource "aws_acm_certificate" "cdn_certificate" {
   domain_name       = "*.somleng.org"
-  provider          = "aws.us-east-1"
   validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  provider          = "aws.us-east-1"
 }
 
 resource "aws_route53_record" "certificate_validation" {
@@ -24,17 +20,4 @@ resource "aws_route53_record" "certificate_validation" {
 resource "aws_acm_certificate_validation" "certificate" {
   certificate_arn         = "${aws_acm_certificate.certificate.arn}"
   validation_record_fqdns = ["${aws_route53_record.certificate_validation.fqdn}"]
-}
-
-resource "aws_route53_record" "cdn_certificate_validation" {
-  name    = "${aws_acm_certificate.cdn_certificate.domain_validation_options.0.resource_record_name}"
-  type    = "${aws_acm_certificate.cdn_certificate.domain_validation_options.0.resource_record_type}"
-  zone_id = "${aws_route53_zone.somleng_org.zone_id}"
-  records = ["${aws_acm_certificate.cdn_certificate.domain_validation_options.0.resource_record_value}"]
-  ttl     = 60
-}
-
-resource "aws_acm_certificate_validation" "cdn_certificate" {
-  certificate_arn         = "${aws_acm_certificate.cdn_certificate.arn}"
-  validation_record_fqdns = ["${aws_route53_record.cdn_certificate_validation.fqdn}"]
 }

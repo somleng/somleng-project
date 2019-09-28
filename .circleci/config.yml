@@ -73,7 +73,8 @@ jobs:
       - run:
           name: Configure Session Token
           command: |
-              aws configure set aws_session_token "$DEPLOY_SESSION_TOKEN" --profile default
+              aws configure set aws_session_token "$DEPLOY_SESSION_TOKEN" --profile default && \
+              cat ~/.aws/config
 
       - aws-s3/sync:
           from: docs_src
