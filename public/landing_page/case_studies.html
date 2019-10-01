@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta class="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Page | Evie by unDraw</title>
+	<link rel='stylesheet' href='css/style.min.css' />
+</head>
+<body>
+	<!-- navbar -->
+	<div class="navbar navbar--extended">
+		<nav class="nav__mobile"></nav>
+		<div class="container">
+			<div class="navbar__inner">
+				<a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image" height="75px"></a>
+				<nav class="navbar__menu">
+					<li><a href="docs.html" target="_blank">Docs</a></li>
+					<li><a href="case_studies.html" target="_blank">Case Studies</a></li>
+				</nav>
+				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
+			</div>
+		</div>
+	</div>
+	<!-- Hero unit -->
+	<div class="page__header">
+		<div class="hero__overlay hero__overlay--gradient"></div>
+		<div class="hero__mask"></div>
+		<div class="page__header__inner">
+			<div class="container">
+				<div class="page__header__content">
+					<div class="page__header__content__inner" id='navConverter'>
+						<h1 class="page__header__title">Case Studies</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Page content -->
+	<div class="page">
+		<div class="container">
+			<div class="page__inner">
+				<div class="page__menu">
+					<ul class="vMenu">
+						<li><a href="#early-warning-system-cambodia">Early Warning System, Cambodia</a></li>
+						<li><a href="#cash-assistance-programme-somalia">Cash Assistance Programme, Somalia</a></li>
+					</ul>
+				</div>
+				<div class="page__main">
+					<div class="text-container">
+						<h3 id="early-warning-system-cambodia" class="page__main__title">Early Warning System, Cambodia</h3>
+						<img src="./images/undraw_weather_notification_4sbo.svg" class="expanded__image">
+						<p>
+							Cambodia is a country consistently ranked as one of the most vulnerable to the effects of natural disasters.
+						</p>
+						<p>
+							In order to deliver timely and potentially lifesaving information to people in disaster prone areas,
+							an Early Warning System (EWS) was conceived by the organization,
+							<a href="https://www.clovekvtisni.cz/en/what-we-do/humanitarian-aid-and-development/cambodia" target="_blank" class="link">People In Need (PIN)</a>.
+						</p>
+						<p>
+							People in Need realized that the EWS needs to be accessible to all Cambodians, regardless of literacy and Internet connectivity issues.
+							They decided to look into a solution which uses voice based messaging for alerts
+							and <a href="https://en.wikipedia.org/wiki/Interactive_voice_response" target="_blank" class="link">Interactive Voice Response (IVR)</a> for registration.
+						</p>
+
+						<p>
+							With help from the Royal Cambodian Government,
+							the <a href="https://www.trc.gov.kh" target="_blank" class="link">Telecommunication Regulator of Cambodia (TRC)</a>
+							and the <a href="http://www.ncdm.gov.kh" target="_blank" class="link">National Committee for Disaster Management (NCDM)</a>,
+							it was regulated that the Early Warning System must be provided free of charge by the Mobile Network Operators (MNOs) in Cambodia.
+						</p>
+
+						<p>
+							With the pieces of the puzzle coming together the problems that still remained were:
+							<ol>
+								<li>
+									How to connect to the MNOs for user registration?
+								</li>
+								<li>
+									How to send out automated alerts to people at risk in the event of an emergency?
+								</li>
+							</ol>
+						</p>
+
+						<p>
+							The major mobile network operators in Cambodia each provided a SIP connection, but lacked the technology that
+							People In Need required to handle user registrations and send out automated flood alerts.
+						</p>
+
+						<h4>Somleng</h4>
+
+						<p>
+							<a href="docs.html" target="_blank" class="link">Somleng Simple Call Flow Manager (Somleng SCFM)</a>
+							is an open source contact center platform and call flow manager designed for Somleng and Twilio.
+							Somleng SCFM comes complete with it's own REST API for managing contacts, callouts and phone calls
+							and can be configured to send out alerts and listen for inbound calls through Somleng's <a href="https://github.com/somleng/twilreapi" target="_blank" class="link">Twilreapi</a>, an open source implementation of Twilio's REST API.
+						</p>
+
+						<p>
+							Unlike Twilio's REST API however, Somleng's Twilreapi gives you full control over where and how inbound and outbound calls are routed to.
+							As such Twilreapi was configured to send out alerts and listen for outbound calls via a SIP connections provided by the telcos.
+						</p>
+
+						<p>
+							Putting it all together, flood sensors which detect water level heights are connected to Somleng SCFM,
+							which then triggers automated callouts to the people in the affected areas in the form of a voice message alert.
+						</p>
+
+						<img src="./images/ews_poster.jpg">
+
+						<h4>Results</h4>
+
+						<p>
+							Since the beginning of the project Somleng has processed around 367 K
+							minutes worth of registrations and 94.7 minutes worth of alerts.
+						</p>
+
+						<h3 id="cash-assistance-programme-somalia" class="page__main__titles">
+							Cash Assistance Programme, Somalia
+						</h3>
+
+						<img src="./images/undraw_Savings_dwkw.svg" class="expanded__image">
+
+						<p>
+							In Somalia returnee households from Dadaab refugee camp in Kenya and vulnerable households in Bay and Bakool
+							received emergency unconditional cash-based transfer assistance package to help them meet their needs during the current drought period.
+						</p>
+						<p>
+							In order to share information and get feedback about the program,
+							a voice-based messaging solution was proposed.
+							In the proposal voice messages and surveys would be recorded in the Somali language
+							and delivered to the household head by mobile phone calls.
+						</p>
+
+						<p>
+							The price for terminating a call through Twilio in Somalia is <a href="https://www.twilio.com/voice/pricing/so" target="_blank" class="link">$0.7680 per minute</a>.
+							To date more than 75.8 K minutes worth of calls have been sent out which would equate to $58,238.98 on Twilio.
+						</p>
+						<p>
+							In order to reduce costs and promote local businesses, <a href="https://www.africasvoices.org/" target="_blank" class="link">Africa's Voices Foundation</a>
+							in conjunction with <a href="https://www.unicef.org/somalia/" target="_blank" class="link">UNICEF Somalia</a> partnered with <a href="https://www.hormuud.com/" target="_blank" class="link">Hormuud</a>, a local MNO in Somalia.
+							In comparison, Hormuud's pricing is between $0.04 and $0.07 per minute.
+						</p>
+
+						<p>
+							Somleng SCFM was again used in this project to provide Africa's Voices Foundation a dashboard for scheduling callouts and managing receipients.
+							Automated voice messages were sent to benificiaries via Somleng's Twilreapi and a SIP connection to Hormuud.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src='js/app.min.js'></script>
+</body>
+</html>
