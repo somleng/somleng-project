@@ -49,4 +49,4 @@ workflows:
           context: Somleng
           filters:
             branches:
-              only: new_website
+              only: master
