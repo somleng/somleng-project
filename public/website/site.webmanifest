@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Somleng",
+    "short_name": "Somleng",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -8,7 +8,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#6C63FF",
+    "background_color": "#6C63FF",
+    "start_url": "https://www.somleng.org",
     "display": "standalone"
 }

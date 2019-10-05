@@ -22,7 +22,7 @@ resource "aws_iam_policy" "ci_deploy" {
       ],
       "Resource": [
         "arn:aws:s3:::${aws_s3_bucket.ci_deploy.id}/*",
-        "arn:aws:s3:::${aws_s3_bucket.docs.id}/*"
+        "arn:aws:s3:::${aws_s3_bucket.website.id}/*"
       ]
     },
     {

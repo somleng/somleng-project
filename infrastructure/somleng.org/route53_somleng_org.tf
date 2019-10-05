@@ -46,15 +46,6 @@ module "route53_record_scfm" {
   alias_hosted_zone_id = "${local.eb_zone_id}"
 }
 
-module "route53_record_docs" {
-  source = "../modules/route53_alias_record"
-
-  hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
-  record_name          = "docs"
-  alias_dns_name       = "${module.somleng_docs.domain_name}"
-  alias_hosted_zone_id = "${module.somleng_docs.hosted_zone_id}"
-}
-
 # For GSuite
 resource "aws_route53_record" "somleng_org_mx" {
   zone_id = "${aws_route53_zone.somleng_org.zone_id}"
@@ -106,17 +97,15 @@ resource "aws_route53_record" "somleng_org_alias" {
   }
 }
 
-### www CNAME
-resource "aws_route53_record" "somleng_org_www" {
-  zone_id = "${aws_route53_zone.somleng_org.zone_id}"
-  name    = "www"
-  type    = "CNAME"
-  ttl     = "3600"
+module "route53_record_somleng_org_www" {
+  source = "../modules/route53_alias_record"
 
-  records = [
-    "dwilkie.github.io",
-  ]
+  hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
+  record_name          = "www"
+  alias_dns_name       = "${module.somleng_website.domain_name}"
+  alias_hosted_zone_id = "${module.somleng_website.hosted_zone_id}"
 }
+
 
 # rtd CNAME
 resource "aws_route53_record" "somleng_org_rtd" {
