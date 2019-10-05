@@ -17,10 +17,6 @@ resource "aws_lambda_function" "this" {
   role             = "${var.lambda_role_arn}"
   source_code_hash = "${data.archive_file.this.output_base64sha256}"
   publish          = true
-
-  lifecycle {
-    ignore_changes = ["filename"]
-  }
 }
 
 data "archive_file" "this" {

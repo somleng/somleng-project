@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta class="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Somleng | Documentation</title>
+	<link rel='stylesheet' href='css/style.min.css' />
+
+  <!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
+	<meta name="msapplication-TileColor" content="#6c63ff">
+	<meta name="theme-color" content="#6C63FF">
+</head>
+<body>
+	<!-- navbar -->
+	<div class="navbar navbar--extended">
+		<nav class="nav__mobile"></nav>
+		<div class="container">
+			<div class="navbar__inner">
+				<a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image" height="75px"></a>
+				<nav class="navbar__menu">
+					<li><a href="docs.html" target="_blank">Documentation</a></li>
+					<li><a href="case_studies.html" target="_blank">Case Studies</a></li>
+				</nav>
+				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
+			</div>
+		</div>
+	</div>
+	<!-- Hero unit -->
+	<div class="page__header">
+		<div class="hero__overlay hero__overlay--gradient"></div>
+		<div class="hero__mask"></div>
+		<div class="page__header__inner">
+			<div class="container">
+				<div class="page__header__content">
+					<div class="page__header__content__inner" id='navConverter'>
+						<h1 class="page__header__title">Documentation</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Page content -->
+	<div class="page">
+		<div class="container">
+			<div class="page__inner">
+				<div class="page__menu">
+					<ul class="vMenu">
+						<li><a href="#somleng-scfm">Somleng SCFM</a></li>
+						<li><a href="#somleng-twilreapi">Somleng Twilreapi</a></li>
+						<li><a href="#somleng-adhearsion">Somleng Adhearsion</a></li>
+						<li><a href="#somleng-freeswitch-config">Somleng FreeSWITCH</a></li>
+					</ul>
+				</div>
+				<div class="page__main">
+					<div class="text-container">
+						<img src="./images/undraw_Bibliophile_hwqc.svg" class="expanded__image">
+
+						<div id="somleng-scfm">
+							<h3 class="page__main__title">
+								Somleng SCFM
+							</h3>
+							<p>
+								Somleng SCFM is an open source contact center platform and call flow manager.
+							</p>
+							<a href="docs/scfm" target="_blank" class="button button__accent">Documentation</a>
+							<a href="https://github.com/somleng/somleng-scfm" target="_blank" class="button button__plain">Github</a>
+						</div>
+
+						<div id="somleng-twilreapi">
+							<h3 class="page__main__title">
+								Somleng Twilreapi
+							</h3>
+							<p>
+								Somleng Twilreapi is an open source implementation of <a href="https://www.twilio.com/docs/usage/api" target="_blank" class="link">Twilio's REST API</a>.
+							</p>
+							<a href="https://github.com/somleng/twilreapi" target="_blank" class="button button__plain">Github</a>
+						</div>
+
+						<div id="somleng-adhearsion">
+							<h3 class="page__main__title">
+								Somleng Adhearsion
+							</h3>
+							<p>
+								Somleng Adhearsion is an open source <a href="https://www.twilio.com/docs/voice/twiml" target="_blank" class="link">TwiML</a> interpreter, converting TwiML to a set of <a href="http://adhearsion.com" target="_blank" class="link">Adhearsion</a> instructions for controlling calls.
+							</p>
+							<a href="https://github.com/somleng/somleng-adhearsion" target="_blank" class="button button__plain">Github</a>
+						</div>
+
+						<div id="somleng-freeswitch-config">
+							<h3 class="page__main__title">
+								Somleng FreeSWITCH
+							</h3>
+							<p>
+								Somleng FreeSWITCH is a set of configuration files for <a href="https://freeswitch.com" target="_blank" class="link">FreeSWITCH</a> optimized for connecting Somleng to Telco's and VoIP providers.
+							</p>
+							<a href="https://github.com/somleng/freeswitch-config" target="_blank" class="button button__plain">Github</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src='js/app.min.js'></script>
+</body>
+</html>

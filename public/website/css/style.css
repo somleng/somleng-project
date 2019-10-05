@@ -1,4 +1,17 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400");
+/* lato-regular - latin */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/lato-v16-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Lato Regular'), local('Lato-Regular'),
+       url('../fonts/lato-v16-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/lato-v16-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/lato-v16-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/lato-v16-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/lato-v16-latin-regular.svg#Lato') format('svg'); /* Legacy iOS */
+}
+
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -856,7 +869,7 @@ select {
 .hero {
   position: relative;
   width: 100%;
-  background-image: url("../images/evie_default_bg.jpeg");
+  background-image: url("../images/undraw_mobile_user_7oqo.svg");
   box-shadow: 0 4px 11px rgba(124, 146, 169, 0.5);
   background-size: cover;
   background-position: center center;
@@ -1391,3 +1404,8 @@ select {
         border-bottom: 1px solid #6C63FF;
         transform: none;
         transition: none; } }
+
+/* CSP */
+.scroll.svg.enableBackground {
+  enable-background: new 0 0 512 512;
+}

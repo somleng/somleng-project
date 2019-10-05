@@ -44,7 +44,6 @@ resource "aws_iam_role" "secure_headers" {
   ]
 }
 EOF
-
 }
 
 resource "aws_iam_role_policy" "secure_headers" {
@@ -69,5 +68,4 @@ resource "aws_iam_role_policy" "secure_headers" {
   ]
 }
 EOF
-
 }

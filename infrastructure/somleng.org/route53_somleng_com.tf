@@ -36,7 +36,7 @@ resource "aws_s3_bucket" "somleng_com_redirection" {
   acl    = "private"
 
   website {
-    redirect_all_requests_to = "http://www.somleng.com"
+    redirect_all_requests_to = "https://www.somleng.org"
   }
 }
 
@@ -59,7 +59,7 @@ resource "aws_s3_bucket" "somleng_com_www_redirection" {
   acl    = "private"
 
   website {
-    redirect_all_requests_to = "http://www.somleng.org"
+    redirect_all_requests_to = "https://www.somleng.org"
   }
 }
 

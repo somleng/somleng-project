@@ -6,6 +6,15 @@
 	<title>Somleng</title>
 	<!-- Don't forget to add your metadata here -->
 	<link rel='stylesheet' href='css/style.min.css' />
+
+  <!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
+	<meta name="msapplication-TileColor" content="#6c63ff">
+	<meta name="theme-color" content="#6C63FF">
 </head>
 <body>
 	<!-- Hero(extended) navbar -->
@@ -16,11 +25,17 @@
 				<a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image" height="75px"></a>
 				<nav class="navbar__menu">
 					<ul>
-						<li><a href="docs.html" target="_blank">Docs</a></li>
+						<li><a href="docs.html" target="_blank">Documentation</a></li>
 						<li><a href="case_studies.html" target="_blank">Case Studies</a></li>
 					</ul>
 				</nav>
-				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
+				<div class="navbar__menu-mob">
+					<a href="" id='toggle'>
+						<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+							<path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/>
+						</svg>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -32,7 +47,7 @@
 			<div class="container">
 				<div class="hero__content">
 					<div class="hero__content__inner" id='navConverter'>
-						<h1 class="hero__title">Somleng</h1>
+						<img src="./images/somleng_logo.png" class="page__image">
 						<p class="hero__text">
 							Somleng is an open source cloud communications platform, similar to Twilio.
 							It's made up of several open source applications which, when used together,
@@ -48,16 +63,15 @@
 	</div>
 	<div class="hero__sub">
 		<span id="scrollToNext" class="scroll">
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" class='hero__sub__down' fill="currentColor" width="512px" height="512px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><path d="M256,298.3L256,298.3L256,298.3l174.2-167.2c4.3-4.2,11.4-4.1,15.8,0.2l30.6,29.9c4.4,4.3,4.5,11.3,0.2,15.5L264.1,380.9c-2.2,2.2-5.2,3.2-8.1,3c-3,0.1-5.9-0.9-8.1-3L35.2,176.7c-4.3-4.2-4.2-11.2,0.2-15.5L66,131.3c4.4-4.3,11.5-4.4,15.8-0.2L256,298.3z"/></svg>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" class='hero__sub__down' fill="currentColor" width="512px" height="512px" viewBox="0 0 512 512" class="enableBackground" xml:space="preserve">
+				<path d="M256,298.3L256,298.3L256,298.3l174.2-167.2c4.3-4.2,11.4-4.1,15.8,0.2l30.6,29.9c4.4,4.3,4.5,11.3,0.2,15.5L264.1,380.9c-2.2,2.2-5.2,3.2-8.1,3c-3,0.1-5.9-0.9-8.1-3L35.2,176.7c-4.3-4.2-4.2-11.2,0.2-15.5L66,131.3c4.4-4.3,11.5-4.4,15.8-0.2L256,298.3z"/>
+			</svg>
 		</span>
 	</div>
 	<!-- Steps -->
 	<div class="steps landing__section">
 		<div class="container">
 			<h2>Who uses Somleng?</h2>
-			<p>
-
-			</p>
 		</div>
 		<div class="container">
 			<div class="steps__inner">
@@ -91,7 +105,7 @@
 					<h4>Telcos</h4>
 					<p class="step__text">
 						For telcos looking to provide their customers with an API to make, receive, control and monitor calls and SMS,
-						Somleng provides an <a href="https://github.com/somleng/twilreapi" target="_blank" class="link">open source implementation</a> of <a href="https://www.twilio.com/docs/usage/api" target="_blank" class="link">Twilio's REST API</a>, in addition to other applications
+						Somleng provides an <a href="docs.html#somleng-twilreapi" target="_blank" class="link">open source implementation of Twilio's REST API</a>, in addition to other applications
 						useful in the telecommunications industry.
 					</p>
 				</div>
@@ -137,11 +151,13 @@
 					<img src="./images/undraw_pair_programming_njlp.svg" class="expanded__image">
 				</div>
 				<div class="expanded__content">
-					<h2 class="expanded__title">Professional Support</h2>
+					<h2 class="expanded__title">Support and Hosting</h2>
 					<p class="expanded__text">
 						Chatterbox is the Company behind Somleng.
-						In 2016, Chatterbox was one of the first 5 companies to receive funding from the UNICEF innovation fund.
-						Chatterbox offers professional support and customizations around the Somleng project. Chatterbox is run by
+						In 2016, Chatterbox was one of the first 5 companies to receive funding from the <a href="https://unicefinnovationfund.org/" target="_blank" class="link">UNICEF innovation fund</a>.
+					</p>
+					<p>
+						Chatterbox offers hosting, professional support and customizations for Somleng. Chatterbox is run by
 						<a href="mailto:dwilkie@somleng.org?subject=Somleng Inquiry" class="link">David Wilkie</a>, CEO and Co-Founder (Left) and
 						<a href="mailto:samnang@somleng.org?subject=Somleng Inquiry" class="link">Samnang Chhun</a>, CTO and Co-Founder (Right).
 						Feel free to reach out to us if you have any inquiries.
@@ -170,7 +186,7 @@
 				<div class="footer__data">
 					<div class="footer__data__item">
 						<div class="footer__row">
-							<a href="docs.html" target="_blank" class="footer__link">Docs</a>
+							<a href="docs.html" target="_blank" class="footer__link">Documentation</a>
 						</div>
 						<div class="footer__row">
 							<a href="case_studies.html" target="_blank" class="footer__link">Case Studies</a>
@@ -196,9 +212,7 @@
 						</div>
 						<div class="footer__row">
 							&copy; 2016
-							<script>
-								new Date().getFullYear()>2016	&&document.write("-"+new Date().getFullYear());
-							</script> Somleng
+							<script src="js/copyright_year.js"></script> Somleng
 						</div>
 					</div>
 				</div>

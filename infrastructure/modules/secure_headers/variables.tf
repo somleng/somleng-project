@@ -1,3 +1,1 @@
-variable "lambda_role_arn" {
-}
-
+variable "lambda_role_arn" {}
