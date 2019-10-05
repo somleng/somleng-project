@@ -1404,3 +1404,8 @@ select {
         border-bottom: 1px solid #6C63FF;
         transform: none;
         transition: none; } }
+
+/* CSP */
+.scroll.svg.enableBackground {
+  enable-background: new 0 0 512 512;
+}
