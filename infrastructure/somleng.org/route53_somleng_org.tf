@@ -93,7 +93,6 @@ module "route53_record_somleng_org" {
   alias_hosted_zone_id = "${module.somleng_naked_redirect.hosted_zone_id}"
 }
 
-
 module "route53_record_somleng_org_www" {
   source = "../modules/route53_alias_record"
 
@@ -102,7 +101,6 @@ module "route53_record_somleng_org_www" {
   alias_dns_name       = "${module.somleng_website.domain_name}"
   alias_hosted_zone_id = "${module.somleng_website.hosted_zone_id}"
 }
-
 
 # rtd CNAME
 resource "aws_route53_record" "somleng_org_rtd" {

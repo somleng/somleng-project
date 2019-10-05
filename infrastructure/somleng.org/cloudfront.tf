@@ -24,7 +24,7 @@ module "somleng_naked_redirect" {
   domain_name             = "${aws_s3_bucket.somleng_org_redirection.website_endpoint}"
   aliases                 = ["somleng.org"]
   origin_protocol_policy  = "http-only"
-  acm_certificate_arn     = "${aws_acm_certificate.cdn_certificate.arn}"
-  lambda_qualified_arn    = "${module.secure_headers.lambda_qualified_arn}s"
+  acm_certificate_arn     = "${aws_acm_certificate.root_cdn_certificate.arn}"
+  lambda_qualified_arn    = "${module.secure_headers.lambda_qualified_arn}"
   logs_bucket_domain_name = "${aws_s3_bucket.logs.bucket_domain_name}"
 }

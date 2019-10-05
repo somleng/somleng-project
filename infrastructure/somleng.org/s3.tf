@@ -1,12 +1,12 @@
 locals {
-  deploy_bucket  = "deploy.${local.route53_domain_name}"
-  cdr_bucket     = "cdr.${local.route53_domain_name}"
-  audio_bucket   = "audio.${local.route53_domain_name}"
-  uploads_bucket = "uploads.${local.route53_domain_name}"
-  backups_bucket = "backups.${local.route53_domain_name}"
-  logs_bucket    = "logs.${local.route53_domain_name}"
-  website_bucket = "www.${local.route53_domain_name}"
-  elb_logging_account_id = "114774131450" # "For ap-southeast-1. See https://amzn.to/2uXbInO"
+  deploy_bucket          = "deploy.${local.route53_domain_name}"
+  cdr_bucket             = "cdr.${local.route53_domain_name}"
+  audio_bucket           = "audio.${local.route53_domain_name}"
+  uploads_bucket         = "uploads.${local.route53_domain_name}"
+  backups_bucket         = "backups.${local.route53_domain_name}"
+  logs_bucket            = "logs.${local.route53_domain_name}"
+  website_bucket         = "www.${local.route53_domain_name}"
+  elb_logging_account_id = "114774131450"                         # "For ap-southeast-1. See https://amzn.to/2uXbInO"
 }
 
 resource "aws_s3_bucket" "ci_deploy" {
@@ -83,7 +83,6 @@ resource "aws_s3_bucket" "website" {
 }
 POLICY
 
-
   website {
     index_document = "index.html"
   }
@@ -134,7 +133,3 @@ resource "aws_s3_bucket_policy" "logs" {
 }
 POLICY
 }
-
-
-
-
