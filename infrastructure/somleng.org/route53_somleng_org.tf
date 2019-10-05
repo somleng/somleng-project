@@ -80,22 +80,19 @@ resource "aws_s3_bucket" "somleng_org_redirection" {
   acl    = "private"
 
   website {
-    redirect_all_requests_to = "http://www.somleng.org"
+    redirect_all_requests_to = "https://www.somleng.org"
   }
 }
 
-# naked redirection alias
-resource "aws_route53_record" "somleng_org_alias" {
-  zone_id = "${aws_route53_zone.somleng_org.zone_id}"
-  name    = ""
-  type    = "A"
+module "route53_record_somleng_org" {
+  source = "../modules/route53_alias_record"
 
-  alias {
-    name                   = "${aws_s3_bucket.somleng_org_redirection.website_domain}"
-    zone_id                = "${aws_s3_bucket.somleng_org_redirection.hosted_zone_id}"
-    evaluate_target_health = false
-  }
+  hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
+  record_name          = ""
+  alias_dns_name       = "${module.somleng_naked_redirect.domain_name}"
+  alias_hosted_zone_id = "${module.somleng_naked_redirect.hosted_zone_id}"
 }
+
 
 module "route53_record_somleng_org_www" {
   source = "../modules/route53_alias_record"
