@@ -30,3 +30,36 @@ resource "aws_security_group_rule" "hormuud_somalia" {
 
   security_group_id = "${module.freeswitch_main.security_group_id}"
 }
+
+resource "aws_security_group_rule" "smart_cambodia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["27.109.112.80/32"]
+  description = "Smart Cambodia"
+
+  security_group_id = "${module.freeswitch_main.security_group_id}"
+}
+
+resource "aws_security_group_rule" "cellcard_cambodia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["103.193.204.17/32"]
+  description = "Cellcard Cambodia"
+
+  security_group_id = "${module.freeswitch_main.security_group_id}"
+}
+
+resource "aws_security_group_rule" "metfone_cambodia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["175.100.32.29/32"]
+  description = "Metfone Cambodia"
+
+  security_group_id = "${module.freeswitch_main.security_group_id}"
+}
