@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "smart_cambodia" {
   from_port   = 5060
   to_port     = 5060
   protocol    = "udp"
-  cidr_blocks = ["27.109.112.80/32"]
+  cidr_blocks = ["27.109.112.140/32"]
   description = "Smart Cambodia"
 
   security_group_id = "${module.freeswitch_main.security_group_id}"
