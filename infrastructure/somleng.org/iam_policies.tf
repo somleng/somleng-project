@@ -89,6 +89,13 @@ resource "aws_iam_policy" "ci_deploy" {
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:cloudformation:*:*:stack/awseb-*/*"
+    },
+    {
+      "Action": [
+        "ecs:RegisterTaskDefinition"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
     }
   ]
 }
