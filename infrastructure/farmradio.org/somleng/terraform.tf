@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "infrastructure.farmradio.org"
-    key     = "somleng_vpc.tfstate"
+    key     = "somleng.tfstate"
     encrypt = true
     region  = "eu-west-1"
   }
