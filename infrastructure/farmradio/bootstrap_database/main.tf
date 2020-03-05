@@ -14,12 +14,12 @@ data "aws_ami" "this" {
 }
 
 data "aws_ssm_parameter" "db_master_password" {
-  name = "bongloy-test.db_master_password"
+  name = "somleng.db_master_password"
 }
 
 resource "aws_security_group" "this" {
-  name   = "bootstrap-test-database"
-  vpc_id = data.terraform_remote_state.test_vpc.outputs.vpc.vpc_id
+  name   = "bootstrap-database"
+  vpc_id = data.terraform_remote_state.somleng.outputs.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -34,18 +34,18 @@ resource "aws_security_group_rule" "egress" {
 resource "aws_instance" "this" {
   ami           = data.aws_ami.this.id
   instance_type = "t3.micro"
-  security_groups = [aws_security_group.this.id, data.terraform_remote_state.test_vpc.outputs.db_security_group.id]
-  subnet_id = element(data.terraform_remote_state.test_vpc.outputs.private_subnets, 0)
+  security_groups = [aws_security_group.this.id, data.terraform_remote_state.somleng.outputs.db_security_group.id]
+  subnet_id = element(data.terraform_remote_state.somleng.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = data.template_file.user_data.rendered
 
   tags = {
-    Name = "bootstrap-test-database"
+    Name = "bootstrap-database"
   }
 }
 
 resource "aws_iam_role" "this" {
-name  = "bootstrap-test-database"
+name  = "bootstrap-database"
 
 assume_role_policy = <<EOF
 {
@@ -78,8 +78,8 @@ data "template_file" "user_data" {
 
   vars = {
     db_password = data.aws_ssm_parameter.db_master_password.value
-    db_host = data.terraform_remote_state.test_vpc.outputs.db.this_db_instance_address
-    db_username = data.terraform_remote_state.test_vpc.outputs.db.this_db_instance_username
+    db_host = data.terraform_remote_state.somleng.outputs.db.this_db_instance_address
+    db_username = data.terraform_remote_state.somleng.outputs.db.this_db_instance_username
     db_name = var.db_name
   }
 }
