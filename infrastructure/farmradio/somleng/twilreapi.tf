@@ -91,12 +91,12 @@ resource "aws_iam_role_policy_attachment" "twilreapi_worker_tier" {
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
 }
 
-resource "aws_iam_role_policy_attachment" "sqs" {
+resource "aws_iam_role_policy_attachment" "twilreapi_sqs" {
   role       = aws_iam_role.twilreapi.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
 }
 
-resource "aws_iam_role_policy_attachment" "ssm" {
+resource "aws_iam_role_policy_attachment" "twilreapi_ssm" {
   role       = aws_iam_role.twilreapi.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
@@ -105,20 +105,6 @@ resource "aws_s3_bucket" "cdr" {
   bucket = "cdr.farmradio.io"
   acl    = "private"
   region = var.aws_region
-}
-
-data "aws_elastic_beanstalk_hosted_zone" "current" {}
-
-resource "aws_route53_record" "twilreapi" {
-  zone_id = data.terraform_remote_state.core.outputs.farmradio_zone.id
-  name    = "twilreapi"
-  type    = "A"
-
-  alias {
-    name                   = aws_elastic_beanstalk_environment.twilreapi_webserver.cname
-    zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
-    evaluate_target_health = true
-  }
 }
 
 resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
@@ -912,5 +898,15 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_webserver" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "INITIATE_OUTBOUND_CALL_QUEUE_URL"
     value     = aws_elastic_beanstalk_environment.twilreapi_outbound_call_worker.queues.0
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "INTERNAL_API_HTTP_AUTH_USER"
+    value     = "admin"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "INTERNAL_API_HTTP_AUTH_PASSWORD"
+    value     = aws_ssm_parameter.twilreapi_internal_api_password.value
   }
 }

@@ -5,3 +5,7 @@ output "acm_certificate" {
 output "farmradio_zone" {
   value = aws_route53_zone.farmradio_io
 }
+
+output "farmradio_internal_zone" {
+  value = aws_route53_zone.farmradio_io_internal
+}
