@@ -43,21 +43,6 @@ locals {
   scfm_deploy_branch       = "master"
 }
 
-locals {
-  vpc_name                             = "somleng"
-  vpc_cidr_block                       = "10.0.0.0/24"
-  vpc_azs                              = ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"]
-  vpc_twilreapi_ec2_subnet_cidr_blocks = ["10.0.0.0/28", "10.0.0.16/28", "10.0.0.32/28"]
-  vpc_intra_subnet_cidr_blocks         = ["10.0.0.112/28", "10.0.0.128/28", "10.0.0.144/28"]
-  vpc_database_subnet_cidr_blocks      = ["10.0.0.160/28", "10.0.0.176/28", "10.0.0.192/28"]
-  vpc_public_subnet_cidr_blocks        = ["10.0.0.208/28", "10.0.0.224/28", "10.0.0.240/28"]
-  vpc_private_subnet_cidr_blocks       = "${concat(local.vpc_twilreapi_ec2_subnet_cidr_blocks)}"
-}
-
 variable "aws_region" {
   default = "ap-southeast-1"
-}
-
-variable "terraform_profile" {
-  default = "somleng-terraform"
 }

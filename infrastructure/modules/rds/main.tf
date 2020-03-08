@@ -25,7 +25,7 @@ resource "aws_security_group" "db" {
 
 module "db" {
   source = "terraform-aws-modules/rds/aws"
-  version = "~> 1.0"
+  version = "1.32.0"
 
   identifier = "${local.identifier}"
 

@@ -1,5 +1,5 @@
 module "secure_headers" {
-  source          = "../modules/secure_headers"
+  source          = "../../modules/secure_headers"
   lambda_role_arn = "${aws_iam_role.secure_headers.arn}"
 
   providers = {
@@ -8,7 +8,7 @@ module "secure_headers" {
 }
 
 module "somleng_website" {
-  source = "../modules/cloudfront"
+  source = "../../modules/cloudfront"
 
   domain_name             = "${aws_s3_bucket.website.website_endpoint}"
   aliases                 = ["www.somleng.org"]
@@ -19,7 +19,7 @@ module "somleng_website" {
 }
 
 module "somleng_naked_redirect" {
-  source = "../modules/cloudfront"
+  source = "../../modules/cloudfront"
 
   domain_name             = "${aws_s3_bucket.somleng_org_redirection.website_endpoint}"
   aliases                 = ["somleng.org"]

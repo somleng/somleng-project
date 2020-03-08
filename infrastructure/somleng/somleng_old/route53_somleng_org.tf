@@ -11,7 +11,7 @@ resource "aws_route53_zone" "internal" {
 }
 
 module "route53_record_somleng_twilreapi" {
-  source = "../modules/route53_alias_record"
+  source = "../../modules/route53_alias_record"
 
   hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
   record_name          = "${local.twilreapi_route53_record_name}"
@@ -20,7 +20,7 @@ module "route53_record_somleng_twilreapi" {
 }
 
 module "route53_record_somleng_adhearsion" {
-  source = "../modules/route53_alias_record"
+  source = "../../modules/route53_alias_record"
 
   hosted_zone_id       = "${aws_route53_zone.internal.zone_id}"
   record_name          = "${local.somleng_adhearsion_route53_record_name}"
@@ -29,7 +29,7 @@ module "route53_record_somleng_adhearsion" {
 }
 
 module "route53_record_somleng_freeswitch" {
-  source = "../modules/route53_alias_record"
+  source = "../../modules/route53_alias_record"
 
   hosted_zone_id       = "${aws_route53_zone.internal.zone_id}"
   record_name          = "${local.somleng_freeswitch_route53_record_name}"
@@ -38,7 +38,7 @@ module "route53_record_somleng_freeswitch" {
 }
 
 module "route53_record_scfm" {
-  source = "../modules/route53_alias_record"
+  source = "../../modules/route53_alias_record"
 
   hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
   record_name          = "${local.scfm_route53_record_name}"
@@ -85,7 +85,7 @@ resource "aws_s3_bucket" "somleng_org_redirection" {
 }
 
 module "route53_record_somleng_org" {
-  source = "../modules/route53_alias_record"
+  source = "../../modules/route53_alias_record"
 
   hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
   record_name          = ""
@@ -94,7 +94,7 @@ module "route53_record_somleng_org" {
 }
 
 module "route53_record_somleng_org_www" {
-  source = "../modules/route53_alias_record"
+  source = "../../modules/route53_alias_record"
 
   hosted_zone_id       = "${aws_route53_zone.somleng_org.zone_id}"
   record_name          = "www"

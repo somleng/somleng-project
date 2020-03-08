@@ -1,12 +1,12 @@
 module "somleng_freeswitch_eb_app" {
-  source = "../modules/eb_app"
+  source = "../../modules/eb_app"
 
   app_identifier   = "${local.somleng_freeswitch_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
 module "freeswitch_simulator" {
-  source = "../modules/freeswitch"
+  source = "../../modules/freeswitch"
 
   app_name       = "${module.somleng_freeswitch_eb_app.app_name}"
   env_identifier = "${local.somleng_freeswitch_identifier}-simulator"
@@ -25,7 +25,7 @@ module "freeswitch_simulator" {
 }
 
 module "freeswitch_main" {
-  source = "../modules/freeswitch"
+  source = "../../modules/freeswitch"
 
   app_name       = "${module.somleng_freeswitch_eb_app.app_name}"
   env_identifier = "${local.somleng_freeswitch_identifier}"

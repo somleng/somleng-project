@@ -21,19 +21,19 @@ locals {
 }
 
 module "eb_solution_stack" {
-  source             = "../modules/eb_solution_stacks"
+  source             = "../../modules/eb_solution_stacks"
   major_ruby_version = "2.6"
 }
 
 module "twilreapi_eb_app" {
-  source = "../modules/eb_app"
+  source = "../../modules/eb_app"
 
   app_identifier   = "${local.twilreapi_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
 module "twilreapi_eb_app_env" {
-  source = "../modules/eb_app_env"
+  source = "../../modules/eb_app_env"
 
   # General Settings
   app_name            = "${module.twilreapi_eb_app.app_name}"
@@ -80,7 +80,7 @@ module "twilreapi_eb_app_env" {
 }
 
 module "twilreapi_eb_outbound_call_worker_env" {
-  source = "../modules/eb_env"
+  source = "../../modules/eb_env"
 
   # General Settings
   app_name            = "${module.twilreapi_eb_app.app_name}"
@@ -124,14 +124,14 @@ module "twilreapi_eb_outbound_call_worker_env" {
 }
 
 module "somleng_adhearsion_eb_app" {
-  source = "../modules/eb_app"
+  source = "../../modules/eb_app"
 
   app_identifier   = "${local.somleng_adhearsion_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
 module "somleng_adhearsion_webserver" {
-  source = "../modules/eb_env"
+  source = "../../modules/eb_env"
 
   # General Settings
   app_name            = "${module.somleng_adhearsion_eb_app.app_name}"
@@ -181,14 +181,14 @@ module "somleng_adhearsion_webserver" {
 }
 
 module "scfm_eb_app" {
-  source = "../modules/eb_app"
+  source = "../../modules/eb_app"
 
   app_identifier   = "${local.scfm_identifier}"
   service_role_arn = "${module.eb_iam.eb_service_role_arn}"
 }
 
 module "scfm_eb_app_env" {
-  source = "../modules/eb_app_env"
+  source = "../../modules/eb_app_env"
 
   # General Settings
   app_name            = "${module.scfm_eb_app.app_name}"

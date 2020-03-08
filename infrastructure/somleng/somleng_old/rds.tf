@@ -1,5 +1,5 @@
 module "twilreapi_db" {
-  source = "../modules/rds"
+  source = "../../modules/rds"
 
   env_identifier = "${local.twilreapi_identifier}"
 
@@ -10,7 +10,7 @@ module "twilreapi_db" {
 }
 
 module "scfm_db" {
-  source = "../modules/rds"
+  source = "../../modules/rds"
 
   env_identifier = "${local.scfm_identifier}"
 
@@ -19,3 +19,4 @@ module "scfm_db" {
   vpc_id               = "${module.vpc.vpc_id}"
   db_subnet_group_name = "${module.vpc.database_subnet_group}"
 }
+

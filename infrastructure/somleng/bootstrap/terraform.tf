@@ -1,5 +1,4 @@
 terraform {
-  # backend "local" {}
   backend "s3" {
     bucket  = "infrastructure.somleng.org"
     key     = "bootstrap.tfstate"
