@@ -10,7 +10,8 @@ resource "aws_iam_role" "administrator" {
       "Principal": {
         "AWS": [
           "${aws_iam_user.loic.arn}",
-          "${aws_iam_user.dwilkie.arn}"
+          "${aws_iam_user.dwilkie.arn}",
+          "${aws_iam_user.samnang.arn}"
         ]
       },
       "Action": "sts:AssumeRole",
