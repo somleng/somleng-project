@@ -16,6 +16,17 @@ resource "aws_security_group" "freeswitch" {
   vpc_id      = module.vpc.vpc_id
 }
 
+resource "aws_security_group_rule" "local_pbx" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["154.160.70.82/32"]
+  description = "FRI Local PBX"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
 resource "aws_eip_association" "eip" {
   instance_id   = aws_elastic_beanstalk_environment.freeswitch_webserver.instances.0
   allocation_id = aws_eip.freeswitch.id
