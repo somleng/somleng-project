@@ -242,7 +242,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.micro"
+    value     = "t3.small"
   }
 
   setting {
@@ -262,7 +262,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "4"
+    value     = "1"
   }
 
   ################### Code Deployment Settings ###################

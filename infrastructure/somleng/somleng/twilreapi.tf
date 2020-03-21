@@ -60,7 +60,7 @@ module "twilreapi_db" {
   engine                      = "postgres"
   engine_version              = "11.5"
   major_engine_version        = "11"
-  instance_class              = "db.t3.micro"
+  instance_class              = "db.t3.small"
   allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
   apply_immediately           = true
@@ -373,11 +373,6 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_caller_worker" {
     name      = "AWS_DEFAULT_REGION"
     value     = var.aws_region
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "EB_TIER"
-    value     = "Worker"
-  }
   # Rails Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -407,7 +402,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_caller_worker" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DB_POOL"
-    value     = "48"
+    value     = "32"
   }
   # Application Specific
   setting {
@@ -483,7 +478,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.micro"
+    value     = "t3.small"
   }
 
   setting {
@@ -620,11 +615,6 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
     name      = "AWS_DEFAULT_REGION"
     value     = var.aws_region
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "EB_TIER"
-    value     = "Worker"
-  }
   # Rails Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -654,7 +644,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DB_POOL"
-    value     = "48"
+    value     = "32"
   }
   # Application Specific
   setting {
@@ -920,11 +910,6 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_webserver" {
     name      = "AWS_DEFAULT_REGION"
     value     = var.aws_region
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "EB_TIER"
-    value     = "WebServer"
-  }
   # Rails Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -954,7 +939,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DB_POOL"
-    value     = "48"
+    value     = "32"
   }
   # Application Specific
   setting {

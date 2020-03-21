@@ -13,6 +13,14 @@ resource "aws_s3_bucket" "somleng_website" {
   bucket = "www.somleng.org"
   acl    = "public-read"
 
+  website {
+    index_document = "index.html"
+  }
+}
+
+resource "aws_s3_bucket_policy" "somleng_website" {
+  bucket = aws_s3_bucket.somleng_website.id
+
   policy = <<POLICY
 {
   "Version":"2012-10-17",
@@ -24,16 +32,12 @@ resource "aws_s3_bucket" "somleng_website" {
         "s3:GetObject"
       ],
       "Resource":[
-        "arn:aws:s3:::www.somleng.org/*"
+        "${aws_s3_bucket.somleng_website.arn}/*"
       ]
     }
   ]
 }
 POLICY
-
-  website {
-    index_document = "index.html"
-  }
 }
 
 resource "aws_s3_bucket" "logs" {

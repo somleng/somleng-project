@@ -49,7 +49,7 @@ module "scfm_db" {
   engine                      = "postgres"
   engine_version              = "11.5"
   major_engine_version        = "11"
-  instance_class              = "db.t3.micro"
+  instance_class              = "db.t3.small"
   allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
   apply_immediately           = true
@@ -111,7 +111,7 @@ resource "aws_iam_policy" "scfm" {
       ],
       "Resource": [
         "${aws_s3_bucket.uploads.arn}",
-        "${aws_s3_bucket.audio.arn}",
+        "${aws_s3_bucket.audio.arn}"
       ]
     },
     {
@@ -123,7 +123,7 @@ resource "aws_iam_policy" "scfm" {
       ],
       "Resource": [
         "${aws_s3_bucket.uploads.arn}/*",
-        "${aws_s3_bucket.audio.arn}/*",
+        "${aws_s3_bucket.audio.arn}/*"
       ]
     }
   ]
@@ -178,17 +178,24 @@ resource "aws_s3_bucket" "audio" {
   bucket = "audio.somleng.org"
   acl    = "public-read"
   region = var.aws_region
+}
+
+resource "aws_s3_bucket_policy" "audio" {
+  bucket = aws_s3_bucket.audio.id
 
   policy = <<POLICY
 {
   "Version":"2012-10-17",
   "Statement":[
     {
-      "Sid":"AddPerm",
-      "Effect":"Allow",
+      "Effect": "Allow",
       "Principal": "*",
-      "Action":["s3:GetObject"],
-      "Resource":["arn:aws:s3:::audio.somleng.org/*"]
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.audio.arn}/*"
+      ]
     }
   ]
 }
@@ -255,7 +262,7 @@ resource "aws_elastic_beanstalk_environment" "scfm_worker" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.micro"
+    value     = "t3.small"
   }
 
   setting {
@@ -392,10 +399,303 @@ resource "aws_elastic_beanstalk_environment" "scfm_worker" {
     name      = "AWS_DEFAULT_REGION"
     value     = var.aws_region
   }
+  # Rails Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "EB_TIER"
-    value     = "Worker"
+    name      = "RAILS_SKIP_ASSET_COMPILATION"
+    value     = "true"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "RAILS_ENV"
+    value     = "production"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "RACK_ENV"
+    value     = "production"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DATABASE_URL"
+    value     = local.scfm_db_url
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "RAILS_MASTER_KEY"
+    value     = aws_ssm_parameter.scfm_rails_master_key.value
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DB_POOL"
+    value     = "32"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "UPLOADS_BUCKET"
+    value     = aws_s3_bucket.uploads.id
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AUDIO_BUCKET"
+    value     = aws_s3_bucket.audio.id
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SMTP_USERNAME"
+    value     = data.terraform_remote_state.core.outputs.ses_credentials.id
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SMTP_PASSWORD"
+    value     = data.terraform_remote_state.core.outputs.ses_credentials.ses_smtp_password
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "PROCESS_ACTIVE_ELASTIC_JOBS"
+    value     = "true"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DEFAULT_URL_HOST"
+    value     = "scfm.somleng.org"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DEFAULT_QUEUE_URL"
+    value     = "`{\"Ref\" : \"AWSEBWorkerQueue\"}`"
+  }
+}
+
+resource "aws_elastic_beanstalk_environment" "scfm_webserver" {
+  # General Settings
+
+  name                = "${local.scfm_app_identifier}-webserver"
+  application         = aws_elastic_beanstalk_application.scfm.name
+  tier                = "WebServer"
+  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.scfm.name
+
+  ################### VPC ###################
+  # https://amzn.to/2JzNUcK
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "VPCId"
+    value     = module.vpc.vpc_id
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "Subnets"
+    value     = join(",", module.vpc.private_subnets)
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "ELBSubnets"
+    value     = join(",", module.vpc.public_subnets)
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "AssociatePublicIpAddress"
+    value     = false
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "ELBScheme"
+    value     = "public"
+  }
+
+  ################### EC2 Settings ###################
+  # http://amzn.to/2FjIpj6
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SecurityGroups"
+    value     = aws_security_group.scfm_db.id
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "InstanceType"
+    value     = "t3.small"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.scfm.name
+  }
+
+  ################### Auto Scaling Group Settings ###################
+  # https://amzn.to/2o7M1uD
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name      = "MinSize"
+    value     = "1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name      = "MaxSize"
+    value     = "4"
+  }
+
+  ################### Code Deployment Settings ###################
+  # http://amzn.to/2thpK2U
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "DeploymentPolicy"
+    value     = "AllAtOnce"
+  }
+
+  ################### Rolling Updates ###################
+  # http://amzn.to/2oMEP78
+  setting {
+    namespace = "aws:autoscaling:updatepolicy:rollingupdate"
+    name      = "RollingUpdateEnabled"
+    value     = "true"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:updatepolicy:rollingupdate"
+    name      = "RollingUpdateType"
+    value     = "Time"
+  }
+
+  ################### Health Reporting ###################
+  # http://amzn.to/2FbOMlh
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name      = "SystemType"
+    value     = "enhanced"
+  }
+
+  ################### Managed Updates ###################
+  # http://amzn.to/2tcRsOe
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions"
+    name      = "ManagedActionsEnabled"
+    value     = "true"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions"
+    name      = "PreferredStartTime"
+    value     = "Sun:19:00"
+  }
+
+  ################### Managed Platform Updates ###################
+  # http://amzn.to/2tccGLY
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    name      = "InstanceRefreshEnabled"
+    value     = "true"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    name      = "UpdateLevel"
+    value     = "minor"
+  }
+
+  ################### CloudWatch Logs ###################
+  # https://amzn.to/2uNOMYb
+  setting {
+    namespace = "aws:elasticbeanstalk:cloudwatch:logs"
+    name      = "StreamLogs"
+    value     = "true"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:cloudwatch:logs"
+    name      = "DeleteOnTerminate"
+    value     = "false"
+  }
+
+  ################### Default Process ###################
+  # https://amzn.to/2HcmWaG
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:process:default"
+    name      = "Port"
+    value     = "80"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:process:default"
+    name      = "Protocol"
+    value     = "HTTP"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:process:default"
+    name      = "HealthCheckPath"
+    value     = "/health_checks"
+  }
+
+  ################### EB Environment ###################
+  # https://amzn.to/2FR9RTu
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name      = "EnvironmentType"
+    value     = "LoadBalanced"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name      = "ServiceRole"
+    value     = aws_iam_instance_profile.eb_service.name
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name      = "LoadBalancerType"
+    value     = "application"
+  }
+  ################### Listener ###################
+  # https://amzn.to/2GzHQiB
+  # Default Listener
+  setting {
+    namespace = "aws:elbv2:listener:default"
+    name      = "ListenerEnabled"
+    value     = "true"
+  }
+  # SSL Listener
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "ListenerEnabled"
+    value     = "true"
+  }
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "Protocol"
+    value     = "HTTPS"
+  }
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "SSLCertificateArns"
+    value     = data.terraform_remote_state.core.outputs.acm_certificate.arn
+  }
+  # Security Policies
+  # https://amzn.to/2q742us
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "SSLPolicy"
+    value     = "ELBSecurityPolicy-FS-1-2-Res-2019-08"
+  }
+
+  ################### ENV Vars ###################
+  # https://amzn.to/2Ez6CgW
+  # Defaults
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AWS_REGION"
+    value     = var.aws_region
+  }
+  # For AWS CLI https://docs.aws.amazon.com/cli/latest/userguide/cli-environment.html
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AWS_DEFAULT_REGION"
+    value     = var.aws_region
   }
   # Rails Specific
   setting {
@@ -426,32 +726,13 @@ resource "aws_elastic_beanstalk_environment" "scfm_worker" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DB_POOL"
-    value     = "48"
+    value     = "32"
   }
+  # Application Specific
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "UPLOADS_BUCKET"
     value     = aws_s3_bucket.uploads.id
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AUDIO_BUCKET"
-    value     = aws_s3_bucket.audio.id
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SMTP_USERNAME"
-    value     = data.terraform_remote_state.core.outputs.smtp_user.username
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SMTP_PASSWORD"
-    value     = data.terraform_remote_state.core.outputs.smtp_user.password
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "PROCESS_ACTIVE_ELASTIC_JOBS"
-    value     = "true"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -461,6 +742,21 @@ resource "aws_elastic_beanstalk_environment" "scfm_worker" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DEFAULT_QUEUE_URL"
-    value     = "`{\"Ref\" : \"AWSEBWorkerQueue\"}`"
+    value     = aws_elastic_beanstalk_environment.scfm_worker.queues.0
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AUDIO_BUCKET"
+    value     = aws_s3_bucket.audio.id
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SMTP_USERNAME"
+    value     = data.terraform_remote_state.core.outputs.ses_credentials.id
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SMTP_PASSWORD"
+    value     = data.terraform_remote_state.core.outputs.ses_credentials.ses_smtp_password
   }
 }

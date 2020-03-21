@@ -44,20 +44,20 @@ resource "aws_route53_record" "naked_redirect" {
   type    = "A"
 
   alias {
-    name                   = aws_s3_bucket.naked_redirect.website_domain
-    zone_id                = aws_s3_bucket.naked_redirect.hosted_zone_id
+    name                   = aws_cloudfront_distribution.somleng_naked_redirect.domain_name
+    zone_id                = aws_cloudfront_distribution.somleng_naked_redirect.hosted_zone_id
     evaluate_target_health = true
   }
 }
 
 resource "aws_route53_record" "somleng_website" {
   zone_id = aws_route53_zone.somleng_org.zone_id
-  name    = ""
+  name    = "www"
   type    = "A"
 
   alias {
-    name                   = aws_s3_bucket.somleng_website.website_domain
-    zone_id                = aws_s3_bucket.somleng_website.hosted_zone_id
+    name                   = aws_cloudfront_distribution.somleng_website.domain_name
+    zone_id                = aws_cloudfront_distribution.somleng_website.hosted_zone_id
     evaluate_target_health = true
   }
 }

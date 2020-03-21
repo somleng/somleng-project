@@ -9,3 +9,7 @@ output "somleng_zone" {
 output "somleng_internal_zone" {
   value = aws_route53_zone.internal
 }
+
+output "ses_credentials" {
+  value = aws_iam_access_key.ses_sender
+}
