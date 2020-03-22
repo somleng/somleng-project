@@ -1,39 +1,9 @@
 locals {
-  freeswitch_app_identifier = "freeswitch"
+  somleng_adhearsion_app_identifier = "somleng-adhearsion"
 }
 
-resource "aws_eip" "freeswitch" {
-  vpc = true
-
-  tags = {
-    Name = "FreeSWITCH Public IP"
-  }
-}
-
-resource "aws_security_group" "freeswitch" {
-  name        = local.freeswitch_app_identifier
-  description = "Whitelisted VOIP Providers"
-  vpc_id      = module.vpc.vpc_id
-}
-
-resource "aws_security_group_rule" "local_pbx" {
-  type        = "ingress"
-  from_port   = 5060
-  to_port     = 5060
-  protocol    = "udp"
-  cidr_blocks = ["154.160.70.82/32"]
-  description = "FRI Local PBX"
-
-  security_group_id = aws_security_group.freeswitch.id
-}
-
-resource "aws_eip_association" "eip" {
-  instance_id   = aws_elastic_beanstalk_environment.freeswitch_webserver.instances.0
-  allocation_id = aws_eip.freeswitch.id
-}
-
-resource "aws_elastic_beanstalk_application" "freeswitch" {
-  name = local.freeswitch_app_identifier
+resource "aws_elastic_beanstalk_application" "somleng_adhearsion" {
+  name = local.somleng_adhearsion_app_identifier
 
   appversion_lifecycle {
     service_role          = aws_iam_role.eb_service_role.arn
@@ -42,8 +12,8 @@ resource "aws_elastic_beanstalk_application" "freeswitch" {
   }
 }
 
-resource "aws_iam_role" "freeswitch" {
-  name = local.freeswitch_app_identifier
+resource "aws_iam_role" "somleng_adhearsion" {
+  name = local.somleng_adhearsion_app_identifier
 
   assume_role_policy = <<EOF
 {
@@ -61,76 +31,33 @@ resource "aws_iam_role" "freeswitch" {
 EOF
 }
 
-resource "aws_iam_instance_profile" "freeswitch" {
-  name = aws_iam_role.freeswitch.name
-  role = aws_iam_role.freeswitch.name
+resource "aws_iam_instance_profile" "somleng_adhearsion" {
+  name = aws_iam_role.somleng_adhearsion.name
+  role = aws_iam_role.somleng_adhearsion.name
 }
 
-resource "aws_iam_role_policy_attachment" "freeswitch_web_tier" {
-  role       = aws_iam_role.freeswitch.name
+resource "aws_iam_role_policy_attachment" "somleng_adhearsion_web_tier" {
+  role       = aws_iam_role.somleng_adhearsion.name
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
 
-resource "aws_iam_role_policy_attachment" "freeswitch_ssm" {
-  role       = aws_iam_role.freeswitch.name
+resource "aws_iam_role_policy_attachment" "somleng_adhearsion_ssm" {
+  role       = aws_iam_role.somleng_adhearsion.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
 
-resource "aws_iam_role_policy_attachment" "freeswitch_multicontainer_docker" {
-  role = aws_iam_role.freeswitch.name
+resource "aws_iam_role_policy_attachment" "somleng_adhearsion_ssm_multicontainer_docker" {
+  role = aws_iam_role.somleng_adhearsion.name
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker"
 }
 
-resource "aws_iam_role_policy_attachment" "freeswitch_polly" {
-  role = aws_iam_role.freeswitch.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonPollyFullAccess"
-}
-
-resource "aws_autoscaling_lifecycle_hook" "terminate_instance" {
-  name                   = "freeswitch-terminate-instance-hook"
-  autoscaling_group_name = aws_elastic_beanstalk_environment.freeswitch_webserver.autoscaling_groups.0
-  default_result         = "CONTINUE"
-  heartbeat_timeout      = 120
-  lifecycle_transition   = "autoscaling:EC2_INSTANCE_TERMINATING"
-}
-
-resource "aws_cloudwatch_event_rule" "terminate_instance" {
-  name        = "${local.freeswitch_app_identifier}-associate-eip"
-  description = "Associate Elastic IP"
-
-  event_pattern = <<PATTERN
-{
-  "source": [
-    "aws.autoscaling"
-  ],
-  "detail-type": [
-    "${local.event_detail_type}"
-  ],
-  "detail": {
-    "AutoScalingGroupName": [
-      "${aws_elastic_beanstalk_environment.freeswitch_webserver.autoscaling_groups.0}"
-    ]
-  }
-}
-PATTERN
-}
-
-resource "aws_cloudwatch_event_target" "lambda" {
-  rule = aws_cloudwatch_event_rule.terminate_instance.name
-  arn  = aws_lambda_function.associate_eip.arn
-}
-
-resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
+resource "aws_elastic_beanstalk_environment" "somleng_adhearsion_webserver" {
   # General Settings
 
-  name                = "freeswitch-webserver"
-  application         = aws_elastic_beanstalk_application.freeswitch.name
+  name                = "somleng-adhearsion-webserver"
+  application         = aws_elastic_beanstalk_application.somleng_adhearsion.name
   tier                = "WebServer"
   solution_stack_name = data.aws_elastic_beanstalk_solution_stack.multi_container_docker.name
-
-  tags = {
-    eip_allocation_id = aws_eip.freeswitch.id
-  }
 
   ################### VPC ###################
   # https://amzn.to/2JzNUcK
@@ -143,7 +70,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = join(",", module.vpc.public_subnets)
+    value     = join(",", module.vpc.private_subnets)
   }
 
   setting {
@@ -155,7 +82,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "AssociatePublicIpAddress"
-    value     = true
+    value     = false
   }
 
   setting {
@@ -168,11 +95,6 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   # http://amzn.to/2FjIpj6
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
-    name      = "SecurityGroups"
-    value     = aws_security_group.freeswitch.id
-  }
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
     value     = "t3.small"
   }
@@ -180,7 +102,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = aws_iam_instance_profile.freeswitch.name
+    value     = aws_iam_instance_profile.somleng_adhearsion.name
   }
 
   ################### Auto Scaling Group Settings ###################
@@ -274,7 +196,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "Port"
-    value     = "5222"
+    value     = "9050"
   }
 
   setting {
@@ -302,14 +224,26 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   }
   ################### Listener ###################
   # https://amzn.to/2GzHQiB
+  # Default Listener
+  setting {
+    namespace = "aws:elbv2:listener:default"
+    name      = "ListenerEnabled"
+    value     = "false"
+  }
+  # SSL Listener
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "ListenerEnabled"
+    value     = "false"
+  }
   # DRb Listener
   setting {
-    namespace = "aws:elbv2:listener:5222"
+    namespace = "aws:elbv2:listener:9050"
     name      = "ListenerEnabled"
     value     = "true"
   }
   setting {
-    namespace = "aws:elbv2:listener:5222"
+    namespace = "aws:elbv2:listener:9050"
     name      = "Protocol"
     value     = "TCP"
   }
@@ -329,47 +263,54 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_EXTERNAL_IP"
-    value     = aws_eip.freeswitch.public_ip
+    name      = "AHN_ENV"
+    value     = "production"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_RAYO_PORT"
+    name      = "AHN_CORE_HOST"
+    value     = "somleng-freeswitch.internal.somleng.org"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AHN_CORE_PORT"
     value     = "5222"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_RAYO_DOMAIN_NAME"
-    value     = "rayo.somleng.org"
+    name      = "AHN_CORE_USERNAME"
+    value     = "rayo@rayo.somleng.org"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_RAYO_USER"
-    value     = "rayo"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_RAYO_PASSWORD"
+    name      = "AHN_CORE_PASSWORD"
     value     = aws_ssm_parameter.somleng_freeswitch_mod_rayo_password.value
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_RAYO_SHARED_SECRET"
-    value     = aws_ssm_parameter.somleng_freeswitch_mod_rayo_password.value
+    name      = "AHN_ADHEARSION_DRB_PORT"
+    value     = "9050"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_JSON_CDR_URL"
-    value     = "https://twilreapi.farmradio.io/api/internal/call_data_records"
+    name      = "AHN_TWILIO_REST_API_PHONE_CALLS_URL"
+    value     = "https://admin:${aws_ssm_parameter.twilreapi_internal_api_password.value}@twilreapi.somleng.org/api/internal/phone_calls"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_MOD_JSON_CDR_CRED"
-    value     = "admin:${aws_ssm_parameter.twilreapi_internal_api_password.value}"
+    name      = "AHN_TWILIO_REST_API_PHONE_CALL_EVENTS_URL"
+    value     = "https://admin:${aws_ssm_parameter.twilreapi_internal_api_password.value}@twilreapi.somleng.org/api/internal/phone_calls/:phone_call_id/phone_call_events"
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "FS_CORE_LOGLEVEL"
-    value     = "notice"
+}
+
+resource "aws_route53_record" "somleng_adhearsion" {
+  zone_id = data.terraform_remote_state.core.outputs.somleng_internal_zone.id
+  name    = "somleng-adhearsion"
+  type    = "A"
+
+  alias {
+    name                   = aws_elastic_beanstalk_environment.somleng_adhearsion_webserver.cname
+    zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
+    evaluate_target_health = true
   }
 }

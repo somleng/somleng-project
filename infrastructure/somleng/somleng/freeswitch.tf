@@ -1,5 +1,25 @@
 locals {
-  freeswitch_app_identifier = "freeswitch"
+  freeswitch_app_identifier = "somleng-freeswitch"
+}
+
+resource "aws_ssm_parameter" "somleng_freeswitch_mod_rayo_password" {
+  name  = "freeswitch.mod_rayo.password"
+  type  = "SecureString"
+  value = "change-me"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
+resource "aws_ssm_parameter" "freeswitch_mod_rayo_shared_secret" {
+  name  = "freeswitch.mod_rayo.shared_secret"
+  type  = "SecureString"
+  value = "change-me"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
 }
 
 resource "aws_eip" "freeswitch" {
@@ -12,17 +32,65 @@ resource "aws_eip" "freeswitch" {
 
 resource "aws_security_group" "freeswitch" {
   name        = local.freeswitch_app_identifier
-  description = "Whitelisted VOIP Providers"
+  description = "Whitelisted voice providers"
   vpc_id      = module.vpc.vpc_id
+
+  tags = {
+    Name = "FreeSWITCH Security Group for VoIP providers"
+  }
 }
 
-resource "aws_security_group_rule" "local_pbx" {
+resource "aws_security_group_rule" "orange_sierra_leone" {
   type        = "ingress"
   from_port   = 5060
   to_port     = 5060
   protocol    = "udp"
-  cidr_blocks = ["154.160.70.82/32"]
-  description = "FRI Local PBX"
+  cidr_blocks = ["197.215.105.30/32"]
+  description = "Orange Sierra Leone"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
+resource "aws_security_group_rule" "hormuud_somalia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["41.78.73.242/32"]
+  description = "Hormuud Somalia"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
+resource "aws_security_group_rule" "smart_cambodia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["27.109.112.140/32"]
+  description = "Smart Cambodia"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
+resource "aws_security_group_rule" "cellcard_cambodia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["103.193.204.26/32"]
+  description = "Cellcard Cambodia"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
+resource "aws_security_group_rule" "metfone_cambodia" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["175.100.93.13/32"]
+  description = "Metfone Cambodia"
 
   security_group_id = aws_security_group.freeswitch.id
 }
@@ -123,7 +191,7 @@ resource "aws_cloudwatch_event_target" "lambda" {
 resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   # General Settings
 
-  name                = "freeswitch-webserver"
+  name                = "${local.freeswitch_app_identifier}-webserver"
   application         = aws_elastic_beanstalk_application.freeswitch.name
   tier                = "WebServer"
   solution_stack_name = data.aws_elastic_beanstalk_solution_stack.multi_container_docker.name
@@ -194,7 +262,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "4"
+    value     = "1"
   }
 
   ################### Code Deployment Settings ###################
@@ -360,7 +428,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_MOD_JSON_CDR_URL"
-    value     = "https://twilreapi.farmradio.io/api/internal/call_data_records"
+    value     = "https://twilreapi.somleng.org/api/internal/call_data_records"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -371,5 +439,17 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_CORE_LOGLEVEL"
     value     = "notice"
+  }
+}
+
+resource "aws_route53_record" "somleng_freeswitch" {
+  zone_id = data.terraform_remote_state.core.outputs.somleng_internal_zone.id
+  name    = "somleng-freeswitch"
+  type    = "A"
+
+  alias {
+    name                   = aws_elastic_beanstalk_environment.freeswitch_webserver.cname
+    zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
+    evaluate_target_health = true
   }
 }

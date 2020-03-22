@@ -1,0 +1,117 @@
+data "aws_elb_service_account" "main" {}
+
+resource "aws_s3_bucket" "naked_redirect" {
+  bucket = "somleng.org"
+  acl    = "private"
+
+  website {
+    redirect_all_requests_to = "https://www.somleng.org"
+  }
+}
+
+resource "aws_s3_bucket" "somleng_website" {
+  bucket = "www.somleng.org"
+  acl    = "public-read"
+
+  website {
+    index_document = "index.html"
+  }
+}
+
+resource "aws_s3_bucket" "www_somleng_com" {
+  bucket = "www.somleng.com"
+  acl    = "private"
+
+  website {
+    redirect_all_requests_to = "https://www.somleng.org"
+  }
+}
+
+resource "aws_s3_bucket" "somleng_com" {
+  bucket = "somleng.com"
+  acl    = "private"
+
+  website {
+    redirect_all_requests_to = "https://www.somleng.org"
+  }
+}
+
+resource "aws_s3_bucket_policy" "somleng_website" {
+  bucket = aws_s3_bucket.somleng_website.id
+
+  policy = <<POLICY
+{
+  "Version":"2012-10-17",
+  "Statement": [
+    {
+      "Effect":"Allow",
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource":[
+        "${aws_s3_bucket.somleng_website.arn}/*"
+      ]
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket" "logs" {
+  bucket = "logs.somleng.org"
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_policy" "logs" {
+  bucket = aws_s3_bucket.logs.id
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "Policy1429136655940",
+  "Statement": [
+    {
+      "Sid": "Stmt1429136633762",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${data.aws_elb_service_account.main.arn}"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}/*"
+    },
+    {
+      "Sid": "AWSLogDeliveryWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "delivery.logs.amazonaws.com"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}/*",
+      "Condition": {"StringEquals": {"s3:x-amz-acl": "bucket-owner-full-control"}}
+    },
+    {
+      "Sid": "AWSLogDeliveryAclCheck",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "delivery.logs.amazonaws.com"
+      },
+      "Action": "s3:GetBucketAcl",
+      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket" "ci_deploy" {
+  bucket = "deploy.somleng.org"
+  acl    = "private"
+  region = var.aws_region
+}
+
+resource "aws_s3_bucket" "backups" {
+  bucket = "backups.somleng.org"
+  acl    = "private"
+  region = var.aws_region
+}
