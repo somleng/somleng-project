@@ -18,6 +18,24 @@ resource "aws_s3_bucket" "somleng_website" {
   }
 }
 
+resource "aws_s3_bucket" "www_somleng_com" {
+  bucket = "www.somleng.com"
+  acl    = "private"
+
+  website {
+    redirect_all_requests_to = "https://www.somleng.org"
+  }
+}
+
+resource "aws_s3_bucket" "somleng_com" {
+  bucket = "somleng.com"
+  acl    = "private"
+
+  website {
+    redirect_all_requests_to = "https://www.somleng.org"
+  }
+}
+
 resource "aws_s3_bucket_policy" "somleng_website" {
   bucket = aws_s3_bucket.somleng_website.id
 
@@ -84,4 +102,16 @@ resource "aws_s3_bucket_policy" "logs" {
   ]
 }
 POLICY
+}
+
+resource "aws_s3_bucket" "ci_deploy" {
+  bucket = "deploy.somleng.org"
+  acl    = "private"
+  region = var.aws_region
+}
+
+resource "aws_s3_bucket" "backups" {
+  bucket = "backups.somleng.org"
+  acl    = "private"
+  region = var.aws_region
 }
