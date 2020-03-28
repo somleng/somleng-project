@@ -110,8 +110,8 @@ resource "aws_iam_policy" "scfm" {
         "s3:ListBucket"
       ],
       "Resource": [
-        "${aws_s3_bucket.uploads.arn}",
-        "${aws_s3_bucket.audio.arn}"
+        "${data.aws_s3_bucket.uploads.arn}",
+        "${data.aws_s3_bucket.audio.arn}"
       ]
     },
     {
@@ -122,8 +122,8 @@ resource "aws_iam_policy" "scfm" {
         "s3:GetObject"
       ],
       "Resource": [
-        "${aws_s3_bucket.uploads.arn}/*",
-        "${aws_s3_bucket.audio.arn}/*"
+        "${data.aws_s3_bucket.uploads.arn}/*",
+        "${data.aws_s3_bucket.audio.arn}/*"
       ]
     }
   ]
@@ -161,27 +161,16 @@ resource "aws_iam_role_policy_attachment" "scfm_ssm" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
 
-resource "aws_s3_bucket" "uploads" {
+data "aws_s3_bucket" "uploads" {
   bucket = "uploads.somleng.org"
-  acl    = "private"
-  region = var.aws_region
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["GET", "POST", "PUT"]
-    allowed_origins = ["https://*.somleng.org"]
-    max_age_seconds = 3000
-  }
 }
 
-resource "aws_s3_bucket" "audio" {
+data "aws_s3_bucket" "audio" {
   bucket = "audio.somleng.org"
-  acl    = "public-read"
-  region = var.aws_region
 }
 
 resource "aws_s3_bucket_policy" "audio" {
-  bucket = aws_s3_bucket.audio.id
+  bucket = data.aws_s3_bucket.audio.id
 
   policy = <<POLICY
 {
@@ -194,7 +183,7 @@ resource "aws_s3_bucket_policy" "audio" {
         "s3:GetObject"
       ],
       "Resource": [
-        "${aws_s3_bucket.audio.arn}/*"
+        "${data.aws_s3_bucket.audio.arn}/*"
       ]
     }
   ]
@@ -433,12 +422,12 @@ resource "aws_elastic_beanstalk_environment" "scfm_worker" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "UPLOADS_BUCKET"
-    value     = aws_s3_bucket.uploads.id
+    value     = data.aws_s3_bucket.uploads.id
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AUDIO_BUCKET"
-    value     = aws_s3_bucket.audio.id
+    value     = data.aws_s3_bucket.audio.id
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -732,7 +721,7 @@ resource "aws_elastic_beanstalk_environment" "scfm_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "UPLOADS_BUCKET"
-    value     = aws_s3_bucket.uploads.id
+    value     = data.aws_s3_bucket.uploads.id
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -747,7 +736,7 @@ resource "aws_elastic_beanstalk_environment" "scfm_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "AUDIO_BUCKET"
-    value     = aws_s3_bucket.audio.id
+    value     = data.aws_s3_bucket.audio.id
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
