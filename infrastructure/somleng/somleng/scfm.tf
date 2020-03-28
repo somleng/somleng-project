@@ -49,14 +49,14 @@ module "scfm_db" {
   engine                      = "postgres"
   engine_version              = "11.5"
   major_engine_version        = "11"
-  instance_class              = "db.t3.small"
+  instance_class              = "db.t3.medium"
   allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
   apply_immediately           = true
   storage_encrypted           = false
   db_subnet_group_name = module.vpc.database_subnet_group
 
-  allocated_storage = 5
+  allocated_storage = 25
 
   username = "somleng"
   password = aws_ssm_parameter.scfm_db_master_password.value

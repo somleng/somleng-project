@@ -60,14 +60,14 @@ module "twilreapi_db" {
   engine                      = "postgres"
   engine_version              = "11.5"
   major_engine_version        = "11"
-  instance_class              = "db.t3.small"
+  instance_class              = "db.t3.medium"
   allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
   apply_immediately           = true
   storage_encrypted           = false
   db_subnet_group_name = module.vpc.database_subnet_group
 
-  allocated_storage = 5
+  allocated_storage = 25
 
   username = "somleng"
   password = aws_ssm_parameter.twilreapi_db_master_password.value
@@ -236,7 +236,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_caller_worker" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.micro"
+    value     = "t3.small"
   }
 
   setting {
@@ -256,7 +256,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_caller_worker" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "4"
+    value     = "2"
   }
 
   ################### Code Deployment Settings ###################
@@ -478,7 +478,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.small"
+    value     = "t3.medium"
   }
 
   setting {
@@ -498,7 +498,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "4"
+    value     = "2"
   }
 
   ################### Code Deployment Settings ###################
@@ -751,7 +751,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_webserver" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "4"
+    value     = "2"
   }
 
   ################### Code Deployment Settings ###################

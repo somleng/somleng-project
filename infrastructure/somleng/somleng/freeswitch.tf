@@ -242,7 +242,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.small"
+    value     = "t3.2xlarge"
   }
 
   setting {
@@ -439,6 +439,16 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_CORE_LOGLEVEL"
     value     = "notice"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "FS_CORE_MAX_SESSIONS"
+    value     = "1000"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "FS_CORE_SESSIONS_PER_SECOND"
+    value     = "1000"
   }
 }
 

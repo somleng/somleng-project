@@ -96,7 +96,7 @@ resource "aws_elastic_beanstalk_environment" "somleng_adhearsion_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.small"
+    value     = "t3.xlarge"
   }
 
   setting {
@@ -116,7 +116,7 @@ resource "aws_elastic_beanstalk_environment" "somleng_adhearsion_webserver" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "4"
+    value     = "2"
   }
 
   ################### Code Deployment Settings ###################
