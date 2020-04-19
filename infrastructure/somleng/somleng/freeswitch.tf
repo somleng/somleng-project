@@ -472,3 +472,15 @@ resource "aws_route53_record" "somleng_freeswitch" {
     evaluate_target_health = true
   }
 }
+
+# https://amzn.to/3crdQoP
+resource "null_resource" "freeswitch_asg_termination_policy" {
+  provisioner "local-exec" {
+    command = "aws autoscaling update-auto-scaling-group --auto-scaling-group-name '${element(aws_elastic_beanstalk_environment.freeswitch_webserver.autoscaling_groups, 0)}' --termination-policies 'OldestInstance'"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+}
+
