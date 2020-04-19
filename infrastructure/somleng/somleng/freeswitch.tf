@@ -262,7 +262,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = "1"
+    value     = "2"
   }
 
   ################### Code Deployment Settings ###################
