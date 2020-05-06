@@ -8,7 +8,7 @@ The Somleng Project is a collection of open source telephony tools which can be 
 
 ## Who's using it?
 
-Check out [Somleng's Real Time Data](http://rtd.somleng.org) to see who's currently using Somleng. You can also read about our case studies in the [Introduction to Somleng article](https://github.com/somleng/somleng-project/blob/master/docs/introduction_for_development_organizations.md).
+Check out [Somleng's Real Time Data](http://somleng-rtd.herokuapp.com) to see who's currently using Somleng. You can also read about our case studies in the [Introduction to Somleng article](https://github.com/somleng/somleng-project/blob/master/docs/introduction_for_development_organizations.md).
 
 ## How can I use it?
 
