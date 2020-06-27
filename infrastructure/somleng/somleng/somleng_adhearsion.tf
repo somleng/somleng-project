@@ -96,7 +96,7 @@ resource "aws_elastic_beanstalk_environment" "somleng_adhearsion_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.xlarge"
+    value     = "t3.small"
   }
 
   setting {
@@ -313,4 +313,16 @@ resource "aws_route53_record" "somleng_adhearsion" {
     zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
     evaluate_target_health = true
   }
+}
+
+resource "null_resource" "somleng_adhearsion_load_balancer_attributes_modifications" {
+  provisioner "local-exec" {
+    command = "aws elbv2 modify-load-balancer-attributes --load-balancer-arn ${aws_elastic_beanstalk_environment.somleng_adhearsion_webserver.load_balancers.0} --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=logs.somleng.org Key=access_logs.s3.prefix,Value=${local.somleng_adhearsion_app_identifier} Key=load_balancing.cross_zone.enabled,Value=true"
+  }
+
+  triggers = {
+    lb_arn = aws_elastic_beanstalk_environment.somleng_adhearsion_webserver.load_balancers.0
+  }
+
+  depends_on = [aws_elastic_beanstalk_environment.somleng_adhearsion_webserver]
 }

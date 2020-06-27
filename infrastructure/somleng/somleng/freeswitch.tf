@@ -242,7 +242,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.2xlarge"
+    value     = "t3.small"
   }
 
   setting {
@@ -438,7 +438,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_CORE_LOGLEVEL"
-    value     = "notice"
+    value     = "err"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -484,3 +484,14 @@ resource "null_resource" "freeswitch_asg_termination_policy" {
   }
 }
 
+resource "null_resource" "freeswitch_load_balancer_attributes_modifications" {
+  provisioner "local-exec" {
+    command = "aws elbv2 modify-load-balancer-attributes --load-balancer-arn ${aws_elastic_beanstalk_environment.freeswitch_webserver.load_balancers.0} --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=logs.somleng.org Key=access_logs.s3.prefix,Value=${local.freeswitch_app_identifier} Key=load_balancing.cross_zone.enabled,Value=true"
+  }
+
+  triggers = {
+    lb_arn = aws_elastic_beanstalk_environment.freeswitch_webserver.load_balancers.0
+  }
+
+  depends_on = [aws_elastic_beanstalk_environment.freeswitch_webserver]
+}
