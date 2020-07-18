@@ -121,10 +121,47 @@ resource "aws_iam_policy" "ci_deploy" {
     },
     {
       "Action": [
-        "ecs:RegisterTaskDefinition"
+        "ecs:RegisterTaskDefinition*",
+        "ecs:Describe*",
+        "ecs:UpdateService",
+        "ecs:RunTask",
+        "ecr:GetAuthorizationToken",
+        "ecr:InitiateLayerUpload",
+        "ecr:CompleteLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:PutImage",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability"
       ],
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:iam::***:role/*ecs*"
+      ]
+    },
+    {
+      "Action": [
+        "ecs:DescribeServices",
+        "codedeploy:GetDeploymentGroup",
+        "codedeploy:CreateDeployment",
+        "codedeploy:GetDeployment",
+        "codedeploy:GetDeploymentConfig",
+        "codedeploy:RegisterApplicationRevision"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:ecs:::service/*",
+        "arn:aws:codedeploy:*:***:deploymentgroup:*",
+        "arn:aws:codedeploy:*:***:deploymentconfig:*",
+        "arn:aws:codedeploy:*:***:application:*"
+      ]
     }
   ]
 }

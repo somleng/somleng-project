@@ -37,3 +37,11 @@ output "logs_bucket" {
 output "db_master_password_parameter" {
   value = aws_ssm_parameter.db_master_password
 }
+
+output "ci_deploy_key" {
+  value = aws_iam_access_key.ci_deploy
+}
+
+output "ci_deploy_role" {
+  value = aws_iam_role.ci_deploy
+}
