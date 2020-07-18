@@ -15,6 +15,16 @@ resource "aws_security_group" "db" {
   }
 }
 
+resource "aws_db_subnet_group" "this" {
+  name        = "somleng-db"
+  description = "For Aurora cluster somleng"
+  subnet_ids  = module.vpc.database_subnets
+
+  tags = {
+    Name = "aurora-somleng"
+  }
+}
+
 resource "aws_ssm_parameter" "db_master_password" {
   name  = "somleng.db_master_password"
   type  = "SecureString"
@@ -26,37 +36,23 @@ resource "aws_ssm_parameter" "db_master_password" {
 }
 
 module "db" {
-  source = "terraform-aws-modules/rds/aws"
+  source  = "terraform-aws-modules/rds-aurora/aws"
 
-  identifier = local.database_identifier
+  name = local.database_identifier
 
-  engine                      = "postgres"
-  engine_version              = "11.6"
-  major_engine_version        = "11"
-  instance_class              = "db.t3.medium"
-  allow_major_version_upgrade = true
+  engine                      = "aurora-postgresql"
+  engine_version              = "11.7"
+  vpc_id = module.vpc.vpc_id
+  db_subnet_group_name = aws_db_subnet_group.this.name
+  allowed_security_groups = [aws_security_group.db.id]
+  allowed_cidr_blocks = [module.vpc.vpc_cidr_block]
+  instance_type              = "db.t3.medium"
   auto_minor_version_upgrade  = true
   apply_immediately           = true
   storage_encrypted           = true
 
-  allocated_storage = 25
-
   username = "somleng"
   password = aws_ssm_parameter.db_master_password.value
   port     = local.database_port
-
-  vpc_security_group_ids = [aws_security_group.db.id]
-
-  skip_final_snapshot       = false
-  final_snapshot_identifier = local.database_identifier
-  backup_retention_period   = 30
-  maintenance_window        = "Sun:19:00-Sun:22:00"
-  backup_window             = "22:00-00:00"
-  deletion_protection       = true
-  multi_az                  = false
-
-  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-
-  create_db_parameter_group = false
-  subnet_ids                = module.vpc.database_subnets
+  enabled_cloudwatch_logs_exports = ["postgresql"]
 }
