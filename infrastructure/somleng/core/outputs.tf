@@ -45,3 +45,15 @@ output "ci_deploy_key" {
 output "ci_deploy_role" {
   value = aws_iam_role.ci_deploy
 }
+
+output "application_load_balancer" {
+  value = aws_lb.somleng_application
+}
+
+output "https_listener" {
+  value = aws_lb_listener.https
+}
+
+output "ecs_cluster" {
+  value = aws_ecs_cluster.somleng
+}

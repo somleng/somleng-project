@@ -113,3 +113,15 @@ resource "aws_route53_record" "somleng_com_txt" {
     "google-site-verification=H1Qxp7StJYRB32sBQE6jlWECLB3sqT_EeJwZcs4bpwE",
   ]
 }
+
+resource "aws_route53_record" "scfm" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "scfm2"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.somleng_application.dns_name
+    zone_id                = aws_lb.somleng_application.zone_id
+    evaluate_target_health = false
+  }
+}
