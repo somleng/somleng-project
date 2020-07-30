@@ -43,9 +43,8 @@ resource "aws_instance" "this" {
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = data.template_file.user_data.rendered
 
-  ebs_block_device {
-    device_name = "/dev/sdg"
-    volume_size = 10
+  root_block_device {
+    volume_size = 20
     volume_type = "gp2"
   }
 

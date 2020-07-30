@@ -17,6 +17,10 @@ data "aws_ssm_parameter" "db_master_password" {
   name = "somleng.db_master_password"
 }
 
+data "aws_s3_bucket" "backups" {
+  bucket = "backups.somleng.org"
+}
+
 resource "aws_security_group" "this" {
   name   = "bootstrap-database"
   vpc_id = data.terraform_remote_state.core_infrastructure.outputs.vpc.vpc_id
@@ -68,6 +72,41 @@ resource "aws_iam_instance_profile" "this" {
   role  = aws_iam_role.this.name
 }
 
+resource "aws_iam_policy" "this" {
+  name = "backup-database"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${data.aws_s3_bucket.backups.arn}"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "${data.aws_s3_bucket.backups.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "this" {
+  role       = aws_iam_role.this.name
+  policy_arn = aws_iam_policy.this.arn
+}
+
 resource "aws_iam_role_policy_attachment" "ssm" {
   role       = aws_iam_role.this.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
@@ -81,5 +120,8 @@ data "template_file" "user_data" {
     db_host = data.terraform_remote_state.core_infrastructure.outputs.db.this_rds_cluster_endpoint
     db_username = data.terraform_remote_state.core_infrastructure.outputs.db.this_rds_cluster_master_username
     db_name = var.db_name
+    create_db = var.create_db
+    restore_db = var.restore_db
+    restore_db_from_backup_name = var.restore_db_from_backup_name
   }
 }
