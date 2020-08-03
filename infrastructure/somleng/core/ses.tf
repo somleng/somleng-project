@@ -95,3 +95,15 @@ resource "aws_route53_record" "dmarc_record" {
   ttl     = "600"
   records = ["v=DMARC1;p=none"]
 }
+
+resource "aws_ssm_parameter" "smtp_username" {
+  name  = "somleng.smtp_username"
+  type  = "String"
+  value = aws_iam_access_key.ses_sender.id
+}
+
+resource "aws_ssm_parameter" "smtp_password" {
+  name  = "somleng.smtp_password"
+  type  = "SecureString"
+  value = aws_iam_access_key.ses_sender.ses_smtp_password
+}

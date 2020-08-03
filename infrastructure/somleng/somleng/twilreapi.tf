@@ -478,7 +478,7 @@ resource "aws_elastic_beanstalk_environment" "twilreapi_worker" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.medium"
+    value     = "t3.small"
   }
 
   setting {

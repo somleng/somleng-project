@@ -46,8 +46,20 @@ resource "aws_iam_policy" "ci_deploy" {
     {
       "Effect": "Allow",
       "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.ci_deploy.arn}",
+        "${aws_s3_bucket.somleng_website.arn}"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "s3:PutObject",
-        "s3:GetObject"
+        "s3:PutObjectAcl",
+        "s3:GetObject",
+        "s3:DeleteObject"
       ],
       "Resource": [
         "${aws_s3_bucket.ci_deploy.arn}/*",
@@ -121,10 +133,47 @@ resource "aws_iam_policy" "ci_deploy" {
     },
     {
       "Action": [
-        "ecs:RegisterTaskDefinition"
+        "ecs:RegisterTaskDefinition*",
+        "ecs:Describe*",
+        "ecs:UpdateService",
+        "ecs:RunTask",
+        "ecr:GetAuthorizationToken",
+        "ecr:InitiateLayerUpload",
+        "ecr:CompleteLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:PutImage",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability"
       ],
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:iam::***:role/*ecs*"
+      ]
+    },
+    {
+      "Action": [
+        "ecs:DescribeServices",
+        "codedeploy:GetDeploymentGroup",
+        "codedeploy:CreateDeployment",
+        "codedeploy:GetDeployment",
+        "codedeploy:GetDeploymentConfig",
+        "codedeploy:RegisterApplicationRevision"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:ecs:::service/*",
+        "arn:aws:codedeploy:*:***:deploymentgroup:*",
+        "arn:aws:codedeploy:*:***:deploymentconfig:*",
+        "arn:aws:codedeploy:*:***:application:*"
+      ]
     }
   ]
 }
