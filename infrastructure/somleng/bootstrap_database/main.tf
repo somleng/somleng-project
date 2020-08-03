@@ -73,7 +73,7 @@ resource "aws_iam_instance_profile" "this" {
 }
 
 resource "aws_iam_policy" "this" {
-  name = "backup-database"
+  name = "bootstrap-database"
 
   policy = <<EOF
 {

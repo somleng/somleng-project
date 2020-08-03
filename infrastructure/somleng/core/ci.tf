@@ -46,8 +46,20 @@ resource "aws_iam_policy" "ci_deploy" {
     {
       "Effect": "Allow",
       "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.ci_deploy.arn}",
+        "${aws_s3_bucket.somleng_website.arn}"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "s3:PutObject",
-        "s3:GetObject"
+        "s3:PutObjectAcl",
+        "s3:GetObject",
+        "s3:DeleteObject"
       ],
       "Resource": [
         "${aws_s3_bucket.ci_deploy.arn}/*",

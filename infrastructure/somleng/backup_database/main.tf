@@ -97,7 +97,8 @@ resource "aws_iam_policy" "this" {
       "Effect": "Allow",
       "Action": [
         "s3:PutObject",
-        "s3:GetObject"
+        "s3:GetObject",
+        "s3:DeleteObject"
       ],
       "Resource": [
         "${data.aws_s3_bucket.backups.arn}/*"
@@ -122,10 +123,6 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    scfm_db_host = data.terraform_remote_state.old_infrastructure.outputs.scfm_db.this_db_instance_address
-    scfm_db_username = data.terraform_remote_state.old_infrastructure.outputs.scfm_db.this_db_instance_username
-    scfm_db_password = data.terraform_remote_state.old_infrastructure.outputs.scfm_db.this_db_instance_password
-    scfm_db_name = data.terraform_remote_state.old_infrastructure.outputs.scfm_db.this_db_instance_name
     twilreapi_db_host = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_address
     twilreapi_db_username = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_username
     twilreapi_db_password = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_password

@@ -3,5 +3,5 @@ variable "aws_region" {
 }
 
 variable "application_name" {
-  description = "scfm or twilreapi"
+  description = "twilreapi"
 }

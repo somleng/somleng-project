@@ -116,7 +116,7 @@ resource "aws_route53_record" "somleng_com_txt" {
 
 resource "aws_route53_record" "scfm" {
   zone_id = aws_route53_zone.somleng_org.zone_id
-  name    = "scfm2"
+  name    = "scfm"
   type    = "A"
 
   alias {
