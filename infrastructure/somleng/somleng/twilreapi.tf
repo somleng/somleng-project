@@ -58,7 +58,7 @@ module "twilreapi_db" {
   name = "somleng_twilreapi"
 
   engine                      = "postgres"
-  engine_version              = "11.5"
+  engine_version              = "11.8"
   major_engine_version        = "11"
   instance_class              = "db.t3.medium"
   allow_major_version_upgrade = true
@@ -188,7 +188,6 @@ resource "aws_iam_role_policy_attachment" "twilreapi_ssm" {
 resource "aws_s3_bucket" "cdr" {
   bucket = "cdr.somleng.org"
   acl    = "private"
-  region = var.aws_region
 }
 
 resource "aws_elastic_beanstalk_environment" "twilreapi_caller_worker" {

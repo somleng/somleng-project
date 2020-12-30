@@ -242,7 +242,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.small"
+    value     = "t3.medium"
   }
 
   setting {
