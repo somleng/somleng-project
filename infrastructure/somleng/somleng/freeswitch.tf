@@ -95,6 +95,17 @@ resource "aws_security_group_rule" "metfone_cambodia" {
   security_group_id = aws_security_group.freeswitch.id
 }
 
+resource "aws_security_group_rule" "c3ntro_mexico" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["104.152.200.44/32"]
+  description = "c3ntro Mexico"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
 resource "aws_eip_association" "eip" {
   instance_id   = aws_elastic_beanstalk_environment.freeswitch_webserver.instances.0
   allocation_id = aws_eip.freeswitch.id
