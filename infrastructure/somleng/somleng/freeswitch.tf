@@ -463,15 +463,6 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   }
 }
 
-resource "aws_autoscaling_schedule" "freeswitch_restart_autoscale_up" {
-  scheduled_action_name  = "freeswitch-restart-autoscale-up"
-  autoscaling_group_name = element(aws_elastic_beanstalk_environment.freeswitch_webserver.autoscaling_groups, 0)
-  recurrence = "0 20 * * *"
-  desired_capacity = 2
-  min_size = 1
-  max_size = 2
-}
-
 resource "aws_route53_record" "somleng_freeswitch" {
   zone_id = data.terraform_remote_state.core.outputs.somleng_internal_zone.id
   name    = "somleng-freeswitch"
