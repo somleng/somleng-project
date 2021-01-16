@@ -110,8 +110,19 @@ resource "aws_security_group_rule" "c3ntro_mexico" {
   from_port   = 5060
   to_port     = 5060
   protocol    = "udp"
-  cidr_blocks = ["104.152.200.44/32"]
+  cidr_blocks = ["200.0.90.35/32"]
   description = "c3ntro Mexico"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
+resource "aws_security_group_rule" "bongloy_office" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["96.9.66.131/32"]
+  description = "Bongloy Office"
 
   security_group_id = aws_security_group.freeswitch.id
 }
