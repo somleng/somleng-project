@@ -9,7 +9,7 @@ variable "restore_db" {
   description = "y or n"
 }
 variable "restore_db_from_backup_name" {
-  description = "twilreapi"
+  description = "somleng_twilreapi"
 }
 variable "db_name" {
   description = "twilreapi"

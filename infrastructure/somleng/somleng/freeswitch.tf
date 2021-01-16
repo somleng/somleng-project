@@ -2,6 +2,16 @@ locals {
   freeswitch_app_identifier = "somleng-freeswitch"
 }
 
+resource "aws_ssm_parameter" "twilreapi_services_password" {
+  name  = "twilreapi.rails.services_password"
+  type  = "SecureString"
+  value = "change-me"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
 resource "aws_ssm_parameter" "somleng_freeswitch_mod_rayo_password" {
   name  = "freeswitch.mod_rayo.password"
   type  = "SecureString"
@@ -439,12 +449,12 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_MOD_JSON_CDR_URL"
-    value     = "https://twilreapi.somleng.org/api/internal/call_data_records"
+    value     = "https://twilreapi.somleng.org/services/call_data_records"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_MOD_JSON_CDR_CRED"
-    value     = "admin:${aws_ssm_parameter.twilreapi_internal_api_password.value}"
+    value     = "services:${aws_ssm_parameter.twilreapi_services_password.value}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"

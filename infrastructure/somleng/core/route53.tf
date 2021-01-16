@@ -150,9 +150,9 @@ resource "aws_route53_record" "freeswitch" {
   }
 }
 
-resource "aws_route53_record" "twilreapi2" {
+resource "aws_route53_record" "twilreapi" {
   zone_id = aws_route53_zone.somleng_org.zone_id
-  name    = "twilreapi2"
+  name    = "twilreapi"
   type    = "A"
 
   alias {
