@@ -2,6 +2,16 @@ locals {
   freeswitch_app_identifier = "somleng-freeswitch"
 }
 
+resource "aws_ssm_parameter" "twilreapi_services_password" {
+  name  = "twilreapi.rails.services_password"
+  type  = "SecureString"
+  value = "change-me"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
 resource "aws_ssm_parameter" "somleng_freeswitch_mod_rayo_password" {
   name  = "freeswitch.mod_rayo.password"
   type  = "SecureString"
@@ -91,6 +101,17 @@ resource "aws_security_group_rule" "metfone_cambodia" {
   protocol    = "udp"
   cidr_blocks = ["175.100.93.13/32"]
   description = "Metfone Cambodia"
+
+  security_group_id = aws_security_group.freeswitch.id
+}
+
+resource "aws_security_group_rule" "c3ntro_mexico" {
+  type        = "ingress"
+  from_port   = 5060
+  to_port     = 5060
+  protocol    = "udp"
+  cidr_blocks = ["104.152.200.44/32"]
+  description = "c3ntro Mexico"
 
   security_group_id = aws_security_group.freeswitch.id
 }
@@ -242,7 +263,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.small"
+    value     = "t3.medium"
   }
 
   setting {
@@ -428,12 +449,12 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_MOD_JSON_CDR_URL"
-    value     = "https://twilreapi.somleng.org/api/internal/call_data_records"
+    value     = "https://twilreapi.somleng.org/services/call_data_records"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_MOD_JSON_CDR_CRED"
-    value     = "admin:${aws_ssm_parameter.twilreapi_internal_api_password.value}"
+    value     = "services:${aws_ssm_parameter.twilreapi_services_password.value}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -450,15 +471,6 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
     name      = "FS_CORE_SESSIONS_PER_SECOND"
     value     = "1000"
   }
-}
-
-resource "aws_autoscaling_schedule" "freeswitch_restart_autoscale_up" {
-  scheduled_action_name  = "freeswitch-restart-autoscale-up"
-  autoscaling_group_name = element(aws_elastic_beanstalk_environment.freeswitch_webserver.autoscaling_groups, 0)
-  recurrence = "0 20 * * *"
-  desired_capacity = 2
-  min_size = 1
-  max_size = 2
 }
 
 resource "aws_route53_record" "somleng_freeswitch" {

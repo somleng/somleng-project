@@ -36,8 +36,6 @@ resource "aws_instance" "this" {
   instance_type = "t3.small"
   security_groups = [
     aws_security_group.this.id,
-    data.terraform_remote_state.old_infrastructure.outputs.scfm_db_security_group.id,
-    data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db_security_group.id
   ]
   subnet_id = element(data.terraform_remote_state.old_infrastructure.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
@@ -123,10 +121,10 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    twilreapi_db_host = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_address
-    twilreapi_db_username = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_username
-    twilreapi_db_password = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_password
-    twilreapi_db_name = data.terraform_remote_state.old_infrastructure.outputs.twilreapi_db.this_db_instance_name
+    old_db_host = "old_db_host"
+    old_db_username = "old_db_username"
+    old_db_password = "old_db_password"
+    old_db_name = "old_db_name"
     application_name = var.application_name
   }
 }

@@ -125,3 +125,40 @@ resource "aws_route53_record" "scfm" {
     evaluate_target_health = false
   }
 }
+
+resource "aws_route53_record" "ahn" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "ahn"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.somleng_application.dns_name
+    zone_id                = aws_lb.somleng_application.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "freeswitch" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "freeswitch"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.somleng_network.dns_name
+    zone_id                = aws_lb.somleng_network.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "twilreapi" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "twilreapi"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.somleng_application.dns_name
+    zone_id                = aws_lb.somleng_application.zone_id
+    evaluate_target_health = true
+  }
+}
+
