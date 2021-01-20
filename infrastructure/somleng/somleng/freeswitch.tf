@@ -470,7 +470,12 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_CORE_LOGLEVEL"
-    value     = "err"
+    value     = "notice"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "FS_CONSOLE_LOGLEVEL"
+    value     = "notice"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
