@@ -230,6 +230,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
 
   tags = {
     eip_allocation_id = aws_eip.freeswitch.id
+    sip_target_group_arn = aws_lb_target_group.freeswitch_elastic_beanstalk_sip.arn
   }
 
   ################### VPC ###################
@@ -402,7 +403,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   }
   ################### Listener ###################
   # https://amzn.to/2GzHQiB
-  # DRb Listener
+  # Rayo Listener
   setting {
     namespace = "aws:elbv2:listener:5222"
     name      = "ListenerEnabled"
@@ -522,4 +523,35 @@ resource "null_resource" "freeswitch_load_balancer_attributes_modifications" {
   }
 
   depends_on = [aws_elastic_beanstalk_environment.freeswitch_webserver]
+}
+
+resource "aws_lb_target_group" "freeswitch_elastic_beanstalk_sip" {
+  name        = "freeswitch-elastic-beanstalk-sip"
+  port        = 5060
+  protocol    = "UDP"
+  target_type = "instance"
+  vpc_id      = module.vpc.vpc_id
+
+  health_check {
+    port = 5222
+    protocol = "TCP"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "freeswitch_elastic_beanstalk_instance_sip" {
+  count = length(aws_elastic_beanstalk_environment.freeswitch_webserver.instances)
+
+  target_group_arn  = aws_lb_target_group.freeswitch_elastic_beanstalk_sip.arn
+  target_id = aws_elastic_beanstalk_environment.freeswitch_webserver.instances[count.index]
+}
+
+resource "aws_lb_listener" "elastic_beanstalk_sip" {
+  load_balancer_arn = aws_elastic_beanstalk_environment.freeswitch_webserver.load_balancers.0
+  port              = "5060"
+  protocol          = "UDP"
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.freeswitch_elastic_beanstalk_sip.arn
+  }
 }

@@ -50,6 +50,10 @@ output "application_load_balancer" {
   value = aws_lb.somleng_application
 }
 
+output "network_load_balancer" {
+  value = aws_lb.somleng_network
+}
+
 output "https_listener" {
   value = aws_lb_listener.https
 }

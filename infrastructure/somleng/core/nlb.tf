@@ -16,16 +16,32 @@ data "aws_network_interface" "freeswitch_old_load_balancer" {
   }
 }
 
+resource "aws_eip" "nlb" {
+  count = length(module.vpc.public_subnets)
+  vpc = true
+
+  tags = {
+    Name = "NLB Public IP"
+  }
+}
+
 resource "aws_lb" "somleng_network" {
   name = "somleng-network"
   load_balancer_type = "network"
-  subnets = module.vpc.public_subnets
   enable_cross_zone_load_balancing = true
 
   access_logs {
     bucket  = aws_s3_bucket.logs.id
     prefix  = "somleng-network"
     enabled = true
+  }
+
+  dynamic "subnet_mapping" {
+    for_each = module.vpc.public_subnets
+    content {
+      subnet_id     = subnet_mapping.value
+      allocation_id = aws_eip.nlb.*.id[subnet_mapping.key]
+    }
   }
 }
 
@@ -88,35 +104,3 @@ resource "aws_lb_listener" "sip" {
   }
 }
 
-resource "aws_globalaccelerator_accelerator" "somleng" {
-  name            = "Somleng"
-  ip_address_type = "IPV4"
-  enabled         = true
-
-  attributes {
-    flow_logs_enabled   = true
-    flow_logs_s3_bucket = aws_s3_bucket.logs.id
-    flow_logs_s3_prefix = "somleng_global_accelerator/"
-  }
-}
-
-resource "aws_globalaccelerator_listener" "somleng" {
-  accelerator_arn = aws_globalaccelerator_accelerator.somleng.id
-  protocol = "UDP"
-  port_range {
-    from_port = 5060
-    to_port = 5060
-  }
-}
-
-resource "aws_globalaccelerator_endpoint_group" "somleng" {
-  listener_arn = aws_globalaccelerator_listener.somleng.id
-  endpoint_group_region = var.aws_region
-
-  health_check_port = 5222
-  health_check_protocol = "TCP"
-
-  endpoint_configuration {
-    endpoint_id = aws_lb.somleng_network.arn
-  }
-}

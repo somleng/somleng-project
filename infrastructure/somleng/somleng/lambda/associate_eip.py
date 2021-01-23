@@ -6,6 +6,7 @@ from datetime import datetime
 
 ec2_client = boto3.client('ec2')
 asg_client = boto3.client('autoscaling')
+elbv2_client = boto3.client('elbv2')
 
 def lambda_handler(event, context):
   log("Received Event: {}".format(event))
@@ -21,10 +22,24 @@ def lambda_handler(event, context):
 
   in_service_instance_id = get_in_service_instance_id(autoscaling_group_name)
   allocation_id = get_instance_tag(in_service_instance_id, os.environ.get('EIP_ALLOCATION_ID_TAG_KEY'))
+  target_group_arn = get_instance_tag(in_service_instance_id, os.environ.get('TARGET_GROUP_ARN_TAG_KEY'))
 
   associate_address(in_service_instance_id, allocation_id)
+  register_instance_target(in_service_instance_id, target_group_arn)
 
   complete_lifecycle_action_success(lifecycle_hook_name, autoscaling_group_name, instance_id)
+
+def register_instance_target(instance_id, target_group_arn):
+  response = elbv2_client.register_targets(
+    TargetGroupArn=target_group_arn,
+    Targets=[
+      {
+          'Id': instance_id
+      }
+    ]
+  )
+
+  log("Registering ELB Target: Response: {}".format(response))
 
 def get_in_service_instance_id(asg_group_name):
   response = asg_client.describe_auto_scaling_groups(

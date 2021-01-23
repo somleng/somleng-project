@@ -50,7 +50,8 @@ resource "aws_iam_role_policy" "lambda_associate_eip" {
         "ec2:DescribeAddresses",
         "ec2:DescribeInstances",
         "autoscaling:DescribeAutoScalingGroups",
-        "autoscaling:CompleteLifecycleAction"
+        "autoscaling:CompleteLifecycleAction",
+        "elasticloadbalancing:RegisterTargets"
       ],
       "Effect": "Allow",
       "Resource": "*"
@@ -76,6 +77,7 @@ resource "aws_lambda_function" "associate_eip" {
     variables = {
       EVENT_DETAIL_TYPE         = local.event_detail_type
       EIP_ALLOCATION_ID_TAG_KEY = "eip_allocation_id"
+      TARGET_GROUP_ARN_TAG_KEY = "sip_target_group_arn"
     }
   }
 }
