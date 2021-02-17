@@ -20,6 +20,7 @@ output "vpc" {
 
 output "db" {
   value = module.db
+  sensitive = true
 }
 
 output "db_security_group" {
