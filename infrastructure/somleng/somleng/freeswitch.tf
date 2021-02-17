@@ -32,12 +32,9 @@ resource "aws_ssm_parameter" "freeswitch_mod_rayo_shared_secret" {
   }
 }
 
-resource "aws_eip" "freeswitch" {
-  vpc = true
 
-  tags = {
-    Name = "FreeSWITCH Public IP"
-  }
+data "aws_eip" "freeswitch" {
+  id = "eipalloc-0081d27aac1864444"
 }
 
 resource "aws_security_group" "freeswitch" {
@@ -129,7 +126,7 @@ resource "aws_security_group_rule" "bongloy_office" {
 
 resource "aws_eip_association" "eip" {
   instance_id   = aws_elastic_beanstalk_environment.freeswitch_webserver.instances.0
-  allocation_id = aws_eip.freeswitch.id
+  allocation_id = data.aws_eip.freeswitch.id
 }
 
 resource "aws_elastic_beanstalk_application" "freeswitch" {
@@ -229,7 +226,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   solution_stack_name = data.aws_elastic_beanstalk_solution_stack.multi_container_docker.name
 
   tags = {
-    eip_allocation_id = aws_eip.freeswitch.id
+    eip_allocation_id = data.aws_eip.freeswitch.id
     sip_target_group_arn = aws_lb_target_group.freeswitch_elastic_beanstalk_sip.arn
   }
 
@@ -431,7 +428,7 @@ resource "aws_elastic_beanstalk_environment" "freeswitch_webserver" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "FS_EXTERNAL_IP"
-    value     = aws_eip.freeswitch.public_ip
+    value     = data.aws_eip.freeswitch.public_ip
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
