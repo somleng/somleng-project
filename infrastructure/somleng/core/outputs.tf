@@ -6,10 +6,6 @@ output "somleng_zone" {
   value = aws_route53_zone.somleng_org
 }
 
-output "somleng_internal_zone" {
-  value = aws_route53_zone.internal
-}
-
 output "ses_credentials" {
   value = aws_iam_access_key.ses_sender
 }
@@ -61,4 +57,8 @@ output "https_listener" {
 
 output "ecs_cluster" {
   value = aws_ecs_cluster.somleng
+}
+
+output "nlb_eips" {
+  value = aws_eip.nlb.*
 }

@@ -6,14 +6,6 @@ resource "aws_route53_zone" "somleng_com" {
   name = "somleng.com."
 }
 
-resource "aws_route53_zone" "internal" {
-  name = "internal.somleng.org."
-
-  vpc {
-    vpc_id = data.terraform_remote_state.somleng.outputs.vpc.vpc_id
-  }
-}
-
 resource "aws_route53_record" "somleng_org_mx" {
   zone_id = aws_route53_zone.somleng_org.zone_id
   name    = ""
