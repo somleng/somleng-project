@@ -6,10 +6,6 @@ output "somleng_zone" {
   value = aws_route53_zone.somleng_org
 }
 
-output "somleng_internal_zone" {
-  value = aws_route53_zone.internal
-}
-
 output "ses_credentials" {
   value = aws_iam_access_key.ses_sender
 }
@@ -20,6 +16,7 @@ output "vpc" {
 
 output "db" {
   value = module.db
+  sensitive = true
 }
 
 output "db_security_group" {
@@ -50,10 +47,18 @@ output "application_load_balancer" {
   value = aws_lb.somleng_application
 }
 
+output "network_load_balancer" {
+  value = aws_lb.somleng_network
+}
+
 output "https_listener" {
   value = aws_lb_listener.https
 }
 
 output "ecs_cluster" {
   value = aws_ecs_cluster.somleng
+}
+
+output "nlb_eips" {
+  value = aws_eip.nlb.*
 }

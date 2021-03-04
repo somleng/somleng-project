@@ -105,5 +105,5 @@ resource "aws_ssm_parameter" "smtp_username" {
 resource "aws_ssm_parameter" "smtp_password" {
   name  = "somleng.smtp_password"
   type  = "SecureString"
-  value = aws_iam_access_key.ses_sender.ses_smtp_password
+  value = aws_iam_access_key.ses_sender.ses_smtp_password_v4
 }
