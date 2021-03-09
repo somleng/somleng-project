@@ -69,15 +69,7 @@ resource "aws_iam_policy" "ci_deploy" {
         "ecs:RegisterTaskDefinition*",
         "ecs:Describe*",
         "ecs:UpdateService",
-        "ecs:RunTask",
-        "ecr:GetAuthorizationToken",
-        "ecr:InitiateLayerUpload",
-        "ecr:CompleteLayerUpload",
-        "ecr:UploadLayerPart",
-        "ecr:PutImage",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "ecr:BatchCheckLayerAvailability"
+        "ecs:RunTask"
       ],
       "Effect": "Allow",
       "Resource": "*"
@@ -116,4 +108,14 @@ EOF
 resource "aws_iam_role_policy_attachment" "ci_deploy" {
   role       = aws_iam_role.ci_deploy.name
   policy_arn = aws_iam_policy.ci_deploy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "ci_ecr" {
+  role       = aws_iam_role.ci_deploy.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+}
+
+resource "aws_iam_role_policy_attachment" "ci_ecr_public" {
+  role       = aws_iam_role.ci_deploy.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticContainerRegistryPublicPowerUser"
 }
