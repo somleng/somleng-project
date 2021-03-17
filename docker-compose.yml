@@ -33,6 +33,7 @@ services:
     build: ../freeswitch-config
     environment:
       - FS_DATABASE_HOST=db
+      - FS_MOD_JSON_CDR_URL=http://twilreapi:3000/services/call_data_records
       - FS_EXTERNAL_SIP_IP
       - FS_EXTERNAL_RTP_IP
     ports:
