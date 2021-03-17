@@ -9,12 +9,12 @@ terraform {
   required_version = ">= 0.12"
 }
 
-data "terraform_remote_state" "old_infrastructure" {
+data "terraform_remote_state" "core" {
   backend = "s3"
 
   config = {
     bucket = "infrastructure.somleng.org"
-    key    = "somleng.tfstate"
+    key    = "core.tfstate"
     region = var.aws_region
   }
 }

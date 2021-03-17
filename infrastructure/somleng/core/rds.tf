@@ -1,6 +1,5 @@
 locals {
   database_port = 5432
-  database_identifier = "somleng"
 }
 
 resource "aws_security_group" "db" {
@@ -38,21 +37,32 @@ resource "aws_ssm_parameter" "db_master_password" {
 module "db" {
   source  = "terraform-aws-modules/rds-aurora/aws"
 
-  name = local.database_identifier
+  name = "somleng"
 
-  engine                      = "aurora-postgresql"
-  engine_version              = "11.7"
+  engine            = "aurora-postgresql"
+  engine_mode       = "serverless"
+  engine_version    = null
   vpc_id = module.vpc.vpc_id
   db_subnet_group_name = aws_db_subnet_group.this.name
   allowed_security_groups = [aws_security_group.db.id]
   allowed_cidr_blocks = [module.vpc.vpc_cidr_block]
-  instance_type              = "db.t3.medium"
   auto_minor_version_upgrade  = true
   apply_immediately           = true
   storage_encrypted           = true
+  monitoring_interval = 60
+  replica_scale_enabled = false
+  replica_count         = 0
 
   username = "somleng"
   password = aws_ssm_parameter.db_master_password.value
+  create_random_password = false
   port     = local.database_port
-  enabled_cloudwatch_logs_exports = ["postgresql"]
+
+  scaling_configuration = {
+    auto_pause               = true
+    min_capacity             = 2
+    max_capacity             = 64
+    seconds_until_auto_pause = 600
+    timeout_action           = "ForceApplyCapacityChange"
+  }
 }
