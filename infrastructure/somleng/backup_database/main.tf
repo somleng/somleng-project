@@ -19,7 +19,7 @@ data "aws_s3_bucket" "backups" {
 
 resource "aws_security_group" "this" {
   name   = "backup-database"
-  vpc_id = data.terraform_remote_state.old_infrastructure.outputs.vpc.vpc_id
+  vpc_id = data.terraform_remote_state.core.outputs.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -36,8 +36,9 @@ resource "aws_instance" "this" {
   instance_type = "t3.small"
   security_groups = [
     aws_security_group.this.id,
+    data.terraform_remote_state.core.outputs.db_security_group.id
   ]
-  subnet_id = element(data.terraform_remote_state.old_infrastructure.outputs.vpc.private_subnets, 0)
+  subnet_id = element(data.terraform_remote_state.core.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = data.template_file.user_data.rendered
 
@@ -121,10 +122,9 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    old_db_host = "old_db_host"
-    old_db_username = "old_db_username"
-    old_db_password = "old_db_password"
-    old_db_name = "old_db_name"
-    application_name = var.application_name
+    db_host = "<change-me>"
+    db_username = "somleng"
+    db_password = "<change-me>"
+    db_name = "<change-me>"
   }
 }
