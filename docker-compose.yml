@@ -4,12 +4,13 @@ services:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
 
   twilreapi:
-    build: ../twilreapi
+    image: public.ecr.aws/somleng/twilreapi
     environment:
       RAILS_ENV: development
       DATABASE_HOST: db
@@ -22,7 +23,7 @@ services:
       - adhearsion
 
   adhearsion:
-    build: ../somleng-adhearsion
+    image: public.ecr.aws/somleng/somleng-adhearsion
     environment:
       AHN_CORE_HOST: freeswitch
       CALL_PLATFORM_HOST: "http://twilreapi:3000"
@@ -30,7 +31,7 @@ services:
       - freeswitch
 
   freeswitch:
-    build: ../freeswitch-config
+    image: public.ecr.aws/somleng/somleng-freeswitch
     environment:
       - FS_DATABASE_HOST=db
       - FS_MOD_JSON_CDR_URL=http://twilreapi:3000/services/call_data_records
