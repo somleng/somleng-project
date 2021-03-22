@@ -1,30 +1,43 @@
-version: '3'
+version: "3.9"
 services:
-  adhearsion:
-    image: somleng/somleng-adhearsion
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     environment:
-      - AHN_CORE_HTTP_ENABLE=false
-      - AHN_CORE_HOST=freeswitch
-      - AHN_CORE_PASSWORD=secret
-      - AHN_CORE_USERNAME=rayo@localhost
-      - AHN_ADHEARSION_DRB_PORT=9050
-      - AHN_TWILIO_REST_API_ENABLED=1
-      - "AHN_TWILIO_REST_API_PHONE_CALLS_URL=http://user:secret@host.docker.internal:3000/api/internal/phone_calls"
-      - "AHN_TWILIO_REST_API_PHONE_CALL_EVENTS_URL=http://user:secret@host.docker.internal:3000/api/internal/phone_calls/:phone_call_id/phone_call_events"
-      - "AHN_SOMLENG_DEFAULT_DIAL_STRING_FORMAT=sofia/external/%{destination}@linphone"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+  twilreapi:
+    image: public.ecr.aws/somleng/twilreapi
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      APP_URL_HOST: "http://twilreapi:3000"
+      AHN_HOST: "http://adhearsion:8080"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - adhearsion
+
+  adhearsion:
+    image: public.ecr.aws/somleng/somleng-adhearsion
+    environment:
+      AHN_CORE_HOST: freeswitch
+      CALL_PLATFORM_HOST: "http://twilreapi:3000"
     depends_on:
       - freeswitch
+
   freeswitch:
-    image: somleng/somleng-freeswitch
+    image: public.ecr.aws/somleng/somleng-freeswitch
     environment:
-      - FS_CORE_LOGLEVEL=notice
-      - FS_MOD_JSON_CDR_CRED=user:secret
-      - FS_MOD_JSON_CDR_URL=http://host.docker.internal:3000/api/internal/call_data_records
-      - FS_MOD_RAYO_DOMAIN_NAME=localhost
-      - FS_MOD_RAYO_PASSWORD=secret
-      - FS_MOD_RAYO_PORT=5222
-      - FS_MOD_RAYO_SHARED_SECRET=secret
-      - FS_MOD_RAYO_USER=rayo
-      - FS_EXTERNAL_IP=192.168.1.40 # replace me with your local IP
+      - FS_DATABASE_HOST=db
+      - FS_MOD_JSON_CDR_URL=http://twilreapi:3000/services/call_data_records
+      - FS_EXTERNAL_SIP_IP
+      - FS_EXTERNAL_RTP_IP
     ports:
       - "5060:5060/udp"
+    depends_on:
+      - db
