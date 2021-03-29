@@ -1,36 +1,3 @@
-resource "aws_iam_group" "ses_sender" {
-  name = "ses_sender"
-}
-
-resource "aws_iam_policy" "ses_sender" {
-  name        = "ses_sender"
-  description = "Policy for Sending Emails"
-  policy      = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"ses:SendRawEmail\",\"Resource\":\"*\"}]}"
-}
-
-resource "aws_iam_group_policy_attachment" "ses_sender" {
-  group      = aws_iam_group.ses_sender.name
-  policy_arn = aws_iam_policy.ses_sender.arn
-}
-
-resource "aws_iam_user" "ses_sender" {
-  name = "ses_sender"
-}
-
-resource "aws_iam_group_membership" "ses_sender" {
-  name = "ses_sender"
-
-  users = [
-    aws_iam_user.ses_sender.name,
-  ]
-
-  group = aws_iam_group.ses_sender.name
-}
-
-resource "aws_iam_access_key" "ses_sender" {
-  user = aws_iam_user.ses_sender.name
-}
-
 resource "aws_ses_domain_identity" "domain" {
   domain   = "somleng.org"
   provider = aws.us-east-1
@@ -94,16 +61,4 @@ resource "aws_route53_record" "dmarc_record" {
   type    = "TXT"
   ttl     = "600"
   records = ["v=DMARC1;p=none"]
-}
-
-resource "aws_ssm_parameter" "smtp_username" {
-  name  = "somleng.smtp_username"
-  type  = "String"
-  value = aws_iam_access_key.ses_sender.id
-}
-
-resource "aws_ssm_parameter" "smtp_password" {
-  name  = "somleng.smtp_password"
-  type  = "SecureString"
-  value = aws_iam_access_key.ses_sender.ses_smtp_password_v4
 }

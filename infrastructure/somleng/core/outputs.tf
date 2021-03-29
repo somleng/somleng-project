@@ -6,10 +6,6 @@ output "somleng_zone" {
   value = aws_route53_zone.somleng_org
 }
 
-output "ses_credentials" {
-  value = aws_iam_access_key.ses_sender
-}
-
 output "vpc" {
   value = module.vpc
 }
