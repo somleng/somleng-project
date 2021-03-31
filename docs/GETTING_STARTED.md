@@ -4,7 +4,7 @@ This guide is intended to get you up and running with Somleng on your machine.
 
 ## Prerequisites
 
-Install [Docker](https://docs.docker.com/engine/installation), [docker-compose](https://docs.docker.com/compose/install/) and [git (optional but highly recommended)](https://git-scm.com/downloads)
+Install [Docker](https://docs.docker.com/engine/installation), [docker-compose](https://docs.docker.com/compose/install/) [git](https://git-scm.com/downloads) and [linphone](https://www.linphone.org/technical-corner/linphone)
 
 ## Clone the repository using git
 
@@ -20,63 +20,50 @@ Or download `docker-compose.yml` manually [here](https://raw.githubusercontent.c
 $ docker-compose pull
 ```
 
-## Setup and seed Somleng's REST API
+## Setup and seed Twilreapi
 
 ```
-$ docker-compose run --rm -e INCOMING_PHONE_NUMBER="{\"phone_number\":\"1234\",\"voice_url\":\"http://demo.twilio.com/docs/voice.xml\"}" twilreapi /bin/bash -c './bin/rails db:setup'
+$ docker-compose exec twilreapi bundle exec rails db:setup
+```
+
+Note down the output for later.
+
+```
+Account SID:          xxxxxxxxxxxxxxxx
+Auth Token:           yyyyyyyyyyyyyyyy
+Inbound Phone Number: 1234
 ```
 
 ## Start Somleng's services
 
-Note the following command will start all Somleng's services including a docker image with [Linphone](http://www.linphone.org/) (a softphone CLI). If you want to use your own softphone running on your host uncomment the lines in [docker-compose.yml](https://github.com/somleng/somleng-project/blob/master/docker-compose.yml)
+Remember to replace `FS_EXTERNAL_SIP_IP` and `FS_EXTERNAL_RTP_IP` with your the local IP of your machine.
 
 ```
-$ docker-compose up
+$ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-with-your-local-ip> docker-compose up
 ```
 
-## Make a call
+## Configure Linphone
 
-In another terminal...
+1. Install Linphone
+2. Configure your SIP account under Preferences -> SIP Accounts. Note you must set your Username to `299221234` (or another valid phone number in Greenland). The SIP address should be automatically filled with your local IP.
+3. Configure your network settings under Preferences -> Network Settings. Set both the SIP/UDP and SIP/TCP listening port to `5061`.
 
-### Get the Account SID and Auth Token
+## Test an inbound call
 
-```
-$ IFS=: read ACCOUNT_SID AUTH_TOKEN <<< $(docker-compose run --rm -e FORMAT=basic_auth twilreapi /bin/bash -c './bin/rails db:seed') && echo "Account SID: $ACCOUNT_SID" && echo "Auth Token:  $AUTH_TOKEN"
-```
+Using Linphone make a call to `1234@<you-local-ip-address>`
 
-### Initiate a call with CURL
+## Test an outbound call with cURL
 
-```
-$ RESPONSE=$(docker-compose run --rm -e "ACCOUNT_SID=$ACCOUNT_SID" -e "AUTH_TOKEN=$AUTH_TOKEN" curl /bin/sh -c 'curl "http://twilreapi:3000/api/2010-04-01/Accounts/$ACCOUNT_SID/Calls.json" --data-urlencode "Method=GET" --data-urlencode "Url=http://demo.twilio.com/docs/voice.xml" --data-urlencode "To=+85510202101" --data-urlencode "From=1234" -u "$ACCOUNT_SID:$AUTH_TOKEN"') && echo $RESPONSE
-```
+Or use your favourite HTTP client.
 
-### Answer the call with linphone
+Remember to replace the placeholders with your Account SID and Auth Token. You can set the URL to any URL which returns TwiML.
 
 ```
-$ docker-compose exec linphone /bin/bash -c 'linphonecsh generic answer'
-```
-
-### Hangup the call with linphone
-
-```
-$ docker-compose exec linphone /bin/bash -c 'linphonecsh generic terminate'
-```
-
-## Get the call from the REST API
-
-```
-$ CALL_SID=$(docker-compose run --rm -e "JSON=$RESPONSE" curl /bin/sh -c 'echo $JSON | jq -j ".sid"') && echo $CALL_SID
-$ docker-compose run -e "ACCOUNT_SID=$ACCOUNT_SID" -e "AUTH_TOKEN=$AUTH_TOKEN" -e "CALL_SID=$CALL_SID" curl /bin/sh -c 'curl "http://twilreapi:3000/api/2010-04-01/Accounts/$ACCOUNT_SID/Calls/$CALL_SID.json" -u "$ACCOUNT_SID:$AUTH_TOKEN"'
-```
-
-## Make an inbound call with linphone
-
-```
-$ docker-compose exec linphone /bin/bash -c 'linphonecsh generic "call 1234@freeswitch"'
-```
-
-Note: You can hangup the call using:
-
-```
-$ docker-compose exec linphone /bin/bash -c 'linphonecsh generic terminate'
+curl -X "POST" "http://localhost:3000/2010-04-01/Accounts/<replace-with-your-account-sid>/Calls" \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     -u '<replace-with-your-account-sid>:<replace-with-your-auth-token>' \
+     --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
+     --data-urlencode "Method=GET" \
+     --data-urlencode "To=+299221234" \
+     --data-urlencode "From=1294"
 ```
