@@ -51,7 +51,7 @@ $ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-wi
 
 3. Configure your network settings under Preferences -> Network Settings. Set both the SIP/UDP and SIP/TCP listening port to `5061`.
 
-![Linphone Network Settings](/docs/images/linphone_network_settingns.png?raw=true "Linphone Network Settings")
+![Linphone Network Settings](/docs/images/linphone_network_settings.png?raw=true "Linphone Network Settings")
 
 ## Test an inbound call
 
