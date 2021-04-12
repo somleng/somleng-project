@@ -57,9 +57,11 @@ Inbound Phone Number: 1234
 
 Using Linphone make a call to `1234@<you-local-ip-address>`
 
-## Test an outbound call with cURL
+## Test an outbound call
 
-Or use your favourite HTTP client, e.g. [Postman](https://www.postman.com/)
+Use cURL or your favourite HTTP client, e.g. [Postman](https://www.postman.com/) to initiate an outbound call.
+
+You can also download the latest [Somleng Twilreapi OpenAPI specification](https://www.somleng.org/docs/twilreapi/open_api.json) and import it into [Postman](https://www.postman.com/).
 
 Remember to replace the placeholders with your Account SID and Auth Token. You can set the URL to any URL which returns valid TwiML.
 
