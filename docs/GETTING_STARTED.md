@@ -20,6 +20,14 @@ Or download `docker-compose.yml` manually [here](https://raw.githubusercontent.c
 $ docker-compose pull
 ```
 
+## Start Somleng's services
+
+Remember to replace `FS_EXTERNAL_SIP_IP` and `FS_EXTERNAL_RTP_IP` with your the local IP of your machine.
+
+```
+$ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-with-your-local-ip> docker-compose up
+```
+
 ## Setup and seed Twilreapi
 
 ```
@@ -32,14 +40,6 @@ Note down the output for later.
 Account SID:          xxxxxxxxxxxxxxxx
 Auth Token:           yyyyyyyyyyyyyyyy
 Inbound Phone Number: 1234
-```
-
-## Start Somleng's services
-
-Remember to replace `FS_EXTERNAL_SIP_IP` and `FS_EXTERNAL_RTP_IP` with your the local IP of your machine.
-
-```
-$ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-with-your-local-ip> docker-compose up
 ```
 
 ## Configure Linphone
@@ -57,11 +57,13 @@ $ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-wi
 
 Using Linphone make a call to `1234@<you-local-ip-address>`
 
-## Test an outbound call with cURL
+## Test an outbound call
 
-Or use your favourite HTTP client.
+Use cURL or your favourite HTTP client, e.g. [Postman](https://www.postman.com/) to initiate an outbound call.
 
-Remember to replace the placeholders with your Account SID and Auth Token. You can set the URL to any URL which returns TwiML.
+You can also download the latest [Somleng Twilreapi OpenAPI specification](https://www.somleng.org/docs/twilreapi/open_api.json) and import it into [Postman](https://www.postman.com/).
+
+Remember to replace the placeholders with your Account SID and Auth Token. You can set the URL to any URL which returns valid TwiML.
 
 ```
 curl -X "POST" "http://localhost:3000/2010-04-01/Accounts/<replace-with-your-account-sid>/Calls" \
