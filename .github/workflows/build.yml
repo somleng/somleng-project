@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - switch_to_github_actions
+      - master
 
 name: Deploy
 
