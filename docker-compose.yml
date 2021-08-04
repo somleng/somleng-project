@@ -23,7 +23,7 @@ services:
       - adhearsion
 
   adhearsion:
-    image: public.ecr.aws/somleng/somleng-adhearsion
+    image: public.ecr.aws/somleng/somleng-switch
     environment:
       AHN_CORE_HOST: freeswitch
       CALL_PLATFORM_HOST: "http://twilreapi:3000"
@@ -31,7 +31,7 @@ services:
       - freeswitch
 
   freeswitch:
-    image: public.ecr.aws/somleng/somleng-freeswitch
+    image: public.ecr.aws/somleng/somleng-switch-freeswitch
     environment:
       - FS_DATABASE_HOST=db
       - FS_MOD_JSON_CDR_URL=http://twilreapi:3000/services/call_data_records
