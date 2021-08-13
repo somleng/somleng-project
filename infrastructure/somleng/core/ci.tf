@@ -99,6 +99,13 @@ resource "aws_iam_policy" "ci_deploy" {
         "arn:aws:codedeploy:*:***:deploymentconfig:*",
         "arn:aws:codedeploy:*:***:application:*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "polly:DescribeVoices"
+      ],
+      "Resource": "*"
     }
   ]
 }
