@@ -9,30 +9,30 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
 
-  twilreapi:
+  somleng:
     image: public.ecr.aws/somleng/twilreapi
     environment:
       RAILS_ENV: development
       DATABASE_HOST: db
-      APP_URL_HOST: "http://twilreapi:3000"
-      AHN_HOST: "http://switch:8080"
+      APP_URL_HOST: "http://somleng:3000"
+      AHN_HOST: "http://somleng-switch:8080"
     ports:
       - "3000:3000"
     depends_on:
       - db
-      - switch
+      - somleng-switch
     healthcheck:
       test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:3000/health_checks 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
       timeout: 5s
       retries: 10
 
-  switch:
+  somleng-switch:
     image: public.ecr.aws/somleng/somleng-switch
     environment:
       AHN_CORE_HOST: freeswitch
       AHN_CORE_HTTP_PORT: 8080
-      CALL_PLATFORM_HOST: "http://twilreapi:3000"
+      CALL_PLATFORM_HOST: "http://somleng:3000"
     depends_on:
       - freeswitch
     healthcheck:
@@ -45,7 +45,7 @@ services:
     image: public.ecr.aws/somleng/somleng-switch-freeswitch
     environment:
       - FS_DATABASE_HOST=db
-      - FS_MOD_JSON_CDR_URL=http://twilreapi:3000/services/call_data_records
+      - FS_MOD_JSON_CDR_URL=http://somleng:3000/services/call_data_records
       - FS_EXTERNAL_SIP_IP
       - FS_EXTERNAL_RTP_IP
     ports:

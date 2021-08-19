@@ -28,10 +28,12 @@ Remember to replace `FS_EXTERNAL_SIP_IP` and `FS_EXTERNAL_RTP_IP` with your the 
 $ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-with-your-local-ip> docker-compose up
 ```
 
-## Setup and seed Twilreapi
+## Setup and seed Somleng
+
+Remember to replace `HOST_IP` with your local IP address.
 
 ```
-$ docker-compose exec twilreapi bundle exec rails db:setup
+$ HOST_IP=<reploace-with-your-local-ip> docker-compose exec twilreapi bundle exec rails db:setup
 ```
 
 Note down the output for later.
@@ -61,8 +63,6 @@ Using Linphone make a call to `1234@<you-local-ip-address>`
 
 Use cURL or your favourite HTTP client, e.g. [Postman](https://www.postman.com/) to initiate an outbound call.
 
-You can also download the latest [Somleng Twilreapi OpenAPI specification](https://www.somleng.org/docs/twilreapi/open_api.json) and import it into [Postman](https://www.postman.com/).
-
 Remember to replace the placeholders with your Account SID and Auth Token. You can set the URL to any URL which returns valid TwiML.
 
 ```
@@ -74,3 +74,8 @@ curl -X "POST" "http://localhost:3000/2010-04-01/Accounts/<replace-with-your-acc
      --data-urlencode "To=+299221234" \
      --data-urlencode "From=1294"
 ```
+
+## Explore the Dashboard
+
+1. Navigate to [http://localhost:3000](http://localhost:3000)
+2. Sign in using the credentials provided after [seeding Somleng](#Setup-and-seed-Somleng).
