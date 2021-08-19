@@ -33,7 +33,7 @@ $ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-wi
 Remember to replace `HOST_IP` with your local IP address.
 
 ```
-$ HOST_IP=<reploace-with-your-local-ip> docker-compose exec twilreapi bundle exec rails db:setup
+$ HOST_IP=<replace-with-your-local-ip> docker-compose exec twilreapi bundle exec rails db:setup
 ```
 
 Note down the output for later.
