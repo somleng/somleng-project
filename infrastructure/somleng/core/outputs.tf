@@ -1,5 +1,6 @@
 output "acm_certificate" {
   value = aws_acm_certificate.certificate
+  sensitive = true
 }
 
 output "somleng_zone" {
@@ -29,10 +30,12 @@ output "logs_bucket" {
 
 output "db_master_password_parameter" {
   value = aws_ssm_parameter.db_master_password
+  sensitive = true
 }
 
 output "ci_deploy_key" {
   value = aws_iam_access_key.ci_deploy
+  sensitive = true
 }
 
 output "ci_deploy_role" {

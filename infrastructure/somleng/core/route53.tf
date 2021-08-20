@@ -142,6 +142,30 @@ resource "aws_route53_record" "twilreapi" {
   }
 }
 
+resource "aws_route53_record" "dashboard" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "dashboard"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.somleng_application.dns_name
+    zone_id                = aws_lb.somleng_application.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "api" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "api"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.somleng_application.dns_name
+    zone_id                = aws_lb.somleng_application.zone_id
+    evaluate_target_health = true
+  }
+}
+
 resource "aws_route53_record" "sip" {
   zone_id = aws_route53_zone.somleng_org.zone_id
   name    = "sip"
