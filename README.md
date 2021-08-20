@@ -20,17 +20,15 @@ The diagram below shows how each technology is connected together. Depending on 
 
 ![Somleng-Overview](https://docs.google.com/drawings/d/e/2PACX-1vSMYTP8Rk_N_I6BWrc4QWhRl6EaAOEyWJTzeXRoKmPWzdqIiQyzSH9YWz3wzCin2H227GT0CSkkop9K/pub?w=1478&h=728)
 
-### Twilreapi
+### Somleng
 
-[Twilreapi](https://github.com/somleng/twilreapi) is an Open Source implementation of [Twilio's REST API](https://www.twilio.com/docs/api/rest). You can use [Twilreapi](https://github.com/somleng/twilreapi) to enqueue outbound calls.
+[Somleng](https://github.com/somleng/somleng) is an Open Source Cloud Communications Platform as a Service (CPaaS). It contains an implementation of [Twilio's REST API](https://www.twilio.com/docs/api/rest) and APIs and a dashboard for Carriers.
 
-### Somleng-Adhearsion
+### Somleng-SWITCH
 
-[Somleng-Adhearsion](https://github.com/somleng/somleng-adhearsion) is an [Adhearsion](https://github.com/adhearsion/adhearsion) application which handles the delivery of outbound calls and the processing of inbound calls. [Somleng-Adhearsion](https://github.com/somleng/somleng-adhearsiono) is connected to [Twilreapi](https://github.com/somleng/twilreapi) to process your outbound calls and respond to inbound calls.
-
-### Somleng FreeSWITCH Configuration
-
-[Somleng FreeSWITCH configuration](https://github.com/somleng/freeswitch-config) is a set of [FreeSWITCH](https://freeswitch.org/) configuration optimized for Somleng. It can be used to configure your [FreeSWITCH](https://freeswitch.org/) installation to connect to [Somleng-Adhearsion](https://github.com/somleng/somleng-adhearsion).
+[Somleng-SWITCH](https://github.com/somleng/somleng-switch) is a the switching layer for Somleng. Some features include:
+* TTS engines,
+*  Open source TwiML parser
 
 ### Somleng Simple Call Flow Manager (SCFM)
 
