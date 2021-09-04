@@ -28,7 +28,7 @@ The diagram below shows how each technology is connected together. Depending on 
 
 [Somleng-SWITCH](https://github.com/somleng/somleng-switch) is a the switching layer for Somleng. Some features include:
 * TTS engines,
-*  Open source TwiML parser
+* Open source TwiML parser
 
 ### Somleng Simple Call Flow Manager (SCFM)
 
