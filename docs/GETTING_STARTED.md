@@ -66,7 +66,7 @@ Use cURL or your favourite HTTP client, e.g. [Postman](https://www.postman.com/)
 Remember to replace the placeholders with your Account SID and Auth Token. You can set the URL to any URL which returns valid TwiML.
 
 ```
-curl -X "POST" "http://localhost:3000/2010-04-01/Accounts/<replace-with-your-account-sid>/Calls" \
+curl -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/<replace-with-your-account-sid>/Calls" \
      -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
      -u '<replace-with-your-account-sid>:<replace-with-your-auth-token>' \
      --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
@@ -77,5 +77,5 @@ curl -X "POST" "http://localhost:3000/2010-04-01/Accounts/<replace-with-your-acc
 
 ## Explore the Dashboard
 
-1. Navigate to [http://localhost:3000](http://localhost:3000)
+1. Navigate to [http://dashboard.lvh.me:3000](http://dashboard.lvh.me:3000)
 2. Sign in using the credentials provided after [seeding Somleng](#Setup-and-seed-Somleng).
