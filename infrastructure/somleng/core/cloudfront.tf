@@ -120,7 +120,7 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.cdn_certificate.arn
+    acm_certificate_arn      = aws_acm_certificate.naked_cdn_somleng_org.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
   }
