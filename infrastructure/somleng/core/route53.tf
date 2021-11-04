@@ -177,3 +177,16 @@ resource "aws_route53_record" "sip" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "cdn" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "cdn"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.cdn_dashboard.domain_name
+    zone_id                = aws_cloudfront_distribution.cdn_dashboard.hosted_zone_id
+    evaluate_target_health = true
+  }
+}
+
