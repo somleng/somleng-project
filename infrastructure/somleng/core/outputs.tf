@@ -3,6 +3,11 @@ output "acm_certificate" {
   sensitive = true
 }
 
+output "cdn_certificate" {
+  value = aws_acm_certificate.cdn_certificate
+  sensitive = true
+}
+
 output "somleng_zone" {
   value = aws_route53_zone.somleng_org
 }
