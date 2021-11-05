@@ -1,3 +1,11 @@
+data "aws_cloudfront_cache_policy" "caching_optimized" {
+  name = "Managed-CachingOptimized"
+}
+
+data "aws_cloudfront_origin_request_policy" "user_agent_referer_headers" {
+  name = "Managed-UserAgentRefererHeaders"
+}
+
 resource "aws_cloudfront_distribution" "somleng_website" {
   origin {
     domain_name = aws_s3_bucket.somleng_website.website_endpoint
@@ -28,25 +36,8 @@ resource "aws_cloudfront_distribution" "somleng_website" {
     target_origin_id = aws_s3_bucket.somleng_website.website_endpoint
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 86400
-    max_ttl                = 31536000
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-
-      headers = [
-        "Access-Control-Allow-Origin",
-        "Access-Control-Allow-Headers",
-        "Access-Control-Allow-Methods",
-        "Access-Control-Max-Age",
-        "Host"
-      ]
-    }
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.user_agent_referer_headers.id
   }
 
   restrictions {
@@ -58,7 +49,7 @@ resource "aws_cloudfront_distribution" "somleng_website" {
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.cdn_certificate.arn
     ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2018"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }
 
@@ -92,25 +83,8 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
     target_origin_id = aws_s3_bucket.naked_redirect.website_endpoint
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 86400
-    max_ttl                = 31536000
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-
-      headers = [
-        "Access-Control-Allow-Origin",
-        "Access-Control-Allow-Headers",
-        "Access-Control-Allow-Methods",
-        "Access-Control-Max-Age",
-        "Host"
-      ]
-    }
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.user_agent_referer_headers.id
   }
 
   restrictions {
@@ -121,54 +95,6 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
 
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.naked_cdn_somleng_org.arn
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2018"
-  }
-}
-
-resource "aws_cloudfront_distribution" "cdn_dashboard" {
-  origin {
-    domain_name = aws_route53_record.dashboard.fqdn
-    origin_id   = aws_route53_record.dashboard.fqdn
-
-    custom_origin_config {
-      http_port              = "80"
-      https_port             = "443"
-      origin_protocol_policy = "https-only"
-      origin_ssl_protocols   = ["TLSv1.2"]
-    }
-  }
-
-  aliases = ["cdn.somleng.org"]
-
-  enabled         = true
-  is_ipv6_enabled = false
-
-  default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = aws_route53_record.dashboard.fqdn
-
-    viewer_protocol_policy = "redirect-to-https"
-    compress = true
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-  }
-
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-
-  viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.cdn_certificate.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }

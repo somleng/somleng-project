@@ -61,3 +61,7 @@ output "ecs_cluster" {
 output "nlb_eips" {
   value = aws_eip.nlb.*
 }
+
+output "route53_zone_somleng_org" {
+  value = aws_route53_zone.somleng_org
+}
