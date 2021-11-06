@@ -106,27 +106,3 @@ resource "aws_route53_record" "somleng_com_txt" {
   ]
 }
 
-resource "aws_route53_record" "ahn" {
-  zone_id = aws_route53_zone.somleng_org.zone_id
-  name    = "ahn"
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.somleng_application.dns_name
-    zone_id                = aws_lb.somleng_application.zone_id
-    evaluate_target_health = true
-  }
-}
-
-resource "aws_route53_record" "sip" {
-  zone_id = aws_route53_zone.somleng_org.zone_id
-  name    = "sip"
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.somleng_network.dns_name
-    zone_id                = aws_lb.somleng_network.zone_id
-    evaluate_target_health = true
-  }
-}
-
