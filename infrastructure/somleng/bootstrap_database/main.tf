@@ -117,8 +117,8 @@ data "template_file" "user_data" {
 
   vars = {
     db_password = data.aws_ssm_parameter.db_master_password.value
-    db_host = data.terraform_remote_state.core_infrastructure.outputs.db.this_rds_cluster_endpoint
-    db_username = data.terraform_remote_state.core_infrastructure.outputs.db.this_rds_cluster_master_username
+    db_host = data.terraform_remote_state.core_infrastructure.outputs.db.rds_cluster_endpoint
+    db_username = data.terraform_remote_state.core_infrastructure.outputs.db.rds_cluster_master_username
     db_name = var.db_name
     create_db = var.create_db
     restore_db = var.restore_db
