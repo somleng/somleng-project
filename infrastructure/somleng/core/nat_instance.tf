@@ -23,11 +23,6 @@ resource "aws_eip" "nat_instance" {
   }
 }
 
-resource "aws_eip_association" "nat_instance" {
-  network_interface_id = aws_network_interface.nat_instance.id
-  allocation_id = aws_eip.nat_instance.id
-}
-
 resource "aws_iam_role" "nat_instance" {
   name = "nat_instance_role"
 
@@ -197,4 +192,18 @@ resource "aws_autoscaling_group" "nat_instance" {
 
 data "template_file" "nat_instance_user_data" {
   template = filebase64("${path.module}/templates/nat_instance_user_data.sh")
+}
+
+# Routes that need to use the NAT Instance
+
+resource "aws_route" "zamtel" {
+  route_table_id            = module.vpc.private_route_table_ids[0]
+  destination_cidr_block    = "165.57.32.1/32"
+  network_interface_id      = aws_network_interface.nat_instance.id
+}
+
+resource "aws_route" "twilio" {
+  route_table_id            = module.vpc.private_route_table_ids[0]
+  destination_cidr_block    = "54.172.60.0/29"
+  network_interface_id      = aws_network_interface.nat_instance.id
 }
