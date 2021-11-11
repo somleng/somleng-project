@@ -22,7 +22,13 @@ EC2_INSTANCE_ID="$(wget -q -O - http://169.254.169.254/latest/meta-data/instance
 AWS_REGION="$(wget -q -O - http://169.254.169.254/latest/meta-data/placement/region)"
 aws ec2 modify-instance-attribute --no-source-dest-check --instance-id $EC2_INSTANCE_ID --region $AWS_REGION
 
-# Attach EIP
+# Attach EIP to Instance
 
 EIP_ALLOCATION_ID=$(aws ec2 describe-tags --region $AWS_REGION --filters "Name=resource-id,Values=$EC2_INSTANCE_ID" "Name=key,Values=EipAllocationId" --output=text --query="Tags[0].Value")
 aws ec2 associate-address --region $AWS_REGION --instance-id $EC2_INSTANCE_ID --allocation-id $EIP_ALLOCATION_ID --allow-reassociation
+
+# Attach Secondary Network Interface
+# This must be done after associating the EIP to the instance
+
+NETWORK_INTERFACE_ID=$(aws ec2 describe-tags --region $AWS_REGION --filters "Name=resource-id,Values=$EC2_INSTANCE_ID" "Name=key,Values=NetworkInterfaceId" --output=text --query="Tags[0].Value")
+aws ec2 attach-network-interface --region $AWS_REGION --network-interface-id $NETWORK_INTERFACE_ID --instance-id $EC2_INSTANCE_ID --device-index 1
