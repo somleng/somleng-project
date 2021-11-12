@@ -70,3 +70,7 @@ output "nlb_eips" {
 output "route53_zone_somleng_org" {
   value = aws_route53_zone.somleng_org
 }
+
+output "nat_instance_ip" {
+  value = aws_eip.nat_instance.public_ip
+}
