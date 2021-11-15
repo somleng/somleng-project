@@ -1,3 +1,5 @@
+# Adapted from: https://github.com/int128/terraform-aws-nat-instance
+
 locals {
   nat_instance_name = "nat-instance"
 }
@@ -21,6 +23,11 @@ resource "aws_eip" "nat_instance" {
   tags = {
     Name = "NAT Instance"
   }
+}
+
+resource "aws_eip_association" "nat_instance" {
+  network_interface_id = aws_network_interface.nat_instance.id
+  allocation_id = aws_eip.nat_instance.id
 }
 
 resource "aws_iam_role" "nat_instance" {
@@ -57,24 +64,9 @@ resource "aws_iam_policy" "nat_instance_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "ec2:DescribeTags",
-        "ec2:AttachNetworkInterface",
-        "ec2:AssociateAddress",
-        "sts:DecodeAuthorizationMessage"
+        "ec2:AttachNetworkInterface"
       ],
       "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:ModifyInstanceAttribute"
-      ],
-      "Resource": "*",
-      "Condition": {
-        "StringEquals": {
-          "ec2:ResourceTag/Name": "${local.nat_instance_name}"
-        }
-      }
     }
   ]
 }
@@ -106,13 +98,38 @@ resource "aws_launch_template" "nat_instance" {
   name_prefix                 = "nat-instance"
   image_id                    = data.aws_ssm_parameter.nat_instance_arm64.value
   instance_type               = "t4g.small"
-  user_data                   = data.template_file.nat_instance_user_data.rendered
 
   iam_instance_profile {
     name = aws_iam_instance_profile.nat_instance.name
   }
 
   vpc_security_group_ids = [aws_security_group.nat_instance.id]
+
+  user_data = base64encode(join("\n", [
+    "#cloud-config",
+    yamlencode({
+      # https://cloudinit.readthedocs.io/en/latest/topics/modules.html
+      write_files : [
+        {
+          path : "/opt/nat/setup.sh",
+          content : templatefile("${path.module}/templates/nat_instance/setup.sh", { eni_id = aws_network_interface.nat_instance.id }),
+          permissions : "0755",
+        },
+        {
+          path : "/opt/nat/snat.sh",
+          content : file("${path.module}/templates/nat_instance/snat.sh"),
+          permissions : "0755",
+        },
+        {
+          path : "/etc/systemd/system/snat.service",
+          content : file("${path.module}/templates/nat_instance/snat.service"),
+        },
+      ],
+      runcmd : [
+        ["/opt/nat/setup.sh"]
+      ],
+    })
+  ]))
 
   lifecycle {
     create_before_destroy = true
@@ -165,18 +182,6 @@ resource "aws_autoscaling_group" "nat_instance" {
     propagate_at_launch = true
   }
 
-  tag {
-    key                 = "NetworkInterfaceId"
-    value               = aws_network_interface.nat_instance.id
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "EipAllocationId"
-    value               = aws_eip.nat_instance.id
-    propagate_at_launch = true
-  }
-
   instance_refresh {
     strategy = "Rolling"
     preferences {
@@ -190,15 +195,17 @@ resource "aws_autoscaling_group" "nat_instance" {
   }
 }
 
-data "template_file" "nat_instance_user_data" {
-  template = filebase64("${path.module}/templates/nat_instance_user_data.sh")
-}
-
 # Routes that need to use the NAT Instance
 
 resource "aws_route" "zamtel" {
   route_table_id            = module.vpc.private_route_table_ids[0]
   destination_cidr_block    = "165.57.32.1/32"
+  network_interface_id      = aws_network_interface.nat_instance.id
+}
+
+resource "aws_route" "zamtel_media" {
+  route_table_id            = module.vpc.private_route_table_ids[0]
+  destination_cidr_block    = "165.57.33.2/32"
   network_interface_id      = aws_network_interface.nat_instance.id
 }
 
