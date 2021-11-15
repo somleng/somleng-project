@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
 yum -y update
+yum -y install iptables-services
 
 # Enable SSM Access
 
@@ -11,6 +12,7 @@ EC2_INSTANCE_ID="$(wget -q -O - http://169.254.169.254/latest/meta-data/instance
 AWS_REGION="$(wget -q -O - http://169.254.169.254/latest/meta-data/placement/region)"
 
 # attach the ENI
+# Retry incase this instance boots before the old one shuts down
 
 retries=60
 

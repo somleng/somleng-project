@@ -92,6 +92,10 @@ resource "aws_network_interface" "nat_instance" {
   tags = {
     Name = "NAT Instance"
   }
+
+  lifecycle {
+    ignore_changes = [attachment]
+  }
 }
 
 resource "aws_launch_template" "nat_instance" {
@@ -206,11 +210,5 @@ resource "aws_route" "zamtel" {
 resource "aws_route" "zamtel_media" {
   route_table_id            = module.vpc.private_route_table_ids[0]
   destination_cidr_block    = "165.57.33.2/32"
-  network_interface_id      = aws_network_interface.nat_instance.id
-}
-
-resource "aws_route" "twilio" {
-  route_table_id            = module.vpc.private_route_table_ids[0]
-  destination_cidr_block    = "54.172.60.0/29"
   network_interface_id      = aws_network_interface.nat_instance.id
 }
