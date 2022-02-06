@@ -41,3 +41,7 @@ The diagram below shows how each technology is connected together. Depending on 
 ## What does Somleng mean?
 
 Somleng (សំឡេង) means Voice in Khmer.
+
+## Investors
+
+[Pitch Deck](https://tinyurl.com/somleng-investordeck)
