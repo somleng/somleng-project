@@ -45,3 +45,7 @@ Somleng (សំឡេង) means Voice in Khmer.
 ## Investors
 
 [Pitch Deck](https://tinyurl.com/somleng-investordeck)
+
+Special thanks to our investors:
+
+[UNICEF Innovation Fund](https://tinyurl.com/crypto-bridge)
