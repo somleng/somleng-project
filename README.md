@@ -18,7 +18,7 @@ The various open source tools that make up The Somleng Project are listed below.
 
 The diagram below shows how each technology is connected together. Depending on your specific needs you may choose to use all or just some of the open source tools described below.
 
-![Somleng-Overview](https://docs.google.com/drawings/d/e/2PACX-1vSMYTP8Rk_N_I6BWrc4QWhRl6EaAOEyWJTzeXRoKmPWzdqIiQyzSH9YWz3wzCin2H227GT0CSkkop9K/pub?w=1478&h=728)
+![Somleng-Overview](https://github.com/somleng/somleng-project/raw/master/somleng_overview.png)
 
 ### Somleng
 
