@@ -53,6 +53,10 @@ The core infrastructure in this repository is a dependency of the other componen
 
 Chatterbox Solutions offers white-labeled Somleng hosting for Carriers. Currently hosting is in private beta. Please [contact us](mailto:contact@somleng.org?subject=Somleng+Hosting) for more info.
 
+## Connect with the community
+
+You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking questions about the project or talk about Somleng with other peers.
+
 ## Who's sponsoring The Somleng Project?
 
 [The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
