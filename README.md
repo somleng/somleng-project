@@ -57,6 +57,12 @@ Chatterbox Solutions offers white-labeled Somleng hosting for Carriers. Currentl
 
 You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking questions about the project or talk about Somleng with other peers.
 
+## Project Resources
+
+* [Stakeholders](https://miro.com/app/board/uXjVOKklTvw=/?invite_link_id=979877928721)
+* [Pitch Deck](https://tinyurl.com/somleng-investordeck)
+* [Community](https://discord.gg/QdrKCW2kPx)
+
 ## Who's sponsoring The Somleng Project?
 
 [The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
