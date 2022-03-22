@@ -63,6 +63,36 @@ You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking 
 * [Pitch Deck](https://tinyurl.com/somleng-investordeck)
 * [Community](https://discord.gg/QdrKCW2kPx)
 
+## Roadmap
+
+Our 2022 Roadmap is structured around the following strategic building blocks.
+
+* Create more network reachability.
+* Add more communication channels.
+* Global customer onboarding.
+
+### Create more network reachability
+
+In order to provide a cheaper alternative to existing CPaaS companies, especially in emerging markets, we need to partner with carriers and individuals who can provide in-country network reachability.
+
+We plan to achieve this by the following approaches:
+
+1. Encourage local carriers to use Somleng.
+
+   Local carriers can offer [much cheaper](https://www.somleng.org/case_studies.html#cash-assistance-programme-somalia) pricing than global aggregators which are used by existing CPaaS providers. By using Somleng to offer white-labeled programmable voice and SMS to their customers, local carriers can generate extra revenue which would otherwise go to global CPaaS providers. Additionally local carriers can publish their routes to be used by global customers in the Somleng network.
+
+2. Empower individuals to become in-country network providers.
+
+   Individuals across the globe can generate income by using their own hardware (GSM modem, SIM Box, etc)to provide network connectivity for Somleng. Individuals register their device with Somleng and Somleng will automatically route calls to devices based on network quality and pricing.
+
+### Add more communication channels
+
+Add programmable SMS to the Somleng stack by developing an open source implementation of [Twilio's Programmable SMS API](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource). Carriers and network providers can configure SMPP routes for programmable SMS similar to programmable voice.
+
+### Global customer onboarding
+
+Once there are local carriers and network providers providing pubic routes on the Somleng network, we can open up global customer onboarding. Customers can then sign-up and use programmable voice and SMS through these providers without the need for a direct relationship with them.
+
 ## Who's sponsoring The Somleng Project?
 
 [The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
