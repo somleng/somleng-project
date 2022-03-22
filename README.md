@@ -4,7 +4,15 @@
 
 ## What is The Somleng Project?
 
-The Somleng Project is a collection of open source telephony tools which can be used to build powerful Voice applications. The goal of the project is to break down the economic and accessibility barriers to building telephony applications. Read more about Somleng on our website at [somleng.org](https://www.somleng.org).
+The Somleng Project is a collection of open source tools which provide a full-stack cloud communications platform. The goal of the project is to break down the economic and accessibility barriers to communications. Read more about Somleng on our website at [somleng.org](https://www.somleng.org).
+
+## Vision
+
+A world where communications is accessible to everyone.
+
+## Mission
+
+To empower customer engagement by making communications more accessible, more affordable and more transparent.
 
 ## How can I use it?
 
