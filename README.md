@@ -6,13 +6,7 @@
 
 The Somleng Project is a collection of open source tools which provide a full-stack cloud communications platform. The goal of the project is to break down the economic and accessibility barriers to communications. Read more about Somleng on our website at [somleng.org](https://www.somleng.org).
 
-## Vision
-
-A world where communications is accessible to everyone.
-
-## Mission
-
-To empower customer engagement by making communications more accessible, more affordable and more transparent.
+Our vision is a world where communications is accessible to everyone.
 
 ## How can I use it?
 
@@ -65,12 +59,6 @@ Chatterbox Solutions offers white-labeled Somleng hosting for Carriers. Currentl
 
 You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking questions about the project or talk about Somleng with other peers.
 
-## Project Resources
-
-* [Stakeholders](https://miro.com/app/board/uXjVOKklTvw=/?invite_link_id=979877928721)
-* [Pitch Deck](https://tinyurl.com/somleng-investordeck)
-* [Community](https://discord.gg/QdrKCW2kPx)
-
 ## Roadmap
 
 Our 2022 Roadmap is structured around the following strategic building blocks.
@@ -101,6 +89,10 @@ Add programmable SMS to the Somleng stack by developing an open source implement
 
 Once there are local carriers and network providers providing pubic routes on the Somleng network, we can open up global customer onboarding. Customers can then sign-up and use programmable voice and SMS through these providers without the need for a direct relationship with them.
 
+To dive deeper into our roadmap and progress please refer to our [Pivotal Tracker Project](https://www.pivotaltracker.com/n/projects/2148301).
+
+For carriers, network providers or anyone who is interested in contributing to Somleng, feel free to join us on the [Discord channel](https://discord.gg/QdrKCW2kPx).
+
 ## Who's sponsoring The Somleng Project?
 
 [The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
@@ -108,6 +100,13 @@ Once there are local carriers and network providers providing pubic routes on th
 ## What does Somleng mean?
 
 Somleng (សំឡេង) means Voice in Khmer.
+
+## Project Resources
+
+* [Stakeholders](https://miro.com/app/board/uXjVOKklTvw=/?invite_link_id=979877928721)
+* [Pitch Deck](https://tinyurl.com/somleng-investordeck)
+* [Community](https://discord.gg/QdrKCW2kPx)
+* [Pivotal Tracker Project](https://www.pivotaltracker.com/n/projects/2148301)
 
 ## Investors
 
