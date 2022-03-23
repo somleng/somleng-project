@@ -89,6 +89,8 @@ Add programmable SMS to the Somleng stack by developing an open source implement
 
 Once there are local carriers and network providers providing pubic routes on the Somleng network, we can open up global customer onboarding. Customers can then sign-up and use programmable voice and SMS through these providers without the need for a direct relationship with them.
 
+### Learn more
+
 To dive deeper into our roadmap and progress please refer to our [Pivotal Tracker Project](https://www.pivotaltracker.com/n/projects/2148301).
 
 For carriers, network providers or anyone who is interested in contributing to Somleng, feel free to join us on the [Discord channel](https://discord.gg/QdrKCW2kPx).
