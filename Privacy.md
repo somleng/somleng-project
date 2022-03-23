@@ -1,56 +1,194 @@
-**Privacy Policy**
+# Privacy Policy
 
-Chatterbox Solutions built Somleng as an Open Source app. This SERVICE is provided by Chatterbox Solutions at no cost and is intended for use as is.
+Last updated: March 22, 2022
 
-This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
+This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.
 
-If you choose to use our Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that we collect is used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.
+We use your personal data to provide and improve the service. By using the service, you agree to the collection and use of information in accordance with this privacy policy.
 
-The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at Somleng unless otherwise defined in this Privacy Policy.
+# Interpretation and Definitions
 
-**Information Collection and Use**
+## Interpretation
 
-For a better experience, while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your Phone Number. The information that we request will be retained by us and used as described in this privacy policy.
+The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
 
-**Log Data**
+## Definitions
 
-We want to inform you that whenever you use our Service, in a case of an error in the app we collect data and information (through third party products) called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing our Service, the time and date of your use of the Service, and other statistics.
+For the purposes of this privacy policy:
 
-**Cookies**
+*   **Account** means a unique account created for you to access our service or parts of our service.
 
-Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.
+*   **Company** (referred to as either "the company", "we", "us" or "our" in this Agreement) refers to Chatterbox Solutions.
 
-This Service does not use these “cookies” explicitly. However, the app may use third party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.
+*   **Cookies** are small files that are placed on your computer, mobile device or any other device by a website, containing the details of your browsing history on that website among its many uses.
 
-**Service Providers**
+*   **Country** refers to: Cambodia
 
-We may employ third-party companies and individuals due to the following reasons:
+*   **Device** means any device that can access the service such as a computer, a cellphone or a digital tablet.
 
-*   To facilitate our Service;
-*   To provide the Service on our behalf;
-*   To perform Service-related services; or
-*   To assist us in analyzing how our Service is used.
+*   **Personal Data** is any information that relates to an identified or identifiable individual.
 
-We want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.
+*   **Service** refers to the product (Somleng).
 
-**Security**
+*   **Service Provider** means any natural or legal person who processes the data on behalf of the company. It refers to third-party companies or individuals employed by the company to facilitate the service, to provide the service on behalf of the company, to perform services related to the service or to assist the company in analyzing how the service is used.
 
-We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.
+*   **Usage Data** refers to data collected automatically, either generated by the use of the service or from the service infrastructure itself (for example, the duration of a page visit).
 
-**Links to Other Sites**
+*   **Website** refers to Somleng, accessible from [https://www.somleng.org](https://www.somleng.org)
 
-This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policy of these websites. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+*   **You** means the individual accessing or using the service, or the company, or other legal entity on behalf of which such individual is accessing or using the service, as applicable.
 
-**Children’s Privacy**
+# Collecting and using your personal data
 
-These Services do not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13 years of age. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.
+## Types of Data Collected
 
-**Changes to This Privacy Policy**
+### Personal Data
 
-We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page.
+While using our service, we may ask you to provide Us with certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to:
 
-This policy is effective as of 2021-11-16
+*   Phone number
 
-**Contact Us**
+*   Email
 
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at contact@somleng.org.
+*   Usage Data
+
+### Usage Data
+
+Usage Data is collected automatically when using the service.
+
+Usage Data may include information such as your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.
+
+When you access the service by or through a mobile device, we may collect certain information automatically, including, but not limited to, the type of mobile device you use, your mobile device unique ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browser you use, unique device identifiers and other diagnostic data.
+
+We may also collect information that your browser sends whenever you visit our service or when you access the service by or through a mobile device.
+
+### Tracking Technologies and cookies
+
+We use cookies and similar tracking technologies to track the activity on our service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze our service. The technologies we use may include:
+
+*   **Cookies or browser cookies.** A cookie is a small file placed on your Device. you can instruct your browser to refuse all cookies or to indicate when a Cookie is being sent. However, if you do not accept cookies, you may not be able to use some parts of our service. Unless you have adjusted your browser setting so that it will refuse cookies, our service may use cookies.
+*   **Flash cookies.** Certain features of our service may use local stored objects (or Flash cookies) to collect and store information about your preferences or your activity on our service. Flash cookies are not managed by the same browser settings as those used for Browser cookies. For more information on how you can delete Flash cookies, please read "Where can I change the settings for disabling, or deleting local shared objects?" available at [https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_](https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_)
+*   **Web beacons.** Certain sections of our service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).
+
+cookies can be "Persistent" or "Session" cookies. Persistent cookies remain on your personal computer or mobile device when you go offline, while Session cookies are deleted as soon as you close your web browser. Learn more about cookies: [Use of cookies by Free privacy policy](https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_cookies_And_Tracking).
+
+We use both session and persistent cookies for the purposes set out below:
+
+*   **Necessary / Essential cookies**
+
+    Type: Session cookies
+
+    Administered by: Us
+
+    Purpose: These cookies are essential to provide you with services available through the Website and to enable you to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these cookies, the services that you have asked for cannot be provided, and we only use these cookies to provide you with those services.
+
+*   **cookies Policy / Notice Acceptance cookies**
+
+    Type: Persistent cookies
+
+    Administered by: Us
+
+    Purpose: These cookies identify if users have accepted the use of cookies on the Website.
+
+*   **Functionality cookies**
+
+    Type: Persistent cookies
+
+    Administered by: Us
+
+    Purpose: These cookies allow us to remember choices you make when you use the Website, such as remembering your login details or language preference. The purpose of these cookies is to provide you with a more personal experience and to avoid you having to re-enter your preferences every time you use the Website.
+
+For more information about the cookies we use and your choices regarding cookies, please visit our cookies Policy or the cookies section of our privacy policy.
+
+## Use of your personal data
+
+The company may use personal data for the following purposes:
+
+*   **To provide and maintain our service**, including to monitor the usage of our service.
+
+*   **To manage your Account:** to manage your registration as a user of the service. The personal data you provide can give you access to different functionalities of the service that are available to you as a registered user.
+
+*   **For the performance of a contract:** the development, compliance and undertaking of the purchase contract for the products, items or services you have purchased or of any other contract with Us through the service.
+
+*   **To contact you:** To contact you by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.
+
+*   **To provide you** with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless you have opted not to receive such information.
+
+*   **To manage your requests:** To attend and manage your requests to Us.
+
+*   **For business transfers:** we may use your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which personal data held by Us about our service users is among the assets transferred.
+
+*   **For other purposes**: we may use your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of our promotional campaigns and to evaluate and improve our service, products, services, marketing and your experience.
+
+We may share your personal information in the following situations:
+
+*   **With service Providers:** we may share your personal information with service Providers to monitor and analyze the use of our service, to contact you.
+*   **For business transfers:** we may share or transfer your personal information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.
+*   **With Affiliates:** we may share your information with our affiliates, in which case we will require those affiliates to honor this privacy policy. Affiliates include our parent company and any other subsidiaries, joint venture partners or other companies that we control or that are under common control with Us.
+*   **With business partners:** we may share your information with our business partners to offer you certain products, services or promotions.
+*   **With other users:** when you share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside.
+*   **With your consent**: we may disclose your personal information for any other purpose with your consent.
+
+## Retention of your personal data
+
+The company will retain your personal data only for as long as is necessary for the purposes set out in this privacy policy. we will retain and use your personal data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.
+
+The company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of our service, or we are legally obligated to retain this data for longer time periods.
+
+## Transfer of your personal data
+
+Your information, including personal data, is processed at the company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction.
+
+Your consent to this privacy policy followed by your submission of such information represents your agreement to that transfer.
+
+The company will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this privacy policy and no transfer of your personal data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.
+
+## Disclosure of your personal data
+
+### Business Transactions
+
+If the company is involved in a merger, acquisition or asset sale, your personal data may be transferred. we will provide notice before your personal data is transferred and becomes subject to a different privacy policy.
+
+### Law enforcement
+
+Under certain circumstances, the company may be required to disclose your personal data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency.
+
+### Other legal requirements
+
+The company may disclose your personal data in the good faith belief that such action is necessary to:
+
+*   Comply with a legal obligation
+*   Protect and defend the rights or property of the company
+*   Prevent or investigate possible wrongdoing in connection with the service
+*   Protect the personal safety of Users of the service or the public
+*   Protect against legal liability
+
+## Security of your personal data
+
+The security of your personal data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal data, we cannot guarantee its absolute security.
+
+# Children's Privacy
+
+our service does not address anyone under the age of 13. we do not knowingly collect personally identifiable information from anyone under the age of 13. If you are a parent or guardian and you are aware that your child has provided Us with personal data, please contact Us. If we become aware that we have collected personal data from anyone under the age of 13 without verification of parental consent, we take steps to remove that information from our servers.
+
+If we need to rely on consent as a legal basis for processing your information and your country requires consent from a parent, we may require your parent's consent before we collect and use that information.
+
+# Links to Other Websites
+
+Our service may contain links to other websites that are not operated by Us. If you click on a third party link, you will be directed to that third party's site. we strongly advise you to review the privacy policy of every site you visit.
+
+we have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.
+
+# Changes to this privacy policy
+
+We may update our privacy policy from time to time. we will notify you of any changes by posting the new privacy policy on this page.
+
+We will let you know via email and/or a prominent notice on our service, prior to the change becoming effective and update the "last updated" date at the top of this privacy policy.
+
+You are advised to review this privacy policy periodically for any changes. Changes to this privacy policy are effective when they are posted on this page.
+
+# Contact Us
+
+If you have any questions about this privacy policy, you can contact us:
+
+*   By email: contact@somleng.org
