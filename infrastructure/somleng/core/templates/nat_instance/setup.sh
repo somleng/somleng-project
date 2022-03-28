@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 yum -y update
-yum -y install iptables-services
+yum -y install iptables-services jq
 
 # Enable SSM Access
 
@@ -29,6 +29,16 @@ for ((i=0; i<retries; i++)); do
 
   sleep 10
 done
+
+# Update the cloudwatch alarm dimensions to terminate instance if in alarm
+
+describe_alarm_result=$(aws cloudwatch describe-alarms --alarm-names ${cloudwatch_alarm_name} --query 'MetricAlarms[0]' --region $AWS_REGION | jq '{AlarmName,MetricName,Period,EvaluationPeriods,ComparisonOperator,Namespace,Statistic,Threshold}')
+
+aws cloudwatch put-metric-alarm \
+  --cli-input-json "$describe_alarm_result" \
+  --dimensions "Name=InstanceId,Value=$EC2_INSTANCE_ID" \
+  --alarm-actions arn:aws:automate:$AWS_REGION:ec2:terminate \
+  --region $AWS_REGION
 
 # start SNAT
 systemctl enable snat
