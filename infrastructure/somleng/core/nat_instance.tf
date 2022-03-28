@@ -67,6 +67,16 @@ resource "aws_iam_policy" "nat_instance_policy" {
         "ec2:AttachNetworkInterface"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudwatch:PutMetricAlarm",
+        "cloudwatch:DescribeAlarms"
+      ],
+      "Resource": [
+        "${aws_cloudwatch_metric_alarm.nat_instance_network_out.arn}"
+      ]
     }
   ]
 }
@@ -116,7 +126,7 @@ resource "aws_launch_template" "nat_instance" {
       write_files : [
         {
           path : "/opt/nat/setup.sh",
-          content : templatefile("${path.module}/templates/nat_instance/setup.sh", { eni_id = aws_network_interface.nat_instance.id }),
+          content : templatefile("${path.module}/templates/nat_instance/setup.sh", { eni_id = aws_network_interface.nat_instance.id, cloudwatch_alarm_name = aws_cloudwatch_metric_alarm.nat_instance_network_out.alarm_name }),
           permissions : "0755",
         },
         {
@@ -213,6 +223,24 @@ resource "aws_ssm_association" "update_ssm_agent" {
   }
 
   schedule_expression = "cron(0 19 ? * SAT *)"
+}
+
+# This is a per instance alarm
+# this instance-id is updated by the init script
+
+resource "aws_cloudwatch_metric_alarm" "nat_instance_network_out" {
+  alarm_name          = "${local.nat_instance_name}-NetworkOut-Zero"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "NetworkPacketsOut"
+  namespace           = "AWS/EC2"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = 0
+
+  lifecycle {
+    ignore_changes = [dimensions, alarm_actions]
+  }
 }
 
 # Routes that need to use the NAT Instance
