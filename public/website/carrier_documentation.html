@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta class="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Somleng | Carrier Documentation</title>
+	<link rel='stylesheet' href='css/style.min.css' />
+	<link rel='stylesheet' href='css/custom.css' />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
+	<meta name="msapplication-TileColor" content="#6c63ff">
+	<meta name="theme-color" content="#6C63FF">
+</head>
+
+<body>
+	<!-- navbar -->
+	<div class="navbar navbar--extended">
+		<nav class="nav__mobile"></nav>
+		<div class="container">
+			<div class="navbar__inner">
+				<a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image"
+						height="75px"></a>
+				<nav class="navbar__menu">
+					<li><a href="docs.html">Documentation</a></li>
+					<li><a href="case_studies.html">Case Studies</a></li>
+				</nav>
+				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 448 512">
+							<path fill="currentColor"
+								d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+								class=""></path>
+						</svg></a></div>
+			</div>
+		</div>
+	</div>
+	<!-- Hero unit -->
+	<div class="page__header">
+		<div class="hero__overlay hero__overlay--gradient"></div>
+		<div class="hero__mask"></div>
+		<div class="page__header__inner">
+			<div class="container">
+				<div class="page__header__content">
+					<div class="page__header__content__inner" id='navConverter'>
+						<h1 class="page__header__title">Carrier Documentation</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Page content -->
+	<div class="page">
+		<div class="container">
+			<div class="page__inner">
+				<div class="page__menu">
+					<ul class="vMenu">
+						<li><a href="#terminology">Terminology</a></li>
+						<li><a href="#audience">Audience</a></li>
+						<li><a href="#introduction">Introduction</a></li>
+						<li><a href="docs/carrier_api" target="_blank">API Docs</a> <i class="fa fa-external-link"></i></li>
+						<li><a href="https://github.com/somleng/somleng-project" target="_blank">Github <i class="fa fa-external-link"></i></a></li>
+					</ul>
+				</div>
+				<div class="page__main">
+					<div class="text-container">
+						<img src="./images/undraw_connected_world_wuay.svg" class="expanded__image">
+
+						<div id="terminology">
+							<h3 class="page__main__title">
+								Terminology
+							</h3>
+							<p>
+								Before we begin, here is some general terminology that is important for understanding this article.
+							</p>
+							<p>
+								<table>
+									<thead>
+										<tr>
+											<th style="text-align: left;">Term</th>
+											<th style="text-align: left;">Meaning</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="text-align: left;">Carrier</td>
+											<td style="text-align: left;">A carrier, telecom company, mobile network operator (MNO) or aggregator who offers routes to the Public Switched Telephone Network (PSTN) and/or Direct Inward Dialing (DID). E.g. AT&T, Verizon</td>
+										</tr>
+										<tr>
+											<td style="text-align: left;">BYOC customer</td>
+											<td style="text-align: left;">An organization (NGO or company) or individual who has a business relationship with a carrier. Bring Your Own Carrier (BYOC).</td>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</p>
+						</div>
+
+						<div id="audience">
+							<h3 class="page__main__title">
+								Audience
+							</h3>
+							<p>
+								This documentation is intended for both carriers and BYOC customers as defined above.
+							</p>
+						</div>
+
+						<div id="introduction">
+							<h3 class="page__main__title">
+								Introduction
+							</h3>
+							<p>
+								Somleng is an Open Source, white-labeled, Cloud Communications Platform as a Service (CPaaS), featuring programmable voice and SMS.
+							</p>
+							<p>
+								There are two kinds of use-cases depending on whether you're a Carrier or BYOC Customer.
+							</p>
+							<ol>
+								<li>Carriers can use Somleng to offer their own branded CPaaS services (such as programmable voice and SMS) to their customers.</li>
+							  <li>BYOC customers can sign up on behalf of a carrier in order to use the CPaaS services directly.</li>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src='js/app.min.js'></script>
+</body>
+
+</html>

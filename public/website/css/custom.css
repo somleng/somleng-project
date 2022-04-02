@@ -1,0 +1,19 @@
+/* Custom */
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-color: #dfe2e5;
+}
+
+th, td {
+  padding: 6px;
+}
+
+th {
+  background-color: #D3D3D3;
+}
