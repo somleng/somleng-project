@@ -63,6 +63,21 @@
 						<li><a href="#terminology">Terminology</a></li>
 						<li><a href="#audience">Audience</a></li>
 						<li><a href="#introduction">Introduction</a></li>
+						<li><a href="#getting_started">Getting Started</a></li>
+						<li>
+							<a href="#using_the_dashboard">Using the Dashboard</a>
+							<ul>
+								<li>
+									<a href="#authentication">Authentication</a>
+								</li>
+								<li>
+									<a href="#accounts">Accounts</a>
+								</li>
+								<li>
+									<a href="#inbound_sip_trunks">Inbound SIP Trunks</a>
+								</li>
+							</ul>
+						</li>
 						<li><a href="docs/carrier_api" target="_blank">API Docs</a> <i class="fa fa-external-link"></i></li>
 						<li><a href="https://github.com/somleng/somleng-project" target="_blank">Github <i class="fa fa-external-link"></i></a></li>
 					</ul>
@@ -122,8 +137,91 @@
 							</p>
 							<ol>
 								<li>Carriers can use Somleng to offer their own branded CPaaS services (such as programmable voice and SMS) to their customers.</li>
-							  <li>BYOC customers can sign up on behalf of a carrier in order to use the CPaaS services directly.</li>
+							  <li>BYOC customers can use Somleng directly, connecting to their carrier.</li>
+							</ol>
+						</div>
+
+						<div id="getting_started">
+							<h3 class="page__main__title">
+								Getting Started
+							</h3>
+							<p>
+								For Carriers and BYOC customers, we recommend you try out Somleng by signing up for a carrier account <a href="https://dashboard.somleng.org/users/sign_up" class="link">here</a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link">Getting Started Guide</a>. Note this requires some technical knowledge.
 							</p>
+
+							<p>
+								Once you have a carrier account you can begin configuring your account to handle programmable voice and SMS.
+							</p>
+						</div>
+
+						<div id="using_the_dashboard">
+							<h3 class="page__main__title">
+								Using the Dashboard
+							</h3>
+							<div id="authentication">
+								<h4>
+									Authentication
+								</h4>
+								<p>
+									Carriers and BYOC customers must sign into the dashboard. The first time you sign in you will be required to setup two factor authentication (2FA). We recommend you use Authy or Google Authenticator to setup your 2FA.
+								</p>
+							</div>
+							<div id="accounts">
+								<h4>
+									Accounts
+								</h4>
+								<p>
+									Accounts are used by carriers, carrier's customers and BYOC customers to send/receive calls and SMS via <a href="docs/twilio_api" class="link">Somleng's implementation of Twilio's REST API</a>.
+								</p>
+								<p>
+									A carrier would typically create and account for each of their customers. BYOC customers might create an account for each project or just create one account for global usage.
+								</p>
+								<p>
+								  There are two types of accounts. Carrier managed and customer managed.
+								</p>
+								<h5>
+									Carrier Managed Accounts
+								</h5>
+								<p>
+									Carrier managed accounts are managed by carriers. These types of accounts can be used by carriers themselves, or they may be created for individual customers.
+									Carrier managed accounts <em>do not</em> allow customer access. The Account SID and Auth token, which are required to access the Twilio REST API, are accessible by the carrier and are displayed on the Account's page.
+								</p>
+								<h5>
+									Customer Managed Accounts
+								</h5>
+								<p>
+									Customer managed accounts are managed by customers.
+									These types of accounts can be created via the dashboard by specifying an account owner for the account.
+									After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their account by themselves.
+									Once an account type is set to customer, it cannot be undone.
+									The customer will have access to their Account SID and Auth Token and this info will no longer be displayed on the Account's page.
+								</p>
+								<p>
+									In order to create an account via the Dashboard:
+									<ol>
+										<li>
+											Sign in to the Dashboard and from the side-navigation, click <strong>Accounts</strong>.
+										</li>
+										<li>
+										  Click the <strong>+</strong> icon to create a new account.
+										</li>
+										<li>
+										  Fill out the form, specifying a name for the account and optionally the owner's name and email address to create a customer account.
+										</li>
+										<li>
+										  Choose <strong>Create Account</strong>
+										</li>
+									</ol>
+								</p>
+							</div>
+							<div id="inbound_sip_trunks">
+								<h4>
+									Inbound SIP Trunks
+								</h4>
+								<p>
+									Inbound SIP Trunks
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
