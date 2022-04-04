@@ -76,8 +76,18 @@
 								<li>
 									<a href="#inbound_sip_trunks">Inbound SIP Trunks</a>
 								</li>
+								<li>
+									<a href="#outbound_sip_trunks">Outbound SIP Trunks</a>
+								</li>
+								<li>
+									<a href="#phone_numbers">Phone Numbers</a>
+								</li>
+								<li>
+									<a href="#users">Users</a>
+								</li>
 							</ul>
 						</li>
+						<li><a href="#api">API</a></li>
 						<li><a href="docs/carrier_api" target="_blank">API Docs</a> <i class="fa fa-external-link"></i></li>
 						<li><a href="https://github.com/somleng/somleng-project" target="_blank">Github <i class="fa fa-external-link"></i></a></li>
 					</ul>
@@ -107,8 +117,8 @@
 											<td style="text-align: left;">A carrier, telecom company, mobile network operator (MNO) or aggregator who offers routes to the Public Switched Telephone Network (PSTN) and/or Direct Inward Dialing (DID). E.g. AT&T, Verizon</td>
 										</tr>
 										<tr>
-											<td style="text-align: left;">BYOC customer</td>
-											<td style="text-align: left;">An organization (NGO or company) or individual who has a business relationship with a carrier. Bring Your Own Carrier (BYOC).</td>
+											<td style="text-align: left;">BYOC User</td>
+											<td style="text-align: left;">An organization (NGO or company) or individual who has a business relationship with a carrier. BYOC stands for Bring Your Own Carrier.</td>
 											</td>
 										</tr>
 									</tbody>
@@ -121,7 +131,7 @@
 								Audience
 							</h3>
 							<p>
-								This documentation is intended for both carriers and BYOC customers as defined above.
+								This documentation is intended for both Carriers and BYOC users as defined above.
 							</p>
 						</div>
 
@@ -133,11 +143,11 @@
 								Somleng is an Open Source, white-labeled, Cloud Communications Platform as a Service (CPaaS), featuring programmable voice and SMS.
 							</p>
 							<p>
-								There are two kinds of use-cases depending on whether you're a Carrier or BYOC Customer.
+								There are two kinds of use-cases depending on whether you're a Carrier or BYOC user.
 							</p>
 							<ol>
 								<li>Carriers can use Somleng to offer their own branded CPaaS services (such as programmable voice and SMS) to their customers.</li>
-							  <li>BYOC customers can use Somleng directly, connecting to their carrier.</li>
+							  <li>BYOC users can use Somleng directly, connecting to their carrier.</li>
 							</ol>
 						</div>
 
@@ -146,7 +156,7 @@
 								Getting Started
 							</h3>
 							<p>
-								For Carriers and BYOC customers, we recommend you try out Somleng by signing up for a carrier account <a href="https://dashboard.somleng.org/users/sign_up" class="link">here</a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link">Getting Started Guide</a>. Note this requires some technical knowledge.
+								For Carriers and BYOC users, we recommend you try out Somleng by signing up for a carrier account <a href="https://dashboard.somleng.org/users/sign_up" class="link">here</a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link">Getting Started Guide</a>. Note that this requires some technical knowledge.
 							</p>
 
 							<p>
@@ -163,7 +173,7 @@
 									Authentication
 								</h4>
 								<p>
-									Carriers and BYOC customers must sign into the dashboard. The first time you sign in you will be required to setup two factor authentication (2FA). We recommend you use Authy or Google Authenticator to setup your 2FA.
+									Carriers and BYOC users must sign into the dashboard. The first time you sign in you will be required to setup two factor authentication (2FA). We recommend you use Authy or Google Authenticator to setup your 2FA.
 								</p>
 							</div>
 							<div id="accounts">
@@ -171,10 +181,10 @@
 									Accounts
 								</h4>
 								<p>
-									Accounts are used by carriers, carrier's customers and BYOC customers to send/receive calls and SMS via <a href="docs/twilio_api" class="link">Somleng's implementation of Twilio's REST API</a>.
+									Accounts are used by carriers, carrier customers and BYOC users to send/receive calls and SMS via <a href="docs/twilio_api" class="link">Somleng's implementation of Twilio's REST API</a>.
 								</p>
 								<p>
-									A carrier would typically create and account for each of their customers. BYOC customers might create an account for each project or just create one account for global usage.
+									A carrier would typically create and account for each of their customers. BYOC users might create an account for each project or just create one account for global usage.
 								</p>
 								<p>
 								  There are two types of accounts. Carrier managed and customer managed.
@@ -203,13 +213,13 @@
 											Sign in to the Dashboard and from the side-navigation, click <strong>Accounts</strong>.
 										</li>
 										<li>
-										  Click the <strong>+</strong> icon to create a new account.
+										  Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new account.
 										</li>
 										<li>
 										  Fill out the form, specifying a name for the account and optionally the owner's name and email address to create a customer account.
 										</li>
 										<li>
-										  Choose <strong>Create Account</strong>
+										  Choose <strong>Create Account</strong>.
 										</li>
 									</ol>
 								</p>
@@ -219,7 +229,196 @@
 									Inbound SIP Trunks
 								</h4>
 								<p>
-									Inbound SIP Trunks
+									Inbound SIP Trunks are used to configure inbound calling to Somleng (aka Direct Inbound Dialing).
+									When you create an Inbound SIP Trunk you specify the source IP address from which SIP will be received.
+									When a call is received by Somleng will use this information to determine the Account.
+								</p>
+								<p>
+									You can then send SIP to any of the following endpoints.
+									We recommend that you use <em>sip.somleng.org</em> for high-availability.
+									<table>
+										<thead>
+											<tr>
+												<th style="text-align: left;">Endpoint</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: left;">sip.somleng.org</td>
+											</tr>
+											<tr>
+												<td style="text-align: left;">52.74.4.205</td>
+											</tr>
+											<tr>
+												<td style="text-align: left;">18.136.239.28</td>
+											</tr>
+											<tr>
+												<td style="text-align: left;">3.0.30.251</td>
+											</tr>
+										</tbody>
+									</table>
+								</p>
+								<p>
+									In order to create an inbound SIP trunk via the Dashboard:
+									<ol>
+										<li>
+											Sign in to the Dashboard and from the side-navigation, click <strong>Inbound SIP Trunks</strong>.
+										</li>
+										<li>
+										  Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new inbound SIP trunk.
+										</li>
+										<li>
+										  Fill out the form, specifying a friendly name for the inbound SIP trunk and the source IP address.
+										</li>
+										<li>
+										  Choose <strong>Create Inbound SIP Trunk</strong>.
+										</li>
+									</ol>
+								</p>
+							</div>
+							<div id="outbound_sip_trunks">
+								<h4>
+									Outbound SIP Trunks
+								</h4>
+								<p>
+									Outbound SIP Trunks are used to configure outbound calling from Somleng.
+									When you create an Outbound SIP Trunk you specify the host to send the calls.
+									You can specify your host as either a fully qualified domain name (FQDN) or IP address.
+									This tells Somleng to send outbound calls to your this host using the configured dial string.
+								</p>
+								<p>
+								  Somleng sends SIP and RTP NATed from the IP address below:
+									<table>
+										<thead>
+											<tr>
+												<th style="text-align: left;">NAT IP</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: left;">13.250.230.15</td>
+											</tr>
+										</tbody>
+									</table>
+								</p>
+								<p>
+									You should allow this IP address on your firewall.
+								</p>
+								<p>
+									In order to create an outbound SIP trunk via the Dashboard:
+									<ol>
+										<li>
+											Sign in to the Dashboard and from the side-navigation, click <strong>Outbound SIP Trunks</strong>.
+										</li>
+										<li>
+										  Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new outbound SIP trunk.
+										</li>
+										<li>
+										  Fill out the form, specifying a friendly name for the outbound SIP trunk and the host.
+											You can also optionally configure a numeric dial string prefix, add a plus prefix or configure a trunk prefix.
+										</li>
+										<li>
+										  Choose <strong>Create Outbound SIP Trunk</strong>.
+										</li>
+									</ol>
+								</p>
+								<p>
+									Once the outbound SIP trunk has been created you can preview the dial string format.
+								</p>
+							</div>
+
+							<div id="rtp_symmetric_latching">
+								<h4>
+								  RTP and Symmetric Latching
+								</h4>
+
+								<p>
+									SIP and RTP from Somleng is sent through a NAT Gateway.
+									This means that the ports specified in the SDP in the SIP Invite from Somleng are unreachable which normally causes one-way audio issues.
+									In order to work-around this problem, it is required that you setup <a href="https://github.com/somleng/somleng-switch/wiki/SIP-NAT" class="link">Symmetric Latching</a> on your device.
+								</p>
+								<p>
+									Symmetric RTP means that the IP address and port pair used by an outbound RTP flow is reused for the inbound flow.
+									The IP address and port are learned when the initial RTP flow is received on your device. The flow's source address and port are latched onto and used as the destination for the RTP sourced by the other side of the call.
+									The IP address and port in the c line and m line respectively in the SDP message are ignored.
+								</p>
+
+								<p>
+									If your device does not support symmetric latching we can configure your account to use a symmetric NAT.
+									Currently this option is not configurable on the dashboard. Please contact us for assistance.
+								</p>
+							</div>
+
+							<div id="phone_numbers">
+								<h4>
+									Phone Numbers
+								</h4>
+								<p>
+									Phone Numbers represent direct inbound dialing (DID) numbers.
+									A phone number can be either a real E.164 number or a short code.
+									When you create a phone number you can optionally assign it to an account.
+									Phone numbers can be configured with a Voice URL and Status Callback URL.
+									This can be done by the carrier or by the account owner.
+								</p>
+								<p>
+									In order to create a phone number via the Dashboard:
+									<ol>
+										<li>
+											Sign in to the Dashboard and from the side-navigation, click <strong>Phone Numbers</strong>.
+										</li>
+										<li>
+										  Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
+										</li>
+										<li>
+										  Fill out the form, specifying the phone number or short code, and optionally assign it to an account.
+										</li>
+										<li>
+										  Choose <strong>Create Phone number</strong>.
+										</li>
+									</ol>
+								</p>
+								<p>
+									Once the phone number has been created you can configure it. To configure a phone number via the Dashboard:
+									<ol>
+										<li>
+										  From the Phone Numbers page, find the phone number you want to configure.
+										</li>
+										<li>
+										  From the gear icon <i class="fas fa-cog"></i> select <strong>Configure</strong>.
+										</li>
+										<li>
+										  Fill out the form specifying a Voice URL and optionally a Status Callback URL.
+											The Voice URL should return valid <a href="https://www.twilio.com/docs/voice/twiml" class="link">TwiML</a> and will be executed when an inbound call is received by Somleng.
+										</li>
+									</ol>
+								</p>
+							</div>
+							<div id="users">
+								<h4>
+									Users
+								</h4>
+								<p>
+									Carrier owners can invite their colleagues to the dashboard.
+								</p>
+								<p>
+									In order to invite a user to the Dashboard:
+									<ol>
+										<li>
+											Sign in to the Dashboard and from the side-navigation, click <strong>Users</strong>.
+										</li>
+										<li>
+										  Click the <strong><i class="fas fa-plus"></i></strong> icon to invite a new user.
+										</li>
+										<li>
+										  Fill out the form, specifying the user's name, email and role.</li>
+										<li>
+										  Choose <strong>Send an invitation</strong>.
+										</li>
+									</ol>
+								</p>
+								<p>
+									The user will receive an email inviting them to the dashboard. Users with the owner role can manage
+									other users, update their role and reset their 2FA.
 								</p>
 							</div>
 						</div>
