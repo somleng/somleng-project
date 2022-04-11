@@ -17,3 +17,7 @@ th, td {
 th {
   background-color: #D3D3D3;
 }
+
+.vMenu ul {
+  padding-left: 25px;
+}
