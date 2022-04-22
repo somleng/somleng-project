@@ -12,6 +12,7 @@ table, th, td {
 
 th, td {
   padding: 6px;
+  text-align: left;
 }
 
 th {
@@ -20,4 +21,8 @@ th {
 
 .vMenu ul {
   padding-left: 25px;
+}
+
+pre, code {
+  white-space: pre-line;
 }

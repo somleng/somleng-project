@@ -71,6 +71,9 @@
 									<a href="#authentication">Authentication</a>
 								</li>
 								<li>
+									<a href="#carrier_settings">Carrier Settings</a>
+								</li>
+								<li>
 									<a href="#accounts">Accounts</a>
 								</li>
 								<li>
@@ -107,19 +110,18 @@
 								<table>
 									<thead>
 										<tr>
-											<th style="text-align: left;">Term</th>
-											<th style="text-align: left;">Meaning</th>
+											<th>Term</th>
+											<th>Meaning</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td style="text-align: left;">Carrier</td>
-											<td style="text-align: left;">A carrier (telecom company, mobile network operator (MNO), aggregator etc) who offers routes to/from the Public Switched Telephone Network (PSTN). E.g. AT&T, Verizon</td>
+											<td>Carrier</td>
+											<td>A carrier (telecom company, mobile network operator (MNO), aggregator etc) who offers routes to/from the Public Switched Telephone Network (PSTN). E.g. AT&T, Verizon</td>
 										</tr>
 										<tr>
-											<td style="text-align: left;">BYOC User</td>
-											<td style="text-align: left;">An individual or organization who has a business relationship with a carrier. BYOC stands for Bring Your Own Carrier.</td>
-											</td>
+											<td>BYOC User</td>
+											<td>An individual or organization who has a business relationship with a carrier. BYOC stands for Bring Your Own Carrier.</td>
 										</tr>
 									</tbody>
 								</table>
@@ -168,12 +170,61 @@
 							<h3 class="page__main__title">
 								Using the Dashboard
 							</h3>
+							<p>
+								The dashboard can be used to manually provision carrier resources.
+								Use the <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a>
+								to automate the provisioning of carrier resources.
+							</p>
 							<div id="authentication">
 								<h4>
 									Authentication
 								</h4>
 								<p>
-									You must sign into the dashboard to use Somleng. The first time you sign in you will be required to setup two factor authentication (2FA). We recommend you use <a href="https://authy.com/" class="link" target="_blank">Authy <i class="fa fa-external-link"></i></a>, <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="link" target="_blank">Google Authenticator <i class="fa fa-external-link"></i></a> or your password manager to setup 2FA.
+									You must sign into the dashboard to use Somleng.
+									The first time you sign in you will be required to setup two factor authentication (2FA).
+									We recommend you use <a href="https://authy.com/" class="link" target="_blank">Authy <i class="fa fa-external-link"></i></a>,
+									<a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="link" target="_blank">Google Authenticator <i class="fa fa-external-link"></i></a>
+									or your password manager to setup 2FA.
+								</p>
+							</div>
+							<div id="carrier_settings">
+								<h4>
+									Carrier Settings
+								</h4>
+								<p>
+									Here you will find general settings for the carrier.
+								</p>
+								<p>
+									From the settings page you'll see your company's name, country, logo
+									and <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a> Key.
+								</p>
+								<p>
+									You can update the name of your company, country and company logo.
+									The logo and name of your company is used to provide custom branding for your dashboard.
+								</p>
+								<p>
+									You can also configure webhooks by specifying a webhook URL. Once a Webhook URL has been configured
+									you'll see Webhook signing secret on the settings page.
+									You'll need the signing secret when <a href="docs/carrier_api#webhooks" target="_blank" class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
+								</p>
+
+								<p>
+									To update your carrier settings:
+									<ol>
+										<li>
+											Sign in to the Dashboard and from the side-navigation, click <strong>Carrier Settings</strong>.
+										</li>
+										<li>
+										  Click the <strong><i class="fas fa-edit"></i></strong> icon to edit your settings.
+										</li>
+										<li>
+										  Fill out the form, specifying your company name, country and logo.
+											You can optionally configure webhooks by specifying a webhook URL.
+										</li>
+										<li>
+										  Choose <strong>Update Carrier Settings</strong>.
+										</li>
+									</ol>
 								</p>
 							</div>
 							<div id="accounts">
@@ -189,23 +240,27 @@
 								<p>
 								  There are two types of accounts. Carrier managed and customer managed.
 								</p>
-								<h5>
-									Carrier Managed Accounts
-								</h5>
-								<p>
-									Carrier managed accounts are <em>managed by</em> carriers. These types of accounts are used by carriers themselves, or by the carrier's individual customers.
-									Carrier managed accounts <em>do not</em> allow customer access. The Account SID and Auth token, which are required to access the Twilio REST API, are accessible by the carrier only and are displayed on the Account's page.
-								</p>
-								<h5>
-									Customer Managed Accounts
-								</h5>
-								<p>
-									Customer managed accounts are <em>managed by</em> carrier customers directly.
-									These types of accounts can be created via the dashboard by specifying an account owner when creating the account.
-									After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their account by themselves.
-									The customer will have access to their Account SID and Auth Token and this info will no longer be displayed on the Account's page.
-									The carrier can disable and enable individual customer accounts from the Dashboard.
-								</p>
+								<div id="carrier_managed_accounts">
+									<h5>
+										Carrier Managed Accounts
+									</h5>
+									<p>
+										Carrier managed accounts are <em>managed by</em> carriers. These types of accounts are used by carriers themselves, or by the carrier's individual customers.
+										Carrier managed accounts <em>do not</em> allow customer access. The Account SID and Auth token, which are required to access the Twilio REST API, are accessible by the carrier only and are displayed on the Account's page.
+									</p>
+								</div>
+								<div id="customer_managed_accounts">
+									<h5>
+										Customer Managed Accounts
+									</h5>
+									<p>
+										Customer managed accounts are <em>managed by</em> carrier customers directly.
+										These types of accounts can be created via the dashboard by specifying an account owner when creating the account.
+										After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their account by themselves.
+										The customer will have access to their Account SID and Auth Token and this info will no longer be displayed on the Account's page.
+										The carrier can disable and enable individual customer accounts from the Dashboard.
+									</p>
+								</div>
 								<p>
 									To create an account via the Dashboard:
 									<ol>
@@ -329,10 +384,13 @@
 								</h4>
 								<p>
 									Phone Numbers represent direct inbound dialing (DID) numbers.
-									A phone number can be either a real E.164 number or a short code.
+									A phone number can be either an E.164 formatted phone number or a short code.
 									When you create a phone number you can optionally assign it to an account.
-									Phone numbers can be configured with a Voice URL and Status Callback URL.
-									This can be done by the carrier or by the account owner.
+								</p>
+								<p>
+									Once provisioned and assigned to an account, phone numbers can be configured with a Voice URL
+									which returns <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a> for controlling the call.
+									This can either be done by the carrier or by the account owner (for <a href="#customer_managed_accounts" class="link">customer managed accounts</a>).
 								</p>
 								<p>
 									To create a phone number via the Dashboard:
@@ -364,8 +422,67 @@
 										  Fill out the form specifying a Voice URL and optionally a Status Callback URL.
 											The Voice URL should return valid <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a> and will be executed when an inbound call is received by Somleng.
 										</li>
+										<li>
+										  Choose <strong>Update Configuration</strong>.
+										</li>
 									</ol>
 								</p>
+							</div>
+							<div id="import_phone_numbers">
+								<h5>
+									Import Phone Numbers
+								</h5>
+								<p>
+									In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
+									<ol>
+										<li>
+										  From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
+										</li>
+										<li>
+										  Select the CSV file of phone numbers to import.
+										</li>
+										<li>
+											Choose <strong>Upload</strong>.
+										</li>
+									</ol>
+								</p>
+
+								<p>
+									<table>
+										<thead>
+											<tr>
+												<th>Column Header</th>
+												<th>Content</th>
+												<th>Possible Values</th>
+												<th>Example</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Number</td>
+												<td>The phone number or short code</td>
+												<td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
+												<td>1234</td>
+											</tr>
+											<tr>
+												<td>Enabled</td>
+												<td>Whether to enable or disable the phone number</td>
+												<td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
+												<td><code>true</code></td>
+											</tr>
+										</tbody>
+									</table>
+								</p>
+
+								<h6>
+									Sample CSV Data
+								</h6>
+
+								<pre>
+									Number,Enabled
+									1234,false
+									85512345678,true
+								</pre>
 							</div>
 							<div id="users">
 								<h4>
