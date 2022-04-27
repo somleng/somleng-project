@@ -93,7 +93,11 @@ Once there are local carriers and network providers providing pubic routes on th
 
 To dive deeper into our roadmap and progress please refer to our [Pivotal Tracker Project](https://www.pivotaltracker.com/n/projects/2148301).
 
-For carriers, network providers or anyone who is interested in contributing to Somleng, feel free to join us on the [Discord channel](https://discord.gg/QdrKCW2kPx).
+## Contributing
+
+For carriers, network providers, or anyone who is interested in suggesting features to Somleng, feel free to join us on the [Discord channel](https://discord.gg/QdrKCW2kPx).
+
+Currently we are moving quickly to achieve the goals stated in [our roadmap](#roadmap). While we welcome anyone who wants to contribute to Somleng we have some specific goals which we want to achieve. It's best to reach out to us on the [Discord channel](https://discord.gg/QdrKCW2kPx) first to discuss your ideas before submitting a pull request.
 
 ## Who's sponsoring The Somleng Project?
 
