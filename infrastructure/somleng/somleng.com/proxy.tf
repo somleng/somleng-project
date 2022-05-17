@@ -3,7 +3,7 @@ module "dashboard_proxy" {
 
   origin_domain_name = "dashboard.somleng.org"
   domain_name = aws_route53_zone.somleng_com.name
-  host_name = "x-dashboard"
+  host_name = "dashboard"
   zone_id = aws_route53_zone.somleng_com.zone_id
 
   create_certificate = false
@@ -15,7 +15,7 @@ module "api_proxy" {
 
   origin_domain_name = "api.somleng.org"
   domain_name = aws_route53_zone.somleng_com.name
-  host_name = "x-api"
+  host_name = "api"
   zone_id = aws_route53_zone.somleng_com.zone_id
 
   create_certificate = false
