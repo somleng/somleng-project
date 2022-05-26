@@ -16,11 +16,6 @@ output "vpc" {
   value = module.vpc
 }
 
-output "db_old" {
-  value = module.db_old
-  sensitive = true
-}
-
 output "db_cluster" {
   value = aws_rds_cluster.db
   sensitive = true

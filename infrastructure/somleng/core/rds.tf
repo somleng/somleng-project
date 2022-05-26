@@ -15,16 +15,6 @@ resource "aws_security_group" "db" {
   }
 }
 
-resource "aws_db_subnet_group" "db_old" {
-  name        = "somleng-db"
-  description = "For Aurora cluster somleng"
-  subnet_ids  = module.vpc.database_subnets
-
-  tags = {
-    Name = "aurora-somleng"
-  }
-}
-
 resource "aws_ssm_parameter" "db_master_password" {
   name  = "somleng.db_master_password"
   type  = "SecureString"
@@ -32,39 +22,6 @@ resource "aws_ssm_parameter" "db_master_password" {
 
   lifecycle {
     ignore_changes = [value]
-  }
-}
-
-module "db_old" {
-  source  = "terraform-aws-modules/rds-aurora/aws"
-  security_group_description = "Managed by Terraform"
-
-  name = "somleng"
-
-  engine            = "aurora-postgresql"
-  engine_mode       = "serverless"
-  engine_version    = null
-  vpc_id = module.vpc.vpc_id
-  db_subnet_group_name = aws_db_subnet_group.db_old.name
-  create_db_subnet_group = false
-  allowed_security_groups = [aws_security_group.db.id]
-  allowed_cidr_blocks = [module.vpc.vpc_cidr_block]
-  auto_minor_version_upgrade  = true
-  apply_immediately           = true
-  storage_encrypted           = true
-  monitoring_interval = 60
-
-  master_username = "somleng"
-  master_password = aws_ssm_parameter.db_master_password.value
-  create_random_password = false
-  port     = local.database_port
-
-  scaling_configuration = {
-    auto_pause               = true
-    min_capacity             = 2
-    max_capacity             = 64
-    seconds_until_auto_pause = 600
-    timeout_action           = "ForceApplyCapacityChange"
   }
 }
 
