@@ -1,11 +1,9 @@
 resource "aws_s3_bucket" "www_somleng_com" {
   bucket = "www.somleng.com"
-  acl    = "private"
 }
 
 resource "aws_s3_bucket" "somleng_com" {
   bucket = "somleng.com"
-  acl    = "private"
 }
 
 resource "aws_s3_bucket_website_configuration" "somleng_com" {
