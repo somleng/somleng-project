@@ -8,7 +8,7 @@ data "aws_s3_bucket" "backups" {
 }
 
 data "aws_rds_cluster" "db_cluster" {
-  cluster_identifier = "somleng"
+  cluster_identifier = "somlengv2"
 }
 
 data "aws_ssm_parameter" "db_master_password" {
@@ -18,6 +18,13 @@ data "aws_ssm_parameter" "db_master_password" {
 resource "aws_security_group" "this" {
   name   = "backup-database"
   vpc_id = data.terraform_remote_state.core.outputs.vpc.vpc_id
+}
+
+data "aws_security_group" "db" {
+  filter {
+    name   = "tag:Name"
+    values = ["aurora-somlengv2"]
+  }
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -34,7 +41,7 @@ resource "aws_instance" "this" {
   instance_type = "t4g.small"
   security_groups = [
     aws_security_group.this.id,
-    data.terraform_remote_state.core.outputs.db_security_group.id
+    data.aws_security_group.db.id
   ]
   subnet_id = element(data.terraform_remote_state.core.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id

@@ -4,11 +4,22 @@ data "aws_ssm_parameter" "arm64_ami" {
 }
 
 data "aws_ssm_parameter" "db_master_password" {
-  name = "somleng.db_master_password"
+  name = "change-me.db_master_password"
 }
 
 data "aws_s3_bucket" "backups" {
   bucket = "backups.somleng.org"
+}
+
+data "aws_rds_cluster" "db_cluster" {
+  cluster_identifier = "change-me"
+}
+
+data "aws_security_group" "db" {
+  filter {
+    name   = "tag:Name"
+    values = ["aurora-change-me"]
+  }
 }
 
 resource "aws_security_group" "this" {
@@ -28,7 +39,7 @@ resource "aws_security_group_rule" "egress" {
 resource "aws_instance" "this" {
   ami           = data.aws_ssm_parameter.arm64_ami.value
   instance_type = "t4g.micro"
-  security_groups = [aws_security_group.this.id, data.terraform_remote_state.core_infrastructure.outputs.db_security_group.id]
+  security_groups = [aws_security_group.this.id, data.aws_security_group.db.id]
   subnet_id = element(data.terraform_remote_state.core_infrastructure.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = data.template_file.user_data.rendered
@@ -115,9 +126,9 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
+    db_host = data.aws_rds_cluster.db_cluster.endpoint
+    db_username = data.aws_rds_cluster.db_cluster.master_username
     db_master_password_parameter_name = data.aws_ssm_parameter.db_master_password.name
-    db_host = data.terraform_remote_state.core_infrastructure.outputs.db_cluster.endpoint
-    db_username = data.terraform_remote_state.core_infrastructure.outputs.db_cluster.master_username
     db_name = var.db_name
     create_db = var.create_db
     restore_db = var.restore_db

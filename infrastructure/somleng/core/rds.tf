@@ -13,6 +13,10 @@ resource "aws_security_group" "db" {
     protocol  = "TCP"
     self      = true
   }
+
+  tags = {
+    Name = "aurora-${local.identifier}"
+  }
 }
 
 resource "aws_ssm_parameter" "db_master_password" {
