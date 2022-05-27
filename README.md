@@ -99,6 +99,8 @@ For carriers, network providers, or anyone who is interested in suggesting featu
 
 Currently we are moving quickly to achieve the goals stated in [our roadmap](#roadmap). While we welcome anyone who wants to contribute to Somleng we have some specific goals which we want to achieve. It's best to reach out to us on the [Discord channel](https://discord.gg/QdrKCW2kPx) first to discuss your ideas before submitting a pull request.
 
+All final decisions about the direction of this project will be decided by the Somleng team.
+
 ## Who's sponsoring The Somleng Project?
 
 [The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
