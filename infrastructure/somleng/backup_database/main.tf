@@ -1,25 +1,30 @@
-data "aws_ami" "this" {
-  most_recent = true
-  owners = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-2.0.????????.?-x86_64-gp2"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
+# https://aws.amazon.com/ec2/instance-types/t4/
+data "aws_ssm_parameter" "arm64_ami" {
+  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2"
 }
 
 data "aws_s3_bucket" "backups" {
   bucket = "backups.somleng.org"
 }
 
+data "aws_rds_cluster" "db_cluster" {
+  cluster_identifier = "somlengv2"
+}
+
+data "aws_ssm_parameter" "db_master_password" {
+  name = "somleng.db_master_password"
+}
+
 resource "aws_security_group" "this" {
   name   = "backup-database"
   vpc_id = data.terraform_remote_state.core.outputs.vpc.vpc_id
+}
+
+data "aws_security_group" "db" {
+  filter {
+    name   = "tag:Name"
+    values = ["aurora-somlengv2"]
+  }
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -32,11 +37,11 @@ resource "aws_security_group_rule" "egress" {
 }
 
 resource "aws_instance" "this" {
-  ami           = data.aws_ami.this.id
-  instance_type = "t3.small"
+  ami           = data.aws_ssm_parameter.arm64_ami.value
+  instance_type = "t4g.small"
   security_groups = [
     aws_security_group.this.id,
-    data.terraform_remote_state.core.outputs.db_security_group.id
+    data.aws_security_group.db.id
   ]
   subnet_id = element(data.terraform_remote_state.core.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
@@ -102,6 +107,15 @@ resource "aws_iam_policy" "this" {
       "Resource": [
         "${data.aws_s3_bucket.backups.arn}/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameter"
+      ],
+      "Resource": [
+        "${data.aws_ssm_parameter.db_master_password.arn}"
+      ]
     }
   ]
 }
@@ -122,9 +136,10 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    db_host = "<change-me>"
-    db_username = "somleng"
-    db_password = "<change-me>"
-    db_name = "<change-me>"
+    db_host = data.aws_rds_cluster.db_cluster.endpoint
+    db_username = data.aws_rds_cluster.db_cluster.master_username
+    db_master_password_parameter_name = data.aws_ssm_parameter.db_master_password.name
+    db_name = var.db_name
+    backup_db = var.backup_db
   }
 }
