@@ -176,19 +176,26 @@
               <h3 class="page__main__title">
                 Using the Dashboard
               </h3>
+
               <p>
                 The dashboard can be used to manually provision carrier resources.
                 Use the <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a>
                 to automate the provisioning of carrier resources.
               </p>
+
               <div id="authentication">
                 <h4>
                   Authentication
                 </h4>
                 <p>
-                  You must sign into the dashboard to use Somleng.
-                  The first time you sign in you will be required to setup two factor authentication (2FA).
-                  We recommend you use <a href="https://authy.com/" class="link" target="_blank">Authy <i class="fa fa-external-link"></i></a>,
+                  You must sign into the dashboard <em>via your vanity domain</em> to use Somleng.
+                  The sign in URL is <code>https://your-vanity-domain.app.somleng.org/users/sign_in</code>.
+                  If you have setup a <a href="#custom_domains" class="link"> custom domain</a> all users may access
+                  the dashboard through your custom domain instead.
+                </p>
+                <p>
+                  All users are required to setup two factor authentication (2FA) the first time they sign in.
+                  We recommend <a href="https://authy.com/" class="link" target="_blank">Authy <i class="fa fa-external-link"></i></a>,
                   <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="link" target="_blank">Google Authenticator <i class="fa fa-external-link"></i></a>
                   or your password manager to setup 2FA.
                 </p>
@@ -198,22 +205,12 @@
                   Carrier Settings
                 </h4>
                 <p>
-                  Here you will find general settings for the carrier.
+                  Here you will find various settings for your carrier.
+                  Under General, you'll see your company's name, vanity domain, website, country and logo.
+                  Under Developer, you'll see your <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a> Key,
+                  as well as your webhook URL and signing secret for <a href="docs/carrier_api#webhooks" target="_blank" class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
+                  If you've setup a <a href="#custom_domains" class="link"> custom domain</a> this will appear under the Custom Domain section.
                 </p>
-                <p>
-                  From the settings page you'll see your company's name, country, logo
-                  and <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a> Key.
-                </p>
-                <p>
-                  You can update the name of your company, country and company logo.
-                  The logo and name of your company is used to provide custom branding for your dashboard.
-                </p>
-                <p>
-                  You can also configure webhooks by specifying a webhook URL. Once a Webhook URL has been configured
-                  you'll see Webhook signing secret on the settings page.
-                  You'll need the signing secret when <a href="docs/carrier_api#webhooks" target="_blank" class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
-                </p>
-
                 <p>
                   To update your carrier settings:
                   <ol>
@@ -224,13 +221,15 @@
                       Click the <strong><i class="fas fa-edit"></i></strong> icon to edit your settings.
                     </li>
                     <li>
-                      Fill out the form, specifying your company name, country and logo.
-                      You can optionally configure webhooks by specifying a webhook URL.
+                      Make your desired changes.
                     </li>
                     <li>
                       Choose <strong>Update Carrier Settings</strong>.
                     </li>
                   </ol>
+                </p>
+                <p>
+                  A word of warning. If you update your vanity domain
                 </p>
               </div>
               <div id="accounts">
@@ -251,7 +250,7 @@
                     Carrier Managed Accounts
                   </h5>
                   <p>
-                    Carrier managed accounts are <em>managed by</em> carriers. These types of accounts are used by carriers themselves, or by the carrier's individual customers.
+                    Carrier managed accounts are <em>managed by</em> carriers. These types of accounts can be used by carriers themselves, or by the carrier's individual customers.
                     Carrier managed accounts <em>do not</em> allow customer access. The Account SID and Auth token, which are required to access the Twilio REST API, are accessible by the carrier only and are displayed on the Account's page.
                   </p>
                 </div>
@@ -264,7 +263,7 @@
                     These types of accounts can be created via the dashboard by specifying an account owner when creating the account.
                     After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their account by themselves.
                     The customer will have access to their Account SID and Auth Token and this info will no longer be displayed on the Account's page.
-                    The carrier can disable and enable individual customer accounts from the Dashboard.
+                    The carrier can still disable and enable individual customer accounts from the Dashboard.
                   </p>
                 </div>
                 <p>
@@ -526,7 +525,7 @@ Number,Enabled
 
               <p>
                 Setting up a custom domain allows you to fully white-label Somleng and brand it for your company.
-                This includes the dashboard, API, emails, and even the documentation.
+                This includes the customer dashboard, API, emails, and even the documentation.
               </p>
 
               <div>
@@ -535,7 +534,7 @@ Number,Enabled
                 </h4>
 
                 <p>
-                  When you setup a custom domain, you specify your custom dashboard, API and mail hosts.
+                  When you setup a custom domain,
                   For example let's say your company's name Rocket Telecom and your website is rocket-telecom.com
 
                 </p>
@@ -551,8 +550,7 @@ Number,Enabled
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-    proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your domain
-    proxy_pass "https://dashboard.somleng.org:443";
+    proxy_pass "https:/your-vanity-domain.app.somleng.org:443";
   }
 }
 
@@ -564,7 +562,6 @@ server {
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-    proxy_set_header X-Forwarded-Host api.example.com; # replace this with your domain
     proxy_pass "https://api.somleng.org:443";
   }
 }</code>

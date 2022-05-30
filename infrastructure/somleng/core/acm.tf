@@ -1,6 +1,7 @@
 resource "aws_acm_certificate" "certificate" {
   domain_name       = "*.somleng.org"
   validation_method = "DNS"
+  subject_alternative_names = ["*.app.somleng.org"]
 }
 
 resource "aws_acm_certificate" "cdn_certificate" {
@@ -15,7 +16,7 @@ resource "aws_acm_certificate" "naked_cdn_somleng_org" {
   provider          = aws.us-east-1
 }
 
-# Additinal certificates for the same domain don't require validations
+# Additional certificates for the same domain don't require validations
 
 resource "aws_route53_record" "certificate_validation" {
   for_each = {
