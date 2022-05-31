@@ -550,18 +550,20 @@ Number,Enabled
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-    proxy_pass "https:/your-vanity-domain.app.somleng.org:443";
+    proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your domain
+    proxy_pass "https://your-subdomain.app.somleng.org:443";
   }
 }
 
 server {
   listen 443;
-  server_name api.example.com; # replace this with your domain
+  server_name api.example.com; # replace this with your domain. Your subdomain must be api.
 
   ssl_certificate /path/to/your/fullchain.pem;
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
+    proxy_set_header X-Forwarded-Host api.example.com; # replace this with your domain
     proxy_pass "https://api.somleng.org:443";
   }
 }</code>
