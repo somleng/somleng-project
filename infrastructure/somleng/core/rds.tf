@@ -56,6 +56,8 @@ resource "aws_rds_cluster" "db" {
     max_capacity = 6.0
     min_capacity = 0.5
   }
+
+  depends_on = [aws_cloudwatch_log_group.this]
 }
 
 resource "aws_rds_cluster_instance" "db" {
@@ -75,4 +77,9 @@ resource "aws_db_parameter_group" "db" {
     name  = "log_min_duration_statement"
     value = "250"
   }
+}
+
+resource "aws_cloudwatch_log_group" "this" {
+  name              = "/aws/rds/cluster/${local.identifier}/postgresql"
+  retention_in_days = 7
 }
