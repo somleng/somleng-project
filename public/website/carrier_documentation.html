@@ -877,6 +877,9 @@ module "somleng_proxy_api" {
                     <li>
                       Set 'Origin domain to' <strong>api.somleng.org</strong>
                     </li>
+                    <li>
+                      <strong>DO NOT</strong> set the X-Forwarded-Host header
+                    </li>
                   </ul>
                 </p>
               </div>
@@ -892,7 +895,6 @@ module "somleng_proxy_api" {
 
                 <p>
                   The following Nginx configuration can be used to setup an Nginx reverse proxy to Somleng.
-                  Note that you must set the <strong>X-Forwarded-Host</strong> header to your custom domain.
                 </p>
 
                 <p>
@@ -911,6 +913,7 @@ module "somleng_proxy_api" {
   }
 
   # Optionally configure a custom API endpoint
+  # Note: DO NOT set X-Forwarded-Host for your custom API endpoint
   server {
     listen 443;
     server_name api.example.com; # replace this with your api domain
@@ -919,7 +922,6 @@ module "somleng_proxy_api" {
     ssl_certificate_key /path/to/your/privatekey.pem;
 
     location / {
-      proxy_set_header X-Forwarded-Host api.example.com; # replace this with your api domain
       proxy_pass "https://api.somleng.org:443";
     }
   }</code></pre>
