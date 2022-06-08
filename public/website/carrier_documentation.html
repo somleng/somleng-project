@@ -521,7 +521,7 @@ Number,Enabled
 
               <p>
                 Setting up a custom domain allows you to fully white-label Somleng and brand it for your company.
-                This includes the customer dashboard, API, emails, and account API documentation.
+                This includes the branded dashboard, API, emails and account API documentation.
               </p>
 
               <div>
@@ -533,9 +533,9 @@ Number,Enabled
                   When you setup a custom domain you need to setup proxy between your domain and Somleng
                   in order for SSL termination to work correctly.
                   Below we describe two methods for doing this via
-                  <a href="https://aws.amazon.com/cloudfront/" class="link" target="_blank">AWS Cloudfront <i class="fa fa-external-link"></i></a>
+                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a>
                   or
-                  <a href="https://www.nginx.com/" class="link" target="_blank">Nginx <i class="fa fa-external-link"></i></a>.
+                  <a href="#custom_domains_nginx" class="link">Nginx</a>.
                   We recommend using AWS Cloudfront unless your have specific custom
                   requirements or you cannot use AWS.
                 </p>
@@ -547,17 +547,29 @@ Number,Enabled
                 </h4>
 
                 <p>
-                  Follow the steps below in the correct order to configure your custom domain.
+                  Follow the steps below to configure your custom domain:
+                  <ol>
+                    <li>
+                      Setup a reverse proxy via <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended)
+                      or <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                    </li>
+                    <li>
+                      <a href="#custom_domains_testing" class="link">Test out your custom domain</a>.
+                    </li>
+                    <li>
+                      <a href="#custom_domains_configure_somleng_dashboard" class="link">Configure your custom domain via the Somleng Dashboard</a>.
+                    </li>
+                  </ol>
                 </p>
               </div>
 
-              <div>
+              <div id="custom_domains_aws_cloudfront">
                 <h4>
-                  Step 1 - Configure an AWS Cloudfront Distribution (Recommended)
+                  1(a). Configure an AWS Cloudfront Distribution (Recommended)
                 </h4>
 
                 <p>
-                  <em>Skip this step if you want to use Ngnix instead.</em>
+                  <em>Skip this step if you prefer to use <a href="#custom_domains_nginx" class="link">Nginx</a> instead.</em>
                 </p>
 
                 <p>
@@ -624,6 +636,10 @@ module "somleng_proxy_api" {
                   Although we highly recommend using the terraform module above, you can also configure your Cloudfront distributions from the AWS Console.
                 </p>
 
+                <h5>
+                  Dashboard Configuration
+                </h5>
+
                 <p>
                   <ol>
                     <li>
@@ -633,31 +649,56 @@ module "somleng_proxy_api" {
                       Choose <strong>Create Distribution</strong>
                     </li>
                     <li>
-                      Update the 'Origin' settings. The origin domain will be
-                      <code class="language-http">your-subdomain.app.somleng.org</code>
-                      and the protocol should be HTTPS only.
-                      Our servers support TLSv1.2
-                    </li>
-                    <li>
-                      Under 'Add custom header' click <strong>Add header</strong>.
-                      Enter <code class="language-http">X-Forwarded-Host</code> for the Header name
-                      and <code class="language-http">your-domain.example.com</code> for the Value.
-                      Remember to replace <code class="language-http">your-domain.example.com</code> with your actual domain.
+                      Update the 'Origin' settings.
+                      <ul>
+                        <img src="./images/cloudfront_origin_settings.png">
+
+                        <li>
+                          Set 'Origin domain to' <strong>your-subdomain.app.somleng.org</strong>
+                          replacing <strong>your-subdomain</strong> with your Somleng subdomain.
+                        </li>
+                        <li>
+                          Set 'Protocol' to <strong>HTTPS only</strong>
+                        </li>
+                        <li>
+                          'HTTPS port' should be set to <strong>443</strong>
+                        </li>
+                        <li>
+                          Set 'Minimum origin SSL protocol' to <strong>TLSv1.2</strong>
+                        </li>
+                        <li>
+                          Under 'Add custom header' click <strong>Add header</strong>.
+                          <ul>
+                            <li>
+                              Enter <strong>X-Forwarded-Host</strong> for the Header name
+                            </li>
+                            <li>
+                              Enter <strong>your-domain.example.com</strong> for the Value.
+                              Remember to replace <strong>your-domain.example.com</strong>with your actual domain.
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          'Enable Origin Shield' should be set to <strong>No</strong>
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       Update the 'Default cache behavior' settings.
                       <ul>
+                        <img src="./images/cloudfront_default_cache_behavior.png">
+
                         <li>
-                          'Compress objects automatically' should be set to <strong>No</strong>.
+                          Set 'Compress objects automatically' to <strong>No</strong>.
                         </li>
                         <li>
-                          'Viewer protocol policy' should be set to <strong>Redirect HTTP to HTTPS</strong>
+                          Set 'Viewer protocol policy' to <strong>Redirect HTTP to HTTPS</strong>
                         </li>
                         <li>
-                          'Allowed HTTP methods' should be set to <strong>GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE</strong>
+                          Set 'Allowed HTTP methods' to <strong>GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE</strong>
                         </li>
                         <li>
-                          'Restrict viewer access' should be set to <strong>No</strong>
+                          Set 'Restrict viewer access' to <strong>No</strong>
                         </li>
                       </ul>
                     </li>
@@ -670,6 +711,8 @@ module "somleng_proxy_api" {
                         <li>
                           Under 'Cache policy', click <strong>Create policy</strong>
                           <ul>
+                            <img src="./images/cloudfront_cache_policy.png">
+
                             <li>
                               Update the 'Details' settings
                               <ul>
@@ -696,7 +739,7 @@ module "somleng_proxy_api" {
                               Update the 'Cache key settings'
                               <ul>
                                 <li>
-                                  Under 'Headers', select 'Include the following headers'
+                                  Under 'Headers', select <strong>Include the following headers</strong>
                                 </li>
                                 <li>
                                   Select the following headers:
@@ -732,10 +775,11 @@ module "somleng_proxy_api" {
                           </ul>
                         </li>
 
-
                         <li>
                           Under 'Origin request policy', click <strong>Create policy</strong>
                           <ul>
+                            <img src="./images/cloudfront_origin_request_policy.png">
+
                             <li>
                               Update the 'Details' settings
                               <ul>
@@ -748,7 +792,7 @@ module "somleng_proxy_api" {
                               Update the 'Origin request settings'
                               <ul>
                                 <li>
-                                  Under 'Headers', select 'Include the following headers'
+                                  Under 'Headers', select <strong>Include the following headers</strong>
                                 </li>
                                 <li>
                                   Select the following headers:
@@ -785,35 +829,133 @@ module "somleng_proxy_api" {
                                 <li>
                                   Set 'Cookies' to <strong>All</strong>
                                 </li>
+                                <li>
+                                  Click <strong>Create</strong>
+                                </li>
                               </ul>
-                            </li>
-                            <li>
-                              Click <strong>Create</strong>
                             </li>
                           </ul>
                         </li>
-
-
                       </ul>
+                    </li>
+
+                    <li>
+                      Update the 'Settings'
+                      <ul>
+                        <img src="./images/cloudfront_settings.png">
+
+                        <li>
+                          Set 'Price class' to <strong>Use all edge locations (best performance)</strong>
+                        </li>
+                        <li>
+                          Set 'Alternate domain name (CNAME)' to <strong>your-domain.example.com</strong>
+                        </li>
+                        <li>
+                          Set 'Custom SSL certificate' to your certificate or click the link to Request certificate.
+                        </li>
+                        <li>
+                          Set security policy to <strong>TLSv1.2_2021 (recommended)</strong> or to the latest recommended policy.
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      Click <strong>Create distribution</strong>
                     </li>
                   </ol>
                 </p>
-              </div>
 
-              <div>
-                <h4>
-                  Nginx
-                </h4>
+                <h5>
+                  API Configuration (optional)
+                </h5>
 
                 <p>
+                  Repeat the <strong>exact same process</strong> above to create a distribution for your custom API domain, with the following modifications:
+                  <ul>
+                    <img src="./images/cloudfront_origin_api_settings.png">
 
+                    <li>
+                      Set 'Origin domain to' <strong>api.somleng.org</strong>
+                    </li>
+                  </ul>
                 </p>
               </div>
 
-              <div>
+              <div id="custom_domains_nginx">
                 <h4>
-                  Configure your custom domain on the Somleng Dashboard.
+                  1(b). Nginx Reverse Proxy
                 </h4>
+
+                <p>
+                  <em>Skip this step if you prefer to use <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended) instead.</em>
+                </p>
+
+                <p>
+                  The following Nginx configuration can be used to setup an Nginx reverse proxy to Somleng.
+                  Note that you must set the <strong>X-Forwarded-Host</strong> header to your custom domain.
+                </p>
+
+                <p>
+                  <pre>
+  <code class="language-nginx">server {
+    listen 443;
+    server_name dashboard.example.com; # replace this with your dashboard domain
+
+    ssl_certificate /path/to/your/fullchain.pem;
+    ssl_certificate_key /path/to/your/privatekey.pem;
+
+    location / {
+      proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your dashboard domain
+      proxy_pass "https://your-subdomain.app.somleng.org:443";
+    }
+  }
+
+  # Optionally configure a custom API endpoint
+  server {
+    listen 443;
+    server_name api.example.com; # replace this with your api domain
+
+    ssl_certificate /path/to/your/fullchain.pem;
+    ssl_certificate_key /path/to/your/privatekey.pem;
+
+    location / {
+      proxy_set_header X-Forwarded-Host api.example.com; # replace this with your api domain
+      proxy_pass "https://api.somleng.org:443";
+    }
+  }</code></pre>
+                </p>
+              </div>
+
+              <div id="custom_domains_testing">
+                <h4>
+                  2. Test your custom domain
+                </h4>
+
+                <p>
+                  After you have setup your reverse proxy via
+                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
+                  <a href="#custom_domains_nginx" class="link">Nginx</a>
+                  you can test it out by going to <strong>your-domain.example.com</strong>.
+                  You should see your carrier logo and the sign in page.
+                </p>
+
+                <p>
+                  Try to sign in and interact with the dashboard.
+                  Note if you get a 422 error after signing in, try clearing your browser cookies and try again.
+                </p>
+              </div>
+
+              <div id="custom_domains_configure_somleng_dashboard">
+                <h4>
+                  3. Configure your custom domain via the Somleng Dashboard.
+                </h4>
+
+                <p>
+                  The final step is to configure your custom domain via the Somleng Dashboard.
+                  Note that this step should only be done after you have setup and tested your reverse proxy via
+                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
+                  <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                </p>
 
                 <ol>
                   <li>
@@ -829,38 +971,27 @@ module "somleng_proxy_api" {
                     Choose <strong>Update Carrier Settings</strong>.
                   </li>
                 </ol>
+
+                <p>
+                  After configuring the custom dashboard host, <em>customer</em> transactional emails (such as forgot password, account invitations, etc)
+                  will link to <strong>your-domain.example.com</strong>. <em>Carrier user</em> transaction emails
+                  are still linked to <strong>your-subdomain.app.somleng.org</strong>.
+                </p>
+
+                <p>
+                  You should also have branded API customer documentation
+                  available at <strong>your-domain.example.com/docs/api</strong>.
+                  Setting the custom API endpoint will additionally update the API documentation examples with
+                  your <strong>your-api.domain.example.com</strong>.
+                </p>
+
+                <p>
+                  Note that the API is always available at <strong>api.somleng.org</strong> regardless of whether you set
+                  a custom API host or not.
+                </p>
               </div>
-
-              <p>
-                <pre>
-<code class="language-nginx">server {
-  listen 443;
-  server_name dashboard.example.com; # replace this with your domain
-
-  ssl_certificate /path/to/your/fullchain.pem;
-  ssl_certificate_key /path/to/your/privatekey.pem;
-
-  location / {
-    proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your domain
-    proxy_pass "https://your-subdomain.app.somleng.org:443";
-  }
-}
-
-server {
-  listen 443;
-  server_name api.example.com; # replace this with your domain. Your subdomain must be api.
-
-  ssl_certificate /path/to/your/fullchain.pem;
-  ssl_certificate_key /path/to/your/privatekey.pem;
-
-  location / {
-    proxy_set_header X-Forwarded-Host api.example.com; # replace this with your domain
-    proxy_pass "https://api.somleng.org:443";
-  }
-}</code>
-                </pre>
-              </p>
             </div>
+
             <div id="rtp_symmetric_latching">
               <h3>
                 RTP and Symmetric Latching
