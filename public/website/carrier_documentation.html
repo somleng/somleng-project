@@ -8,11 +8,7 @@
   <link rel='stylesheet' href='css/style.min.css' />
   <link rel='stylesheet' href='css/custom.css' />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/nginx.min.js"></script>
-  <script>hljs.highlightAll();</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -164,7 +160,7 @@
                 Getting Started
               </h3>
               <p>
-                We recommend you try out Somleng by signing up for a carrier account <a href="https://dashboard.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note that this requires some technical knowledge.
+                We recommend you try out Somleng by signing up for a carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note that this requires some technical knowledge.
               </p>
 
               <p>
@@ -188,8 +184,8 @@
                   Authentication
                 </h4>
                 <p>
-                  You must sign into the dashboard <em>via your vanity domain</em> to use Somleng.
-                  The sign in URL is <code>https://your-vanity-domain.app.somleng.org/users/sign_in</code>.
+                  You must sign into the dashboard <em>via your subdomain</em> to use Somleng.
+                  The signin URL is <code>https://your-subdomain.app.somleng.org/users/sign_in</code>.
                   If you have setup a <a href="#custom_domains" class="link"> custom domain</a> all users may access
                   the dashboard through your custom domain instead.
                 </p>
@@ -206,7 +202,7 @@
                 </h4>
                 <p>
                   Here you will find various settings for your carrier.
-                  Under General, you'll see your company's name, vanity domain, website, country and logo.
+                  Under General, you'll see your company's name, subdomain, website, country and logo.
                   Under Developer, you'll see your <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a> Key,
                   as well as your webhook URL and signing secret for <a href="docs/carrier_api#webhooks" target="_blank" class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
                   If you've setup a <a href="#custom_domains" class="link"> custom domain</a> this will appear under the Custom Domain section.
@@ -229,7 +225,7 @@
                   </ol>
                 </p>
                 <p>
-                  A word of warning. If you update your vanity domain
+                  A word of warning. If you update your sudomain
                 </p>
               </div>
               <div id="accounts">
@@ -525,7 +521,7 @@ Number,Enabled
 
               <p>
                 Setting up a custom domain allows you to fully white-label Somleng and brand it for your company.
-                This includes the customer dashboard, API, emails, and even the documentation.
+                This includes the customer dashboard, API, emails, and account API documentation.
               </p>
 
               <div>
@@ -534,10 +530,305 @@ Number,Enabled
                 </h4>
 
                 <p>
-                  When you setup a custom domain,
-                  For example let's say your company's name Rocket Telecom and your website is rocket-telecom.com
+                  When you setup a custom domain you need to setup proxy between your domain and Somleng
+                  in order for SSL termination to work correctly.
+                  Below we describe two methods for doing this via
+                  <a href="https://aws.amazon.com/cloudfront/" class="link" target="_blank">AWS Cloudfront <i class="fa fa-external-link"></i></a>
+                  or
+                  <a href="https://www.nginx.com/" class="link" target="_blank">Nginx <i class="fa fa-external-link"></i></a>.
+                  We recommend using AWS Cloudfront unless your have specific custom
+                  requirements or you cannot use AWS.
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Setup your custom domain
+                </h4>
+
+                <p>
+                  Follow the steps below in the correct order to configure your custom domain.
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Step 1 - Configure an AWS Cloudfront Distribution (Recommended)
+                </h4>
+
+                <p>
+                  <em>Skip this step if you want to use Ngnix instead.</em>
+                </p>
+
+                <p>
+                  In order to make this step easier, we've created a
+                  <a href="https://github.com/somleng/terraform-aws-cloudfront-reverse-proxy" class="link" target="_blank">Terraform module <i class="fa fa-external-link"></i></a>
+                  automates the configuration and management of your AWS Cloudfront distributions via
+                  <a href="https://www.terraform.io" class="link" target="_blank">Terraform <i class="fa fa-external-link"></i></a>.
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Using the Terraform Module (Recommended)
+                </h4>
+
+                <p>
+                  In order to use the terraform module you need to setup and install Terraform first.
+                  We recommend following the
+                  <a href="https://learn.hashicorp.com/collections/terraform/aws-get-started" class="link" target="_blank">Terraform AWS tutorial <i class="fa fa-external-link"></i></a>
+                  to get started.
+                </p>
+                <p>
+                  <pre><code class="language-hcl">
+# somleng_proxy.tf
+module "somleng_proxy_dashboard" {
+  source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
+
+  host = "dashboard.example.com" # Replace this with your custom domain
+  origin = "your-domain.app.somleng.org" # Replace this with your somleng subdomain
+  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
+}
+
+# Optionally configure a custom API endpoint
+module "somleng_proxy_api" {
+  source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
+
+  host = "api.example.com" # Replace this with your custom API domain (Note your subdomain must also be 'api')
+  origin = "api.somleng.org"
+  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
+}</code></pre>
+                </p>
+                <p>
+                  The terraform configuration above will configure two AWS cloudfront distributions (one for the dashboard and one for the API)
+                  and optionally create SSL certificates managed by AWS Certificate Manager. If you're using route53 to manage your
+                  domain, the module will also create records pointing your custom domain to the AWS cloudfront distributions.
+                </p>
+
+                <p>
+                  <em>
+                    Note that the second module, <code class="language-hcl">somleng_proxy_api</code> is optional and only required
+                    if you want to configure a custom API endpoint.
+                  </em>
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Configuring Cloudfront Manually
+                </h4>
+
+                <p>
+                  Although we highly recommend using the terraform module above, you can also configure your Cloudfront distributions from the AWS Console.
+                </p>
+
+                <p>
+                  <ol>
+                    <li>
+                      Sign in to the AWS Management Console and open the CloudFront console.
+                    </li>
+                    <li>
+                      Choose <strong>Create Distribution</strong>
+                    </li>
+                    <li>
+                      Update the 'Origin' settings. The origin domain will be
+                      <code class="language-http">your-subdomain.app.somleng.org</code>
+                      and the protocol should be HTTPS only.
+                      Our servers support TLSv1.2
+                    </li>
+                    <li>
+                      Under 'Add custom header' click <strong>Add header</strong>.
+                      Enter <code class="language-http">X-Forwarded-Host</code> for the Header name
+                      and <code class="language-http">your-domain.example.com</code> for the Value.
+                      Remember to replace <code class="language-http">your-domain.example.com</code> with your actual domain.
+                    </li>
+                    <li>
+                      Update the 'Default cache behavior' settings.
+                      <ul>
+                        <li>
+                          'Compress objects automatically' should be set to <strong>No</strong>.
+                        </li>
+                        <li>
+                          'Viewer protocol policy' should be set to <strong>Redirect HTTP to HTTPS</strong>
+                        </li>
+                        <li>
+                          'Allowed HTTP methods' should be set to <strong>GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE</strong>
+                        </li>
+                        <li>
+                          'Restrict viewer access' should be set to <strong>No</strong>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      Update the 'Cache key and origin requests' settings
+                      <ul>
+                        <li>
+                          Select <strong>Cache policy and origin request policy (recommended)</strong>
+                        </li>
+                        <li>
+                          Under 'Cache policy', click <strong>Create policy</strong>
+                          <ul>
+                            <li>
+                              Update the 'Details' settings
+                              <ul>
+                                <li>
+                                  Set 'Name' to <strong>somleng-proxy</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'TTL Settings'
+                              <ul>
+                                <li>
+                                  Set 'Minimum TTL' to <strong>0</strong>
+                                </li>
+                                <li>
+                                  Set 'Maximum TTL' to <strong>1</strong>
+                                </li>
+                                <li>
+                                  Set 'Default TTL' to <strong>0</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'Cache key settings'
+                              <ul>
+                                <li>
+                                  Under 'Headers', select 'Include the following headers'
+                                </li>
+                                <li>
+                                  Select the following headers:
+                                  <ul>
+                                    <li>
+                                      <strong>Authorization</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept-Encoding</strong>
+                                    </li>
+                                  </ul>
+
+                                </li>
+                                <li>
+                                  Set 'Query strings' to <strong>None</strong>
+                                </li>
+                                <li>
+                                  Set 'Cookies' to <strong>None</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'Compression support' settings
+                              <ul>
+                                <li>
+                                  <em>Deselect</em> both <strong>Gzip</strong> and <strong>Brotli</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Click <strong>Create</strong>
+                            </li>
+                          </ul>
+                        </li>
+
+
+                        <li>
+                          Under 'Origin request policy', click <strong>Create policy</strong>
+                          <ul>
+                            <li>
+                              Update the 'Details' settings
+                              <ul>
+                                <li>
+                                  Set 'Name' to <strong>somleng-proxy</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'Origin request settings'
+                              <ul>
+                                <li>
+                                  Under 'Headers', select 'Include the following headers'
+                                </li>
+                                <li>
+                                  Select the following headers:
+                                  <ul>
+                                    <li>
+                                      <strong>Origin</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept-Charset</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Access-Control-Request-Method</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Access-Control-Request-Headers</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Referer</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept-Language</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept-Datetime</strong>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>
+                                  Set 'Query strings' to <strong>All</strong>
+                                </li>
+                                <li>
+                                  Set 'Cookies' to <strong>All</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Click <strong>Create</strong>
+                            </li>
+                          </ul>
+                        </li>
+
+
+                      </ul>
+                    </li>
+                  </ol>
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Nginx
+                </h4>
+
+                <p>
 
                 </p>
+              </div>
+
+              <div>
+                <h4>
+                  Configure your custom domain on the Somleng Dashboard.
+                </h4>
+
+                <ol>
+                  <li>
+                    Sign in to the Dashboard and from the side-navigation, click <strong>Carrier Settings</strong>.
+                  </li>
+                  <li>
+                    Click the <strong><i class="fas fa-edit"></i></strong> icon to edit your settings.
+                  </li>
+                  <li>
+                    Under custom domain, enter your dashboard and API hosts.
+                  </li>
+                  <li>
+                    Choose <strong>Update Carrier Settings</strong>.
+                  </li>
+                </ol>
               </div>
 
               <p>
@@ -597,6 +888,7 @@ server {
     </div>
 
     <script src='js/app.min.js'></script>
-</body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-core.min.js" integrity="sha512-9khQRAUBYEJDCDVP2yw3LRUQvjJ0Pjx0EShmaQjcHa6AXiOv6qHQu9lCAIR8O+/D8FtaCoJ2c0Tf9Xo7hYH01Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-fTl/qcO1VgvKtOMApX2PdZzkziyr2stM65GYPLGuYMnuMm1z2JLJG6XVU7C/mR+E7xBUqCivykuhlzfqxXBXbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
 </html>
