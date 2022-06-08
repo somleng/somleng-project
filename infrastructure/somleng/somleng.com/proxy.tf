@@ -1,5 +1,5 @@
 module "dashboard_proxy" {
-  source = "https://github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
+  source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
   host = "dashboard.somleng.com"
   origin = "demo-carrier.app.somleng.org"
@@ -16,7 +16,7 @@ module "dashboard_proxy" {
 }
 
 module "api_proxy" {
-  source = "https://github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
+  source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
   host = "api.somleng.com"
   origin = "api.somleng.org"
 
