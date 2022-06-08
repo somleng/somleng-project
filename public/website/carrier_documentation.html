@@ -597,8 +597,15 @@ Number,Enabled
 module "somleng_proxy_dashboard" {
   source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
-  host = "dashboard.example.com" # Replace this with your custom domain
-  origin = "your-domain.app.somleng.org" # Replace this with your somleng subdomain
+  host = "your-domain.example.com" # Replace this with your custom domain
+  origin = "your-domain.app.somleng.org" # Replace this with your Somleng subdomain
+  origin_custom_headers = [
+    {
+      "name" = "X-Forwarded-Host",
+      "value" = "your-domain.example.com" # Replace with your custom domain
+    }
+  ]
+
   zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
   certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
 }
@@ -607,8 +614,11 @@ module "somleng_proxy_dashboard" {
 module "somleng_proxy_api" {
   source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
-  host = "api.example.com" # Replace this with your custom API domain (Note your subdomain must also be 'api')
+  host = "your-api-domain.example.com" # Replace this with your custom API domain
   origin = "api.somleng.org"
+
+  # DO NOT set X-Forwarded-Host
+
   zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
   certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
 }</code></pre>
