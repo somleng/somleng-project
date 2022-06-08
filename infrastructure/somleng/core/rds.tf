@@ -50,11 +50,14 @@ resource "aws_rds_cluster" "db" {
   db_subnet_group_name   = aws_db_subnet_group.db.name
   skip_final_snapshot = true
   storage_encrypted = true
+  enabled_cloudwatch_logs_exports = ["postgresql"]
 
   serverlessv2_scaling_configuration {
     max_capacity = 6.0
     min_capacity = 0.5
   }
+
+  depends_on = [aws_cloudwatch_log_group.this]
 }
 
 resource "aws_rds_cluster_instance" "db" {
@@ -63,4 +66,20 @@ resource "aws_rds_cluster_instance" "db" {
   instance_class     = "db.serverless"
   engine             = aws_rds_cluster.db.engine
   engine_version     = aws_rds_cluster.db.engine_version
+  db_parameter_group_name = aws_db_parameter_group.db.name
+}
+
+resource "aws_db_parameter_group" "db" {
+  name   = "${local.identifier}-aurora-postgresql13"
+  family = "aurora-postgresql13"
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "250"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "this" {
+  name              = "/aws/rds/cluster/${local.identifier}/postgresql"
+  retention_in_days = 7
 }
