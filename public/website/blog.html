@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta class="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Somleng | Blog</title>
+	<link rel='stylesheet' href='css/style.min.css' />
+	<link rel='stylesheet' href='css/custom.css' />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+  <!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
+	<meta name="msapplication-TileColor" content="#6c63ff">
+	<meta name="theme-color" content="#6C63FF">
+</head>
+<body>
+	<!-- navbar -->
+	<div class="navbar navbar--extended">
+		<nav class="nav__mobile"></nav>
+		<div class="container">
+			<div class="navbar__inner">
+				<a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image" height="75px"></a>
+				<nav class="navbar__menu">
+					<li><a href="docs.html">Documentation</a></li>
+					<li><a href="case_studies.html">Case Studies</a></li>
+          <li><a href="blog.html">Blog</a></li>
+				</nav>
+				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
+			</div>
+		</div>
+	</div>
+	<!-- Hero unit -->
+	<div class="page__header">
+		<div class="hero__overlay hero__overlay--gradient"></div>
+		<div class="hero__mask"></div>
+		<div class="page__header__inner">
+			<div class="container">
+				<div class="page__header__content">
+					<div class="page__header__content__inner" id='navConverter'>
+						<h1 class="page__header__title">Blog</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Page content -->
+	<div class="page">
+		<div class="container">
+			<div class="page__inner">
+				<div class="page__menu">
+					<ul class="vMenu">
+            <li><a href="#be-your-own-twilio">June 10, 2022 - Be your own Twilio</a></li>
+						<li><a href="#the-somleng-story">June 9, 2022 - The Somleng Story</a></li>
+					</ul>
+				</div>
+				<div class="page__main">
+					<div class="text-container">
+            <div id="be-your-own-twilio">
+							<h2 class="page__main__title">
+								Be you own Twilio
+              </h2>
+              <h5>
+                June 10, 2022
+              </h5>
+              <img src="./images/undraw_calling_re_mgft.svg" class="expanded__image">
+
+              <p>
+                Following on from our introductory blog post
+                <a href="#the-somleng-story" class="link">The Somleng Story</a> in this post we'll do a deep dive into
+                how local carriers can offer programmable voice to their customers via Somleng.
+              </p>
+
+              <h4>
+                Why carriers should offer programmable voice to their customers?
+              </h4>
+
+              <p>
+                Programmable voice has a variety of different use-cases such as:
+                <ul>
+                  <li>
+                    Alerts and Notifications - e.g. password resets, low balance alerts, bill reminders, fraud warnings.
+                  </li>
+                  <li>
+                    Interactive Voice Response (IVR)
+                  </li>
+                  <li>
+                    Disaster Management, mHealth <a href="case_studies.html" target="_blank" class="link">and more <i class="fa fa-external-link"></i></a>.
+                  </li>
+                </ul>
+              </p>
+
+              <p>
+                Twilio has become the de-facto go-to solution for programmable voice and
+                <a href="https://investors.twilio.com/news/news-details/2022/Twilio-Announces-First-Quarter-2022-Results/default.aspx#:~:text=Revenue%20of%20%24875.4%20million%20for,%25%20year%2Dover%2Dyear." target="_blank" class="link">profits exorbitantly <i class="fa fa-external-link"></i></a>
+                as a result. But actually local carriers can offer much
+                <a href="case_studies.html#cash-assistance-programme-somalia" target="_blank" class="link">cheaper pricing <i class="fa fa-external-link"></i></a>
+                and better quality since they are the custodians of the network.
+              </p>
+              <p>
+                By offering programmable voice as a solution, local carriers can share in the profits and obtain an advantage
+                over their competitors all while protecting their own branding.
+              </p>
+
+              <h4>
+                What is Somleng?
+              </h4>
+
+              <p>
+                Somleng is an Open Source, white-labeled, Cloud Communications as a Service (CPaaS) solution.
+                Unlike Twilio, which is a global centralized CPaaS designed for platform users directly,
+                Somleng is designed for carriers and network operators.
+              </p>
+
+              <p>
+                Instead of platform users signing up directly on Somleng, Carriers instead sign up
+                for a Somleng carrier account and manage their own customer accounts.
+              </p>
+              <p>
+                With the release of our new
+                <a href="carrier_documentation.html#custom_domains" target="_blank" class="link">custom domains <i class="fa fa-external-link"></i></a>
+                feature,
+                a carrier can now configure their own custom domain and branding, providing a fully branded CPaaS solution their platform customers.
+              </p>
+
+              <p>
+                Carriers can then invite their customers their branded dashboard via their custom domain where the customer can manage their own account and API credentials.
+                The customer can then use Somleng's REST API for programmable voice.
+              </p>
+
+              <figure>
+                <img src="./images/somleng_customer_dashboard.png">
+                <figcaption>Customized Somleng dashboard as viewed by a carrier customer.</figcaption>
+              </figure>
+
+              <figure>
+                <img src="./images/somleng_customer_api_docs.png">
+                <figcaption>Customized Somleng API docs as viewed by a carrier customer.</figcaption>
+              </figure>
+
+              <h4>
+                Wrapping up
+              </h4>
+
+              <p>
+                Public sign ups are currently available for carriers only.
+                If you work for a carrier and are interested in trying things out please read through our
+                <a href="carrier_documentation.html#custom_domains" target="_blank" class="link">carrier documentation <i class="fa fa-external-link"></i></a>,
+                where you'll find link to sign up for a trial account.
+              </p>
+            </div>
+
+						<div id="the-somleng-story">
+							<h2 class="page__main__title">
+								The Somleng Story
+              </h2>
+              <h5>
+                June 9, 2022
+              </h5>
+							<img src="./images/undraw_phone_call_re_hx6a.svg" class="expanded__image">
+							<p>
+								For a while now, Twilio has become the king of cloud communications.
+                Although there has been a few clones pop up over the years, e.g. Vonage, Message Bird, etc.
+                the space has remained relatively same same. Until now...
+							</p>
+              <p>
+                Somleng has the ambitious goal of revolutionizing the cloud communications space turning it on its head.
+                We aim to take the power of cloud communications away from Big Tech's monopoly and bring it to the people.
+                But to understand where we're going and why, it's important to understand where we've come from.
+              </p>
+
+              <h4>
+                🇰🇭 Cambodian Dating
+              </h4>
+
+              <img src="./images/undraw_everywhere_together_re_xe5a.svg" class="expanded__image">
+
+              <p>
+                Starting back in 2012 Somleng's predecessor was a SMS and Voice powered dating service called Chibi.
+                Launching in Cambodia, before the Smartphones and Facebook were ever really a thing (in Cambodia at least)
+                subscribers would dial into a short-code and be randomly connected to another subscriber.
+                Basically a chat roulette that worked over an ordinary voice call.
+              </p>
+              <p>
+                Subscribers could also send text messages
+                to their new 'friend' by simply texting to the short code. Chibi would scan the messages,
+                and build up a basic profile of the subscriber, trying to determine their age, gender and location.
+              </p>
+
+              <p>
+                The service was surprisingly popular, at its peak having more than 120,000 subscribers. But by 2015,
+                smartphones and Facebook had taken over in Cambodia and Chibi eventually died.
+              </p>
+
+              <h4>
+                🇰🇭 National Early Warning System
+              </h4>
+
+              <img src="./images/undraw_weather_notification_4sbo.svg" class="expanded__image">
+
+              <p>
+                Around 2016, the Royal Cambodian Government in partnership with the NGO People In Need,
+                were looking for a solution for the
+                <a href="case_studies.html#early-warning-system-cambodia" target="_blank" class="link">National Early Warning System <i class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                The requirements were simple. In case of a natural disaster (such as a flood),
+                a government official could record a voice message and deliver it via phone call to citizens in the affected areas.
+              </p>
+
+              <p>
+                Programmable voice is a perfect solution to this problem. Voice messages are recorded in Khmer,
+                so it doesn't require the beneficiary be literate, have a smart phone nor have access to the Internet. They just pick up the
+                phone and listen to the information recorded by the government official.
+              </p>
+
+							<p>
+                Our experience with building scalable communications platform to power Chibi
+                meant that the timing was perfect for a pivot and Somleng was born.
+							</p>
+
+              <p>
+                Today Somleng is still powering Cambodia's Early Warning System.
+              </p>
+
+              <h4>
+                🇺🇳 UNICEF Innovation Fund and Digital Public Good
+              </h4>
+
+              <img src="./images/undraw_around_the_world_re_rb1p.png" class="expanded__image">
+
+              <p>
+                In 2016 Somleng was
+                <a href="https://www.unicefinnovationfund.org/broadcast/updates/somleng-open-source-telephony" target="_blank" class="link">among the first five companies to receive investment <i class="fa fa-external-link"></i></a>
+                from
+                the UNICEF Innovation Fund, in order to scale Somleng to support other use-cases.
+              </p>
+              <p>
+                Since then the UNICEF Innovation Fund been Somleng's main investor which has enabled us to grow far beyond
+                Cambodia. Somleng is now powering cloud communications solutions <a href="case_studies.html" target="_blank" class="link">across the world <i class="fa fa-external-link"></i></a>
+                impacting over 250K beneficiaries across 11 different countries.
+              </p>
+
+              <p>
+                Somleng was also recently made a <a href="https://digitalpublicgoods.net/registry/somleng.html" target="_blank" class="link">Digital Public Good <i class="fa fa-external-link"></i></a> recognition that Somleng is a product that helps to create a more equitable world.
+              </p>
+
+              <h4>
+                Our Vision and Roadmap
+              </h4>
+
+              <img src="./images/undraw_scrum_board_re_wk7v.svg" class="expanded__image">
+
+              <p>
+                There's a growing consensus that the Internet is too centralized controlled by too few players.
+                It's no different in the cloud communications space. Big Tech controls most of the space
+                and there are few options for individuals, small and medium sized companies, governments and NGOs.
+              </p>
+
+              <p>
+                Somleng's vision is a world where communications is accessible to everyone.
+                In order to achieve this vision we need to think outside the box and provide a solution benefits
+                everyone, not just Big Tech.
+              </p>
+
+              <h4>
+                Be your own Twilio
+              </h4>
+
+              <img src="./images/undraw_building_re_xfcm.svg" class="expanded__image">
+
+              <p>
+                The first step for Somleng, is to level the playing field for local carriers (for clarification a local carrier
+                is a local telecom company, mobile network operator or aggregator).
+              </p>
+              <p>
+                Twilio's et al. business model is based on a centralized Cloud Communications Platform as a Service (CPaaS). They charge an
+                expensive premium (especially in emerging markets), to basically act as a middle-man between the platform user and the beneficiary.
+              </p>
+
+              <p>
+                But what if a local carrier, who controls the network connectivity in their region or country,
+                could <em>be</em> their own Twilio? They could provide a similar service to Twilio at a
+                <a href="case_studies.html#cash-assistance-programme-somalia" target="_blank" class="link">fraction of the cost <i class="fa fa-external-link"></i></a> by cutting them out of the flow.
+              </p>
+              <p>
+                In addition to the reduced costs for the platform user, the local carrier can protect their own branding and generate
+                additional revenue streams.
+              </p>
+
+              <p>
+                Somleng now supports
+                <a href="carrier_documentation.html#custom_domains" target="_blank" class="link">custom domains <i class="fa fa-external-link"></i></a>
+                allowing carriers to leverage Somleng's API and Dashboard, while keeping their own branding. Alternatively, since Somleng is 100% open source, local carriers can always host Somleng
+                on their own servers.
+              </p>
+
+              <h4>
+                Be your own carrier
+              </h4>
+
+              <img src="./images/undraw_programmer_re_owql.svg" class="expanded__image">
+
+              <p>
+                While supporting local carriers is a good first step, there's still a level of centralization at the local carrier level.
+                In other words, Somleng now provides a solution to dissipate the monopoly of cloud communications from Big Tech
+                to local carriers, but we can still go a step further to bring the power to individuals and organizations directly.
+              </p>
+
+              <p>
+                One of the features we'll be working on in the coming months is called "Be your own carrier".
+                The idea is that any individual, business or organization can use Somleng to become a Network Provider, and provide the connectivity layer
+                required for cloud communications, and in a future iteration, even be able to earn money from it.
+              </p>
+
+              <p>
+                The idea is quite simple. Using readily available, off-the-shelf hardware such as a GSM Gateway or GSM Modem,
+                a network provider can provide connectivity to their local mobile network and register their route with Somleng.
+                Somleng will then route calls and SMS to/from the network provider to provide programmable voice and SMS to the platform user.
+              </p>
+
+              <p>
+                A simple use-case for this is handling phone number verification via programmable voice.
+                In order do achieve this now, you need to use a service like Twilio or Firebase.
+                However with Somleng's "Be your own carrier" feature the application owner can register as a Network Provider,
+                and their application can initiate a call via Somleng's REST API.
+                The call is then routed via the network provider's hardware to the beneficiary's phone.
+              </p>
+
+              <p>
+                Now that any individual or organization can <em>be</em> their own carrier by becoming a network provider,
+                the foundations are in place for a global marketplace of network providers and local carriers.
+              </p>
+
+              <h4>
+                A more equitable CPaaS Economy
+              </h4>
+
+              <img src="./images/undraw_transfer_money_re_6o1h.svg" class="expanded__image">
+
+              <p>
+                The final step in Somleng's CPaaS revolution is to leverage the global network of local carriers and network providers
+                to provide a more equitable CPaaS economy. Local operators and network providers can make their routes publicly available
+                and set their own prices and be compensated for every interaction that goes through their route. In theory this should
+                create competition for who can offer the cheapest, highest quality routes.
+              </p>
+
+              <h4>
+                Wrapping up
+              </h4>
+
+              <p>
+                We're excited about the journey that we're on and proud to be doing things differently.
+                A special thanks to the UNICEF Innovation Fund team who have supported us from the beginning.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
