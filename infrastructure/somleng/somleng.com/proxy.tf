@@ -11,6 +11,11 @@ module "dashboard_proxy" {
     }
   ]
 
+  allowed_origin_request_headers = [
+    "X-CSRF-Token",
+    "X-Requested-With"
+  ]
+
   zone_id = aws_route53_zone.somleng_com.zone_id
   certificate_arn = aws_acm_certificate.this.arn
 }

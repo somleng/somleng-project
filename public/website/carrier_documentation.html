@@ -607,6 +607,11 @@ module "somleng_proxy_dashboard" {
     }
   ]
 
+  allowed_origin_request_headers = [
+    "X-CSRF-Token",
+    "X-Requested-With"
+  ]
+
   zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
   certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
 }
@@ -827,10 +832,16 @@ module "somleng_proxy_api" {
                                       <strong>Referer</strong>
                                     </li>
                                     <li>
-                                      <strong>Accept-Language</strong>
+                                      <strong>User-Agent</strong>
                                     </li>
                                     <li>
-                                      <strong>Accept-Datetime</strong>
+                                      <strong>Content-Type</strong>
+                                    </li>
+                                    <li>
+                                      <strong>X-CSRF-Token</strong>
+                                    </li>
+                                    <li>
+                                      <strong>X-Requested-With</strong>
                                     </li>
                                   </ul>
                                 </li>
