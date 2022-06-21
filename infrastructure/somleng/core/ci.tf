@@ -65,6 +65,13 @@ resource "aws_iam_policy" "ci_deploy" {
       ]
     },
     {
+      "Effect": "Allow",
+      "Action": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "Resource": "*"
+    },
+    {
       "Action": [
         "ecs:RegisterTaskDefinition*",
         "ecs:Describe*",
