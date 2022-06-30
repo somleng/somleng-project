@@ -4,7 +4,7 @@ data "aws_ssm_parameter" "arm64_ami" {
 }
 
 data "aws_ssm_parameter" "db_master_password" {
-  name = "change-me.db_master_password"
+  name = "${var.db_master_password_parameter_identifier}.db_master_password"
 }
 
 data "aws_s3_bucket" "backups" {
@@ -12,13 +12,13 @@ data "aws_s3_bucket" "backups" {
 }
 
 data "aws_rds_cluster" "db_cluster" {
-  cluster_identifier = "change-me"
+  cluster_identifier = var.cluster_identifier
 }
 
 data "aws_security_group" "db" {
   filter {
     name   = "tag:Name"
-    values = ["aurora-change-me"]
+    values = ["aurora-${var.cluster_identifier}"]
   }
 }
 
