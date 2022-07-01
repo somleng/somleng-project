@@ -1,7 +1,7 @@
 resource "aws_acm_certificate" "certificate" {
   domain_name       = "*.somleng.org"
   validation_method = "DNS"
-  subject_alternative_names = ["*.app.somleng.org"]
+  subject_alternative_names = ["*.app.somleng.org", "*.app-staging.somleng.org"]
 }
 
 resource "aws_acm_certificate" "cdn_certificate" {
