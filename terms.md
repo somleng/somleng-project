@@ -4,53 +4,53 @@
 
 ## TABLE OF CONTENTS
 
-[1. AGREEMENT TO TERMS](#agreement)
+[1. AGREEMENT TO TERMS](#1-agreement-to-terms)
 
-[2. INTELLECTUAL PROPERTY RIGHTS](#ip)
+[2. INTELLECTUAL PROPERTY RIGHTS](#2-intellectual-property-rights)
 
-[3. USER REPRESENTATIONS](#userreps)
+[3. USER REPRESENTATIONS](#3-user-representations)
 
-[4. USER REGISTRATION](#userreg)
+[4. USER REGISTRATION](#4-user-registration)
 
-[5. FEES AND PAYMENT](#payment)
+[5. FEES AND PAYMENT](#5-fees-and-payment)
 
-[6. CANCELLATION](#cancel)
+[6. CANCELLATION](#6-cancellation)
 
-[7. PROHIBITED ACTIVITIES](#prohibited)
+[7. PROHIBITED ACTIVITIES](#7-prohibited-activities)
 
-[8. USER GENERATED CONTRIBUTIONS](#ugc)
+[8. USER GENERATED CONTRIBUTIONS](#8-user-generated-contributions)
 
-[9. CONTRIBUTION LICENSE](#license)
+[9. CONTRIBUTION LICENSE](#9-contribution-license)
 
-[10. SUBMISSIONS](#submissions)
+[10. SUBMISSIONS](#10-submissions)
 
-[11. SITE MANAGEMENT](#sitemanage)
+[11. SITE MANAGEMENT](#11-site-management)
 
-[12. PRIVACY POLICY](#privacypolicy1)
+[12. PRIVACY POLICY](#12-privacy-policy)
 
-[13. TERM AND TERMINATION](#terms)
+[13. TERM AND TERMINATION](#13-term-and-termination)
 
-[14. MODIFICATIONS AND INTERRUPTIONS](#modifications)
+[14. MODIFICATIONS AND INTERRUPTIONS](#14-modifications-and-interruptions)
 
-[15. GOVERNING LAW](#law)
+[15. GOVERNING LAW](#15-governing-law)
 
-[16. DISPUTE RESOLUTION](#disputes)
+[16. DISPUTE RESOLUTION](#16-dispute-resolution)
 
-[17. CORRECTIONS](#corrections)
+[17. CORRECTIONS](#17-corrections)
 
-[18. DISCLAIMER](#disclaimer)
+[18. DISCLAIMER](#18-disclaimer)
 
-[19. LIMITATIONS OF LIABILITY](#liability)
+[19. LIMITATIONS OF LIABILITY](#19-limitations-of-liability)
 
-[20. INDEMNIFICATION](#indemnification)
+[20. INDEMNIFICATION](#20-indemnification)
 
-[21. USER DATA](#userdata)
+[21. USER DATA](#21-user-data)
 
-[22. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES](#electronic)
+[22. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES](#22-electronic-communications-transactions-and-signatures)
 
-[23. MISCELLANEOUS](#misc)
+[23. MISCELLANEOUS](#23-miscellaneous)
 
-[24. CONTACT US](#contact)
+[24. CONTACT US](#24-contact-us)
 
 ## 1. AGREEMENT TO TERMS
 
