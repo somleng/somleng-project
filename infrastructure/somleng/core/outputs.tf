@@ -74,3 +74,7 @@ output "route53_zone_somleng_org" {
 output "nat_instance_ip" {
   value = aws_eip.nat_instance.public_ip
 }
+
+output "global_accelerator" {
+  value = aws_globalaccelerator_accelerator.somleng
+}
