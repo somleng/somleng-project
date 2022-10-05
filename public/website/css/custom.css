@@ -22,3 +22,7 @@ th {
 .vMenu ul {
   padding-left: 25px;
 }
+
+h5, h6 {
+  font-weight: bold;
+}

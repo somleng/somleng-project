@@ -79,10 +79,7 @@
                   <a href="#accounts">Accounts</a>
                 </li>
                 <li>
-                  <a href="#inbound_sip_trunks">Inbound SIP Trunks</a>
-                </li>
-                <li>
-                  <a href="#outbound_sip_trunks">Outbound SIP Trunks</a>
+                  <a href="#sip_trunks">SIP Trunks</a>
                 </li>
                 <li>
                   <a href="#phone_numbers">Phone Numbers</a>
@@ -93,8 +90,10 @@
               </ul>
             </li>
             <li><a href="#custom_domains">Custom Domains</a></li>
+            <li><a href="#client_gateway_configuration">Client Gateway Configuration</a></li>
             <li><a href="#rtp_symmetric_latching">RTP and Symmetric Latching</a></li>
-            <li><a href="docs/carrier_api" target="_blank">API Docs</a> <i class="fa fa-external-link"></i></li>
+            <li><a href="docs/carrier_api" target="_blank">API Reference</a> <i class="fa fa-external-link"></i></li>
+            <li><a href="docs/twilio_api" target="_blank">Account API Reference</a> <i class="fa fa-external-link"></i></li>
             <li><a href="https://github.com/somleng/somleng-project" target="_blank">Github <i class="fa fa-external-link"></i></a></li>
           </ul>
         </div>
@@ -126,6 +125,10 @@
                       <td>BYOC User</td>
                       <td>An individual or organization who has a business relationship with a carrier. BYOC stands for Bring Your Own Carrier.</td>
                     </tr>
+                    <tr>
+                      <td>Network Provider</td>
+                      <td>An individual or organization with their own VoIP gateway to access the PSTN.</td>
+                    </tr>
                   </tbody>
                 </table>
               </p>
@@ -136,7 +139,7 @@
                 Audience
               </h3>
               <p>
-                This documentation is intended for both Carriers and BYOC users as defined above.
+                This documentation is intended for Carriers and BYOC Users, and Network Providers as defined above.
               </p>
             </div>
 
@@ -148,11 +151,16 @@
                 Somleng is an Open Source, white-labeled, Cloud Communications Platform as a Service (CPaaS), featuring programmable voice and SMS.
               </p>
               <p>
-                There are two kinds of use-cases depending on whether you're a Carrier or BYOC user.
+                There are three kinds of use-cases depending on who you are.
               </p>
               <ol>
-                <li>Carriers can use Somleng to offer their own branded CPaaS services (such as programmable voice and SMS) to their customers.</li>
-                <li>BYOC users can use Somleng directly, connecting through their carrier.</li>
+                <li>Carriers use Somleng to offer their own branded CPaaS services to their customers.</li>
+                <li>
+                  BYOC users can either use Somleng directly or offer CPaaS services to their customers by connecting through their carrier.
+                </li>
+                <li>
+                  Network Providers can either use Somleng directly or offer CPaaS services to their customers by connecting through their VoIP Gateway.
+                </li>
               </ol>
             </div>
 
@@ -165,7 +173,7 @@
               </p>
 
               <p>
-                Once you have a carrier account you can begin configuring your account to handle programmable voice and SMS.
+                Once you have an account you can begin configuring your it to handle programmable voice and SMS.
               </p>
             </div>
 
@@ -225,9 +233,6 @@
                     </li>
                   </ol>
                 </p>
-                <p>
-                  A word of warning. If you update your sudomain
-                </p>
               </div>
               <div id="accounts">
                 <h4>
@@ -281,40 +286,111 @@
                   </ol>
                 </p>
               </div>
-              <div id="inbound_sip_trunks">
+              <div id="sip_trunks">
                 <h4>
-                  Inbound SIP Trunks
+                  SIP Trunks
                 </h4>
                 <p>
-                  Inbound SIP Trunks are used to configure inbound dialing to Somleng (aka Direct Inbound Dialing).
-                  When you create an Inbound SIP Trunk you specify the source IP address from which SIP invite is sent from.
-                  Somleng uses this information to determine the carrier, account and how to handle the call.
+                  SIP Trunks are used to configure both inbound and outbound dialing to and from Somleng.
+                  We define inbound dialing (also known as Direct Inboound Dialing (DID)) as calls terminated by Somleng,
+                  and outbound dialing as calls originated by Somleng.
+                <p>
+                </p>
+                  When you create a SIP Trunk you first choose the authentication mode. There are two authentication modes available described below:
                 </p>
                 <p>
-                  Once you have setup your inbound SIP trunk, you can then send SIP to any of the following endpoints.
-                  We recommend that you use <em>sip.somleng.org</em> for high-availability.
                   <table>
                     <thead>
                       <tr>
-                        <th style="text-align: left;">Endpoint</th>
+                        <th style="text-align: left;">Authentication mode</th>
+                        <th style="text-align: left;">Description</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td style="text-align: left;">sip.somleng.org</td>
+                        <td style="text-align: left;">IP Address</td>
+                        <td style="text-align: left;">
+                          Choose this mode if you <em>have</em> a public static IP address and <em>are not</em> behind a NAT.
+                          This mode is best suited for carriers and BYOC users.
+                        </td>
                       </tr>
                       <tr>
-                        <td style="text-align: left;">52.74.4.205</td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: left;">18.136.239.28</td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: left;">3.0.30.251</td>
+                        <td style="text-align: left;">Client Credentials</td>
+                        <td style="text-align: left;">
+                          Choose this mode if you <em>do not have</em> a public static IP address or <em>are</em> behind a NAT.
+                          This mode is best suited for network providers.
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                 </p>
+
+                <div id="sip_trunks_ip_address_configuration">
+                  <h5>
+                    IP Address Authentication
+                  </h5>
+                  <p>
+                    <em>Note this mode is best suited for Carriers and BYOC users.</em>
+                  </p>
+
+                  <div id="sip_trunks_ip_address_configuration_inbound_dialing">
+                    <h6>
+                      Inbound Dialing
+                    </h6>
+
+                    <p>
+                      When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                    </p>
+                    <ol>
+                      <li>
+                        You <em>must</em> provide a public static IP address as the <em>Source IP</em>.
+                        This IP address is used to authenticate the carrier when inbound calls are received.
+                      </li>
+                      <li>
+                        You <em>must</em> connect to our public gateway via one of the IP addresses listed below:
+                        <ul>
+                          <li>
+                            52.74.4.205
+                          </li>
+                          <li>
+                            18.136.239.28
+                          </li>
+                          <li>
+                            3.0.30.251
+                          </li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+
+                  <div id="sip_trunks_ip_address_configuration_outbound_dialing">
+                    <h6>
+                      Outbound Dialing
+                    </h6>
+
+                    <p>
+                      When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                    </p>
+                    <ol>
+                      <li>
+                        You <em>must</em> provide a publicly accessible domain name or IP address to connect to.
+                      </li>
+                      <li>
+                        You <em>must</em> allow the following IP address on your firewall:
+                        <ul>
+                          <li>
+                            13.250.230.15
+                          </li>
+                        </ul>
+                        Note that both media and SIP is sent from this IP address.
+                      </li>
+                      <li>
+                        You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+
                 <p>
                   To create an inbound SIP trunk via the Dashboard:
                   <ol>
@@ -1012,6 +1088,31 @@ module "somleng_proxy_api" {
                 <p>
                   Note that the API is always available at <strong>api.somleng.org</strong> regardless of whether you set
                   a custom API host or not.
+                </p>
+              </div>
+            </div>
+
+            <div id="client_gateway_configuration">
+              <h3>
+                Client Gateway Configuration
+              </h3>
+
+              <p>
+                Setting up a client gateway allows network providers to use their own VoIP gateway to access the PSTN
+                thereby removing the need to connect with a Carrier.
+              </p>
+
+              <p>
+                Currently Somleng officially supports
+                <a href="http://www.hybertone.com/en/products.asp" class="link" target="_blank">GoIP gateways <i class="fa fa-external-link"></i></a>.
+                Other VoIP gateways may work as well but have not been tested.
+                If you want to use Somleng with a different gateway please
+                <a href="https://github.com/somleng/somleng-switch/issues" class="link" target="_blank">open an issue <i class="fa fa-external-link"></i></a>.
+              </p>
+
+              <div id="client_gateway_configuration_goip">
+                <p>
+
                 </p>
               </div>
             </div>
