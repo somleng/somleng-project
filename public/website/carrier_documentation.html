@@ -117,15 +117,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr id="carrier">
                       <td>Carrier</td>
                       <td>A carrier (telecom company, mobile network operator (MNO), aggregator etc) who offers routes to/from the Public Switched Telephone Network (PSTN). E.g. AT&T, Verizon</td>
                     </tr>
-                    <tr>
+                    <tr id="byoc_user">
                       <td>BYOC User</td>
                       <td>An individual or organization who has a business relationship with a carrier. BYOC stands for Bring Your Own Carrier.</td>
                     </tr>
-                    <tr>
+                    <tr id="network_provider">
                       <td>Network Provider</td>
                       <td>An individual or organization with their own VoIP gateway to access the PSTN.</td>
                     </tr>
@@ -156,10 +156,10 @@
               <ol>
                 <li>Carriers use Somleng to offer their own branded CPaaS services to their customers.</li>
                 <li>
-                  BYOC users can either use Somleng directly or offer CPaaS services to their customers by connecting through their carrier.
+                  BYOC users use Somleng directly or offer CPaaS services to their customers by connecting through a carrier that they have a business relationship with.
                 </li>
                 <li>
-                  Network Providers can either use Somleng directly or offer CPaaS services to their customers by connecting through their VoIP Gateway.
+                  Network Providers use Somleng directly or offer CPaaS services to their customers by connecting through a VoIP Gateway that they own or manage.
                 </li>
               </ol>
             </div>
@@ -169,7 +169,7 @@
                 Getting Started
               </h3>
               <p>
-                We recommend you try out Somleng by signing up for a carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note that this requires some technical knowledge.
+                We recommend you try out Somleng by signing up for a carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note: This requires some technical knowledge.
               </p>
 
               <p>
@@ -196,7 +196,7 @@
                   You must sign into the dashboard <em>via your subdomain</em> to use Somleng.
                   The sign in URL is <code>https://your-subdomain.app.somleng.org/users/sign_in</code>.
                   If you have setup a <a href="#custom_domains" class="link"> custom domain</a> all users may access
-                  the dashboard through your custom domain instead.
+                  the dashboard through your custom domain as well.
                 </p>
                 <p>
                   All users are required to setup two factor authentication (2FA) the first time they sign in.
@@ -239,35 +239,44 @@
                   Accounts
                 </h4>
                 <p>
-                  Accounts are used by carriers, carrier customers and BYOC users to send/receive calls and SMS via <a href="docs/twilio_api" class="link">Somleng's implementation of Twilio's REST API</a>.
+                  Accounts are used by carriers, carrier customers, BYOC users and network providers to send/receive calls and SMS via the <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>.
                 </p>
                 <p>
-                  Typically a carrier would create an account for each of their customers. BYOC users might create an account for each project or just create one account for their usage.
+                  Typically a carrier would create an account for each of their customers. BYOC users and network providers on the other hand might create an account for each project or just create one global account for their own usage.
                 </p>
                 <p>
-                  There are two types of accounts. Carrier managed and customer managed.
+                  There are two types of accounts. Carrier managed and customer managed described below:
                 </p>
-                <div id="carrier_managed_accounts">
-                  <h5>
-                    Carrier Managed Accounts
-                  </h5>
-                  <p>
-                    Carrier managed accounts are <em>managed by</em> carriers. These types of accounts can be used by carriers themselves, or by the carrier's individual customers.
-                    Carrier managed accounts <em>do not</em> allow customer access. The Account SID and Auth token, which are required to access the Twilio REST API, are accessible by the carrier only and are displayed on the Account's page.
-                  </p>
-                </div>
-                <div id="customer_managed_accounts">
-                  <h5>
-                    Customer Managed Accounts
-                  </h5>
-                  <p>
-                    Customer managed accounts are <em>managed by</em> carrier customers directly.
-                    These types of accounts can be created via the dashboard by specifying an account owner when creating the account.
-                    After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their account by themselves.
-                    The customer will have access to their Account SID and Auth Token and this info will no longer be displayed on the Account's page.
-                    The carrier can still disable and enable individual customer accounts from the Dashboard.
-                  </p>
-                </div>
+
+                <p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="text-align: left;">Account type</th>
+                        <th style="text-align: left;">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr id="carrier_managed_accounts">
+                        <td style="text-align: left;">Carrier Managed</td>
+                        <td style="text-align: left;">
+                          Carrier managed accounts are <em>managed by</em> carriers.
+                          These types of accounts can be either used by carriers themselves, or by the carrier's customers.
+                        </td>
+                      </tr>
+                      <tr id="customer_managed_accounts">
+                        <td style="text-align: left;">Customer Managed</td>
+                        <td style="text-align: left;">
+                          Customer managed accounts are <em>managed by</em> the carrier's customers directly.
+                          These types of accounts can be created via the dashboard by specifying an account owner when creating the account.
+                          After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their own account.
+                          The customer will also have access to their Account SID and Auth Token.
+                          The carrier can still disable and enable customer accounts from the Dashboard.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </p>
                 <p>
                   To create an account via the Dashboard:
                   <ol>
@@ -291,8 +300,8 @@
                   SIP Trunks
                 </h4>
                 <p>
-                  SIP Trunks are used to configure both inbound and outbound dialing to and from Somleng.
-                  We define inbound dialing (also known as Direct Inboound Dialing (DID)) as calls terminated by Somleng,
+                  SIP Trunks are used to configure both inbound and outbound dialing, both to and from Somleng.
+                  We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by Somleng,
                   and outbound dialing as calls originated by Somleng.
                 <p>
                 </p>
@@ -330,7 +339,7 @@
                     IP Address Authentication
                   </h5>
                   <p>
-                    <em>Note this mode is best suited for Carriers and BYOC users.</em>
+                    <em>Note: This mode is best suited for Carriers and BYOC users.</em>
                   </p>
 
                   <div id="sip_trunks_ip_address_configuration_inbound_dialing">
@@ -373,7 +382,7 @@
                     </p>
                     <ol>
                       <li>
-                        You <em>must</em> provide a publicly accessible domain name or IP address to connect to.
+                        You <em>must</em> provide a host to connect to. You can specify your host as either a fully qualified domain name (FQDN) or IP address.
                       </li>
                       <li>
                         You <em>must</em> allow the following IP address on your firewall:
@@ -382,78 +391,90 @@
                             13.250.230.15
                           </li>
                         </ul>
-                        Note that both media and SIP is sent from this IP address.
+                        Note: Both media and SIP is sent from this IP address.
                       </li>
                       <li>
                         You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
                       </li>
                     </ol>
                   </div>
+
+                  <p>
+                    To configure a SIP trunk via IP address authentication:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                      </li>
+                      <li>
+                        Under General, select <strong>IP address</strong> for Authentication mode.
+                      </li>
+                      <li>
+                        Under Inbound Dialing, enter a public static IP address for inbound call authentication.
+                      </li>
+                      <li>
+                        Under Outbound Dialing, enter a domain name or IP address for outbound calls.
+                      </li>
+                      <li>
+                        Choose <strong>Create SIP Trunk</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SIP Trunk you'll see the configuration details on the next screen.
+
+                    <img src="./images/sip_trunk-ip_address.png">
+                  </p>
                 </div>
 
-                <p>
-                  To create an inbound SIP trunk via the Dashboard:
-                  <ol>
-                    <li>
-                      Sign in to the Dashboard and from the side-navigation, click <strong>Inbound SIP Trunks</strong>.
-                    </li>
-                    <li>
-                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new inbound SIP trunk.
-                    </li>
-                    <li>
-                      Fill out the form, specifying a friendly name for the inbound SIP trunk and the source IP address.
-                    </li>
-                    <li>
-                      Choose <strong>Create Inbound SIP Trunk</strong>.
-                    </li>
-                  </ol>
-                </p>
-              </div>
-              <div id="outbound_sip_trunks">
-                <h4>
-                  Outbound SIP Trunks
-                </h4>
-                <p>
-                  Outbound SIP Trunks are used to configure outbound dialing from Somleng.
-                  When you create an Outbound SIP Trunk you specify the destination host to send outbound calls.
-                  You can specify your host as either a fully qualified domain name (FQDN) or IP address.
-                  The outbound SIP trunk configuration determines the dial string that will be used to send calls to your SIP server.
-                </p>
-                <p id="nat_gateway">
-                  SIP and RTP from Somleng sent through a NAT Gateway from the IP address below.
-                  You should allow this IP address on your firewall.
-                  You may also need to setup <a href="#rtp_symmetric_latching" class="link">Symmetric Latching</a> on your device.
-                  <table>
-                    <thead>
-                      <tr>
-                        <th style="text-align: left;">NAT IP</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style="text-align: left;">13.250.230.15</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </p>
-                <p>
-                  To create an outbound SIP trunk via the Dashboard:
-                  <ol>
-                    <li>
-                      Sign in to the Dashboard and from the side-navigation, click <strong>Outbound SIP Trunks</strong>.
-                    </li>
-                    <li>
-                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new outbound SIP trunk.
-                    </li>
-                    <li>
-                      Fill out the form, specifying a friendly name for the outbound SIP trunk and the host.
-                      You can also optionally configure a numeric dial string prefix, add a plus prefix or configure a trunk prefix.
-                    </li>
-                    <li>
-                      Choose <strong>Create Outbound SIP Trunk</strong>.
-                    </li>
-                  </ol>
-                </p>
+                <div id="sip_trunks_client_credentials_configuration">
+                  <h5>
+                    Client Credentials Authentication
+                  </h5>
+                  <p>
+                    <em>Note: This mode is best suited for Network Providers.</em>
+                  </p>
+
+                  <p>
+                    When you configure a SIP trunk via <strong>client credentials authentication</strong> you <em>don't need</em> a public
+                    status IP address. Instead you authenticate with Somleng via SIP registration. After you configure a SIP trunk in this mode
+                    you will be given a unique set of client credentials which can be used to authenticate with Somleng. These credentials
+                    can be used directly when configuring your <a href="#client_gateway_configuration" class="link">client gateway</a>.
+                  </p>
+
+                  <p>
+                    To configure a SIP trunk via client credentials authentication:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                      </li>
+                      <li>
+                        Under General, select <strong>Client credentials</strong> for Authentication mode.
+                      </li>
+                      <li>
+                        Under Inbound Dialing, it's recommended to select the default country code of the caller.
+                        This allows your VoIP gateway to work with national dialing numbers. Somleng will try to normalize
+                        number into E.164 format using this setting.
+                      </li>
+                      <li>
+                        Choose <strong>Create SIP Trunk</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SIP Trunk you'll see the generated credentials on the next screen.
+
+                    <img src="./images/sip_trunk-client_credentials.png">
+                  </p>
+
+                </div>
               </div>
 
               <div id="phone_numbers">
@@ -598,7 +619,7 @@ Number,Enabled
 
               <p>
                 Setting up a custom domain allows you to fully white-label Somleng and brand it for your company.
-                This includes the branded dashboard, API, emails and account API documentation.
+                This includes the branded dashboard, emails, Carrier API and Account API references.
               </p>
 
               <div>
@@ -713,7 +734,7 @@ module "somleng_proxy_api" {
 
                 <p>
                   <em>
-                    Note that the second module, <code class="language-hcl">somleng_proxy_api</code> is optional and only required
+                    Note: The second module, <code class="language-hcl">somleng_proxy_api</code> is optional and only required
                     if you want to configure a custom API endpoint.
                   </em>
                 </p>
@@ -1052,7 +1073,7 @@ module "somleng_proxy_api" {
 
                 <p>
                   The final step is to configure your custom domain via the Somleng Dashboard.
-                  Note that this step should only be done after you have setup and tested your reverse proxy via
+                  Note: This step should only be done after you have setup and tested your reverse proxy via
                   <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
                   <a href="#custom_domains_nginx" class="link">Nginx</a>.
                 </p>
@@ -1086,7 +1107,7 @@ module "somleng_proxy_api" {
                 </p>
 
                 <p>
-                  Note that the API is always available at <strong>api.somleng.org</strong> regardless of whether you set
+                  Note: The API is always available at <strong>api.somleng.org</strong> regardless of whether you set
                   a custom API host or not.
                 </p>
               </div>
@@ -1098,26 +1119,413 @@ module "somleng_proxy_api" {
               </h3>
 
               <p>
-                Setting up a client gateway allows network providers to use their own VoIP gateway to access the PSTN
-                thereby removing the need to connect with a Carrier.
+                Setting up a client gateway allows
+                <a href="#network_provider" class="link">network providers</a>
+                to use Somleng with their own
+                <a href="https://en.wikipedia.org/wiki/VoIP_gateway" class="link" target="_blank">VoIP gateway <i class="fa fa-external-link"></i></a>
+                which provides access the PSTN, thereby removing the need for a commercial agreement with a carrier.
               </p>
 
               <p>
-                Currently Somleng officially supports
-                <a href="http://www.hybertone.com/en/products.asp" class="link" target="_blank">GoIP gateways <i class="fa fa-external-link"></i></a>.
-                Other VoIP gateways may work as well but have not been tested.
-                If you want to use Somleng with a different gateway please
-                <a href="https://github.com/somleng/somleng-switch/issues" class="link" target="_blank">open an issue <i class="fa fa-external-link"></i></a>.
+                <em>
+                  Note: Being a network provider isn't restricted to carriers or organizations. Any individual can become a network provider
+                  as long as they have access to a VoIP Gateway.
+                </em>
               </p>
 
-              <div id="client_gateway_configuration_goip">
+              <div id="client_gateway_configuration_how_it_works">
+                <h4>
+                  How it works
+                </h4>
+
                 <p>
-                  <img src="./images/sip_trunk-client_credentials_new.png">
+                  A network provider configures their VoIP gateway to connect to Somleng.
+                  After the configuration is complete the network provider can originate outbound calls through their VoIP gateway using the
+                  <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>
+                  and terminate and control inbound calls via TwiML.
                 </p>
 
                 <p>
-                  <img src="./images/goip-1_configurations_preferences.png">
+                  The network provider can also use Somleng to offer 3rd party access to the PSTN in their country via their VoIP gateway.
                 </p>
+              </div>
+
+              <div id="client_gateway_configuration_overview">
+                <h4>
+                  Configuration Overview
+                </h4>
+
+                <p>
+                  <em>
+                    Note: You can still follow along with these instructions even if you don't have a VoIP gateway yet. Instead of configuring you VoIP gateway,
+                    you can configure a softphone such as
+                    <a href="https://apps.apple.com/us/app/telephone/id406825478?mt=12" class="link" target="_blank">Telephone <i class="fa fa-external-link"></i></a>.
+                    This will allow you to create outbound calls through Somleng which should reach your softphone.
+                  </em>
+                </p>
+
+                <p>
+                  Below is an overview of the steps required to configure a client gateway:
+                </p>
+
+                <ol>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_sip_trunk" class="link">
+                      Create a SIP Trunk
+                    </a> to obtain your SIP credentials.
+                  </li>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_account" class="link">
+                      Create an account
+                    </a> to obtain your Account SID and Auth Token for outbound dialing.
+                  </li>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_phone_number" class="link">
+                      Create a Phone Number
+                    </a> for inbound dialing.
+                  </li>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_voip_gateway" class="link">
+                      Configure your VoIP Gateway
+                    </a> to connect to Somleng.
+                  </li>
+                </ol>
+
+                <p>
+                  <em>
+                    Note: Currently Somleng officially supports the following gateways:
+                    <ul>
+                      <li>
+                        <a href="http://www.hybertone.com/en/products.asp" class="link" target="_blank">GoIP <i class="fa fa-external-link"></i></a>.
+                      </li>
+                    </ul>
+
+                    Other VoIP gateways may work as well but have not been tested.
+                    If you want to use Somleng with a different gateway please
+                    <a href="https://github.com/somleng/somleng-switch/issues" class="link" target="_blank">open an issue <i class="fa fa-external-link"></i></a>.
+                  </em>
+                </p>
+              </div>
+
+              <div id="client_gateway_configuration_instructions">
+                <div id="client_gateway_configuration_instructions_sip_trunk">
+                  <h4>
+                    1. Create a SIP Trunk
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#sip_trunks" class="link">SIP Trunk</i></a> and configure it with client credentials authentication.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                    </li>
+                    <li>
+                      Under General, select <strong>Client credentials</strong> for the authentication mode.
+                    </li>
+                    <li>
+                      Set <strong>Max channels</strong> to the number of channels (or SIM cards) your have available on your VoIP Gateway.
+                    </li>
+                    <li>
+                      Under Inbound Dialing select the default country code of the caller. This should match the country code you use later when you create a phone number.
+                    </li>
+                    <li>
+                      Choose <strong>Create SIP Trunk</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/sip_trunk-client_credentials_new.png">
+
+                  <p>
+                    After you have created a SIP trunk you will see your client credentials on the next screen:
+                  </p>
+
+                  <img id="client_gateway_configuration_instructions_sip_trunk_client_credentials" src="./images/sip_trunk-client_credentials.png">
+                </div>
+
+                <div id="client_gateway_configuration_instructions_account">
+                  <h4>
+                    2. Create an Account
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#accounts" class="link">Account</a> to obtain your Account SID and Auth Token for outbound dialing.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Accounts</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new account.
+                    </li>
+                    <li>
+                      Enter a name for the account.
+                    </li>
+                    <li>
+                      Choose <strong>Create Account</strong>.
+                    </li>
+                  </ol>
+
+                  <p>
+                    <em>
+                      Note: You don't need explicity associate the account with the SIP trunk you created in the previous step. Somleng
+                      will automatically select the SIP trunk when a call is created or received.
+                    </em>
+                  </p>
+
+                  <img src="./images/account-new.png">
+
+                  <p>
+                    After you have created your account, the SID and Auth Token are shown on the next screen:
+                  </p>
+
+                  <img src="./images/account.png">
+                </div>
+
+                <div id="client_gateway_configuration_instructions_phone_number">
+                  <h4>
+                    3. Create a Phone Number
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#phone_numbers" class="link">Phone Number</a> for inbound dialing.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
+                    </li>
+                    <li>
+                      Enter the phone number including he country code in E.164 format.
+                    </li>
+                    <li>
+                      Link the phone number to the account by selecting the account created in the previous step.
+                    </li>
+                    <li>
+                      Choose <strong>Create Phone number</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/phone_number-new.png">
+
+                  <p>
+                    After you have created your phone number, you can configure it on the next screen:
+                  </p>
+
+                  <img src="./images/phone_number.png">
+
+                  <ol>
+                    <li>
+                      Click the <strong><i class="fas fa-gear"></i></strong> dropdown and choose <strong>Configure</strong>.
+                    </li>
+                    <li>
+                      Configure the phone number by entering a Voice URL that returns valid
+                      <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a>.
+                    </li>
+                    <li>
+                      Configure other optional parameters for the phone number as necessary.
+                    </li>
+                    <li>
+                      Choose <strong>Update Configuration</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/phone_number-configure.png">
+                </div>
+
+                <div id="client_gateway_configuration_instructions_voip_gateway">
+                  <h4>
+                    4. Configure your VoIP gateway
+                  </h4>
+
+                  <p>
+                    After you have completed the previous steps, you can now configure you VoIP gateway
+                    to connect to Somleng. Below is the configuration instructions for the following VoIP gateways:
+
+                    <ul>
+                      <li>
+                        <a href="#client_gateway_configuration_goip" class="link">GoIP</a>
+                      </li>
+                    </ul>
+                  </p>
+                </div>
+
+                <div id="client_gateway_configuration_goip">
+                  <h5>
+                    GoIP Configuration
+                  </h5>
+
+                  <p>
+                    Follow the instructions below to configure the GoIP gateway to connect to Somleng.
+                  </p>
+
+                  <ol>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_general_configuration" class="link">
+                        General Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_basic_voip_configuration" class="link">
+                        Basic VoIP Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_advanced_voip_configuration" class="link">
+                        Advanced VoIP Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_call_in_configuration" class="link">
+                        Call-In Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_testing" class="link">
+                        Testing
+                      </a>
+                    </li>
+                  </ol>
+
+                  <div id="client_gateway_configuration_goip_general_configuration">
+                    <h6>
+                      1. General Configuration
+                    </h6>
+
+                    <p>
+                      <em>
+                        Note: Before completing this step, we recommend that you test out the GoIP gateway in isolation by
+                        inserting a SIM card into the device and making a call to the number in the device.
+                        The internal IVR of the GoIP gateway should answer the call.
+                      </em>
+                    </p>
+
+                    <p>
+                      In order to configure the GoIP gateway for inbound dialing, we need to turn off the in-built IVR.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Preferences</strong>.
+                      </li>
+                      <li>
+                        Set IVR to <strong>Disable</strong>
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <img src="./images/goip-1_configurations_preferences.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_basic_voip_configuration">
+                    <h6>
+                      2. Basic VoIP Configuration
+                    </h6>
+
+                    <p>
+                      The next step is to configure the GoIP gateway to register with Somleng. There are 3 different modes of configuration depending on your
+                      circumstances.
+                    </p>
+
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Config Mode</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr id="goip_single_server_mode">
+                          <td>Single Server Mode</td>
+                          <td>Use this mode to associate all channels on your GoIP gateway to a single SIP Trunk on Somleng.</td>
+                        </tr>
+                        <tr id="goip_multi_server_mode">
+                          <td>Multi Server Mode</td>
+                          <td>Use this mode to associate a single channel on your GoIP gateway to a single SIP Trunk on Somleng.</td>
+                        </tr>
+                        <tr id="goip_group_mode">
+                          <td>Group Mode</td>
+                          <td>Use this mode to associate a group of channels on your GoIP gateway to a single SIP trunk on Somleng.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Basic VoIP</strong>.
+                      </li>
+                      <li>
+                        Choose your preferred configuration mode as described above from <strong>Config Mode</strong>.
+                      </li>
+                      <li>
+                        Copy the <strong>Username</strong> from the <strong>Client Credentials</strong> section from
+                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        and paste it in the <strong>Authentication ID</strong> field.
+                      </li>
+                      <li>
+                        Copy the <strong>Password</strong> from the <strong>Client Credentials</strong> section from
+                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        and paste it in the <strong>Password</strong> field.
+                      </li>
+                      <li>
+                        Copy the <strong>Domain</strong> from the <strong>Client Credentials</strong> section from
+                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        and paste it in the <strong>SIP Registrar Server</strong> field.
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <p>
+                      <em>
+                        Note: If you choose Multi-Server mode or Group mode, you'll need to repeat the instructions above for each channel or group.
+                      </em>
+                    </p>
+
+                    <img src="./images/goip-2_configurations_basic_voip.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_advanced_voip_configuration">
+                    <h6>
+                      3. Advanced VoIP Configuration
+                    </h6>
+
+                    <p>
+                      Configure DTMF Signaling under the Advance VoIP section.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Advance VoIP</strong>.
+                      </li>
+                      <li>
+                        Select <strong>Outband</strong> from <strong>DTMF Signaling</strong>.
+                      </li>
+                      <li>
+                        Select <strong>RFC 2833</strong> from <strong>Outband DTMF Type</strong>.
+                      </li>
+                      <li>
+                        Ensure <strong>RTP Payload Type</strong> is set to <strong>101</strong>.
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <img src="./images/goip-3_configurations_advance_voip.png">
+                  </div>
+                </div>
               </div>
             </div>
 

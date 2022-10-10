@@ -23,6 +23,11 @@ th {
   padding-left: 25px;
 }
 
-h5, h6 {
-  font-weight: bold;
+h5 {
+  font-size: 1.15em;
 }
+
+h6 {
+  font-size: 1.05em;
+}
+
