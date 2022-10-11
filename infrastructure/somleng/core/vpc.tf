@@ -14,9 +14,3 @@ module "vpc" {
   create_database_subnet_group = false
   azs              = data.aws_availability_zones.azs.names
 }
-
-resource "aws_servicequotas_service_quota" "eip_limit" {
-  quota_code   = "L-0263D0A3"
-  service_code = "ec2"
-  value        = 100
-}

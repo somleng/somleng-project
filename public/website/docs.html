@@ -1,112 +1,1660 @@
 <!DOCTYPE html>
 <html lang='en'>
+
 <head>
-	<meta class="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Somleng | Documentation</title>
-	<link rel='stylesheet' href='css/style.min.css' />
+  <meta class="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Somleng | Documentation</title>
+  <link rel='stylesheet' href='css/style.min.css' />
+  <link rel='stylesheet' href='css/custom.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-	<link rel="manifest" href="site.webmanifest">
-	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
-	<meta name="msapplication-TileColor" content="#6c63ff">
-	<meta name="theme-color" content="#6C63FF">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
+  <meta name="msapplication-TileColor" content="#6c63ff">
+  <meta name="theme-color" content="#6C63FF">
 </head>
+
 <body>
-	<!-- navbar -->
-	<div class="navbar navbar--extended">
-		<nav class="nav__mobile"></nav>
-		<div class="container">
-			<div class="navbar__inner">
-				<a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image" height="75px"></a>
-				<nav class="navbar__menu">
-					<li><a href="docs.html">Documentation</a></li>
-					<li><a href="case_studies.html">Case Studies</a></li>
-					<li><a href="blog.html">Blog</a></li>
-				</nav>
-				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
-			</div>
-		</div>
-	</div>
-	<!-- Hero unit -->
-	<div class="page__header">
-		<div class="hero__overlay hero__overlay--gradient"></div>
-		<div class="hero__mask"></div>
-		<div class="page__header__inner">
-			<div class="container">
-				<div class="page__header__content">
-					<div class="page__header__content__inner" id='navConverter'>
-						<h1 class="page__header__title">Documentation</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Page content -->
-	<div class="page">
-		<div class="container">
-			<div class="page__inner">
-				<div class="page__menu">
-					<ul class="vMenu">
-						<li><a href="#getting-started">Getting Started</a></li>
-						<li><a href="#somleng">Somleng</a></li>
-						<li><a href="#somleng-switch">SomlengSWITCH</a></li>
-						<li><a href="#somleng-scfm">Somleng SCFM</a></li>
-					</ul>
-				</div>
-				<div class="page__main">
-					<div class="text-container">
-						<img src="./images/undraw_Bibliophile_hwqc.svg" class="expanded__image">
+  <!-- navbar -->
+  <div class="navbar navbar--extended">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image"
+            height="75px"></a>
+        <nav class="navbar__menu">
+          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="open_source.html">Open Source</a></li>
+          <li><a href="case_studies.html">Case Studies</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </nav>
+        <div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512">
+              <path fill="currentColor"
+                d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+                class=""></path>
+            </svg></a></div>
+      </div>
+    </div>
+  </div>
+  <!-- Hero unit -->
+  <div class="page__header">
+    <div class="hero__overlay hero__overlay--gradient"></div>
+    <div class="hero__mask"></div>
+    <div class="page__header__inner">
+      <div class="container">
+        <div class="page__header__content">
+          <div class="page__header__content__inner" id='navConverter'>
+            <h1 class="page__header__title">Documentation</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page content -->
+  <div class="page">
+    <div class="container">
+      <div class="page__inner">
+        <div class="page__menu">
+          <ul class="vMenu">
+            <li><a href="#terminology">Terminology</a></li>
+            <li><a href="#audience">Audience</a></li>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#getting_started">Getting Started</a></li>
+            <li>
+              <a href="#using_the_dashboard">Using the Dashboard</a>
+              <ul>
+                <li>
+                  <a href="#authentication">Authentication</a>
+                </li>
+                <li>
+                  <a href="#carrier_settings">Carrier Settings</a>
+                </li>
+                <li>
+                  <a href="#accounts">Accounts</a>
+                </li>
+                <li>
+                  <a href="#sip_trunks">SIP Trunks</a>
+                </li>
+                <li>
+                  <a href="#phone_numbers">Phone Numbers</a>
+                </li>
+                <li>
+                  <a href="#users">Users</a>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#custom_domains">Custom Domains</a></li>
+            <li><a href="#client_gateway_configuration">Client Gateway Configuration</a></li>
+            <li><a href="#rtp_symmetric_latching">RTP and Symmetric Latching</a></li>
+            <li><a href="docs/carrier_api" target="_blank">API Reference</a> <i class="fa fa-external-link"></i></li>
+            <li><a href="docs/twilio_api" target="_blank">Account API Reference</a> <i class="fa fa-external-link"></i></li>
+            <li><a href="https://github.com/somleng/somleng-project" target="_blank">Github <i class="fa fa-external-link"></i></a></li>
+          </ul>
+        </div>
+        <div class="page__main">
+          <div class="text-container">
+            <img src="./images/undraw_connected_world_wuay.svg" class="expanded__image">
 
-						<div id="getting-started">
-							<h3 class="page__main__title">
-								Getting Started
-							</h3>
-							<p>
-								Follow the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" target="_blank" class="link">Getting Started Guide</a> to get Somleng up and running on your local machine.
-							</p>
-						</div>
+            <div id="terminology">
+              <h3 class="page__main__title">
+                Terminology
+              </h3>
+              <p>
+                Before we begin, here is some general terminology that is important for understanding this article.
+              </p>
+              <p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Term</th>
+                      <th>Meaning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="carrier">
+                      <td>Carrier</td>
+                      <td>A carrier (telecom company, mobile network operator (MNO), aggregator etc) who offers routes to/from the Public Switched Telephone Network (PSTN). E.g. AT&T, Verizon</td>
+                    </tr>
+                    <tr id="byoc_user">
+                      <td>BYOC User</td>
+                      <td>An individual or organization who has a business relationship with a carrier. BYOC stands for Bring Your Own Carrier.</td>
+                    </tr>
+                    <tr id="network_provider">
+                      <td>Network Provider</td>
+                      <td>An individual or organization with their own VoIP gateway to access the PSTN.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </p>
+            </div>
 
-						<div id="somleng">
-							<h3 class="page__main__title">
-								Somleng
-							</h3>
-							<p>
-								Somleng is Cloud Communications Platform as a Service (CPaaS). It provides an open source implementation of <a href="https://www.twilio.com/docs/voice/api" target="_blank" class="link">Twilio's REST API</a>, as well as a Dashboard and API for carriers.
-							</p>
-							<a href="docs/twilio_api" target="_blank" class="button button__accent">API Docs</a>
-							<a href="carrier_documentation.html" target="_blank" class="button button__accent">Carrier Docs</a>
-							<a href="https://github.com/somleng/somleng" target="_blank" class="button button__plain">Github</a>
-						</div>
+            <div id="audience">
+              <h3 class="page__main__title">
+                Audience
+              </h3>
+              <p>
+                This documentation is intended for Carriers and BYOC Users, and Network Providers as defined above.
+              </p>
+            </div>
 
-						<div id="somleng-switch">
-							<h3 class="page__main__title">
-								SomlengSWITCH
-							</h3>
-							<p>
-								SomlengSWITCH is an open source <a href="https://www.twilio.com/docs/voice/twiml" target="_blank" class="link">TwiML</a> interpreter, and switch for Somleng.
-							</p>
-							<a href="https://github.com/somleng/somleng-switch" target="_blank" class="button button__plain">Github</a>
-						</div>
+            <div id="introduction">
+              <h3 class="page__main__title">
+                Introduction
+              </h3>
+              <p>
+                Somleng is an Open Source, white-labeled, Cloud Communications Platform as a Service (CPaaS), featuring programmable voice and SMS.
+              </p>
+              <p>
+                There are three kinds of use-cases depending on who you are.
+              </p>
+              <ol>
+                <li>Carriers use Somleng to offer their own branded CPaaS services to their customers.</li>
+                <li>
+                  BYOC users use Somleng directly or offer CPaaS services to their customers by connecting through a carrier that they have a business relationship with.
+                </li>
+                <li>
+                  Network Providers use Somleng directly or offer CPaaS services to their customers by connecting through a VoIP Gateway that they own or manage.
+                </li>
+              </ol>
+            </div>
 
-						<div id="somleng-scfm">
-							<h3 class="page__main__title">
-								Somleng SCFM
-							</h3>
-							<p>
-								Somleng SCFM is an open source contact center platform and call flow manager.
-							</p>
-							<a href="docs/scfm" target="_blank" class="button button__accent">Documentation</a>
-							<a href="https://github.com/somleng/somleng-scfm" target="_blank" class="button button__plain">Github</a>
-						</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <div id="getting_started">
+              <h3 class="page__main__title">
+                Getting Started
+              </h3>
+              <p>
+                We recommend you try out Somleng by signing up for a carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note: This requires some technical knowledge.
+              </p>
 
-<script src='js/app.min.js'></script>
-</body>
+              <p>
+                Once you have an account you can begin configuring your it to handle programmable voice and SMS.
+              </p>
+            </div>
+
+            <div id="using_the_dashboard">
+              <h3 class="page__main__title">
+                Using the Dashboard
+              </h3>
+
+              <p>
+                The dashboard can be used to manually provision carrier resources.
+                Use the <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a>
+                to automate the provisioning of carrier resources.
+              </p>
+
+              <div id="authentication">
+                <h4>
+                  Authentication
+                </h4>
+                <p>
+                  You must sign into the dashboard <em>via your subdomain</em> to use Somleng.
+                  The sign in URL is <code>https://your-subdomain.app.somleng.org/users/sign_in</code>.
+                  If you have setup a <a href="#custom_domains" class="link"> custom domain</a> all users may access
+                  the dashboard through your custom domain as well.
+                </p>
+                <p>
+                  All users are required to setup two factor authentication (2FA) the first time they sign in.
+                  We recommend <a href="https://authy.com/" class="link" target="_blank">Authy <i class="fa fa-external-link"></i></a>,
+                  <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="link" target="_blank">Google Authenticator <i class="fa fa-external-link"></i></a>
+                  or your password manager to setup 2FA.
+                </p>
+              </div>
+              <div id="carrier_settings">
+                <h4>
+                  Carrier Settings
+                </h4>
+                <p>
+                  Here you will find various settings for your carrier.
+                  Under General, you'll see your company's name, subdomain, website, country and logo.
+                  Under Developer, you'll see your <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a> Key,
+                  as well as your webhook URL and signing secret for <a href="docs/carrier_api#webhooks" target="_blank" class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
+                  If you've setup a <a href="#custom_domains" class="link"> custom domain</a> this will appear under the Custom Domain section.
+                </p>
+                <p>
+                  To update your carrier settings:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Carrier Settings</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-edit"></i></strong> icon to edit your settings.
+                    </li>
+                    <li>
+                      Make your desired changes.
+                    </li>
+                    <li>
+                      Choose <strong>Update Carrier Settings</strong>.
+                    </li>
+                  </ol>
+                </p>
+              </div>
+              <div id="accounts">
+                <h4>
+                  Accounts
+                </h4>
+                <p>
+                  Accounts are used by carriers, carrier customers, BYOC users and network providers to send/receive calls and SMS via the <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>.
+                </p>
+                <p>
+                  Typically a carrier would create an account for each of their customers. BYOC users and network providers on the other hand might create an account for each project or just create one global account for their own usage.
+                </p>
+                <p>
+                  There are two types of accounts. Carrier managed and customer managed described below:
+                </p>
+
+                <p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="text-align: left;">Account type</th>
+                        <th style="text-align: left;">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr id="carrier_managed_accounts">
+                        <td style="text-align: left;">Carrier Managed</td>
+                        <td style="text-align: left;">
+                          Carrier managed accounts are <em>managed by</em> carriers.
+                          These types of accounts can be either used by carriers themselves, or by the carrier's customers.
+                        </td>
+                      </tr>
+                      <tr id="customer_managed_accounts">
+                        <td style="text-align: left;">Customer Managed</td>
+                        <td style="text-align: left;">
+                          Customer managed accounts are <em>managed by</em> the carrier's customers directly.
+                          These types of accounts can be created via the dashboard by specifying an account owner when creating the account.
+                          After providing the account owner's name and email address, the owner will be invited to the dashboard and can manage their own account.
+                          The customer will also have access to their Account SID and Auth Token.
+                          The carrier can still disable and enable customer accounts from the Dashboard.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </p>
+                <p>
+                  To create an account via the Dashboard:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Accounts</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new account.
+                    </li>
+                    <li>
+                      Fill out the form, specifying a name for the account and optionally the owner's name and email address to create a customer account.
+                    </li>
+                    <li>
+                      Choose <strong>Create Account</strong>.
+                    </li>
+                  </ol>
+                </p>
+              </div>
+              <div id="sip_trunks">
+                <h4>
+                  SIP Trunks
+                </h4>
+                <p>
+                  SIP Trunks are used to configure both inbound and outbound dialing, both to and from Somleng.
+                  We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by Somleng,
+                  and outbound dialing as calls originated by Somleng.
+                <p>
+                </p>
+                  When you create a SIP Trunk you first choose the authentication mode. There are two authentication modes available described below:
+                </p>
+                <p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="text-align: left;">Authentication mode</th>
+                        <th style="text-align: left;">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="text-align: left;">IP Address</td>
+                        <td style="text-align: left;">
+                          Choose this mode if you <em>have</em> a public static IP address and <em>are not</em> behind a NAT.
+                          This mode is best suited for carriers and BYOC users.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;">Client Credentials</td>
+                        <td style="text-align: left;">
+                          Choose this mode if you <em>do not have</em> a public static IP address or <em>are</em> behind a NAT.
+                          This mode is best suited for network providers.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </p>
+
+                <div id="sip_trunks_ip_address_configuration">
+                  <h5>
+                    IP Address Authentication
+                  </h5>
+                  <p>
+                    <em>Note: This mode is best suited for Carriers and BYOC users.</em>
+                  </p>
+
+                  <div id="sip_trunks_ip_address_configuration_inbound_dialing">
+                    <h6>
+                      Inbound Dialing
+                    </h6>
+
+                    <p>
+                      When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                    </p>
+                    <ol>
+                      <li>
+                        You <em>must</em> provide a public static IP address as the <em>Source IP</em>.
+                        This IP address is used to authenticate the carrier when inbound calls are received.
+                      </li>
+                      <li>
+                        You <em>must</em> connect to our public gateway via one of the IP addresses listed below:
+                        <ul>
+                          <li>
+                            52.74.4.205
+                          </li>
+                          <li>
+                            18.136.239.28
+                          </li>
+                          <li>
+                            3.0.30.251
+                          </li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+
+                  <div id="sip_trunks_ip_address_configuration_outbound_dialing">
+                    <h6>
+                      Outbound Dialing
+                    </h6>
+
+                    <p>
+                      When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                    </p>
+                    <ol>
+                      <li>
+                        You <em>must</em> provide a host to connect to. You can specify your host as either a fully qualified domain name (FQDN) or IP address.
+                      </li>
+                      <li>
+                        You <em>must</em> allow the following IP address on your firewall:
+                        <ul>
+                          <li>
+                            13.250.230.15
+                          </li>
+                        </ul>
+                        Note: Both media and SIP is sent from this IP address.
+                      </li>
+                      <li>
+                        You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
+                      </li>
+                    </ol>
+                  </div>
+
+                  <p>
+                    To configure a SIP trunk via IP address authentication:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                      </li>
+                      <li>
+                        Under General, select <strong>IP address</strong> for Authentication mode.
+                      </li>
+                      <li>
+                        Under Inbound Dialing, enter a public static IP address for inbound call authentication.
+                      </li>
+                      <li>
+                        Under Outbound Dialing, enter a domain name or IP address for outbound calls.
+                      </li>
+                      <li>
+                        Choose <strong>Create SIP Trunk</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SIP Trunk you'll see the configuration details on the next screen.
+
+                    <img src="./images/sip_trunk-ip_address.png">
+                  </p>
+                </div>
+
+                <div id="sip_trunks_client_credentials_configuration">
+                  <h5>
+                    Client Credentials Authentication
+                  </h5>
+                  <p>
+                    <em>Note: This mode is best suited for Network Providers.</em>
+                  </p>
+
+                  <p>
+                    When you configure a SIP trunk via <strong>client credentials authentication</strong> you <em>don't need</em> a public
+                    status IP address. Instead you authenticate with Somleng via SIP registration. After you configure a SIP trunk in this mode
+                    you will be given a unique set of client credentials which can be used to authenticate with Somleng. These credentials
+                    can be used directly when configuring your <a href="#client_gateway_configuration" class="link">client gateway</a>.
+                  </p>
+
+                  <p>
+                    To configure a SIP trunk via client credentials authentication:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                      </li>
+                      <li>
+                        Under General, select <strong>Client credentials</strong> for Authentication mode.
+                      </li>
+                      <li>
+                        Under Inbound Dialing, it's recommended to select the default country code of the caller.
+                        This allows your VoIP gateway to work with national dialing numbers. Somleng will try to normalize
+                        number into E.164 format using this setting.
+                      </li>
+                      <li>
+                        Choose <strong>Create SIP Trunk</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SIP Trunk you'll see the generated credentials on the next screen.
+
+                    <img src="./images/sip_trunk-client_credentials.png">
+                  </p>
+
+                </div>
+              </div>
+
+              <div id="phone_numbers">
+                <h4>
+                  Phone Numbers
+                </h4>
+                <p>
+                  Phone Numbers represent direct inbound dialing (DID) numbers.
+                  A phone number can be either an E.164 formatted phone number or a short code.
+                  When you create a phone number you can optionally assign it to an account.
+                </p>
+                <p>
+                  Once provisioned and assigned to an account, phone numbers can be configured with a Voice URL
+                  which returns <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a> for controlling the call.
+                  This can either be done by the carrier or by the account owner (for <a href="#customer_managed_accounts" class="link">customer managed accounts</a>).
+                </p>
+                <p>
+                  To create a phone number via the Dashboard:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
+                    </li>
+                    <li>
+                      Fill out the form, specifying the phone number or short code, and optionally assign it to an account.
+                    </li>
+                    <li>
+                      Choose <strong>Create Phone number</strong>.
+                    </li>
+                  </ol>
+                </p>
+                <p>
+                  Once the phone number has been created you can configure it. To configure a phone number via the Dashboard:
+                  <ol>
+                    <li>
+                      From the Phone Numbers page, find the phone number you want to configure.
+                    </li>
+                    <li>
+                      From the gear icon <i class="fas fa-cog"></i> select <strong>Configure</strong>.
+                    </li>
+                    <li>
+                      Fill out the form specifying a Voice URL and optionally a Status Callback URL.
+                      The Voice URL should return valid <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a> and will be executed when an inbound call is received by Somleng.
+                    </li>
+                    <li>
+                      Choose <strong>Update Configuration</strong>.
+                    </li>
+                  </ol>
+                </p>
+              </div>
+              <div id="import_phone_numbers">
+                <h5>
+                  Import Phone Numbers
+                </h5>
+                <p>
+                  In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
+                  <ol>
+                    <li>
+                      From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
+                    </li>
+                    <li>
+                      Select the CSV file of phone numbers to import.
+                    </li>
+                    <li>
+                      Choose <strong>Upload</strong>.
+                    </li>
+                  </ol>
+                </p>
+
+                <p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Column Header</th>
+                        <th>Content</th>
+                        <th>Possible Values</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Number</td>
+                        <td>The phone number or short code</td>
+                        <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
+                        <td>1234</td>
+                      </tr>
+                      <tr>
+                        <td>Enabled</td>
+                        <td>Whether to enable or disable the phone number</td>
+                        <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
+                        <td><code>true</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </p>
+
+                <h6>
+                  Sample CSV Data
+                </h6>
+
+                <pre>
+Number,Enabled
+1234,false
+85512345678,true</pre>
+              </div>
+              <div id="users">
+                <h4>
+                  Users
+                </h4>
+                <p>
+                  Carrier owners can invite their colleagues to the dashboard.
+                </p>
+                <p>
+                  To invite a user to the Dashboard:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Users</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to invite a new user.
+                    </li>
+                    <li>
+                      Fill out the form, specifying the user's name, email and role.</li>
+                    <li>
+                      Choose <strong>Send an invitation</strong>.
+                    </li>
+                  </ol>
+                </p>
+                <p>
+                  The user will receive an email inviting them to the dashboard. Users with the owner role can manage
+                  other users, update their role and reset their 2FA.
+                </p>
+              </div>
+            </div>
+
+            <div id="custom_domains">
+              <h3>
+                Custom Domains
+              </h3>
+
+              <p>
+                Setting up a custom domain allows you to fully white-label Somleng and brand it for your company.
+                This includes the branded dashboard, emails, Carrier API and Account API references.
+              </p>
+
+              <div>
+                <h4>
+                  How it works
+                </h4>
+
+                <p>
+                  When you setup a custom domain you need to setup proxy between your domain and Somleng
+                  in order for SSL termination to work correctly.
+                  Below we describe two methods for doing this via
+                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a>
+                  or
+                  <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                  We recommend using AWS Cloudfront unless your have specific custom
+                  requirements or you cannot use AWS.
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Setup your custom domain
+                </h4>
+
+                <p>
+                  Follow the steps below to configure your custom domain:
+                  <ol>
+                    <li>
+                      Setup a reverse proxy via <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended)
+                      or <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                    </li>
+                    <li>
+                      <a href="#custom_domains_testing" class="link">Test out your custom domain</a>.
+                    </li>
+                    <li>
+                      <a href="#custom_domains_configure_somleng_dashboard" class="link">Configure your custom domain via the Somleng Dashboard</a>.
+                    </li>
+                  </ol>
+                </p>
+              </div>
+
+              <div id="custom_domains_aws_cloudfront">
+                <h4>
+                  1(a). Configure an AWS Cloudfront Distribution (Recommended)
+                </h4>
+
+                <p>
+                  <em>Skip this step if you prefer to use <a href="#custom_domains_nginx" class="link">Nginx</a> instead.</em>
+                </p>
+
+                <p>
+                  In order to make this step easier, we've created a
+                  <a href="https://github.com/somleng/terraform-aws-cloudfront-reverse-proxy" class="link" target="_blank">Terraform module <i class="fa fa-external-link"></i></a>
+                  automates the configuration and management of your AWS Cloudfront distributions via
+                  <a href="https://www.terraform.io" class="link" target="_blank">Terraform <i class="fa fa-external-link"></i></a>.
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Using the Terraform Module (Recommended)
+                </h4>
+
+                <p>
+                  In order to use the terraform module you need to setup and install Terraform first.
+                  We recommend following the
+                  <a href="https://learn.hashicorp.com/collections/terraform/aws-get-started" class="link" target="_blank">Terraform AWS tutorial <i class="fa fa-external-link"></i></a>
+                  to get started.
+                </p>
+                <p>
+                  <pre><code class="language-hcl">
+# somleng_proxy.tf
+module "somleng_proxy_dashboard" {
+  source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
+
+  host = "your-domain.example.com" # Replace this with your custom domain
+  origin = "your-domain.app.somleng.org" # Replace this with your Somleng subdomain
+  origin_custom_headers = [
+    {
+      "name" = "X-Forwarded-Host",
+      "value" = "your-domain.example.com" # Replace with your custom domain
+    }
+  ]
+
+  allowed_origin_request_headers = [
+    "X-CSRF-Token",
+    "X-Requested-With"
+  ]
+
+  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
+}
+
+# Optionally configure a custom API endpoint
+module "somleng_proxy_api" {
+  source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
+
+  host = "your-api-domain.example.com" # Replace this with your custom API domain
+  origin = "api.somleng.org"
+
+  # DO NOT set X-Forwarded-Host
+
+  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
+}</code></pre>
+                </p>
+                <p>
+                  The terraform configuration above will configure two AWS cloudfront distributions (one for the dashboard and one for the API)
+                  and optionally create SSL certificates managed by AWS Certificate Manager. If you're using route53 to manage your
+                  domain, the module will also create records pointing your custom domain to the AWS cloudfront distributions.
+                </p>
+
+                <p>
+                  <em>
+                    Note: The second module, <code class="language-hcl">somleng_proxy_api</code> is optional and only required
+                    if you want to configure a custom API endpoint.
+                  </em>
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Configuring Cloudfront Manually
+                </h4>
+
+                <p>
+                  Although we highly recommend using the terraform module above, you can also configure your Cloudfront distributions from the AWS Console.
+                </p>
+
+                <h5>
+                  Dashboard Configuration
+                </h5>
+
+                <p>
+                  <ol>
+                    <li>
+                      Sign in to the AWS Management Console and open the CloudFront console.
+                    </li>
+                    <li>
+                      Choose <strong>Create Distribution</strong>
+                    </li>
+                    <li>
+                      Update the 'Origin' settings.
+                      <ul>
+                        <img src="./images/cloudfront_origin_settings.png">
+
+                        <li>
+                          Set 'Origin domain to' <strong>your-subdomain.app.somleng.org</strong>
+                          replacing <strong>your-subdomain</strong> with your Somleng subdomain.
+                        </li>
+                        <li>
+                          Set 'Protocol' to <strong>HTTPS only</strong>
+                        </li>
+                        <li>
+                          'HTTPS port' should be set to <strong>443</strong>
+                        </li>
+                        <li>
+                          Set 'Minimum origin SSL protocol' to <strong>TLSv1.2</strong>
+                        </li>
+                        <li>
+                          Under 'Add custom header' click <strong>Add header</strong>.
+                          <ul>
+                            <li>
+                              Enter <strong>X-Forwarded-Host</strong> for the Header name
+                            </li>
+                            <li>
+                              Enter <strong>your-domain.example.com</strong> for the Value.
+                              Remember to replace <strong>your-domain.example.com</strong>with your actual domain.
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          'Enable Origin Shield' should be set to <strong>No</strong>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      Update the 'Default cache behavior' settings.
+                      <ul>
+                        <img src="./images/cloudfront_default_cache_behavior.png">
+
+                        <li>
+                          Set 'Compress objects automatically' to <strong>No</strong>.
+                        </li>
+                        <li>
+                          Set 'Viewer protocol policy' to <strong>Redirect HTTP to HTTPS</strong>
+                        </li>
+                        <li>
+                          Set 'Allowed HTTP methods' to <strong>GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE</strong>
+                        </li>
+                        <li>
+                          Set 'Restrict viewer access' to <strong>No</strong>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      Update the 'Cache key and origin requests' settings
+                      <ul>
+                        <li>
+                          Select <strong>Cache policy and origin request policy (recommended)</strong>
+                        </li>
+                        <li>
+                          Under 'Cache policy', click <strong>Create policy</strong>
+                          <ul>
+                            <img src="./images/cloudfront_cache_policy.png">
+
+                            <li>
+                              Update the 'Details' settings
+                              <ul>
+                                <li>
+                                  Set 'Name' to <strong>somleng-proxy</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'TTL Settings'
+                              <ul>
+                                <li>
+                                  Set 'Minimum TTL' to <strong>0</strong>
+                                </li>
+                                <li>
+                                  Set 'Maximum TTL' to <strong>1</strong>
+                                </li>
+                                <li>
+                                  Set 'Default TTL' to <strong>0</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'Cache key settings'
+                              <ul>
+                                <li>
+                                  Under 'Headers', select <strong>Include the following headers</strong>
+                                </li>
+                                <li>
+                                  Select the following headers:
+                                  <ul>
+                                    <li>
+                                      <strong>Authorization</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept-Encoding</strong>
+                                    </li>
+                                  </ul>
+
+                                </li>
+                                <li>
+                                  Set 'Query strings' to <strong>None</strong>
+                                </li>
+                                <li>
+                                  Set 'Cookies' to <strong>None</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'Compression support' settings
+                              <ul>
+                                <li>
+                                  <em>Deselect</em> both <strong>Gzip</strong> and <strong>Brotli</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Click <strong>Create</strong>
+                            </li>
+                          </ul>
+                        </li>
+
+                        <li>
+                          Under 'Origin request policy', click <strong>Create policy</strong>
+                          <ul>
+                            <img src="./images/cloudfront_origin_request_policy.png">
+
+                            <li>
+                              Update the 'Details' settings
+                              <ul>
+                                <li>
+                                  Set 'Name' to <strong>somleng-proxy</strong>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Update the 'Origin request settings'
+                              <ul>
+                                <li>
+                                  Under 'Headers', select <strong>Include the following headers</strong>
+                                </li>
+                                <li>
+                                  Select the following headers:
+                                  <ul>
+                                    <li>
+                                      <strong>Origin</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept-Charset</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Accept</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Access-Control-Request-Method</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Access-Control-Request-Headers</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Referer</strong>
+                                    </li>
+                                    <li>
+                                      <strong>User-Agent</strong>
+                                    </li>
+                                    <li>
+                                      <strong>Content-Type</strong>
+                                    </li>
+                                    <li>
+                                      <strong>X-CSRF-Token</strong>
+                                    </li>
+                                    <li>
+                                      <strong>X-Requested-With</strong>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>
+                                  Set 'Query strings' to <strong>All</strong>
+                                </li>
+                                <li>
+                                  Set 'Cookies' to <strong>All</strong>
+                                </li>
+                                <li>
+                                  Click <strong>Create</strong>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      Update the 'Settings'
+                      <ul>
+                        <img src="./images/cloudfront_settings.png">
+
+                        <li>
+                          Set 'Price class' to <strong>Use all edge locations (best performance)</strong>
+                        </li>
+                        <li>
+                          Set 'Alternate domain name (CNAME)' to <strong>your-domain.example.com</strong>
+                        </li>
+                        <li>
+                          Set 'Custom SSL certificate' to your certificate or click the link to Request certificate.
+                        </li>
+                        <li>
+                          Set security policy to <strong>TLSv1.2_2021 (recommended)</strong> or to the latest recommended policy.
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      Click <strong>Create distribution</strong>
+                    </li>
+                  </ol>
+                </p>
+
+                <h5>
+                  API Configuration (optional)
+                </h5>
+
+                <p>
+                  Repeat the <strong>exact same process</strong> above to create a distribution for your custom API domain, with the following modifications:
+                  <ul>
+                    <img src="./images/cloudfront_origin_api_settings.png">
+
+                    <li>
+                      Set 'Origin domain to' <strong>api.somleng.org</strong>
+                    </li>
+                    <li>
+                      <strong>DO NOT</strong> set the X-Forwarded-Host header
+                    </li>
+                  </ul>
+                </p>
+              </div>
+
+              <div id="custom_domains_nginx">
+                <h4>
+                  1(b). Nginx Reverse Proxy
+                </h4>
+
+                <p>
+                  <em>Skip this step if you prefer to use <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended) instead.</em>
+                </p>
+
+                <p>
+                  The following Nginx configuration can be used to setup an Nginx reverse proxy to Somleng.
+                </p>
+
+                <p>
+                  <pre>
+  <code class="language-nginx">server {
+    listen 443;
+    server_name dashboard.example.com; # replace this with your dashboard domain
+
+    ssl_certificate /path/to/your/fullchain.pem;
+    ssl_certificate_key /path/to/your/privatekey.pem;
+
+    location / {
+      proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your dashboard domain
+      proxy_pass "https://your-subdomain.app.somleng.org:443";
+    }
+  }
+
+  # Optionally configure a custom API endpoint
+  # Note: DO NOT set X-Forwarded-Host for your custom API endpoint
+  server {
+    listen 443;
+    server_name api.example.com; # replace this with your api domain
+
+    ssl_certificate /path/to/your/fullchain.pem;
+    ssl_certificate_key /path/to/your/privatekey.pem;
+
+    location / {
+      proxy_pass "https://api.somleng.org:443";
+    }
+  }</code></pre>
+                </p>
+              </div>
+
+              <div id="custom_domains_testing">
+                <h4>
+                  2. Test your custom domain
+                </h4>
+
+                <p>
+                  After you have setup your reverse proxy via
+                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
+                  <a href="#custom_domains_nginx" class="link">Nginx</a>
+                  you can test it out by going to <strong>your-domain.example.com</strong>.
+                  You should see your carrier logo and the sign in page.
+                </p>
+
+                <p>
+                  Try to sign in and interact with the dashboard.
+                  Note if you get a 422 error after signing in, try clearing your browser cookies and try again.
+                </p>
+              </div>
+
+              <div id="custom_domains_configure_somleng_dashboard">
+                <h4>
+                  3. Configure your custom domain via the Somleng Dashboard.
+                </h4>
+
+                <p>
+                  The final step is to configure your custom domain via the Somleng Dashboard.
+                  Note: This step should only be done after you have setup and tested your reverse proxy via
+                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
+                  <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                </p>
+
+                <ol>
+                  <li>
+                    Sign in to the Dashboard and from the side-navigation, click <strong>Carrier Settings</strong>.
+                  </li>
+                  <li>
+                    Click the <strong><i class="fas fa-edit"></i></strong> icon to edit your settings.
+                  </li>
+                  <li>
+                    Under custom domain, enter your dashboard and API hosts.
+                  </li>
+                  <li>
+                    Choose <strong>Update Carrier Settings</strong>.
+                  </li>
+                </ol>
+
+                <p>
+                  After configuring the custom dashboard host, <em>customer</em> transactional emails (such as forgot password, account invitations, etc)
+                  will link to <strong>your-domain.example.com</strong>. <em>Carrier user</em> transaction emails
+                  are still linked to <strong>your-subdomain.app.somleng.org</strong>.
+                </p>
+
+                <p>
+                  You should also have branded API customer documentation
+                  available at <strong>your-domain.example.com/docs/api</strong>.
+                  Setting the custom API endpoint will additionally update the API documentation examples with
+                  your <strong>your-api.domain.example.com</strong>.
+                </p>
+
+                <p>
+                  Note: The API is always available at <strong>api.somleng.org</strong> regardless of whether you set
+                  a custom API host or not.
+                </p>
+              </div>
+            </div>
+
+            <div id="client_gateway_configuration">
+              <h3>
+                Client Gateway Configuration
+              </h3>
+
+              <p>
+                Setting up a client gateway allows
+                <a href="#network_provider" class="link">network providers</a>
+                to use Somleng with their own
+                <a href="https://en.wikipedia.org/wiki/VoIP_gateway" class="link" target="_blank">VoIP gateway <i class="fa fa-external-link"></i></a>
+                which provides access the PSTN, thereby removing the need for a commercial agreement with a carrier.
+              </p>
+
+              <p>
+                <em>
+                  Note: Being a network provider isn't restricted to carriers or organizations. Any individual can become a network provider
+                  as long as they have access to a VoIP Gateway.
+                </em>
+              </p>
+
+              <div id="client_gateway_configuration_how_it_works">
+                <h4>
+                  How it works
+                </h4>
+
+                <p>
+                  A network provider configures their VoIP gateway to connect to Somleng.
+                  After the configuration is complete the network provider can originate outbound calls through their VoIP gateway using the
+                  <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>
+                  and terminate and control inbound calls via TwiML.
+                </p>
+
+                <p>
+                  The network provider can also use Somleng to offer 3rd party access to the PSTN in their country via their VoIP gateway.
+                </p>
+              </div>
+
+              <div id="client_gateway_configuration_overview">
+                <h4>
+                  Configuration Overview
+                </h4>
+
+                <p>
+                  <em>
+                    Note: You can still follow along with these instructions even if you don't have a VoIP gateway yet. Instead of configuring you VoIP gateway,
+                    you can configure a softphone such as
+                    <a href="https://apps.apple.com/us/app/telephone/id406825478?mt=12" class="link" target="_blank">Telephone <i class="fa fa-external-link"></i></a>.
+                    This will allow you to create outbound calls through Somleng which should reach your softphone.
+                  </em>
+                </p>
+
+                <p>
+                  Below is an overview of the steps required to configure a client gateway:
+                </p>
+
+                <ol>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_sip_trunk" class="link">
+                      Create a SIP Trunk
+                    </a> to obtain your SIP credentials.
+                  </li>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_account" class="link">
+                      Create an account
+                    </a> to obtain your Account SID and Auth Token for outbound dialing.
+                  </li>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_phone_number" class="link">
+                      Create a Phone Number
+                    </a> for inbound dialing.
+                  </li>
+                  <li>
+                    <a href="#client_gateway_configuration_instructions_voip_gateway" class="link">
+                      Configure your VoIP Gateway
+                    </a> to connect to Somleng.
+                  </li>
+                </ol>
+
+                <p>
+                  <em>
+                    Note: Currently Somleng officially supports the following gateways:
+                    <ul>
+                      <li>
+                        <a href="http://www.hybertone.com/en/products.asp" class="link" target="_blank">GoIP <i class="fa fa-external-link"></i></a>.
+                      </li>
+                    </ul>
+
+                    Other VoIP gateways may work as well but have not been tested.
+                    If you want to use Somleng with a different gateway please
+                    <a href="https://github.com/somleng/somleng-switch/issues" class="link" target="_blank">open an issue <i class="fa fa-external-link"></i></a>.
+                  </em>
+                </p>
+              </div>
+
+              <div id="client_gateway_configuration_instructions">
+                <div id="client_gateway_configuration_instructions_sip_trunk">
+                  <h4>
+                    1. Create a SIP Trunk
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#sip_trunks" class="link">SIP Trunk</i></a> and configure it with client credentials authentication.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                    </li>
+                    <li>
+                      Under General, select <strong>Client credentials</strong> for the authentication mode.
+                    </li>
+                    <li>
+                      Set <strong>Max channels</strong> to the number of channels (or SIM cards) your have available on your VoIP Gateway.
+                    </li>
+                    <li>
+                      Under Inbound Dialing select the default country code of the caller. This should match the country code you use later when you create a phone number.
+                    </li>
+                    <li>
+                      Choose <strong>Create SIP Trunk</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/sip_trunk-client_credentials_new.png">
+
+                  <p>
+                    After you have created a SIP trunk you will see your client credentials on the next screen:
+                  </p>
+
+                  <img id="client_gateway_configuration_instructions_sip_trunk_client_credentials" src="./images/sip_trunk-client_credentials.png">
+                </div>
+
+                <div id="client_gateway_configuration_instructions_account">
+                  <h4>
+                    2. Create an Account
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#accounts" class="link">Account</a> to obtain your Account SID and Auth Token for outbound dialing.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Accounts</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new account.
+                    </li>
+                    <li>
+                      Enter a name for the account.
+                    </li>
+                    <li>
+                      Choose <strong>Create Account</strong>.
+                    </li>
+                  </ol>
+
+                  <p>
+                    <em>
+                      Note: You don't need explicity associate the account with the SIP trunk you created in the previous step. Somleng
+                      will automatically select the SIP trunk when a call is created or received.
+                    </em>
+                  </p>
+
+                  <img src="./images/account-new.png">
+
+                  <p>
+                    After you have created your account, the SID and Auth Token are shown on the next screen:
+                  </p>
+
+                  <img id="client_gateway_configuration_instructions_account_credentials" src="./images/account.png">
+                </div>
+
+                <div id="client_gateway_configuration_instructions_phone_number">
+                  <h4>
+                    3. Create a Phone Number
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#phone_numbers" class="link">Phone Number</a> for inbound dialing.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
+                    </li>
+                    <li>
+                      Enter the phone number including he country code in E.164 format.
+                    </li>
+                    <li>
+                      Link the phone number to the account by selecting the account created in the previous step.
+                    </li>
+                    <li>
+                      Choose <strong>Create Phone number</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/phone_number-new.png">
+
+                  <p>
+                    After you have created your phone number, you can configure it on the next screen:
+                  </p>
+
+                  <img src="./images/phone_number.png">
+
+                  <ol>
+                    <li>
+                      Click the <strong><i class="fas fa-gear"></i></strong> dropdown and choose <strong>Configure</strong>.
+                    </li>
+                    <li>
+                      Configure the phone number by entering a Voice URL that returns valid
+                      <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a>.
+                    </li>
+                    <li>
+                      Configure other optional parameters for the phone number as necessary.
+                    </li>
+                    <li>
+                      Choose <strong>Update Configuration</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/phone_number-configure.png">
+                </div>
+
+                <div id="client_gateway_configuration_instructions_voip_gateway">
+                  <h4>
+                    4. Configure your VoIP gateway
+                  </h4>
+
+                  <p>
+                    After you have completed the previous steps, you can now configure you VoIP gateway
+                    to connect to Somleng. Below is the configuration instructions for the following VoIP gateways:
+
+                    <ul>
+                      <li>
+                        <a href="#client_gateway_configuration_goip" class="link">GoIP</a>
+                      </li>
+                    </ul>
+                  </p>
+                </div>
+
+                <div id="client_gateway_configuration_goip">
+                  <h5>
+                    GoIP Configuration
+                  </h5>
+
+                  <p>
+                    Follow the instructions below to configure the GoIP gateway to connect to Somleng.
+                  </p>
+
+                  <ol>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_general_configuration" class="link">
+                        General Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_basic_voip_configuration" class="link">
+                        Basic VoIP Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_advanced_voip_configuration" class="link">
+                        Advanced VoIP Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_call_in_configuration" class="link">
+                        Call-In Configuration
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_goip_testing" class="link">
+                        Testing
+                      </a>
+                    </li>
+                  </ol>
+
+                  <div id="client_gateway_configuration_goip_general_configuration">
+                    <h6>
+                      1. General Configuration
+                    </h6>
+
+                    <p>
+                      <em>
+                        Note: Before completing this step, we recommend that you test out the GoIP gateway in isolation by
+                        inserting a SIM card into the device and making a call to the number in the device.
+                        The internal IVR of the GoIP gateway should answer the call.
+                      </em>
+                    </p>
+
+                    <p>
+                      In order to configure the GoIP gateway for inbound dialing, we need to turn off the in-built IVR.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Preferences</strong>.
+                      </li>
+                      <li>
+                        Set IVR to <strong>Disable</strong>
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <img src="./images/goip-1_configurations_preferences.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_basic_voip_configuration">
+                    <h6>
+                      2. Basic VoIP Configuration
+                    </h6>
+
+                    <p>
+                      The next step is to configure the GoIP gateway to register with Somleng. There are 3 different modes of configuration depending on your
+                      circumstances.
+                    </p>
+
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Config Mode</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr id="goip_single_server_mode">
+                          <td>Single Server Mode</td>
+                          <td>
+                            Use this mode to associate all channels on your GoIP gateway to a single SIP Trunk on Somleng.
+                            <br/>
+                            <em>
+                              Note: You can use this mode together with a <strong>Routing Prefix</strong> to control which
+                              channel an outbound call with be routed to. Please refer to the GoIP User Manual for more information
+                              about <strong>Routing Prefix</strong> and the channel selection algorithm.
+                            </em>
+                          </td>
+                        </tr>
+                        <tr id="goip_config_by_line">
+                          <td>Config by Line</td>
+                          <td>
+                            Use this mode to associate a single channel on your GoIP gateway to a single SIP Trunk on Somleng.
+                            <br/>
+                            <em>
+                              Note: This mode requires you so set a <strong>Routing Prefix</strong> for each channel.
+                            </em>
+                          </td>
+                        </tr>
+                        <tr id="goip_config_by_group">
+                          <td>Config by Group</td>
+                          <td>
+                            Use this mode to associate a group of channels on your GoIP gateway to a single SIP trunk on Somleng.
+                            <br/>
+                            <em>
+                              Note: This mode requires you so set a <strong>Routing Prefix</strong> for each group.
+                            </em>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Basic VoIP</strong>.
+                      </li>
+                      <li>
+                        Choose your preferred configuration mode as described above from <strong>Config Mode</strong>.
+                      </li>
+                      <li>
+                        Copy the <strong>Username</strong> from the <strong>Client Credentials</strong> section from
+                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        and paste it in the <strong>Authentication ID</strong> field.
+                      </li>
+                      <li>
+                        Copy the <strong>Password</strong> from the <strong>Client Credentials</strong> section from
+                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        and paste it in the <strong>Password</strong> field.
+                      </li>
+                      <li>
+                        Copy the <strong>Domain</strong> from the <strong>Client Credentials</strong> section from
+                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        and paste it in the <strong>SIP Registrar Server</strong> field.
+                      </li>
+                      <li>
+                        Optionally fill in <strong>Routing Prefix</strong> to control the channel selection algorithm. Please refer to the GoIP User Manual for more details.
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <p>
+                      <em>
+                        Note: If you choose <strong>Config by Line</strong> or <strong>Config by Group</strong> you'll need to repeat the instructions above for each channel or group.
+                      </em>
+                    </p>
+
+                    <img src="./images/goip-2_configurations_basic_voip.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_advanced_voip_configuration">
+                    <h6>
+                      3. Advanced VoIP Configuration
+                    </h6>
+
+                    <p>
+                      Configure DTMF Signaling under the Advance VoIP section.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Advance VoIP</strong>.
+                      </li>
+                      <li>
+                        Ensure <strong>NAT Keep-alive</strong> is set to <strong>Enable</strong>.
+                      </li>
+                      <li>
+                        Select <strong>Outband</strong> from <strong>DTMF Signaling</strong>.
+                      </li>
+                      <li>
+                        Select <strong>RFC 2833</strong> from <strong>Outband DTMF Type</strong>.
+                      </li>
+                      <li>
+                        Ensure <strong>RTP Payload Type</strong> is set to <strong>101</strong>.
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <img src="./images/goip-3_configurations_advance_voip.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_call_in_configuration">
+                    <h6>
+                      4. Call-In Configuration
+                    </h6>
+
+                    <p>
+                      Configure caller-id forward mode and VoIP forwarding number.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Call In</strong>.
+                      </li>
+                      <li>
+                        Select <strong>Use Remote Party ID</strong> from <strong>CID Forward Mode</strong>.
+                      </li>
+                      <li>
+                        Ensure <strong>Call In</strong> is set to <strong>Enable</strong>.
+                      </li>
+                      <li>
+                        Fill in <strong>Forwarding to VoIP Number</strong> with the number you configured in
+                        <a href="#client_gateway_configuration_instructions_phone_number" class="link"> Step 3</a>.
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <p>
+                      <em>Note: Repeat this step for each channel you need to configure.</em>
+                    </p>
+
+                    <img src="./images/goip-4_configurations_call_in.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_testing">
+                    <h6>
+                      5. Testing
+                    </h6>
+
+                    <p>
+                      Reboot, then test your configuration.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Tools -> Reboot</strong>.
+                      </li>
+                      <li>
+                        From the side-navigation, click <strong>Status -> General</strong>.
+                      </li>
+                      <li>
+                        Under <strong>Call Status and Setting</strong> ensure that <strong>Login, Call In and Call Out</strong> shows <strong>Y</strong> in each column.
+                      </li>
+                      <li>
+                        Test an inbound call by making a call to one of the phone numbers you configured in
+                        <a href="#client_gateway_configuration_instructions_phone_number" class="link"> Step 3</a>.
+                      </li>
+                      <li>
+                        Test an outbound call using the
+                        <a href="docs/twilio_api#create-a-call" class="link">Account API <i class="fa fa-external-link"></i></a>.
+                        Use the credentials from the account you created in
+                        <a href="#client_gateway_configuration_instructions_account_credentials" class="link"> Step 2</a>.
+                      </li>
+                    </ol>
+
+                    <img src="./images/goip-5_general.png">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="rtp_symmetric_latching">
+              <h3>
+                RTP and Symmetric Latching
+              </h3>
+
+              <p>
+                In
+                <a href="#sip_trunks_ip_address_configuration" class="link"> IP address authentication mode</a>
+                SIP and RTP from Somleng is sent through a NAT Gateway.
+                This means that the ports specified in the SDP in the SIP Invite from Somleng are unreachable which normally causes one-way audio issues.
+                To work-around this problem, it is required that you enable <a href="https://github.com/somleng/somleng-switch/wiki/SIP-NAT" class="link" target="_blank">Symmetric Latching <i class="fa fa-external-link"></i></a> and NAT traversal in your configuration.
+              </p>
+              <p>
+                Symmetric RTP means that the IP address and port pair used by an outbound RTP flow is reused for the inbound flow.
+                The IP address and port are learned when the initial RTP flow is received on your device. The flow's source address and port are latched onto and used as the destination for the RTP sourced by the other side of the call.
+                The IP address and port in the c line and m line respectively in the SDP message are ignored.
+              </p>
+
+              <p>
+                If your configuration does not support symmetric latching we can configure your account to use a symmetric NAT.
+                Currently this option is not configurable on the dashboard. Please contact us for assistance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src='js/app.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-core.min.js" integrity="sha512-9khQRAUBYEJDCDVP2yw3LRUQvjJ0Pjx0EShmaQjcHa6AXiOv6qHQu9lCAIR8O+/D8FtaCoJ2c0Tf9Xo7hYH01Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-fTl/qcO1VgvKtOMApX2PdZzkziyr2stM65GYPLGuYMnuMm1z2JLJG6XVU7C/mR+E7xBUqCivykuhlzfqxXBXbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
 </html>
