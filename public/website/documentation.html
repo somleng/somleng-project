@@ -4,7 +4,7 @@
 <head>
   <meta class="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Somleng | Carrier Documentation</title>
+  <title>Somleng | Documentation</title>
   <link rel='stylesheet' href='css/style.min.css' />
   <link rel='stylesheet' href='css/custom.css' />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -29,7 +29,8 @@
         <a href="index.html" class="navbar__logo"><img src="./images/somleng_logo.png" class="step__image"
             height="75px"></a>
         <nav class="navbar__menu">
-          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="open_source.html">Open Source</a></li>
           <li><a href="case_studies.html">Case Studies</a></li>
           <li><a href="blog.html">Blog</a></li>
         </nav>
@@ -50,7 +51,7 @@
       <div class="container">
         <div class="page__header__content">
           <div class="page__header__content__inner" id='navConverter'>
-            <h1 class="page__header__title">Carrier Documentation</h1>
+            <h1 class="page__header__title">Documentation</h1>
           </div>
         </div>
       </div>
@@ -1284,7 +1285,7 @@ module "somleng_proxy_api" {
                     After you have created your account, the SID and Auth Token are shown on the next screen:
                   </p>
 
-                  <img src="./images/account.png">
+                  <img id="client_gateway_configuration_instructions_account_credentials" src="./images/account.png">
                 </div>
 
                 <div id="client_gateway_configuration_instructions_phone_number">
@@ -1447,15 +1448,35 @@ module "somleng_proxy_api" {
                       <tbody>
                         <tr id="goip_single_server_mode">
                           <td>Single Server Mode</td>
-                          <td>Use this mode to associate all channels on your GoIP gateway to a single SIP Trunk on Somleng.</td>
+                          <td>
+                            Use this mode to associate all channels on your GoIP gateway to a single SIP Trunk on Somleng.
+                            <br/>
+                            <em>
+                              Note: You can use this mode together with a <strong>Routing Prefix</strong> to control which
+                              channel an outbound call with be routed to. Please refer to the GoIP User Manual for more information
+                              about <strong>Routing Prefix</strong> and the channel selection algorithm.
+                            </em>
+                          </td>
                         </tr>
-                        <tr id="goip_multi_server_mode">
-                          <td>Multi Server Mode</td>
-                          <td>Use this mode to associate a single channel on your GoIP gateway to a single SIP Trunk on Somleng.</td>
+                        <tr id="goip_config_by_line">
+                          <td>Config by Line</td>
+                          <td>
+                            Use this mode to associate a single channel on your GoIP gateway to a single SIP Trunk on Somleng.
+                            <br/>
+                            <em>
+                              Note: This mode requires you so set a <strong>Routing Prefix</strong> for each channel.
+                            </em>
+                          </td>
                         </tr>
-                        <tr id="goip_group_mode">
-                          <td>Group Mode</td>
-                          <td>Use this mode to associate a group of channels on your GoIP gateway to a single SIP trunk on Somleng.</td>
+                        <tr id="goip_config_by_group">
+                          <td>Config by Group</td>
+                          <td>
+                            Use this mode to associate a group of channels on your GoIP gateway to a single SIP trunk on Somleng.
+                            <br/>
+                            <em>
+                              Note: This mode requires you so set a <strong>Routing Prefix</strong> for each group.
+                            </em>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1483,13 +1504,16 @@ module "somleng_proxy_api" {
                         and paste it in the <strong>SIP Registrar Server</strong> field.
                       </li>
                       <li>
+                        Optionally fill in <strong>Routing Prefix</strong> to control the channel selection algorithm. Please refer to the GoIP User Manual for more details.
+                      </li>
+                      <li>
                         Click <strong>Save Changes</strong>.
                       </li>
                     </ol>
 
                     <p>
                       <em>
-                        Note: If you choose Multi-Server mode or Group mode, you'll need to repeat the instructions above for each channel or group.
+                        Note: If you choose <strong>Config by Line</strong> or <strong>Config by Group</strong> you'll need to repeat the instructions above for each channel or group.
                       </em>
                     </p>
 
@@ -1510,6 +1534,9 @@ module "somleng_proxy_api" {
                         From the side-navigation, click <strong>Configurations -> Advance VoIP</strong>.
                       </li>
                       <li>
+                        Ensure <strong>NAT Keep-alive</strong> is set to <strong>Enable</strong>.
+                      </li>
+                      <li>
                         Select <strong>Outband</strong> from <strong>DTMF Signaling</strong>.
                       </li>
                       <li>
@@ -1525,6 +1552,75 @@ module "somleng_proxy_api" {
 
                     <img src="./images/goip-3_configurations_advance_voip.png">
                   </div>
+
+                  <div id="client_gateway_configuration_goip_call_in_configuration">
+                    <h6>
+                      4. Call-In Configuration
+                    </h6>
+
+                    <p>
+                      Configure caller-id forward mode and VoIP forwarding number.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Configurations -> Call In</strong>.
+                      </li>
+                      <li>
+                        Select <strong>Use Remote Party ID</strong> from <strong>CID Forward Mode</strong>.
+                      </li>
+                      <li>
+                        Ensure <strong>Call In</strong> is set to <strong>Enable</strong>.
+                      </li>
+                      <li>
+                        Fill in <strong>Forwarding to VoIP Number</strong> with the number you configured in
+                        <a href="#client_gateway_configuration_instructions_phone_number" class="link"> Step 3</a>.
+                      </li>
+                      <li>
+                        Click <strong>Save Changes</strong>.
+                      </li>
+                    </ol>
+
+                    <p>
+                      <em>Note: Repeat this step for each channel you need to configure.</em>
+                    </p>
+
+                    <img src="./images/goip-4_configurations_call_in.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_goip_testing">
+                    <h6>
+                      5. Testing
+                    </h6>
+
+                    <p>
+                      Reboot, then test your configuration.
+                    </p>
+
+                    <ol>
+                      <li>
+                        From the side-navigation, click <strong>Tools -> Reboot</strong>.
+                      </li>
+                      <li>
+                        From the side-navigation, click <strong>Status -> General</strong>.
+                      </li>
+                      <li>
+                        Under <strong>Call Status and Setting</strong> ensure that <strong>Login, Call In and Call Out</strong> shows <strong>Y</strong> in each column.
+                      </li>
+                      <li>
+                        Test an inbound call by making a call to one of the phone numbers you configured in
+                        <a href="#client_gateway_configuration_instructions_phone_number" class="link"> Step 3</a>.
+                      </li>
+                      <li>
+                        Test an outbound call using the
+                        <a href="docs/twilio_api#create-a-call" class="link">Account API <i class="fa fa-external-link"></i></a>.
+                        Use the credentials from the account you created in
+                        <a href="#client_gateway_configuration_instructions_account_credentials" class="link"> Step 2</a>.
+                      </li>
+                    </ol>
+
+                    <img src="./images/goip-5_general.png">
+                  </div>
                 </div>
               </div>
             </div>
@@ -1535,9 +1631,11 @@ module "somleng_proxy_api" {
               </h3>
 
               <p>
-                SIP and RTP from Somleng is sent through a <a href="#nat_gateway" class="link">NAT Gateway</a>.
+                In
+                <a href="#sip_trunks_ip_address_configuration" class="link"> IP address authentication mode</a>
+                SIP and RTP from Somleng is sent through a NAT Gateway.
                 This means that the ports specified in the SDP in the SIP Invite from Somleng are unreachable which normally causes one-way audio issues.
-                To work-around this problem, it is required that you setup <a href="https://github.com/somleng/somleng-switch/wiki/SIP-NAT" class="link" target="_blank">Symmetric Latching <i class="fa fa-external-link"></i></a> on your device.
+                To work-around this problem, it is required that you enable <a href="https://github.com/somleng/somleng-switch/wiki/SIP-NAT" class="link" target="_blank">Symmetric Latching <i class="fa fa-external-link"></i></a> and NAT traversal in your configuration.
               </p>
               <p>
                 Symmetric RTP means that the IP address and port pair used by an outbound RTP flow is reused for the inbound flow.
@@ -1546,7 +1644,7 @@ module "somleng_proxy_api" {
               </p>
 
               <p>
-                If your device does not support symmetric latching we can configure your account to use a symmetric NAT.
+                If your configuration does not support symmetric latching we can configure your account to use a symmetric NAT.
                 Currently this option is not configurable on the dashboard. Please contact us for assistance.
               </p>
             </div>
