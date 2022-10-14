@@ -54,12 +54,112 @@
 			<div class="page__inner">
 				<div class="page__menu">
 					<ul class="vMenu">
+            <li><a href="#introducing-diy-programmable-voice">October 14, 2022 - Introducing DIY Programmable Voice</a></li>
             <li><a href="#be-your-own-twilio">June 10, 2022 - Be your own Twilio</a></li>
 						<li><a href="#the-somleng-story">June 9, 2022 - The Somleng Story</a></li>
 					</ul>
 				</div>
 				<div class="page__main">
 					<div class="text-container">
+            <div id="introducing-diy-programmable-voice">
+							<h2 class="page__main__title">
+								Introducing DIY Programmable Voice
+              </h2>
+              <h5>
+                October 14, 2022
+              </h5>
+              <img src="./images/undraw_recording_re_5xyq.svg" class="expanded__image">
+
+              <p>
+                At Somleng, one of our biggest customer bases are NGOs. One of the reasons that NGOs choose us is because we work with local carriers
+                directly. This allows us to provide cloud communication services in new markets where it's otherwise unavailable, or with better quality, and
+                <a href="case_studies.html#cash-assistance-programme-somalia" target="_blank" class="link">a fraction of the cost of our competitors <i class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                Although working with local carriers improves quality and reduces costs, one of the biggest pain points for our customers
+                is actually engaging with and arriving at a commercial agreement with a local carrier.
+                Often our customers want to get something up and running quickly to prove a concept or do a pilot, without
+                engaging with their local carrier.
+              </p>
+
+              <h4>
+                Bypassing Carriers
+              </h4>
+
+              <p>
+                It turns out that it's actually possible to access the local public switched telephone network (PSTN) without a commercial agreement with a local carrier.
+                All you need is a
+                <a href="https://en.wikipedia.org/wiki/VoIP_gateway" target="_blank" class="link">VoIP gateway <i class="fa fa-external-link"></i></a> and one or more SIM cards.
+                A VoIP gateway has interfaces to both IP networks and the PSTN and handles the bridging between them. One interface can be connected to the Internet and the other
+                to the PSTN, via SIM card(s) inserted into the VoIP gateway.
+                VoIP gateways range in size 1 from to 128 channels or more. The more channels you have the more concurrent calls you can support.
+              </p>
+
+              <p>
+                Today we're excited to announce official support for VoIP gateways on Somleng.
+              </p>
+
+              <p>
+                With this new feature customers can
+                <a href="https://app.somleng.org/users/sign_up" target="_blank" class="link">sign up <i class="fa fa-external-link"></i></a>
+                and connect their VoIP gateway to Somleng by
+                <a href="docs.html#client_gateway_configuration" target="_blank" class="link">configuring a client gateway connection <i class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                After the connection is configured, customers can programmatically make outbound calls through your VoIP gateway using the
+                <a href="docs/twilio_api" target="_blank" class="link">REST API <i class="fa fa-external-link"></i></a>,
+                and programmatically control both outbound and inbound calls via TwiML.
+              </p>
+
+              <p>
+                <em>
+                  Note: Using VoIP gateways is restricted in some countries.
+                  We recommend that you check your local laws and regulations before proceeding with
+                  this method.
+                </em>
+              </p>
+
+              <h4>
+                Network Providers
+              </h4>
+
+              <p>
+                This new feature also opens up new business opportunities for individuals or organizations to provide access to the
+                PSTN in their country via a VoIP gateway that they own or manage. We call this type of user a
+                <a href="docs.html#network_provider" target="_blank" class="link">Network Provider <i class="fa fa-external-link"></i></a>,
+                and like carriers, they can also create customer accounts on Somleng.
+              </p>
+
+              <p>
+                Any account that the Network Provider creates, is managed by them and has its own set of
+                <a href="docs/twilio_api" target="_blank" class="link">REST API <i class="fa fa-external-link"></i></a>
+                credentials and account management interface.
+                A network provider can therefore onboard their own customers,
+                by creating them an account and providing them with PSTN access through their VoIP gateway(s).
+              </p>
+
+              <p>
+                This can be combined with our
+                <a href="docs/#custom_domains" target="_blank" class="link">custom domains feature <i class="fa fa-external-link"></i></a>
+                feature resulting in a fully custom-branded experience for your customer.
+              </p>
+
+              <p>
+                We don't yet have a way for a network provider to monetize this business flow directly on the Somleng platform, but it's something we will consider
+                if enough users request this feature.
+              </p>
+
+              <h4>
+                Stay Tuned
+              </h4>
+
+              <p>
+                Currently our client gateway feature only supports Programmable Voice, but stay tuned because we're adding SMS support next!
+              </p>
+            </div>
+
             <div id="be-your-own-twilio">
 							<h2 class="page__main__title">
 								Be your own Twilio
@@ -122,7 +222,7 @@
               </p>
               <p>
                 With the release of our new
-                <a href="carrier_docs.html#custom_domains" target="_blank" class="link">custom domains <i class="fa fa-external-link"></i></a>
+                <a href="docs.html#custom_domains" target="_blank" class="link">custom domains <i class="fa fa-external-link"></i></a>
                 feature,
                 a carrier can now configure their own custom domain and branding, providing a fully branded CPaaS solution their platform customers.
               </p>
@@ -149,7 +249,7 @@
               <p>
                 Public sign ups are currently available for carriers only.
                 If you work for a carrier and are interested in trying things out please read through our
-                <a href="carrier_docs.html#custom_domains" target="_blank" class="link">carrier documentation <i class="fa fa-external-link"></i></a>,
+                <a href="docs.html" target="_blank" class="link">carrier documentation <i class="fa fa-external-link"></i></a>,
                 where you'll find link to sign up for a trial account.
               </p>
             </div>
@@ -263,7 +363,7 @@
               </p>
 
               <p>
-                Somleng's vision is a world where communications is accessible to everyone.
+                Somleng's vision is a world where communications are accessible to everyone.
                 In order to achieve this vision we need to think outside the box and provide a solution benefits
                 everyone, not just Big Tech.
               </p>
@@ -295,7 +395,7 @@
 
               <p>
                 Somleng now supports
-                <a href="carrier_docs.html#custom_domains" target="_blank" class="link">custom domains <i class="fa fa-external-link"></i></a>
+                <a href="docs.html#custom_domains" target="_blank" class="link">custom domains <i class="fa fa-external-link"></i></a>
                 allowing carriers to leverage Somleng's API and Dashboard, while keeping their own branding. Alternatively, since Somleng is 100% open source, local carriers can always host Somleng
                 on their own servers.
               </p>
