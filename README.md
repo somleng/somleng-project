@@ -1,18 +1,22 @@
 # The Somleng Project
 
-![Somleng](https://github.com/dwilkie/somleng-project/raw/gh-pages/images/talking_in_the_factory.jpg "Credit: Fani Llaurado")
+## About this Repository
 
-## What is The Somleng Project?
+This repository is the entry point for The Somleng Project. The README links to the individual software components that make up Somleng as well as the source code for [somleng.org](https://www.somleng.org).
 
-The Somleng Project is a collection of open source tools which provide a full-stack cloud communications platform. The goal of the project is to break down the economic and accessibility barriers to communications. Read more about Somleng on our website at [somleng.org](https://www.somleng.org).
+## What is Somleng?
 
-Our vision is a world where communications is accessible to everyone.
+Somleng is a collection of open source tools which provide a full-stack cloud communications platform. The goal of the project is to break down the economic and accessibility barriers to communications. Read more about Somleng on our website at [somleng.org](https://www.somleng.org).
 
-## How can I use it?
+> Our vision is a world where communications is accessible to everyone.
 
-Follow the [GETTING STARTED](https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md) guide to get Somleng up and running on your local development machine.
+You can use Somleng to roll out your own programmable voice and SMS to:
 
-## How it works?
+* 🏥 [Save lives](https://www.somleng.org/case_studies.html#early-warning-system-cambodia)
+* 🧒🏽 [Improve the lives of children](https://www.somleng.org/case_studies.html#mhealth-unicef-guatemala)
+* 🤑 [For fun or profit](https://www.somleng.org/case_studies.html#powering-cpaas-mexico)
+
+## How does it work?
 
 The diagram below shows how each component is connected together.
 
@@ -26,22 +30,40 @@ On the left hand side, applications such as [RapidPro](https://community.rapidpr
 
 SomlengSWITCH can be connected to carriers, VoIP gateways, SIM Boxes or even GSM modems in order to make or receive calls from the telephone network.
 
-More information on the various components are listed below. More detailed information about each components can be found in the individual project repositories.
+More information on the various components are listed below. More detailed information about each component can be found in the individual project repositories.
 
 ### Somleng
 
-[Somleng](https://github.com/somleng/somleng) is an Open Source Cloud Communications Platform as a Service (CPaaS). It contains an [Open Source implementation of Twilio's REST API](https://www.somleng.org/docs/twilio_api) as well as APIs and functionality for Carriers to onboard their own customers.
+[Somleng](https://github.com/somleng/somleng) is an Open Source Cloud Communications Platform as a Service (CPaaS). This is the core engine of Somleng. Some features include:
+
+* An open source implementation of Twilio's REST API for programmable voice and SMS.
+* White-label(able) dashboard.
 
 ### SomlengSWITCH
 
-[SomlengSWITCH](https://github.com/somleng/somleng-switch) is a the switching layer for Somleng. Some features include:
+[SomlengSWITCH](https://github.com/somleng/somleng-switch) is the low level switching layer for Somleng. Some features include:
 
 * TTS engines
 * Open source TwiML parser
 
 ### Somleng Simple Call Flow Manager (SCFM)
 
-[Somleng Simple Call Flow Manager (SCFM)](https://github.com/somleng/somleng-scfm) is an application which can be used to connect and process calls through Somleng (or Twilio). It can also be used as an alternative [RapidPro](https://community.rapidpro.io/) for enqueuing calls and handling inbound call flows.
+[Somleng Simple Call Flow Manager (SCFM)](https://github.com/somleng/somleng-scfm) is an application which can be used to connect and process calls through Somleng (or Twilio). Some features include:
+
+* Contact management
+* Callflow management
+
+## Documentation
+
+Below is a link to the documentation start page.
+
+* 📚 [Documentation](https://www.somleng.org/docs.html)
+
+## Getting Started
+
+We recommend you play around with our hosted version to get a feel for how the product works before trying to run it locally. You can find a link to the sign-up page in our [documentation](https://www.somleng.org/docs.html).
+
+Follow the [GETTING STARTED](https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md) guide to get Somleng up and running on your local development machine.
 
 ## Deployment
 
