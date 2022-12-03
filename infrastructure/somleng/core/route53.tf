@@ -28,6 +28,17 @@ resource "aws_route53_record" "somleng_org_txt" {
   ]
 }
 
+resource "aws_route53_record" "somleng_org_github" {
+  zone_id = aws_route53_zone.somleng_org.zone_id
+  name    = "_github-challenge-somleng-org"
+  type    = "TXT"
+  ttl     = "3600"
+
+  records = [
+    "489c3122c7",
+  ]
+}
+
 resource "aws_route53_record" "naked_redirect" {
   zone_id = aws_route53_zone.somleng_org.zone_id
   name    = ""
