@@ -92,19 +92,11 @@ resource "aws_iam_policy" "ci_deploy" {
     },
     {
       "Action": [
-        "ecs:DescribeServices",
-        "codedeploy:GetDeploymentGroup",
-        "codedeploy:CreateDeployment",
-        "codedeploy:GetDeployment",
-        "codedeploy:GetDeploymentConfig",
-        "codedeploy:RegisterApplicationRevision"
+        "ecs:DescribeServices"
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:ecs:::service/*",
-        "arn:aws:codedeploy:*:***:deploymentgroup:*",
-        "arn:aws:codedeploy:*:***:deploymentconfig:*",
-        "arn:aws:codedeploy:*:***:application:*"
+        "arn:aws:ecs:::service/*"
       ]
     },
     {

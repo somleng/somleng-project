@@ -25,10 +25,6 @@ output "db_security_group" {
   value = aws_security_group.db
 }
 
-output "codedeploy_role" {
-  value = aws_iam_role.codedeploy
-}
-
 output "logs_bucket" {
   value = aws_s3_bucket.logs
 }
