@@ -80,10 +80,13 @@
                   <a href="#accounts">Accounts</a>
                 </li>
                 <li>
-                  <a href="#sip_trunks">SIP Trunks</a>
+                  <a href="#phone_numbers">Phone Numbers</a>
                 </li>
                 <li>
-                  <a href="#phone_numbers">Phone Numbers</a>
+                  <a href="#voice">Voice</a>
+                </li>
+                <li>
+                  <a href="#messaging">Messaging</a>
                 </li>
                 <li>
                   <a href="#users">Users</a>
@@ -296,188 +299,6 @@
                   </ol>
                 </p>
               </div>
-              <div id="sip_trunks">
-                <h4>
-                  SIP Trunks
-                </h4>
-                <p>
-                  SIP Trunks are used to configure both inbound and outbound dialing, both to and from Somleng.
-                  We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by Somleng,
-                  and outbound dialing as calls originated by Somleng.
-                <p>
-                </p>
-                  When you create a SIP Trunk you first choose the authentication mode. There are two authentication modes available described below:
-                </p>
-                <p>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th style="text-align: left;">Authentication mode</th>
-                        <th style="text-align: left;">Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style="text-align: left;">IP Address</td>
-                        <td style="text-align: left;">
-                          Choose this mode if you <em>have</em> a public static IP address and <em>are not</em> behind a NAT.
-                          This mode is best suited for carriers and BYOC users.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: left;">Client Credentials</td>
-                        <td style="text-align: left;">
-                          Choose this mode if you <em>do not have</em> a public static IP address or <em>are</em> behind a NAT.
-                          This mode is best suited for network providers.
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </p>
-
-                <div id="sip_trunks_ip_address_configuration">
-                  <h5>
-                    IP Address Authentication
-                  </h5>
-                  <p>
-                    <em>Note: This mode is best suited for Carriers and BYOC users.</em>
-                  </p>
-
-                  <div id="sip_trunks_ip_address_configuration_inbound_dialing">
-                    <h6>
-                      Inbound Dialing
-                    </h6>
-
-                    <p>
-                      When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
-                    </p>
-                    <ol>
-                      <li>
-                        You <em>must</em> provide a public static IP address as the <em>Source IP</em>.
-                        This IP address is used to authenticate the carrier when inbound calls are received.
-                      </li>
-                      <li>
-                        You <em>must</em> connect to our public gateway via one of the IP addresses listed below:
-                        <ul>
-                          <li>
-                            52.74.4.205
-                          </li>
-                          <li>
-                            18.136.239.28
-                          </li>
-                          <li>
-                            3.0.30.251
-                          </li>
-                        </ul>
-                      </li>
-                    </ol>
-                  </div>
-
-                  <div id="sip_trunks_ip_address_configuration_outbound_dialing">
-                    <h6>
-                      Outbound Dialing
-                    </h6>
-
-                    <p>
-                      When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
-                    </p>
-                    <ol>
-                      <li>
-                        You <em>must</em> provide a host to connect to. You can specify your host as either a fully qualified domain name (FQDN) or IP address.
-                      </li>
-                      <li>
-                        You <em>must</em> allow the following IP address on your firewall:
-                        <ul>
-                          <li>
-                            13.250.230.15
-                          </li>
-                        </ul>
-                        Note: Both media and SIP is sent from this IP address.
-                      </li>
-                      <li>
-                        You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
-                      </li>
-                    </ol>
-                  </div>
-
-                  <p>
-                    To configure a SIP trunk via IP address authentication:
-                    <ol>
-                      <li>
-                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
-                      </li>
-                      <li>
-                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
-                      </li>
-                      <li>
-                        Under General, select <strong>IP address</strong> for Authentication mode.
-                      </li>
-                      <li>
-                        Under Inbound Dialing, enter a public static IP address for inbound call authentication.
-                      </li>
-                      <li>
-                        Under Outbound Dialing, enter a domain name or IP address for outbound calls.
-                      </li>
-                      <li>
-                        Choose <strong>Create SIP Trunk</strong>.
-                      </li>
-                    </ol>
-                  </p>
-
-                  <p>
-                    After you create your SIP Trunk you'll see the configuration details on the next screen.
-
-                    <img src="./images/sip_trunk-ip_address.png">
-                  </p>
-                </div>
-
-                <div id="sip_trunks_client_credentials_configuration">
-                  <h5>
-                    Client Credentials Authentication
-                  </h5>
-                  <p>
-                    <em>Note: This mode is best suited for Network Providers.</em>
-                  </p>
-
-                  <p>
-                    When you configure a SIP trunk via <strong>client credentials authentication</strong> you <em>don't need</em> a public
-                    status IP address. Instead you authenticate with Somleng via SIP registration. After you configure a SIP trunk in this mode
-                    you will be given a unique set of client credentials which can be used to authenticate with Somleng. These credentials
-                    can be used directly when configuring your <a href="#client_gateway_configuration" class="link">client gateway</a>.
-                  </p>
-
-                  <p>
-                    To configure a SIP trunk via client credentials authentication:
-                    <ol>
-                      <li>
-                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
-                      </li>
-                      <li>
-                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
-                      </li>
-                      <li>
-                        Under General, select <strong>Client credentials</strong> for Authentication mode.
-                      </li>
-                      <li>
-                        Under Inbound Dialing, it's recommended to select the default country code of the caller.
-                        This allows your VoIP gateway to work with national dialing numbers. Somleng will try to normalize
-                        number into E.164 format using this setting.
-                      </li>
-                      <li>
-                        Choose <strong>Create SIP Trunk</strong>.
-                      </li>
-                    </ol>
-                  </p>
-
-                  <p>
-                    After you create your SIP Trunk you'll see the generated credentials on the next screen.
-
-                    <img src="./images/sip_trunk-client_credentials.png">
-                  </p>
-
-                </div>
-              </div>
-
               <div id="phone_numbers">
                 <h4>
                   Phone Numbers
@@ -527,61 +348,325 @@
                     </li>
                   </ol>
                 </p>
+
+                <div id="import_phone_numbers">
+                  <h5>
+                    Import Phone Numbers
+                  </h5>
+                  <p>
+                    In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
+                    <ol>
+                      <li>
+                        From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
+                      </li>
+                      <li>
+                        Select the CSV file of phone numbers to import.
+                      </li>
+                      <li>
+                        Choose <strong>Upload</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Column Header</th>
+                          <th>Content</th>
+                          <th>Possible Values</th>
+                          <th>Example</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Number</td>
+                          <td>The phone number or short code</td>
+                          <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
+                          <td>1234</td>
+                        </tr>
+                        <tr>
+                          <td>Enabled</td>
+                          <td>Whether to enable or disable the phone number</td>
+                          <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
+                          <td><code>true</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </p>
+
+                  <h6>
+                    Sample CSV Data
+                  </h6>
+
+                  <pre>
+  Number,Enabled
+  1234,false
+  85512345678,true</pre>
+                </div>
               </div>
-              <div id="import_phone_numbers">
-                <h5>
-                  Import Phone Numbers
-                </h5>
+
+              <div id="voice">
+                <h4>
+                  Voice
+                </h4>
                 <p>
-                  In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
-                  <ol>
-                    <li>
-                      From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
-                    </li>
-                    <li>
-                      Select the CSV file of phone numbers to import.
-                    </li>
-                    <li>
-                      Choose <strong>Upload</strong>.
-                    </li>
-                  </ol>
+                  This section contains everything you need related to configuring programmable Voice.
                 </p>
 
+                <div id="sip_trunks">
+                  <h5>
+                    SIP Trunks
+                  </h5>
+                  <p>
+                    SIP Trunks are used to configure both inbound and outbound dialing, both to and from Somleng.
+                    We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by Somleng,
+                    and outbound dialing as calls originated by Somleng.
+                  <p>
+                  </p>
+                    When you create a SIP Trunk you first choose the authentication mode. There are two authentication modes available described below:
+                  </p>
+                  <p>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th style="text-align: left;">Authentication mode</th>
+                          <th style="text-align: left;">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="text-align: left;">IP Address</td>
+                          <td style="text-align: left;">
+                            Choose this mode if you <em>have</em> a public static IP address and <em>are not</em> behind a NAT.
+                            This mode is best suited for carriers and BYOC users.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align: left;">Client Credentials</td>
+                          <td style="text-align: left;">
+                            Choose this mode if you <em>do not have</em> a public static IP address or <em>are</em> behind a NAT.
+                            This mode is best suited for network providers.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </p>
+
+                  <div id="sip_trunks_ip_address_configuration">
+                    <h6>
+                      IP Address Authentication
+                    </h6>
+                    <p>
+                      <em>Note: This mode is best suited for Carriers and BYOC users.</em>
+                    </p>
+
+                    <div id="sip_trunks_ip_address_configuration_inbound_dialing">
+                      <h7>
+                        Inbound Dialing
+                      </h7>
+
+                      <p>
+                        When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                      </p>
+                      <ol>
+                        <li>
+                          You <em>must</em> provide a public static IP address as the <em>Source IP</em>.
+                          This IP address is used to authenticate the carrier when inbound calls are received.
+                        </li>
+                        <li>
+                          You <em>must</em> connect to our public gateway via one of the IP addresses listed below:
+                          <ul>
+                            <li>
+                              52.74.4.205
+                            </li>
+                            <li>
+                              18.136.239.28
+                            </li>
+                            <li>
+                              3.0.30.251
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </div>
+
+                    <div id="sip_trunks_ip_address_configuration_outbound_dialing">
+                      <h7>
+                        Outbound Dialing
+                      </h7>
+
+                      <p>
+                        When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                      </p>
+                      <ol>
+                        <li>
+                          You <em>must</em> provide a host to connect to. You can specify your host as either a fully qualified domain name (FQDN) or IP address.
+                        </li>
+                        <li>
+                          You <em>must</em> allow the following IP address on your firewall:
+                          <ul>
+                            <li>
+                              13.250.230.15
+                            </li>
+                          </ul>
+                          Note: Both media and SIP is sent from this IP address.
+                        </li>
+                        <li>
+                          You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
+                        </li>
+                      </ol>
+                    </div>
+
+                    <p>
+                      To configure a SIP trunk via IP address authentication:
+                      <ol>
+                        <li>
+                          Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                        </li>
+                        <li>
+                          Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                        </li>
+                        <li>
+                          Under General, select <strong>IP address</strong> for Authentication mode.
+                        </li>
+                        <li>
+                          Under Inbound Dialing, enter a public static IP address for inbound call authentication.
+                        </li>
+                        <li>
+                          Under Outbound Dialing, enter a domain name or IP address for outbound calls.
+                        </li>
+                        <li>
+                          Choose <strong>Create SIP Trunk</strong>.
+                        </li>
+                      </ol>
+                    </p>
+
+                    <p>
+                      After you create your SIP Trunk you'll see the configuration details on the next screen.
+
+                      <img src="./images/sip_trunk-ip_address.png">
+                    </p>
+                  </div>
+
+                  <div id="sip_trunks_client_credentials_configuration">
+                    <h6>
+                      Client Credentials Authentication
+                    </h6>
+                    <p>
+                      <em>Note: This mode is best suited for Network Providers.</em>
+                    </p>
+
+                    <p>
+                      When you configure a SIP trunk via <strong>client credentials authentication</strong> you <em>don't need</em> a public
+                      status IP address. Instead you authenticate with Somleng via SIP registration. After you configure a SIP trunk in this mode
+                      you will be given a unique set of client credentials which can be used to authenticate with Somleng. These credentials
+                      can be used directly when configuring your <a href="#client_gateway_configuration" class="link">client gateway</a>.
+                    </p>
+
+                    <p>
+                      To configure a SIP trunk via client credentials authentication:
+                      <ol>
+                        <li>
+                          Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                        </li>
+                        <li>
+                          Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                        </li>
+                        <li>
+                          Under General, select <strong>Client credentials</strong> for Authentication mode.
+                        </li>
+                        <li>
+                          Under Inbound Dialing, it's recommended to select the default country code of the caller.
+                          This allows your VoIP gateway to work with national dialing numbers. Somleng will try to normalize
+                          number into E.164 format using this setting.
+                        </li>
+                        <li>
+                          Choose <strong>Create SIP Trunk</strong>.
+                        </li>
+                      </ol>
+                    </p>
+
+                    <p>
+                      After you create your SIP Trunk you'll see the generated credentials on the next screen.
+
+                      <img src="./images/sip_trunk-client_credentials.png">
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div id="messaging">
+                <h4>
+                  Messaging
+                </h4>
                 <p>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Column Header</th>
-                        <th>Content</th>
-                        <th>Possible Values</th>
-                        <th>Example</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Number</td>
-                        <td>The phone number or short code</td>
-                        <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
-                        <td>1234</td>
-                      </tr>
-                      <tr>
-                        <td>Enabled</td>
-                        <td>Whether to enable or disable the phone number</td>
-                        <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
-                        <td><code>true</code></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  This section contains everything you need related to configuring programmable SMS.
                 </p>
 
-                <h6>
-                  Sample CSV Data
-                </h6>
+                <div id="sms_gateways">
+                  <h5>
+                    SMS Gateways
+                  </h5>
 
-                <pre>
-Number,Enabled
-1234,false
-85512345678,true</pre>
+                  <img src="./images/sms_gateway_diagram.png">
+
+                  <p>
+                    SMS Gateways are used by Somleng for SMS origination and termination.
+                    Configuring an SMS Gateway allows you to fully control your SMS infrastructure.
+                  </p>
+
+                  <p>
+                    When you configure an SMS gateway,
+                    you receive a <em>Device Token</em> which uniquely identifies your SMS Gateway.
+                    You'll then need to install the
+                    <a href="https://github.com/somleng/sms-gateway/releases" class="link" target="_blank">Somleng SMS Gateway agent app <i class="fa fa-external-link"></i></a> on your on-premise infrastructure.
+                    Normally, you'll only need to configure a single SMS Gateway, however if you require multiple SMS gateways, you'll need to run an instance of the
+                    <a href="https://github.com/somleng/sms-gateway/releases" class="link" target="_blank">agent app <i class="fa fa-external-link"></i></a>
+                    for each one.
+                  </p>
+
+                  <p>
+                    Once the agent app is running on your local infrastructure and connected to Somleng,
+                    the SMS Gateway will show <em>Connected</em> on the Dashboard.
+                  </p>
+
+                  <p>
+                    To configure an SMS Gateway:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SMS Gateways</strong> under <strong>Messaging</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SMS Gateway.
+                      </li>
+                      <li>
+                        Enter a name for your SMS Gateway.
+                      </li>
+                      <li>
+                        Enter the maximum number of channels your SMS gateway supports. Leave it blank for unlimited channels.
+                      </li>
+                      <li>
+                        Choose <strong>Create SMS gateway</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SMS Gateway you'll see the the connection status and device token on the next screen.
+                  </p>
+                </div>
+
+                <div id="sms_gateway_channel_groups">
+                  <h5>
+                    Channel Groups
+                  </h5>
+                </div>
+
+                <div id="messaging_services">
+                  <h5>
+                    Messaging Groups
+                  </h5>
+                </div>
               </div>
               <div id="users">
                 <h4>
