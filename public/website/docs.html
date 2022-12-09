@@ -80,18 +80,22 @@
                   <a href="#accounts">Accounts</a>
                 </li>
                 <li>
-                  <a href="#sip_trunks">SIP Trunks</a>
+                  <a href="#phone_numbers">Phone Numbers</a>
                 </li>
                 <li>
-                  <a href="#phone_numbers">Phone Numbers</a>
+                  <a href="#voice">Voice</a>
+                </li>
+                <li>
+                  <a href="#messaging">Messaging</a>
                 </li>
                 <li>
                   <a href="#users">Users</a>
                 </li>
               </ul>
             </li>
-            <li><a href="#custom_domains">Custom Domains</a></li>
-            <li><a href="#client_gateway_configuration">Client Gateway Configuration</a></li>
+            <li><a href="#custom_domains_configuration_guide">Custom Domain Configuration Guide</a></li>
+            <li><a href="#client_gateway_configuration_guide">Client Gateway Configuration Guide</a></li>
+            <li><a href="#sms_gateway_configuration_guide">SMS Gateway Configuration Guide</a></li>
             <li><a href="#rtp_symmetric_latching">RTP and Symmetric Latching</a></li>
             <li><a href="docs/carrier_api" target="_blank">API Reference</a> <i class="fa fa-external-link"></i></li>
             <li><a href="docs/twilio_api" target="_blank">Account API Reference</a> <i class="fa fa-external-link"></i></li>
@@ -196,7 +200,7 @@
                 <p>
                   You must sign into the dashboard <em>via your subdomain</em> to use Somleng.
                   The sign in URL is <code>https://your-subdomain.app.somleng.org/users/sign_in</code>.
-                  If you have setup a <a href="#custom_domains" class="link"> custom domain</a> all users may access
+                  If you have setup a <a href="#custom_domains_configuration_guide" class="link"> custom domain</a> all users may access
                   the dashboard through your custom domain as well.
                 </p>
                 <p>
@@ -215,7 +219,7 @@
                   Under General, you'll see your company's name, subdomain, website, country and logo.
                   Under Developer, you'll see your <a href="docs/carrier_api" target="_blank" class="link">Carrier API <i class="fa fa-external-link"></i></a> Key,
                   as well as your webhook URL and signing secret for <a href="docs/carrier_api#webhooks" target="_blank" class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
-                  If you've setup a <a href="#custom_domains" class="link"> custom domain</a> this will appear under the Custom Domain section.
+                  If you've setup a <a href="#custom_domains_configuration_guide" class="link"> custom domain</a> this will appear under the Custom Domain section.
                 </p>
                 <p>
                   To update your carrier settings:
@@ -296,188 +300,6 @@
                   </ol>
                 </p>
               </div>
-              <div id="sip_trunks">
-                <h4>
-                  SIP Trunks
-                </h4>
-                <p>
-                  SIP Trunks are used to configure both inbound and outbound dialing, both to and from Somleng.
-                  We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by Somleng,
-                  and outbound dialing as calls originated by Somleng.
-                <p>
-                </p>
-                  When you create a SIP Trunk you first choose the authentication mode. There are two authentication modes available described below:
-                </p>
-                <p>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th style="text-align: left;">Authentication mode</th>
-                        <th style="text-align: left;">Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style="text-align: left;">IP Address</td>
-                        <td style="text-align: left;">
-                          Choose this mode if you <em>have</em> a public static IP address and <em>are not</em> behind a NAT.
-                          This mode is best suited for carriers and BYOC users.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: left;">Client Credentials</td>
-                        <td style="text-align: left;">
-                          Choose this mode if you <em>do not have</em> a public static IP address or <em>are</em> behind a NAT.
-                          This mode is best suited for network providers.
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </p>
-
-                <div id="sip_trunks_ip_address_configuration">
-                  <h5>
-                    IP Address Authentication
-                  </h5>
-                  <p>
-                    <em>Note: This mode is best suited for Carriers and BYOC users.</em>
-                  </p>
-
-                  <div id="sip_trunks_ip_address_configuration_inbound_dialing">
-                    <h6>
-                      Inbound Dialing
-                    </h6>
-
-                    <p>
-                      When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
-                    </p>
-                    <ol>
-                      <li>
-                        You <em>must</em> provide a public static IP address as the <em>Source IP</em>.
-                        This IP address is used to authenticate the carrier when inbound calls are received.
-                      </li>
-                      <li>
-                        You <em>must</em> connect to our public gateway via one of the IP addresses listed below:
-                        <ul>
-                          <li>
-                            52.74.4.205
-                          </li>
-                          <li>
-                            18.136.239.28
-                          </li>
-                          <li>
-                            3.0.30.251
-                          </li>
-                        </ul>
-                      </li>
-                    </ol>
-                  </div>
-
-                  <div id="sip_trunks_ip_address_configuration_outbound_dialing">
-                    <h6>
-                      Outbound Dialing
-                    </h6>
-
-                    <p>
-                      When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
-                    </p>
-                    <ol>
-                      <li>
-                        You <em>must</em> provide a host to connect to. You can specify your host as either a fully qualified domain name (FQDN) or IP address.
-                      </li>
-                      <li>
-                        You <em>must</em> allow the following IP address on your firewall:
-                        <ul>
-                          <li>
-                            13.250.230.15
-                          </li>
-                        </ul>
-                        Note: Both media and SIP is sent from this IP address.
-                      </li>
-                      <li>
-                        You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
-                      </li>
-                    </ol>
-                  </div>
-
-                  <p>
-                    To configure a SIP trunk via IP address authentication:
-                    <ol>
-                      <li>
-                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
-                      </li>
-                      <li>
-                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
-                      </li>
-                      <li>
-                        Under General, select <strong>IP address</strong> for Authentication mode.
-                      </li>
-                      <li>
-                        Under Inbound Dialing, enter a public static IP address for inbound call authentication.
-                      </li>
-                      <li>
-                        Under Outbound Dialing, enter a domain name or IP address for outbound calls.
-                      </li>
-                      <li>
-                        Choose <strong>Create SIP Trunk</strong>.
-                      </li>
-                    </ol>
-                  </p>
-
-                  <p>
-                    After you create your SIP Trunk you'll see the configuration details on the next screen.
-
-                    <img src="./images/sip_trunk-ip_address.png">
-                  </p>
-                </div>
-
-                <div id="sip_trunks_client_credentials_configuration">
-                  <h5>
-                    Client Credentials Authentication
-                  </h5>
-                  <p>
-                    <em>Note: This mode is best suited for Network Providers.</em>
-                  </p>
-
-                  <p>
-                    When you configure a SIP trunk via <strong>client credentials authentication</strong> you <em>don't need</em> a public
-                    status IP address. Instead you authenticate with Somleng via SIP registration. After you configure a SIP trunk in this mode
-                    you will be given a unique set of client credentials which can be used to authenticate with Somleng. These credentials
-                    can be used directly when configuring your <a href="#client_gateway_configuration" class="link">client gateway</a>.
-                  </p>
-
-                  <p>
-                    To configure a SIP trunk via client credentials authentication:
-                    <ol>
-                      <li>
-                        Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
-                      </li>
-                      <li>
-                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
-                      </li>
-                      <li>
-                        Under General, select <strong>Client credentials</strong> for Authentication mode.
-                      </li>
-                      <li>
-                        Under Inbound Dialing, it's recommended to select the default country code of the caller.
-                        This allows your VoIP gateway to work with national dialing numbers. Somleng will try to normalize
-                        number into E.164 format using this setting.
-                      </li>
-                      <li>
-                        Choose <strong>Create SIP Trunk</strong>.
-                      </li>
-                    </ol>
-                  </p>
-
-                  <p>
-                    After you create your SIP Trunk you'll see the generated credentials on the next screen.
-
-                    <img src="./images/sip_trunk-client_credentials.png">
-                  </p>
-
-                </div>
-              </div>
-
               <div id="phone_numbers">
                 <h4>
                   Phone Numbers
@@ -488,9 +310,18 @@
                   When you create a phone number you can optionally assign it to an account.
                 </p>
                 <p>
-                  Once provisioned and assigned to an account, phone numbers can be configured with a Voice URL
-                  which returns <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a> for controlling the call.
-                  This can either be done by the carrier or by the account owner (for <a href="#customer_managed_accounts" class="link">customer managed accounts</a>).
+                  Once provisioned and assigned to an account, phone numbers can then be configured for inbound dialing and/or inbound messaging.
+                </p>
+                <p>
+                  To configure inbound dialing, set the Voice URL which should return valid
+                  <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML for Programmable Voice <i class="fa fa-external-link"></i></a>
+                </p>
+                <p>
+                  To configure inbound messaging, set the SMS URL which should return valid
+                  <a href="https://www.twilio.com/docs/messaging/twiml" class="link" target="_blank">TwiML for Programmable SMS <i class="fa fa-external-link"></i></a>
+                </p>
+                <p>
+                  This configuration can either be done by the carrier or by an account admin (for <a href="#customer_managed_accounts" class="link">customer managed accounts</a>).
                 </p>
                 <p>
                   To create a phone number via the Dashboard:
@@ -519,69 +350,467 @@
                       From the gear icon <i class="fas fa-cog"></i> select <strong>Configure</strong>.
                     </li>
                     <li>
-                      Fill out the form specifying a Voice URL and optionally a Status Callback URL.
-                      The Voice URL should return valid <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a> and will be executed when an inbound call is received by Somleng.
+                      Optionally configure the phone number to handle inbound calls.
+                      <ul>
+                        <li>
+                          Under <strong>Voice</strong>, specify a Voice URL and Voice Method. This will configure your phone number for inbound dialing.
+                          The Voice URL should return valid <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML for Programmable Voice <i class="fa fa-external-link"></i></a> and will be executed when an inbound call is received by Somleng.
+                        </li>
+                        <li>
+                          Optionally configure a Status Callback URL and Status Callback Method which will be used to post status updates for inbound calls to this number.
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      Optionally configure the phone number to handle inbound messages.
+                      <ul>
+                        <li>
+                          Under <strong>Messaging</strong>, specify a SMS URL and SMS Method. This will configure your phone number for inbound messaging.
+                          The SMS URL should return valid <a href="https://www.twilio.com/docs/messaging/twiml" class="link" target="_blank">TwiML for Programmable SMS <i class="fa fa-external-link"></i></a> and will be executed when an inbound message is received by Somleng.
+                        </li>
+                        <li>
+                          Optionally you can configure a
+                          <a href="#messaging_services" class="link">Messaging Service</a>
+                          instead of configuring each phone number individually.
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       Choose <strong>Update Configuration</strong>.
                     </li>
                   </ol>
                 </p>
+
+                <p>
+                  After you have configured a phone number, the configuration will be shown on the next screen.
+                </p>
+
+                <img src="./images/phone_number_sms-configure.png">
+
+                <div id="import_phone_numbers">
+                  <h5>
+                    Import Phone Numbers
+                  </h5>
+                  <p>
+                    In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
+                    <ol>
+                      <li>
+                        From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
+                      </li>
+                      <li>
+                        Select the CSV file of phone numbers to import.
+                      </li>
+                      <li>
+                        Choose <strong>Upload</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Column Header</th>
+                          <th>Content</th>
+                          <th>Possible Values</th>
+                          <th>Example</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Number</td>
+                          <td>The phone number or short code</td>
+                          <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
+                          <td>1234</td>
+                        </tr>
+                        <tr>
+                          <td>Enabled</td>
+                          <td>Whether to enable or disable the phone number</td>
+                          <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
+                          <td><code>true</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </p>
+
+                  <h6>
+                    Sample CSV Data
+                  </h6>
+
+                  <pre>
+  Number,Enabled
+  1234,false
+  85512345678,true</pre>
+                </div>
               </div>
-              <div id="import_phone_numbers">
-                <h5>
-                  Import Phone Numbers
-                </h5>
+
+              <div id="voice">
+                <h4>
+                  Voice
+                </h4>
                 <p>
-                  In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
-                  <ol>
-                    <li>
-                      From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
-                    </li>
-                    <li>
-                      Select the CSV file of phone numbers to import.
-                    </li>
-                    <li>
-                      Choose <strong>Upload</strong>.
-                    </li>
-                  </ol>
+                  This section contains everything you need related to configuring programmable Voice.
                 </p>
 
+                <div id="sip_trunks">
+                  <h5>
+                    SIP Trunks
+                  </h5>
+                  <p>
+                    SIP Trunks are used to configure both inbound and outbound dialing, both to and from Somleng.
+                    We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by Somleng,
+                    and outbound dialing as calls originated by Somleng.
+                  <p>
+                  </p>
+                    When you create a SIP Trunk you first choose the authentication mode. There are two authentication modes available described below:
+                  </p>
+                  <p>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th style="text-align: left;">Authentication mode</th>
+                          <th style="text-align: left;">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="text-align: left;">IP Address</td>
+                          <td style="text-align: left;">
+                            Choose this mode if you <em>have</em> a public static IP address and <em>are not</em> behind a NAT.
+                            This mode is best suited for carriers and BYOC users.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align: left;">Client Credentials</td>
+                          <td style="text-align: left;">
+                            Choose this mode if you <em>do not have</em> a public static IP address or <em>are</em> behind a NAT.
+                            This mode is best suited for network providers.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </p>
+
+                  <div id="sip_trunks_ip_address_configuration">
+                    <h6>
+                      IP Address Authentication
+                    </h6>
+                    <p>
+                      <em>Note: This mode is best suited for Carriers and BYOC users.</em>
+                    </p>
+
+                    <div id="sip_trunks_ip_address_configuration_inbound_dialing">
+                      <h7>
+                        Inbound Dialing
+                      </h7>
+
+                      <p>
+                        When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                      </p>
+                      <ol>
+                        <li>
+                          You <em>must</em> provide a public static IP address as the <em>Source IP</em>.
+                          This IP address is used to authenticate the carrier when inbound calls are received.
+                        </li>
+                        <li>
+                          You <em>must</em> connect to our public gateway via one of the IP addresses listed below:
+                          <ul>
+                            <li>
+                              52.74.4.205
+                            </li>
+                            <li>
+                              18.136.239.28
+                            </li>
+                            <li>
+                              3.0.30.251
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </div>
+
+                    <div id="sip_trunks_ip_address_configuration_outbound_dialing">
+                      <h7>
+                        Outbound Dialing
+                      </h7>
+
+                      <p>
+                        When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP address authentication</strong> the following rules apply:
+                      </p>
+                      <ol>
+                        <li>
+                          You <em>must</em> provide a host to connect to. You can specify your host as either a fully qualified domain name (FQDN) or IP address.
+                        </li>
+                        <li>
+                          You <em>must</em> allow the following IP address on your firewall:
+                          <ul>
+                            <li>
+                              13.250.230.15
+                            </li>
+                          </ul>
+                          Note: Both media and SIP is sent from this IP address.
+                        </li>
+                        <li>
+                          You <em>must</em> support NAT Traversal and Symmetric Latching. <a href="#rtp_symmetric_latching" class="link">Read more</a>.
+                        </li>
+                      </ol>
+                    </div>
+
+                    <p>
+                      To configure a SIP trunk via IP address authentication:
+                      <ol>
+                        <li>
+                          Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                        </li>
+                        <li>
+                          Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                        </li>
+                        <li>
+                          Under General, select <strong>IP address</strong> for Authentication mode.
+                        </li>
+                        <li>
+                          Under Inbound Dialing, enter a public static IP address for inbound call authentication.
+                        </li>
+                        <li>
+                          Under Outbound Dialing, enter a domain name or IP address for outbound calls.
+                        </li>
+                        <li>
+                          Choose <strong>Create SIP Trunk</strong>.
+                        </li>
+                      </ol>
+                    </p>
+
+                    <p>
+                      After you create your SIP Trunk you'll see the configuration details on the next screen.
+
+                      <img src="./images/sip_trunk-ip_address.png">
+                    </p>
+                  </div>
+
+                  <div id="sip_trunks_client_credentials_configuration">
+                    <h6>
+                      Client Credentials Authentication
+                    </h6>
+                    <p>
+                      <em>Note: This mode is best suited for Network Providers.</em>
+                    </p>
+
+                    <p>
+                      When you configure a SIP trunk via <strong>client credentials authentication</strong> you <em>don't need</em> a public
+                      status IP address. Instead you authenticate with Somleng via SIP registration. After you configure a SIP trunk in this mode
+                      you will be given a unique set of client credentials which can be used to authenticate with Somleng. These credentials
+                      can be used directly when configuring your <a href="#client_gateway_configuration_guide" class="link">client gateway</a>.
+                    </p>
+
+                    <p>
+                      To configure a SIP trunk via client credentials authentication:
+                      <ol>
+                        <li>
+                          Sign in to the Dashboard and from the side-navigation, click <strong>SIP Trunks</strong>.
+                        </li>
+                        <li>
+                          Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SIP trunk.
+                        </li>
+                        <li>
+                          Under General, select <strong>Client credentials</strong> for Authentication mode.
+                        </li>
+                        <li>
+                          Under Inbound Dialing, it's recommended to select the default country code of the caller.
+                          This allows your VoIP gateway to work with national dialing numbers. Somleng will try to normalize
+                          number into E.164 format using this setting.
+                        </li>
+                        <li>
+                          Choose <strong>Create SIP Trunk</strong>.
+                        </li>
+                      </ol>
+                    </p>
+
+                    <p>
+                      After you create your SIP Trunk you'll see the generated credentials on the next screen.
+
+                      <img src="./images/sip_trunk-client_credentials.png">
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div id="messaging">
+                <h4>
+                  Messaging
+                </h4>
                 <p>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Column Header</th>
-                        <th>Content</th>
-                        <th>Possible Values</th>
-                        <th>Example</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Number</td>
-                        <td>The phone number or short code</td>
-                        <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
-                        <td>1234</td>
-                      </tr>
-                      <tr>
-                        <td>Enabled</td>
-                        <td>Whether to enable or disable the phone number</td>
-                        <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
-                        <td><code>true</code></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  This section contains everything you need related to configuring programmable SMS.
                 </p>
 
-                <h6>
-                  Sample CSV Data
-                </h6>
+                <div id="sms_gateways">
+                  <h5>
+                    SMS Gateways
+                  </h5>
 
-                <pre>
-Number,Enabled
-1234,false
-85512345678,true</pre>
+                  <p>
+                    SMS Gateways are used by Somleng for SMS origination and termination.
+                    Configuring an SMS Gateway allows you to fully control your own SMS infrastructure.
+                  </p>
+
+                  <p>
+                    When you configure an SMS gateway on the Dashboard,
+                    you receive a <em>Device Token</em> which uniquely identifies your SMS Gateway.
+                    You'll then need to install the
+                    <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">Somleng SMS Gateway App <i class="fa fa-external-link"></i></a>
+                    on your on-premise or cloud infrastructure.
+                    Normally, you'll only need to configure a single SMS Gateway, however if you require multiple SMS gateways, you'll need to run an instance of the
+                    for each one. Once the app is running on your local infrastructure and connected to Somleng,
+                    the SMS Gateway will show <em>Connected</em> on the Dashboard.
+                  </p>
+
+                  <p>
+                    To configure an SMS Gateway:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SMS Gateways</strong> under <strong>Messaging</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SMS Gateway.
+                      </li>
+                      <li>
+                        Enter a name for your SMS Gateway.
+                      </li>
+                      <li>
+                        Enter the maximum number of channels your SMS gateway supports. Leave it blank for unlimited channels.
+                      </li>
+                      <li>
+                        Choose <strong>Create SMS gateway</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SMS Gateway you'll see your <em>Device Token</em> on the next screen.
+                  </p>
+
+                  <img src="./images/sms_gateway.png">
+                </div>
+
+                <div id="sms_gateway_channel_groups">
+                  <h5>
+                    Channel Groups
+                  </h5>
+
+                  <p>
+                    An SMS gateway channel group allows you control which channels are used by your SMS Gateway to terminate outbound messages.
+                    This is mainly used by network providers who connect via a GSM Gateway.
+                  </p>
+
+                  <p>
+                    For example let's assume your GSM Gateway has 4 available channels.
+                    Now, let's assume you insert 2 SIM cards belong to a carrier called "Smart", 1 SIM card belonging to a carrier called "Metfone", and
+                    another SIM card belonging to a carrier called "Cellcard".
+                  </p>
+
+                  <p>
+                    Channel groups allow you to specify which messages will be routed through the "Smart" SIM cards, which messages
+                    will be routed through the "Metfone" SIM cards and which messages will be routed through the "Cellcard" SIM cards.
+                  </p>
+
+                  <p>
+                    To configure a Channel Group:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>Channel Groups</strong> under <strong>Messaging</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new Channel Group.
+                      </li>
+                      <li>
+                        Enter a name for your Channel Group.
+                      </li>
+                      <li>
+                        Assign the channel group to an SMS Gateway.
+                      </li>
+                      <li>
+                         Specify a comma separated list of prefixes (including the country code) for the Channel Group. This list is used to
+                         match the channel group by the destination number of an outbound message.
+                      </li>
+                      <li>
+                        Select the channels that you want to associate with the channel group. The available channels are derived from the maximum
+                        number of channels you specified on your SMS Gateway.
+                      </li>
+                      <li>
+                        Choose <strong>Create Channel group</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you have created your Channel Group you can see the configuration details.
+                  </p>
+
+                  <img src="./images/messaging_channel_group.png">
+                </div>
+
+                <div id="messaging_services">
+                  <h5>
+                    Messaging Services
+                  </h5>
+
+                  <p>
+                    Messaging services allow you to apply messaging configuration to of a group of phone numbers, rather than having to configure each
+                    one individually.
+                  </p>
+
+                  <p>
+                    To configure an Messaging Service:
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>Messaging Services</strong> under <strong>Messaging</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new Messaging Service.
+                      </li>
+                      <li>
+                        Enter a name for your Messaging Service.
+                      </li>
+                      <li>
+                        Choose <strong>Next</strong>.
+                      </li>
+                      <li>
+                         Add phone numbers to your Messaging Service by selecting them from the Sender Pool. Note these phone numbers must already
+                         be assigned to the account you selected above.
+                      </li>
+                      <li>
+                        Choose the default behavior for inbound messages received by the numbers in the pool. You can either:
+                        <ul>
+                          <li>
+                            Defer to sender's webhook (Default). This will fallback to configuration for the individual phone number.
+                          </li>
+                          <li>
+                            Drop the message. Your application will ignore inbound messages. You won't be charged for them and they won't
+                            show up on the dashboard.
+                          </li>
+                          <li>
+                            Send a webhook. Invoke a HTTP webhook for all incoming messages in the sender pool.
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        If you chose <em>Send a webhook</em> in the previous step you must enter a Inbound Request URL and Inbound request method to request for incoming messages.
+                      </li>
+                      <li>
+                        Optionally configure a Status Callback URL for all outbound messages in the sender pool.
+                      </li>
+                      <li>
+                        Configure Smart encoding for outbound messages. If this is turned on Smart encoding will apply to all outbound messages in the number pool.
+                      </li>
+                      <li>
+                        Choose <strong>Create Messaging service</strong>.
+                      </li>
+                    </ol>
+                  </p>
+                  <p>
+                    After you have configured your messaging service you can see the configuration details.
+                  </p>
+
+                  <img src="./images/messaging_service.png">
+                </div>
               </div>
               <div id="users">
                 <h4>
@@ -613,9 +842,9 @@ Number,Enabled
               </div>
             </div>
 
-            <div id="custom_domains">
+            <div id="custom_domains_configuration_guide">
               <h3>
-                Custom Domains
+                Custom Domain Configuration Guide
               </h3>
 
               <p>
@@ -632,9 +861,9 @@ Number,Enabled
                   When you setup a custom domain you need to setup proxy between your domain and Somleng
                   in order for SSL termination to work correctly.
                   Below we describe two methods for doing this via
-                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a>
+                  <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a>
                   or
-                  <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                  <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>.
                   We recommend using AWS Cloudfront unless your have specific custom
                   requirements or you cannot use AWS.
                 </p>
@@ -649,26 +878,26 @@ Number,Enabled
                   Follow the steps below to configure your custom domain:
                   <ol>
                     <li>
-                      Setup a reverse proxy via <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended)
-                      or <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                      Setup a reverse proxy via <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended)
+                      or <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>.
                     </li>
                     <li>
-                      <a href="#custom_domains_testing" class="link">Test out your custom domain</a>.
+                      <a href="#custom_domains_configuration_guide_testing" class="link">Test out your custom domain</a>.
                     </li>
                     <li>
-                      <a href="#custom_domains_configure_somleng_dashboard" class="link">Configure your custom domain via the Somleng Dashboard</a>.
+                      <a href="#custom_domains_configuration_guide_configure_somleng_dashboard" class="link">Configure your custom domain via the Somleng Dashboard</a>.
                     </li>
                   </ol>
                 </p>
               </div>
 
-              <div id="custom_domains_aws_cloudfront">
+              <div id="custom_domains_configuration_guide_aws_cloudfront">
                 <h4>
                   1(a). Configure an AWS Cloudfront Distribution (Recommended)
                 </h4>
 
                 <p>
-                  <em>Skip this step if you prefer to use <a href="#custom_domains_nginx" class="link">Nginx</a> instead.</em>
+                  <em>Skip this step if you prefer to use <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a> instead.</em>
                 </p>
 
                 <p>
@@ -1004,13 +1233,13 @@ module "somleng_proxy_api" {
                 </p>
               </div>
 
-              <div id="custom_domains_nginx">
+              <div id="custom_domains_configuration_guide_nginx">
                 <h4>
                   1(b). Nginx Reverse Proxy
                 </h4>
 
                 <p>
-                  <em>Skip this step if you prefer to use <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended) instead.</em>
+                  <em>Skip this step if you prefer to use <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a> (recommended) instead.</em>
                 </p>
 
                 <p>
@@ -1048,15 +1277,15 @@ module "somleng_proxy_api" {
                 </p>
               </div>
 
-              <div id="custom_domains_testing">
+              <div id="custom_domains_configuration_guide_testing">
                 <h4>
                   2. Test your custom domain
                 </h4>
 
                 <p>
                   After you have setup your reverse proxy via
-                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
-                  <a href="#custom_domains_nginx" class="link">Nginx</a>
+                  <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a> or
+                  <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>
                   you can test it out by going to <strong>your-domain.example.com</strong>.
                   You should see your carrier logo and the sign in page.
                 </p>
@@ -1067,7 +1296,7 @@ module "somleng_proxy_api" {
                 </p>
               </div>
 
-              <div id="custom_domains_configure_somleng_dashboard">
+              <div id="custom_domains_configuration_guide_configure_somleng_dashboard">
                 <h4>
                   3. Configure your custom domain via the Somleng Dashboard.
                 </h4>
@@ -1075,8 +1304,8 @@ module "somleng_proxy_api" {
                 <p>
                   The final step is to configure your custom domain via the Somleng Dashboard.
                   Note: This step should only be done after you have setup and tested your reverse proxy via
-                  <a href="#custom_domains_aws_cloudfront" class="link">AWS Cloudfront</a> or
-                  <a href="#custom_domains_nginx" class="link">Nginx</a>.
+                  <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a> or
+                  <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>.
                 </p>
 
                 <ol>
@@ -1114,9 +1343,9 @@ module "somleng_proxy_api" {
               </div>
             </div>
 
-            <div id="client_gateway_configuration">
+            <div id="client_gateway_configuration_guide">
               <h3>
-                Client Gateway Configuration
+                Client Gateway Configuration Guide
               </h3>
 
               <p>
@@ -1134,7 +1363,7 @@ module "somleng_proxy_api" {
                 </em>
               </p>
 
-              <div id="client_gateway_configuration_how_it_works">
+              <div id="client_gateway_configuration_guide_how_it_works">
                 <h4>
                   How it works
                 </h4>
@@ -1151,7 +1380,7 @@ module "somleng_proxy_api" {
                 </p>
               </div>
 
-              <div id="client_gateway_configuration_overview">
+              <div id="client_gateway_configuration_guide_overview">
                 <h4>
                   Configuration Overview
                 </h4>
@@ -1171,22 +1400,22 @@ module "somleng_proxy_api" {
 
                 <ol>
                   <li>
-                    <a href="#client_gateway_configuration_instructions_sip_trunk" class="link">
+                    <a href="#client_gateway_configuration_guide_instructions_sip_trunk" class="link">
                       Create a SIP Trunk
                     </a> to obtain your SIP credentials.
                   </li>
                   <li>
-                    <a href="#client_gateway_configuration_instructions_account" class="link">
+                    <a href="#client_gateway_configuration_guide_instructions_account" class="link">
                       Create an account
                     </a> to obtain your Account SID and Auth Token for outbound dialing.
                   </li>
                   <li>
-                    <a href="#client_gateway_configuration_instructions_phone_number" class="link">
+                    <a href="#client_gateway_configuration_guide_instructions_phone_number" class="link">
                       Create a Phone Number
                     </a> for inbound dialing.
                   </li>
                   <li>
-                    <a href="#client_gateway_configuration_instructions_voip_gateway" class="link">
+                    <a href="#client_gateway_configuration_guide_instructions_voip_gateway" class="link">
                       Configure your VoIP Gateway
                     </a> to connect to Somleng.
                   </li>
@@ -1208,8 +1437,8 @@ module "somleng_proxy_api" {
                 </p>
               </div>
 
-              <div id="client_gateway_configuration_instructions">
-                <div id="client_gateway_configuration_instructions_sip_trunk">
+              <div id="client_gateway_configuration_guide_instructions">
+                <div id="client_gateway_configuration_guide_instructions_sip_trunk">
                   <h4>
                     1. Create a SIP Trunk
                   </h4>
@@ -1245,10 +1474,10 @@ module "somleng_proxy_api" {
                     After you have created a SIP trunk you will see your client credentials on the next screen:
                   </p>
 
-                  <img id="client_gateway_configuration_instructions_sip_trunk_client_credentials" src="./images/sip_trunk-client_credentials.png">
+                  <img id="client_gateway_configuration_guide_instructions_sip_trunk_client_credentials" src="./images/sip_trunk-client_credentials.png">
                 </div>
 
-                <div id="client_gateway_configuration_instructions_account">
+                <div id="client_gateway_configuration_guide_instructions_account">
                   <h4>
                     2. Create an Account
                   </h4>
@@ -1285,16 +1514,16 @@ module "somleng_proxy_api" {
                     After you have created your account, the SID and Auth Token are shown on the next screen:
                   </p>
 
-                  <img id="client_gateway_configuration_instructions_account_credentials" src="./images/account.png">
+                  <img id="client_gateway_configuration_guide_instructions_account_credentials" src="./images/account.png">
                 </div>
 
-                <div id="client_gateway_configuration_instructions_phone_number">
+                <div id="client_gateway_configuration_guide_instructions_phone_number">
                   <h4>
                     3. Create a Phone Number
                   </h4>
 
                   <p>
-                    Create a new <a href="#phone_numbers" class="link">Phone Number</a> for inbound dialing.
+                    Create a new <a href="#phone_numbers" class="link">Phone Number</a> and configure it for inbound dialing.
                   </p>
 
                   <ol>
@@ -1315,8 +1544,6 @@ module "somleng_proxy_api" {
                     </li>
                   </ol>
 
-                  <img src="./images/phone_number-new.png">
-
                   <p>
                     After you have created your phone number, you can configure it on the next screen:
                   </p>
@@ -1329,7 +1556,7 @@ module "somleng_proxy_api" {
                     </li>
                     <li>
                       Configure the phone number by entering a Voice URL that returns valid
-                      <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i class="fa fa-external-link"></i></a>.
+                      <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML for Programmable Voice <i class="fa fa-external-link"></i></a>.
                     </li>
                     <li>
                       Configure other optional parameters for the phone number as necessary.
@@ -1342,7 +1569,7 @@ module "somleng_proxy_api" {
                   <img src="./images/phone_number-configure.png">
                 </div>
 
-                <div id="client_gateway_configuration_instructions_voip_gateway">
+                <div id="client_gateway_configuration_guide_instructions_voip_gateway">
                   <h4>
                     4. Configure your VoIP gateway
                   </h4>
@@ -1353,13 +1580,13 @@ module "somleng_proxy_api" {
 
                     <ul>
                       <li>
-                        <a href="#client_gateway_configuration_goip" class="link">GoIP</a>
+                        <a href="#client_gateway_configuration_guide_goip" class="link">GoIP</a>
                       </li>
                     </ul>
                   </p>
                 </div>
 
-                <div id="client_gateway_configuration_goip">
+                <div id="client_gateway_configuration_guide_goip">
                   <h5>
                     GoIP Configuration
                   </h5>
@@ -1370,33 +1597,33 @@ module "somleng_proxy_api" {
 
                   <ol>
                     <li>
-                      <a href="#client_gateway_configuration_goip_general_configuration" class="link">
+                      <a href="#client_gateway_configuration_guide_goip_general_configuration" class="link">
                         General Configuration
                       </a>
                     </li>
                     <li>
-                      <a href="#client_gateway_configuration_goip_basic_voip_configuration" class="link">
+                      <a href="#client_gateway_configuration_guide_goip_basic_voip_configuration" class="link">
                         Basic VoIP Configuration
                       </a>
                     </li>
                     <li>
-                      <a href="#client_gateway_configuration_goip_advanced_voip_configuration" class="link">
+                      <a href="#client_gateway_configuration_guide_goip_advanced_voip_configuration" class="link">
                         Advanced VoIP Configuration
                       </a>
                     </li>
                     <li>
-                      <a href="#client_gateway_configuration_goip_call_in_configuration" class="link">
+                      <a href="#client_gateway_configuration_guide_goip_call_in_configuration" class="link">
                         Call-In Configuration
                       </a>
                     </li>
                     <li>
-                      <a href="#client_gateway_configuration_goip_testing" class="link">
+                      <a href="#client_gateway_configuration_guide_goip_testing" class="link">
                         Testing
                       </a>
                     </li>
                   </ol>
 
-                  <div id="client_gateway_configuration_goip_general_configuration">
+                  <div id="client_gateway_configuration_guide_goip_general_configuration">
                     <h6>
                       1. General Configuration
                     </h6>
@@ -1428,7 +1655,7 @@ module "somleng_proxy_api" {
                     <img src="./images/goip-1_configurations_preferences.png">
                   </div>
 
-                  <div id="client_gateway_configuration_goip_basic_voip_configuration">
+                  <div id="client_gateway_configuration_guide_goip_basic_voip_configuration">
                     <h6>
                       2. Basic VoIP Configuration
                     </h6>
@@ -1490,17 +1717,17 @@ module "somleng_proxy_api" {
                       </li>
                       <li>
                         Copy the <strong>Username</strong> from the <strong>Client Credentials</strong> section from
-                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        <a href="#client_gateway_configuration_guide_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
                         and paste it in the <strong>Authentication ID</strong> field.
                       </li>
                       <li>
                         Copy the <strong>Password</strong> from the <strong>Client Credentials</strong> section from
-                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        <a href="#client_gateway_configuration_guide_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
                         and paste it in the <strong>Password</strong> field.
                       </li>
                       <li>
                         Copy the <strong>Domain</strong> from the <strong>Client Credentials</strong> section from
-                        <a href="#client_gateway_configuration_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
+                        <a href="#client_gateway_configuration_guide_instructions_sip_trunk_client_credentials" class="link"> Step 1</a>
                         and paste it in the <strong>SIP Registrar Server</strong> field.
                       </li>
                       <li>
@@ -1520,7 +1747,7 @@ module "somleng_proxy_api" {
                     <img src="./images/goip-2_configurations_basic_voip.png">
                   </div>
 
-                  <div id="client_gateway_configuration_goip_advanced_voip_configuration">
+                  <div id="client_gateway_configuration_guide_goip_advanced_voip_configuration">
                     <h6>
                       3. Advanced VoIP Configuration
                     </h6>
@@ -1553,7 +1780,7 @@ module "somleng_proxy_api" {
                     <img src="./images/goip-3_configurations_advance_voip.png">
                   </div>
 
-                  <div id="client_gateway_configuration_goip_call_in_configuration">
+                  <div id="client_gateway_configuration_guide_goip_call_in_configuration">
                     <h6>
                       4. Call-In Configuration
                     </h6>
@@ -1574,7 +1801,7 @@ module "somleng_proxy_api" {
                       </li>
                       <li>
                         Fill in <strong>Forwarding to VoIP Number</strong> with the number you configured in
-                        <a href="#client_gateway_configuration_instructions_phone_number" class="link"> Step 3</a>.
+                        <a href="#client_gateway_configuration_guide_instructions_phone_number" class="link"> Step 3</a>.
                       </li>
                       <li>
                         Click <strong>Save Changes</strong>.
@@ -1588,7 +1815,7 @@ module "somleng_proxy_api" {
                     <img src="./images/goip-4_configurations_call_in.png">
                   </div>
 
-                  <div id="client_gateway_configuration_goip_testing">
+                  <div id="client_gateway_configuration_guide_goip_testing">
                     <h6>
                       5. Testing
                     </h6>
@@ -1609,18 +1836,341 @@ module "somleng_proxy_api" {
                       </li>
                       <li>
                         Test an inbound call by making a call to one of the phone numbers you configured in
-                        <a href="#client_gateway_configuration_instructions_phone_number" class="link"> Step 3</a>.
+                        <a href="#client_gateway_configuration_guide_instructions_phone_number" class="link"> Step 3</a>.
                       </li>
                       <li>
                         Test an outbound call using the
                         <a href="docs/twilio_api#create-a-call" class="link">Account API <i class="fa fa-external-link"></i></a>.
                         Use the credentials from the account you created in
-                        <a href="#client_gateway_configuration_instructions_account_credentials" class="link"> Step 2</a>.
+                        <a href="#client_gateway_configuration_guide_instructions_account_credentials" class="link"> Step 2</a>.
                       </li>
                     </ol>
 
                     <img src="./images/goip-5_general.png">
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="sms_gateway_configuration_guide">
+              <h3>
+                SMS Gateway Configuration Guide
+              </h3>
+
+              <p>
+                Setting up an SMS Gateway allows
+                <a href="#network_provider" class="link">network providers</a>
+                to provide programmable SMS through their own SMS infrastructure.
+              </p>
+
+              <p>
+                SMS infrastructure can mean anything from an API connection to a provider that you manage,
+                a simple GSM Modem, or an SMPP connection to a carrier.
+              </p>
+
+              <p>
+                <em>
+                  Note: Providing programmable SMS as a network provider isn't restricted to carriers or organizations.
+                  Any individual can become a network provider as long as they have access to their own SMS infrastructure.
+                </em>
+              </p>
+
+              <div id="sms_gateway_configuration_guide_how_it_works">
+                <h4>
+                  How it works
+                </h4>
+
+                <img src="./images/sms_gateway_diagram.png">
+
+                <p>
+                  Network providers connect to Somleng via Somleng's SMS Gateway App installed on-premise, or on the cloud
+                  infrastructure managed by the network provider.
+                </p>
+
+                <p>
+                  Customers can then use the
+                  <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>
+                  to send and receive SMS though the network provider's SMS infrastructure.
+                </p>
+              </div>
+
+              <div id="sms_gateway_configuration_guide_overview">
+                <h4>
+                  Configuration Overview
+                </h4>
+
+                <p>
+                  Below is an overview of the steps required to configure an SMS gateway:
+                </p>
+
+                <ol>
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_create_an_sms_gateway" class="link">Create an SMS Gateway</a>
+                  </li>
+
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_create_an_account" class="link">Create an Account</a>
+                  </li>
+
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_create_phone_number" class="link">Create and configure a Phone Number</a>
+                  </li>
+
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_install_sms_gateway_app" class="link">Install the Somleng SMS Gateway App</a>
+                  </li>
+
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_send_an_outbound_message" class="link">Send an Outbound Message</a>
+                  </li>
+
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_receive_an_inbound_message" class="link">Receive an Inbound Message</a>
+                  </li>
+
+                  <li>
+                    <a href="#sms_gateway_configuration_guide_additional_steps" class="link">Additional Steps</a>
+                  </li>
+                </ol>
+              </div>
+
+              <div id="sms_gateway_configuration_guide_instructions">
+                <div id="sms_gateway_configuration_guide_create_an_sms_gateway">
+                  <h4>
+                    1. Create an SMS Gateway
+                  </h4>
+
+                  <p>
+                    <a href="#sms_gateways" class="link">Create an SMS gateway</a> via the Dashboard.
+                  </p>
+
+                  <p>
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>SMS Gateways</strong> under <strong>Messaging</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new SMS Gateway.
+                      </li>
+                      <li>
+                        Enter a name for your SMS Gateway.
+                      </li>
+                      <li>
+                        Enter the maximum number of channels your SMS gateway supports. Leave it blank for unlimited channels.
+                      </li>
+                      <li>
+                        Choose <strong>Create SMS gateway</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    After you create your SMS Gateway you'll see your <em>Device Token</em> on the next screen. You'll need this
+                    later in
+                    <a href="#sms_gateway_configuration_guide_install_sms_gateway_app" class="link">Step 4</a>
+                    when you install the SMS Gateway App.
+                  </p>
+
+                  <img src="./images/sms_gateway.png">
+                </div>
+
+                <div id="sms_gateway_configuration_guide_create_an_account">
+                  <h4>
+                    2. Create an Account
+                  </h4>
+
+                  <p>
+                    <a href="#accounts" class="link">Create an Account</a> via the Dashboard.
+                  </p>
+                  <p>
+                    <em>Note: You can skip this step if you already have a carrier account setup.</em>
+                  </p>
+
+                  <p>
+                    <ol>
+                      <li>
+                        Sign in to the Dashboard and from the side-navigation, click <strong>Accounts</strong>.
+                      </li>
+                      <li>
+                        Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new account.
+                      </li>
+                      <li>
+                        Give the account a name.
+                      </li>
+                      <li>
+                        Choose <strong>Create Account</strong>.
+                      </li>
+                    </ol>
+                  </p>
+
+                  <p>
+                    You'll need to reference this account when you configure a Phone Number in
+                    <a href="#sms_gateway_configuration_guide_create_phone_number" class="link">Step 3</a>
+                    and when testing an outbound message in
+                    <a href="#sms_gateway_configuration_guide_send_an_outbound_message" class="link">Step 5</a>.
+                  </p>
+
+                  <img src="./images/account.png">
+                </div>
+
+                <div id="sms_gateway_configuration_guide_create_phone_number">
+                  <h4>
+                    3. Create and configure a Phone Number
+                  </h4>
+
+                  <p>
+                    Create a new <a href="#phone_numbers" class="link">Phone Number</a> and configure it for inbound messaging.
+                  </p>
+
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
+                    </li>
+                    <li>
+                      Enter the phone number including he country code in E.164 format.
+                    </li>
+                    <li>
+                      Link the phone number to the account by selecting the account created in the previous step.
+                    </li>
+                    <li>
+                      Choose <strong>Create Phone number</strong>.
+                    </li>
+                  </ol>
+
+                  <p>
+                    After you have created your phone number, you can configure it on the next screen:
+                  </p>
+
+                  <img src="./images/phone_number.png">
+
+                  <ol>
+                    <li>
+                      Click the <strong><i class="fas fa-gear"></i></strong> dropdown and choose <strong>Configure</strong>.
+                    </li>
+                    <li>
+                      Under <strong>Messaging</strong> enter an SMS URL that returns valid
+                      <a href="https://www.twilio.com/docs/messaging/twiml" class="link" target="_blank">TwiML for Programmable SMS <i class="fa fa-external-link"></i></a>.
+                      This will configure the phone number to handle inbound messages. You can use the following URL: <a href="https://tinyurl.com/demo-sms" class="link" target="_blank">https://tinyurl.com/demo-sms <i class="fa fa-external-link"></i></a> which returns valid TwiML.
+                    </li>
+                    <li>
+                      Choose <strong>GET</strong> from <strong>SMS method</strong> if you used the URL above.
+                    </li>
+                    <li>
+                      Choose <strong>Update Configuration</strong>.
+                    </li>
+                  </ol>
+
+                  <p>
+                    After you have configured your phone number you can review the configuration on the next screen:
+                  </p>
+
+                  <img src="./images/phone_number_sms-configure.png">
+                </div>
+
+                <div id="sms_gateway_configuration_guide_install_sms_gateway_app">
+                  <h4>
+                    4. Download and Install the Somleng SMS Gateway App
+                  </h4>
+
+                  <p>
+                    The
+                    <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">Somleng SMS Gateway App <i class="fa fa-external-link"></i></a>.
+                    is as a gateway between Somleng and your SMS infrastructure.
+                  </p>
+
+                  <p>
+                    Detailed instructions on how to install, configure and deploy the app can be found on the Somleng SMS Gateway
+                    <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">Github repository <i class="fa fa-external-link"></i></a>.
+                    You'll need the <em>Device Token</em> from
+                    <a href="#sms_gateway_configuration_guide_create_an_sms_gateway" class="link">Step 1</a>.
+                    to connect the SMS Gateway App to Somleng.
+                  </p>
+
+                  <p>
+                    Once the SMS Gateway app is configured and successfully connected to Somleng, you should see the connection status show <em>Connected</em>
+                    the Dashboard.
+                  </p>
+
+                  <img src="./images/sms_gateway_connection_status_connected.png">
+                </div>
+
+                <div id="sms_gateway_configuration_guide_send_an_outbound_message">
+                  <h4>
+                    5. Send an Outbound Message
+                  </h4>
+
+                  <p>
+                    You can use the
+                    <a href="docs/twilio_api#create-a-message" class="link" target="_blank">Account API <i class="fa fa-external-link"></i></a> to test sending an outbound SMS.
+
+                    Replacing the <strong>ACCOUNT-SID</strong> and <strong>AUTH-TOKEN</strong> with the information from the account you created in
+                    <a href="#sms_gateway_configuration_guide_create_an_account" class="link">Step 2</a> you can use the following code to
+                    send an SMS:
+
+                    <pre><code class="language-bash">
+curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X POST \
+--data-urlencode 'To=+855715100860' \
+--data-urlencode 'From=+85568308531' \
+--data-urlencode 'Body=Hello from Somleng' \
+-u ACCOUNT-SID:AUTH-TOKEN
+</code></pre>
+
+                    <em>
+                      Note: The <code>From</code> parameter must match the phone number you created in
+                      <a href="#sms_gateway_configuration_guide_create_phone_number" class="link">Step 3</a>.
+                    </em>
+                  </p>
+
+                  <p>
+                    You should see the message appear in the <strong>Messages</strong> section of the Dashboard.
+                  </p>
+
+                  <img src="./images/messages.png">
+                </div>
+
+                <div id="sms_gateway_configuration_guide_receive_an_inbound_message">
+                  <h4>
+                    6. Receive an Inbound Message
+                  </h4>
+
+                  <p>
+                    In order to test an inbound SMS, simply send a message to the number you configured in
+                    <a href="#sms_gateway_configuration_guide_create_phone_number" class="link">Step 3</a>.
+                  </p>
+
+                  <p>
+                    If you have configured your phone number correctly you should see the message appear in the <strong>Messages</strong>
+                    section of the Dashboard as shown in
+                    <a href="#sms_gateway_configuration_guide_send_an_outbound_message" class="link">Step 5</a>.
+                  </p>
+
+                  <p>
+                    If you don't see the message on the Dashboard, you can check the <strong>Error Logs</strong> section of the Dashboard.
+                  </p>
+
+                  <img src="./images/error_logs.png">
+                </div>
+
+                <div id="sms_gateway_configuration_guide_additional_steps">
+                  <h4>
+                    7. Additional Steps
+                  </h4>
+
+                  <p>
+                    If you need more control over which channels outbound SMS are delivered though, you can configure one or more
+                    <a href="#sms_gateway_channel_groups" class="link">Channel Groups</a>.
+                  </p>
+
+                  <p>
+                    Instead of configuring each phone number individually, like we did in
+                    <a href="#sms_gateway_configuration_guide_create_phone_number" class="link">Step 3</a>,
+                    you can configure a
+                    <a href="#sms_gateway_channel_groups" class="link">Messaging Service</a> with shared configuration and apply
+                    it to multiple phone numbers.
+                  </p>
                 </div>
               </div>
             </div>
