@@ -20,7 +20,7 @@ You can use Somleng to roll out your own programmable voice and SMS to:
 
 The diagram below shows how each component is connected together.
 
-![Somleng-Overview](https://github.com/somleng/somleng-project/raw/master/somleng_overview.png)
+![Somleng-Overview](https://github.com/somleng/somleng-project/raw/main/somleng_overview.png)
 
 ### Explanation
 
@@ -63,11 +63,11 @@ Below is a link to the documentation start page.
 
 We recommend you play around with our hosted version to get a feel for how the product works before trying to run it locally. You can find a link to the sign-up page in our [documentation](https://www.somleng.org/docs.html).
 
-Follow the [GETTING STARTED](https://github.com/somleng/somleng-project/blob/master/docs/GETTING_STARTED.md) guide to get Somleng up and running on your local development machine.
+Follow the [GETTING STARTED](https://github.com/somleng/somleng-project/blob/main/docs/GETTING_STARTED.md) guide to get Somleng up and running on your local development machine.
 
 ## Deployment
 
-The [infrastructure directory](https://github.com/somleng/somleng-project/tree/master/infrastructure/somleng) contains [Terraform](https://www.terraform.io/) configuration files in order to deploy Somleng to AWS. This repository only contains core infrastructure. Each individual component's infrastructure is in its own repository.
+The [infrastructure directory](https://github.com/somleng/somleng-project/tree/main/infrastructure/somleng) contains [Terraform](https://www.terraform.io/) configuration files in order to deploy Somleng to AWS. This repository only contains core infrastructure. Each individual component's infrastructure is in its own repository.
 
 :warning: The current infrastructure of Somleng is rapidly changing as we continue to improve and experiment with new features. We often make breaking changes to the current infrastructure which usually requires some manual migration. We don't recommend that you try to deploy and run your own Somleng stack for production purposes at this stage. Instead consider using our [hosting](#hosting) services.
 

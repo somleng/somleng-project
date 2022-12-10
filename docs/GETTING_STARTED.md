@@ -12,7 +12,7 @@ Install [Docker](https://docs.docker.com/engine/installation), [docker-compose](
 $ git clone https://github.com/somleng/somleng-project --depth 1 && cd somleng-project
 ```
 
-Or download `docker-compose.yml` manually [here](https://raw.githubusercontent.com/somleng/somleng-project/master/docker-compose.yml)
+Or download `docker-compose.yml` manually [here](https://raw.githubusercontent.com/somleng/somleng-project/main/docker-compose.yml)
 
 ## Pull the latest images
 
