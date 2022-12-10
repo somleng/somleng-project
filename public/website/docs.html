@@ -198,7 +198,7 @@
                   Authentication
                 </h4>
                 <p>
-                  You must sign into the dashboard <em>via your subdomain</em> to use Somleng.
+                  You must sign in to the dashboard <em>via your subdomain</em> to use Somleng.
                   The sign in URL is <code>https://your-subdomain.app.somleng.org/users/sign_in</code>.
                   If you have setup a <a href="#custom_domains_configuration_guide" class="link"> custom domain</a> all users may access
                   the dashboard through your custom domain as well.
@@ -247,7 +247,8 @@
                   Accounts are used by carriers, carrier customers, BYOC users and network providers to send/receive calls and SMS via the <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>.
                 </p>
                 <p>
-                  Typically a carrier would create an account for each of their customers. BYOC users and network providers on the other hand might create an account for each project or just create one global account for their own usage.
+                  Typically a carrier would create an account for each of their customers.
+                  BYOC users and network providers on the other hand might create an account for each customer or project or just create one global account for their own usage.
                 </p>
                 <p>
                   There are two types of accounts. Carrier managed and customer managed described below:
@@ -312,16 +313,20 @@
                 <p>
                   Once provisioned and assigned to an account, phone numbers can then be configured for inbound dialing and/or inbound messaging.
                 </p>
+                <ul>
+                  <li>
+                    To configure inbound dialing, set a Voice URL which should return valid
+                    <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML for Programmable Voice <i class="fa fa-external-link"></i></a>
+                  </li>
+                  <li>
+                    To configure inbound messaging, set a SMS URL which should return valid
+                    <a href="https://www.twilio.com/docs/messaging/twiml" class="link" target="_blank">TwiML for Programmable SMS <i class="fa fa-external-link"></i></a>
+                  </li>
+                </ul>
                 <p>
-                  To configure inbound dialing, set the Voice URL which should return valid
-                  <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML for Programmable Voice <i class="fa fa-external-link"></i></a>
-                </p>
-                <p>
-                  To configure inbound messaging, set the SMS URL which should return valid
-                  <a href="https://www.twilio.com/docs/messaging/twiml" class="link" target="_blank">TwiML for Programmable SMS <i class="fa fa-external-link"></i></a>
-                </p>
-                <p>
-                  This configuration can either be done by the carrier or by an account admin (for <a href="#customer_managed_accounts" class="link">customer managed accounts</a>).
+                  <em>
+                    Note: This configuration can either be done by the carrier or by an account admin (for <a href="#customer_managed_accounts" class="link">customer managed accounts</a>).
+                  </em>
                 </p>
                 <p>
                   To create a phone number via the Dashboard:
@@ -341,7 +346,7 @@
                   </ol>
                 </p>
                 <p>
-                  Once the phone number has been created you can configure it. To configure a phone number via the Dashboard:
+                  Once the phone number has been created, you can configure it. To configure a phone number via the Dashboard:
                   <ol>
                     <li>
                       From the Phone Numbers page, find the phone number you want to configure.
@@ -353,11 +358,11 @@
                       Optionally configure the phone number to handle inbound calls.
                       <ul>
                         <li>
-                          Under <strong>Voice</strong>, specify a Voice URL and Voice Method. This will configure your phone number for inbound dialing.
+                          Under <strong>Voice</strong>, specify a <strong>Voice URL</strong> and <strong>Voice Method</strong>. This will configure your phone number for inbound dialing.
                           The Voice URL should return valid <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML for Programmable Voice <i class="fa fa-external-link"></i></a> and will be executed when an inbound call is received by Somleng.
                         </li>
                         <li>
-                          Optionally configure a Status Callback URL and Status Callback Method which will be used to post status updates for inbound calls to this number.
+                          Optionally configure a Status Callback URL and Status Callback Method which will be used to deliver status updates for inbound calls to this number.
                         </li>
                       </ul>
                     </li>
@@ -369,9 +374,9 @@
                           The SMS URL should return valid <a href="https://www.twilio.com/docs/messaging/twiml" class="link" target="_blank">TwiML for Programmable SMS <i class="fa fa-external-link"></i></a> and will be executed when an inbound message is received by Somleng.
                         </li>
                         <li>
-                          Optionally you can configure a
-                          <a href="#messaging_services" class="link">Messaging Service</a>
-                          instead of configuring each phone number individually.
+                          Optionally configure a
+                          <a href="#messaging_services" class="link">Messaging Service</a>. This is useful if you want to apply a set of configuration
+                          to multiple phone numbers, instead of configuring each phone number individually.
                         </li>
                       </ul>
                     </li>
@@ -393,6 +398,7 @@
                   </h5>
                   <p>
                     In order to bulk import phone numbers, you can upload a CSV file from the Dashboard.
+                    Somleng requires a CSV file in the following format:
                     <ol>
                       <li>
                         From the Phone Numbers page, click the upload button <i class="fas fa-file-upload"></i>.
