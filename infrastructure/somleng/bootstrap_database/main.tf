@@ -1,6 +1,6 @@
 # https://aws.amazon.com/ec2/instance-types/t4/
 data "aws_ssm_parameter" "arm64_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2"
+  name = "/aws/service/ami-amazon-linux-latest/al2022-ami-kernel-default-arm64"
 }
 
 data "aws_ssm_parameter" "db_master_password" {

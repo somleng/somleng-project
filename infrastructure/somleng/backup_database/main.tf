@@ -1,6 +1,5 @@
-# https://aws.amazon.com/ec2/instance-types/t4/
 data "aws_ssm_parameter" "arm64_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2"
+  name = "/aws/service/ami-amazon-linux-latest/al2022-ami-kernel-default-arm64"
 }
 
 data "aws_s3_bucket" "backups" {
@@ -8,11 +7,11 @@ data "aws_s3_bucket" "backups" {
 }
 
 data "aws_rds_cluster" "db_cluster" {
-  cluster_identifier = "somlengv2"
+  cluster_identifier = var.cluster_identifier
 }
 
 data "aws_ssm_parameter" "db_master_password" {
-  name = "somleng.db_master_password"
+  name = "${var.db_master_password_parameter_identifier}.db_master_password"
 }
 
 resource "aws_security_group" "this" {
