@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide is intended to get you up and running with Somleng on your machine.
+This guide is intended to get you up and running with Somleng on your local machine. It is not intended for production!
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ $ docker-compose pull
 
 ## Start Somleng's services
 
-Remember to replace `FS_EXTERNAL_SIP_IP` and `FS_EXTERNAL_RTP_IP` with your the local IP of your machine.
+Remember to replace `FS_EXTERNAL_SIP_IP` and `FS_EXTERNAL_RTP_IP` with the local IP of your machine.
 
 ```
 $ FS_EXTERNAL_SIP_IP=<replace-with-your-local-ip> FS_EXTERNAL_RTP_IP=<replace-with-your-local-ip> docker-compose up
