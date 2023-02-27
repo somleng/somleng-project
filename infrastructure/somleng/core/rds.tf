@@ -67,7 +67,20 @@ resource "aws_rds_cluster_instance" "db" {
   engine             = aws_rds_cluster.db.engine
   engine_version     = aws_rds_cluster.db.engine_version
   db_parameter_group_name = aws_db_parameter_group.db.name
+  performance_insights_enabled = true
 }
+
+# resource "aws_rds_cluster_instance" "db_reader1" {
+#   identifier         = "${local.identifier}-reader1"
+#   cluster_identifier = aws_rds_cluster.db.id
+#   instance_class     = "db.serverless"
+#   engine             = aws_rds_cluster.db.engine
+#   engine_version     = aws_rds_cluster.db.engine_version
+#   promotion_tier = 2 # https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-administration.html#aurora-serverless-v2-choosing-promotion-tier
+#   db_parameter_group_name = aws_db_parameter_group.db.name
+#   performance_insights_enabled = true
+#   depends_on    = [aws_rds_cluster_instance.db]
+# }
 
 resource "aws_db_parameter_group" "db" {
   name   = "${local.identifier}-aurora-postgresql13"
