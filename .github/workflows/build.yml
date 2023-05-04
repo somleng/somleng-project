@@ -15,8 +15,7 @@ jobs:
 
       - name: Bootstrap DB
         run: |
-          LOCAL_IP="$(hostname -i)"
-          docker-compose exec -e HOST_IP=$LOCAL_IP somleng bundle exec rails db:setup
+          docker-compose exec somleng bundle exec rails db:setup
 
   deploy:
     name: Deploy
