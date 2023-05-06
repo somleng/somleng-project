@@ -15,7 +15,7 @@ jobs:
 
       - name: Bootstrap DB
         run: |
-          docker-compose run --no-TTY somleng bundle exec rails db:setup
+          docker-compose run -T somleng bundle exec rails db:setup
 
   deploy:
     name: Deploy
