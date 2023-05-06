@@ -19,9 +19,6 @@ jobs:
           output=$(docker-compose run -T somleng bundle exec rails db:setup)
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
-          echo $output
-          echo $account_sid
-          echo $auth_token
           echo "account_sid=$account_sid" >> $GITHUB_OUTPUT
           echo "auth_token=$auth_token" >> $GITHUB_OUTPUT
 
@@ -29,11 +26,9 @@ jobs:
         run: |
           account_sid="${{ steps.bootstrap_db.outputs.account_sid }}"
           auth_token="${{ steps.bootstrap_db.outputs.auth_token }}"
-          echo $account_sid
-          echo $auth_token
           curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/$account_sid/Calls" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
-            -u "$account_sid:$auth_token" \
+            -u "$account_sid:$auth_tokenwrong" \
             --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
             --data-urlencode "Method=GET" \
             --data-urlencode "To=+299221234" \
