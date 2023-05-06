@@ -24,11 +24,9 @@ jobs:
 
       - name: Test an outbound call
         run: |
-          account_sid="${{ steps.bootstrap_db.outputs.account_sid }}"
-          auth_token="${{ steps.bootstrap_db.outputs.auth_token }}"
-          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/$account_sid/Calls" \
+          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Calls" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
-            -u "$account_sid:$auth_tokenwrong" \
+            -u "$${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
             --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
             --data-urlencode "Method=GET" \
             --data-urlencode "To=+299221234" \
