@@ -16,10 +16,8 @@ jobs:
       - name: Bootstrap DB
         run: |
           output=$(docker-compose run -T somleng bundle exec rails db:setup)
-          account_sid=$(echo $output | grep "Account SID" | grep -E '[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{8}' -o)
-          auth_token=$(echo $output | grep "Auth Token")
-          echo $auth_token
-          auth_token=$(echo ${auth_token/Auth Token:/""} | grep -E '\b[a-zA-Z0-9_-]+\b' -o)
+          account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{8}')
+          auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
           echo $account_sid
           echo $auth_token
 
