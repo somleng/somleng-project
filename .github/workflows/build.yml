@@ -31,7 +31,7 @@ jobs:
           auth_token="${{ steps.bootstrap_db.outputs.auth_token }}"
           echo $account_sid
           echo $auth_token
-          curl -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/$account_sid/Calls" \
+          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/$account_sid/Calls" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
             -u "$account_sid:$auth_token" \
             --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
