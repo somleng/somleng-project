@@ -17,7 +17,7 @@ jobs:
         run: |
           output=$(docker-compose run -T somleng bundle exec rails db:setup)
           account_sid=$(echo $output | egrep "Account SID" | egrep '[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{8}' -o)
-          auth_token=$(echo $output | egrep "Auth Token"
+          auth_token=$(echo $output | egrep "Auth Token")
           auth_token=$(echo ${auth_token/Auth Token:/""} | egrep '\b[a-zA-Z0-9\-_]+\b' -o)
           echo $output
           echo $account_sid
