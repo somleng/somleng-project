@@ -24,8 +24,8 @@ jobs:
 
       - name: Test an outbound call
         run: |
-          account_sid=${{ steps.bootstrap_db.outputs.account_sid }}
-          auth_token=${{ steps.bootstrap_db.outputs.auth_token }}"
+          account_sid="${{ steps.bootstrap_db.outputs.account_sid }}"
+          auth_token="${{ steps.bootstrap_db.outputs.auth_token }}"
           curl -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/$account_sid/Calls" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
             -u '$account_sid:$auth_token' \
