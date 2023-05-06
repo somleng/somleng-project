@@ -1,17 +1,45 @@
-on:
-  push:
-    branches:
-      - main
-
-name: Deploy
+on: push
+name: Build
 
 jobs:
-  deploy:
-    name: Deploy
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Run docker-compose
+        run: |
+          docker-compose up -d
+
+      - name: Bootstrap DB
+        id: bootstrap_db
+        run: |
+          output=$(docker-compose run -T somleng bundle exec rails db:setup)
+          account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
+          auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
+          echo "account_sid=$account_sid" >> $GITHUB_OUTPUT
+          echo "auth_token=$auth_token" >> $GITHUB_OUTPUT
+
+      - name: Test an outbound call
+        run: |
+          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Calls" \
+            -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+            -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
+            --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
+            --data-urlencode "Method=GET" \
+            --data-urlencode "To=+299221234" \
+            --data-urlencode "From=1294"
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

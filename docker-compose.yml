@@ -8,7 +8,6 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -16,7 +15,7 @@ services:
       retries: 5
 
   somleng:
-    image: public.ecr.aws/somleng/somleng
+    image: ghcr.io/somleng/somleng
     environment:
       RAILS_ENV: development
       DATABASE_HOST: db
@@ -31,7 +30,6 @@ services:
       default:
         aliases:
           - api.somleng.dev
-
     healthcheck:
       test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:3000/health_checks 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
@@ -39,7 +37,7 @@ services:
       retries: 10
 
   somleng-switch:
-    image: public.ecr.aws/somleng/somleng-switch
+    image: ghcr.io/somleng/somleng-switch
     environment:
       AHN_CORE_HOST: freeswitch
       AHN_CORE_HTTP_PORT: 8080
@@ -53,7 +51,7 @@ services:
       retries: 10
 
   freeswitch:
-    image: public.ecr.aws/somleng/somleng-switch-freeswitch
+    image: ghcr.io/somleng/freeswitch
     environment:
       - FS_DATABASE_HOST=db
       - FS_MOD_JSON_CDR_URL=http://api.somleng.dev:3000/services/call_data_records
