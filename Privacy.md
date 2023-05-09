@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: March 22, 2022
+Last updated: May 9, 2023
 
 This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.
 
@@ -167,6 +167,16 @@ The company may disclose your personal data in the good faith belief that such a
 
 The security of your personal data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal data, we cannot guarantee its absolute security.
 
+## Applicable Laws
+
+Somleng is an open source [Digital Public Good](https://digitalpublicgoods.net/registry/somleng.html) which is deployed in a number of different countries around the world. It is incumbant on the entity that deploys and runs Somleng to adhear to the applicable privacy laws in their country.
+
+### Somleng as a Service
+
+Somleng as a Service (available at [https://app.somleng.org/users/sign_up](https://app.somleng.org/users/sign_up)) is a service made available to organizations and individuals who don't want to manage their own Somleng infrastructure. This service is run by Chatterbox Solutions, which is registered in the Kingdom of Cambodia.
+
+Chatterbox Solutions adheares to all applicable privacy laws in relation to running Somleng as a Service.
+
 # Children's Privacy
 
 our service does not address anyone under the age of 13. we do not knowingly collect personally identifiable information from anyone under the age of 13. If you are a parent or guardian and you are aware that your child has provided Us with personal data, please contact Us. If we become aware that we have collected personal data from anyone under the age of 13 without verification of parental consent, we take steps to remove that information from our servers.
@@ -181,9 +191,7 @@ we have no control over and assume no responsibility for the content, privacy po
 
 # Changes to this privacy policy
 
-We may update our privacy policy from time to time. we will notify you of any changes by posting the new privacy policy on this page.
-
-We will let you know via email and/or a prominent notice on our service, prior to the change becoming effective and update the "last updated" date at the top of this privacy policy.
+We may update our privacy policy from time to time. we will notify you of any changes by posting the new privacy policy on this page and updating the "last updated" date at the top of this privacy policy.
 
 You are advised to review this privacy policy periodically for any changes. Changes to this privacy policy are effective when they are posted on this page.
 
