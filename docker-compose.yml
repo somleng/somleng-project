@@ -20,7 +20,7 @@ services:
       RAILS_ENV: development
       DATABASE_HOST: db
       DASHBOARD_URL_HOST: "http://dashboard.lvh.me:3000"
-      AHN_HOST: "http://somleng-switch:8080"
+      SWITCH_HOST: "http://somleng-switch:8080"
     ports:
       - "3000:3000"
     depends_on:
