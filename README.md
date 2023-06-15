@@ -2,7 +2,9 @@
 
 ## About this Repository
 
-This repository is the entry point for The Somleng Project. The README links to the individual software components that make up Somleng as well as the source code for [somleng.org](https://www.somleng.org).
+This repository is the entry point for The Somleng Project. The README links to the individual software components that make up Somleng. The repository also contains the source code for [somleng.org](https://www.somleng.org).
+
+[![Build](https://github.com/somleng/somleng-project/actions/workflows/build.yml/badge.svg)](https://github.com/somleng/somleng-project/actions/workflows/build.yml)
 
 ## What is Somleng?
 
