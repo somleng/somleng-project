@@ -43,7 +43,7 @@ resource "aws_rds_cluster" "db" {
   cluster_identifier = local.identifier
   engine             = "aurora-postgresql"
   engine_mode        = "provisioned"
-  engine_version     = "13.6"
+  engine_version     = "13.8"
   master_username    = "somleng"
   master_password    = aws_ssm_parameter.db_master_password.value
   vpc_security_group_ids = [aws_security_group.db.id]
