@@ -68,6 +68,15 @@
             <li><a href="#introduction">Introduction</a></li>
             <li><a href="#getting_started">Getting Started</a></li>
             <li>
+              <a href="#quick_start">Quick Start</a>
+              <ul>
+                <li>
+                  <a href="#quick_start_programmable_voice_chime">Setting up Programmable Voice with Amazon Chime</a>
+                </li>
+              </ul>
+            </li>
+
+            <li>
               <a href="#using_the_dashboard">Using the Dashboard</a>
               <ul>
                 <li>
@@ -153,7 +162,7 @@
                 Introduction
               </h3>
               <p>
-                Somleng is an Open Source, white-labeled, Cloud Communications Platform as a Service (CPaaS), featuring programmable voice and SMS.
+                Somleng is an Open Source, white-labeled, Cloud Communications Platform as a Service (CPaaS), and Telco-as-a-Service (TaaS) featuring programmable voice and SMS.
               </p>
               <p>
                 There are three kinds of use-cases depending on who you are.
@@ -180,6 +189,243 @@
               <p>
                 Once you have an account you can begin configuring your it to handle programmable voice and SMS.
               </p>
+            </div>
+
+            <div id="quick_start">
+              <h3 class="page__main__title">
+                Quick Start
+              </h3>
+              <p>
+                This section contains quick start guides to get you up and running with Somleng.
+              </p>
+
+              <div id="quick_start_programmable_voice_chime">
+                <h4>
+                  Setting up Programmable Voice with Amazon Chime
+                </h4>
+
+                <p>
+                  After following this guide you'll be able to use the Somleng API to initiate control voice calls via your Amazon Chime account.
+                </p>
+
+                <p>
+                  The following diagram shows how it works:
+                </p>
+
+                <img src="./images/chime_quickstart_how_it_works.png">
+
+                <h5>
+                  Overview
+                </h5>
+
+                <p>
+                  Below is an overview of the steps required to configure programmable voice via Amazon Chime:
+                </p>
+
+                <ol>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_create_amazon_chime_voice_connector" class="link">
+                      Create a new Amazon Chime Voice Connector
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_assign_phone_number_to_connector" class="link">
+                      Assign a new phone number to the connector
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_sign_up_for_a_free_somleng_carrier_account" class="link">
+                      Sign up for a free Somleng Carrier Account
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_configure_a_sip_trunk" class="link">
+                      Configure a SIP Trunk
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_create_an_account" class="link">
+                      Create an account
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_assign_a_phone_number" class="link">
+                      Assign a phone number
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#quick_start_programmable_voice_chime_test_it_out" class="link">
+                      Test it out
+                    </a>
+                  </li>
+                </ol>
+
+                <div id="quick_start_programmable_voice_chime_create_amazon_chime_voice_connector">
+                  <h5>
+                    1. Create a new Amazon Chime Voice Connector
+                  </h5>
+
+                  <p>
+                    <em>Note: This step assumes that you already have an AWS account setup.</em>
+                  </p>
+
+                  <p>
+                    Perform the following steps:
+
+                    <ol type="a">
+                      <li>
+                        Under Amazon Chime, create a new Voice Connector. Set Encryption to <strong>Disabled</strong>.
+                        <img src="./images/chime_quickstart_create_voice_connector.png">
+                      </li>
+
+                      <li>
+                        Configure the termination settings
+
+                        <ol type="i">
+                          <li>
+                            On the Termination tab, set Termination status to <strong>Enabled</strong>.
+                          </li>
+                          <li>
+                            Under Allowed hosts list, add the following IP <strong>13.250.230.15/32</strong>.
+                            This is Somleng's public IP address documented <a href="#sip_trunks_ip_address_configuration_outbound_dialing" class="link">here</a>.
+                          </li>
+                        </ol>
+
+
+                        <img src="./images/chime_quickstart_termination_settings.png">
+                      </li>
+                    </ol>
+                  </p>
+                </div>
+
+
+                <div id="quick_start_programmable_voice_chime_assign_phone_number_to_connector">
+                  <h5>
+                    2. Assign a new phone number to the connector
+                  </h5>
+
+                  <p>
+                    On the Phone numbers tab, assign a new phone number from the inventory.
+
+                    <img src="./images/chime_quickstart_phone_number_assignment.png">
+                  </p>
+                </div>
+
+                <div id="quick_start_programmable_voice_chime_sign_up_for_a_free_somleng_carrier_account">
+                  <h5>
+                    3. Sign up for a free Somleng Carrier Account
+                  </h5>
+
+                  <p>
+                    You can sign up for a free Somleng carrier account <a href="https://app.somleng.org/users/sign_up" class="link">here</a>.
+                  </p>
+                </div>
+
+                <div id="quick_start_programmable_voice_chime_configure_a_sip_trunk">
+                  <h5>
+                    4. Configure a SIP trunk
+                  </h5>
+
+                  Under the <strong>Voice</strong> menu, create a new SIP trunk.
+
+                  <ol type="a">
+                    <li>
+                      Under Authentication mode, choose <strong>IP address</strong>.
+                    </li>
+
+                    <li>
+                      Give your SIP trunk a name, e.g. Amazon Chime
+                    </li>
+
+                    <li>
+                      Under Outbound Dialing, set the Host to the Outbound host name that was generated when you created the Amazon Chime Voice connector in
+                      <a href="#quick_start_programmable_voice_chime_create_amazon_chime_voice_connector" class="link">Step 1</a>. The value should be <strong>your-host.voiceconnector.chime.aws</strong>
+                    </li>
+
+                    <li>
+                      Ensure that you <strong>enable</strong> Plus prefix. This is required by Amazon Chime.
+                    </li>
+                  </ol>
+
+                  <img src="./images/chime_quickstart_new_sip_trunk.png">
+                </div>
+
+                <div id="quick_start_programmable_voice_chime_create_an_account">
+                  <h5>
+                    5. Create an account
+                  </h5>
+
+                  Under the <strong>Accounts</strong> menu, create a new account.
+
+                  <ol type="a">
+                    <li>
+                      Give the account a name.
+                    </li>
+                    <li>
+                      Press <strong>Create Account</strong>. The rest of the form is optional.
+                    </li>
+                  </ol>
+
+                  <img src="./images/chime_quickstart_new_account.png">
+                </div>
+
+                <div>
+                  <h5 id="quick_start_programmable_voice_chime_assign_a_phone_number">
+                    6. Assign a phone number
+                  </h5>
+
+                  Under the <strong>Phone Numbers</strong> menu, create a phone number and assign it to the account created in the previous step.
+
+                  <ol type="a">
+                    <li>
+                      Enter the number that you assigned to your Chime Voice Connector in <a href="#quick_start_programmable_voice_chime_assign_phone_number_to_connector" class="link">Step 2</a>.
+                    </li>
+                    <li>
+                      Select the account that you created in <a href="#quick_start_programmable_voice_chime_create_an_account" class="link">Step 5</a>.
+                    </li>
+                    <li>
+                      Ensure the phone number is <strong>Enabled</strong>.
+                    </li>
+                    <li>
+                      Press <strong>Create Phone Number</strong>
+                    </li>
+                  </ol>
+
+                  <img src="./images/chime_quickstart_new_phone_number.png">
+                </div>
+
+                <div id="quick_start_programmable_voice_chime_test_it_out">
+                  <h5>
+                    7. Test it out
+                  </h5>
+
+                  <ol type="a">
+                    <li>
+                      Obtain your Somleng API credentials from the account page that you created in <a href="#quick_start_programmable_voice_chime_create_an_account" class="link">Step 5</a>. Copy the Accound SID and Auth Token.
+                    </li>
+                    <li>
+                      Use the following snippit to create an outbound call using the <a href="docs/twilio_api/#helper-libraries" target="_blank" class="link">somleng-node <i class="fa fa-external-link"></i></a> helper library.
+
+                      <script src="https://embed.runkit.com"></script>
+                      <div id="quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit">
+                      </div>
+                      <div id=quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit_code" style="visibility:hidden;">
+
+                      </div>
+                      <script>
+                        var notebook = RunKit.createNotebook({
+                          element: document.getElementById("quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit"),
+                          nodeVersion: "18.x.x",
+                          source: "// Replace \"accountSid\" and \"authToken\" with your Somleng account credentials from Step 5.\n// Replace \"to\" with the destination number and \"from\" with a number you configured in Step 6.\n// Optionally, instead of passing the Twiml parameter, you can provide a \"Url\": that returns TwiML Voice instructions.\n\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst client = require('somleng')(accountSid, authToken);\n\nclient.calls\n  .create({\n      twiml: '<Response><Say voice=\"Polly.Joanna\">Ahoy, World! I am Joanna, from Amazon Polly. How are you today?</Say><Play>https://demo.twilio.com/docs/classic.mp3</Play></Response>',\n      to: 'change-me',\n      from: 'change-me'\n    })\n  .then(call => console.log(call.sid));\n",
+                      })
+                      </script>
+                    </li>
+                    <li>
+                      You should see the created call on the Dashboard by clicking on <strong>Phone Calls</strong> under the <strong>Voice</strong> menu.
+                    </li>
+                  </ol>
+                </div>
+              </div>
             </div>
 
             <div id="using_the_dashboard">
