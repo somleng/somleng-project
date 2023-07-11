@@ -68,15 +68,11 @@ Follow the [GETTING STARTED](https://github.com/somleng/somleng-project/blob/mai
 
 ## Deployment
 
-The [infrastructure directory](https://github.com/somleng/somleng-project/tree/main/infrastructure/somleng) contains [Terraform](https://www.terraform.io/) configuration files in order to deploy Somleng to AWS. This repository only contains core infrastructure. Each individual component's infrastructure is in its own repository.
-
-:warning: The current infrastructure of Somleng is rapidly changing as we continue to improve and experiment with new features. We often make breaking changes to the current infrastructure which usually requires some manual migration. We don't recommend that you try to deploy and run your own Somleng stack for production purposes at this stage. Instead consider using our [hosting](#hosting) services.
-
-The core infrastructure in this repository is a dependency of the other components and is shared using [remote state](https://www.terraform.io/language/state/remote).
+The [infrastructure directory](https://github.com/somleng/somleng-project/tree/main/infrastructure/somleng) contains [Terraform](https://www.terraform.io/) configuration files in order to deploy Somleng to AWS. This repository only contains core infrastructure. Each individual component's infrastructure is in its own repository. Some of the infrastructure in this repository is a dependency of the other components and is shared using [remote state](https://www.terraform.io/language/state/remote).
 
 ## Hosting
 
-Chatterbox Solutions offers white-labeled Somleng hosting for Carriers. Currently hosting is in private beta. Please [contact us](mailto:contact@somleng.org?subject=Somleng+Hosting) for more info.
+Chatterbox Solutions offers white-labeled Somleng hosting for Carriers. Currently this service is in private beta. Please [contact us](mailto:contact@somleng.org?subject=Somleng%20Inquiry&body=Hi%2C%0D%0A%0D%0AWe're%20interested%20in%20using%20your%20hosting%20services.) for more info.
 
 ## Connect with the community
 
