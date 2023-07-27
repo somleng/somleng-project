@@ -117,7 +117,10 @@ resource "aws_launch_template" "nat_instance" {
     name = aws_iam_instance_profile.nat_instance.name
   }
 
-  vpc_security_group_ids = [aws_security_group.nat_instance.id]
+  network_interfaces {
+    associate_public_ip_address  = true
+    security_groups = [aws_security_group.nat_instance.id]
+  }
 
   user_data = base64encode(join("\n", [
     "#cloud-config",
@@ -254,5 +257,11 @@ resource "aws_route" "zamtel" {
 resource "aws_route" "zamtel_media" {
   route_table_id            = module.vpc.private_route_table_ids[0]
   destination_cidr_block    = "165.57.33.2/32"
+  network_interface_id      = aws_network_interface.nat_instance.id
+}
+
+resource "aws_route" "telecom_cambodia_media" {
+  route_table_id            = module.vpc.private_route_table_ids[0]
+  destination_cidr_block    = "203.223.42.132/32"
   network_interface_id      = aws_network_interface.nat_instance.id
 }
