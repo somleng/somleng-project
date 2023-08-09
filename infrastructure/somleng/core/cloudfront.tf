@@ -8,8 +8,8 @@ data "aws_cloudfront_origin_request_policy" "user_agent_referer_headers" {
 
 resource "aws_cloudfront_distribution" "somleng_website" {
   origin {
-    domain_name = aws_s3_bucket.somleng_website.website_endpoint
-    origin_id   = aws_s3_bucket.somleng_website.website_endpoint
+    domain_name = aws_s3_bucket_website_configuration.somleng_website.website_endpoint
+    origin_id   = aws_s3_bucket_website_configuration.somleng_website.website_endpoint
 
     custom_origin_config {
       http_port              = "80"
@@ -27,13 +27,13 @@ resource "aws_cloudfront_distribution" "somleng_website" {
   logging_config {
     include_cookies = false
     bucket          = aws_s3_bucket.logs.bucket_domain_name
-    prefix          = "cloudfront/${aws_s3_bucket.somleng_website.website_endpoint}"
+    prefix          = "cloudfront/${aws_s3_bucket_website_configuration.somleng_website.website_endpoint}"
   }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = aws_s3_bucket.somleng_website.website_endpoint
+    target_origin_id = aws_s3_bucket_website_configuration.somleng_website.website_endpoint
 
     viewer_protocol_policy = "redirect-to-https"
     cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
@@ -55,8 +55,8 @@ resource "aws_cloudfront_distribution" "somleng_website" {
 
 resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
   origin {
-    domain_name = aws_s3_bucket.naked_redirect.website_endpoint
-    origin_id   = aws_s3_bucket.naked_redirect.website_endpoint
+    domain_name = aws_s3_bucket_website_configuration.naked_redirect.website_endpoint
+    origin_id   = aws_s3_bucket_website_configuration.naked_redirect.website_endpoint
 
     custom_origin_config {
       http_port              = "80"
@@ -74,13 +74,13 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
   logging_config {
     include_cookies = false
     bucket          = aws_s3_bucket.logs.bucket_domain_name
-    prefix          = "cloudfront/${aws_s3_bucket.somleng_website.website_endpoint}"
+    prefix          = "cloudfront/${aws_s3_bucket_website_configuration.naked_redirect.website_endpoint}"
   }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = aws_s3_bucket.naked_redirect.website_endpoint
+    target_origin_id = aws_s3_bucket_website_configuration.naked_redirect.website_endpoint
 
     viewer_protocol_policy = "redirect-to-https"
     cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id

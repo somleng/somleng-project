@@ -1,6 +1,6 @@
 resource "aws_eip" "nlb" {
   count = length(module.vpc.public_subnets)
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name = "NLB Public IP"
