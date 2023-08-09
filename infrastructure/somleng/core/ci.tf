@@ -47,7 +47,6 @@ resource "aws_iam_policy" "ci_deploy" {
         "s3:ListBucket"
       ],
       "Resource": [
-        "${aws_s3_bucket.ci_deploy.arn}",
         "${aws_s3_bucket.somleng_website.arn}"
       ]
     },
@@ -60,7 +59,6 @@ resource "aws_iam_policy" "ci_deploy" {
         "s3:DeleteObject"
       ],
       "Resource": [
-        "${aws_s3_bucket.ci_deploy.arn}/*",
         "${aws_s3_bucket.somleng_website.arn}/*"
       ]
     },

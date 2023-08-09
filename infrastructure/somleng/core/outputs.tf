@@ -55,10 +55,6 @@ output "https_listener" {
   value = aws_lb_listener.https
 }
 
-output "ecs_cluster" {
-  value = aws_ecs_cluster.somleng
-}
-
 output "nlb_eips" {
   value = aws_eip.nlb.*
 }

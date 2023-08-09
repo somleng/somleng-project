@@ -18,7 +18,7 @@ data "aws_ssm_parameter" "nat_instance" {
 }
 
 resource "aws_eip" "nat_instance" {
-  vpc      = true
+  domain      = "vpc"
 
   tags = {
     Name = "NAT Instance"
