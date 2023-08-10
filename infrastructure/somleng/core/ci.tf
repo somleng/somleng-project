@@ -56,6 +56,7 @@ resource "aws_iam_policy" "ci_deploy" {
         "s3:PutObject",
         "s3:PutObjectAcl",
         "s3:GetObject",
+        "s3:GetObjectAcl",
         "s3:DeleteObject"
       ],
       "Resource": [
@@ -102,6 +103,19 @@ resource "aws_iam_policy" "ci_deploy" {
       "Action": [
         "polly:DescribeVoices"
       ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codebuild:StartBuild",
+        "codebuild:BatchGetBuilds"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:GetLogEvents"],
       "Resource": "*"
     }
   ]
