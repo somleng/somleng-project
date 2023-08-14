@@ -1725,6 +1725,9 @@ module "somleng_proxy_api" {
                       Under Inbound Dialing select the default country code of the caller. This should match the country code you use later when you create a phone number.
                     </li>
                     <li>
+                      Under Outbound Dialing optionally configure <strong>Route prefixes</strong>, <strong>Dial string prefix</strong> and select <strong>National dialing</strong> where appropriate.
+                    </li>
+                    <li>
                       Choose <strong>Create SIP Trunk</strong>.
                     </li>
                   </ol>
@@ -1882,6 +1885,16 @@ module "somleng_proxy_api" {
                         Testing
                       </a>
                     </li>
+                    <li>
+                      <a href="#client_gateway_configuration_guide_goip_advanced_routing_configuration" class="link">
+                        Advanced Routing Configuration (Optional)
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#client_gateway_configuration_guide_goip_additional_resources" class="link">
+                        Additional Resources
+                      </a>
+                    </li>
                   </ol>
 
                   <div id="client_gateway_configuration_guide_goip_general_configuration">
@@ -1923,7 +1936,9 @@ module "somleng_proxy_api" {
 
                     <p>
                       The next step is to configure the GoIP gateway to register with Somleng. There are 3 different modes of configuration depending on your
-                      circumstances.
+                      circumstances. Please refer to the
+                      <a href="#client_gateway_configuration_guide_goip_additional_resources" class="link">GoIP User Manual</a>
+                      for more information about the different configuration modes and the channel selection algorithms.
                     </p>
 
                     <table>
@@ -1940,9 +1955,7 @@ module "somleng_proxy_api" {
                             Use this mode to associate all channels on your GoIP gateway to a single SIP Trunk on Somleng.
                             <br/>
                             <em>
-                              Note: You can use this mode together with a <strong>Routing Prefix</strong> to control which
-                              channel an outbound call with be routed to. Please refer to the GoIP User Manual for more information
-                              about <strong>Routing Prefix</strong> and the channel selection algorithm.
+                              This mode is best if you only have one group of SIM cards and you want to route evenly between all of them.
                             </em>
                           </td>
                         </tr>
@@ -1962,7 +1975,8 @@ module "somleng_proxy_api" {
                             Use this mode to associate a group of channels on your GoIP gateway to a single SIP trunk on Somleng.
                             <br/>
                             <em>
-                              Note: This mode requires you so set a <strong>Routing Prefix</strong> for each group.
+                              This mode is useful if you want to route to a different group of SIM cards based on the number prefix.
+                              See <a href="#client_gateway_configuration_guide_goip_advanced_routing_configuration" class="link">Advanced Routing Configuration</a> for more info.
                             </em>
                           </td>
                         </tr>
@@ -1992,7 +2006,9 @@ module "somleng_proxy_api" {
                         and paste it in the <strong>SIP Registrar Server</strong> field.
                       </li>
                       <li>
-                        Optionally fill in <strong>Routing Prefix</strong> to control the channel selection algorithm. Please refer to the GoIP User Manual for more details.
+                        Optionally fill in <strong>Routing Prefix</strong> to control the channel selection algorithm. Please refer to the
+                        <a href="#client_gateway_configuration_guide_goip_additional_resources" class="link">GoIP User Manual</a>
+                         for more details.
                       </li>
                       <li>
                         Click <strong>Save Changes</strong>.
@@ -2010,7 +2026,7 @@ module "somleng_proxy_api" {
 
                   <div id="client_gateway_configuration_guide_goip_advanced_voip_configuration">
                     <h6>
-                      3. Advanced VoIP Configuration
+                      3. Advanced VoIP Configuration (Optional)
                     </h6>
 
                     <p>
@@ -2111,6 +2127,137 @@ module "somleng_proxy_api" {
                     </ol>
 
                     <img src="./images/goip-5_general.png">
+                  </div>
+
+                  <div id="client_gateway_configuration_guide_goip_advanced_routing_configuration">
+                    <h6>
+                      6. Advanced Routing Configuration (Optional)
+                    </h6>
+
+                    <p>
+                      Let's say you have a GoIP-8 with 3 groups of SIM Cards from 3 different mobile operators. Assume you have 4 SIM cards from Telco A,
+                      3 SIM cards from Telco B, and 1 SIM Card from Telco C and you want to route calls from Telco A to group 1,
+                      Telco B to group 2 and Telco C to group 3 according to the table below.
+                    </p>
+
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>No. of SIM cards</th>
+                          <th>Telco</th>
+                          <th>Prefixes</th>
+                          <th>Group</th>
+                          <th>Lines</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>4</td>
+                          <td>Telco A</td>
+                          <td>85510, 85515, 85516</td>
+                          <td>Group 1</td>
+                          <td>Lines 1-4</td>
+                        </tr>
+
+                        <tr>
+                          <td>3</td>
+                          <td>Telco B</td>
+                          <td>85531, 85571, 85597</td>
+                          <td>Group 2</td>
+                          <td>Lines 5-7</td>
+                        </tr>
+
+                        <tr>
+                          <td>1</td>
+                          <td>Telco C</td>
+                          <td>85511, 85512, 85517</td>
+                          <td>Group 3</td>
+                          <td>Line 8</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <p>
+                      In order to handle this situation complete the following steps.
+                    </p>
+
+                    <ol>
+                      <li>
+                        <p>
+                          Configure 3 seperate SIP Trunks (one for each Telco) as per the instructions in
+                          <a href="#client_gateway_configuration_guide_instructions_sip_trunk" class="link"> Step 1 of the Client Configuration Guide</a>.
+                        </p>
+                        <p>
+                          For each SIP trunk specify:
+                          <ul>
+                            <li>
+                              <strong>Max channels</strong>. This should equal the number of SIM cards installed for the telco.
+                            </li>
+                            <li>
+                              <strong>Route prefixes</strong>. A comma seperated list of route prefixes for the telco. Must include the country code.
+                            </li>
+                            <li>
+                              <strong>Dial string prefix</strong>. A unique numeric identifier for the group prepended to the dial string. This will be used by GoIP to identify the channel group.
+                            </li>
+                            <li>
+                              Select <strong>National dialing</strong>. This will ensure that the national dialing format will be sent to your GoIP.
+                            </li>
+                          </ul>
+                        </p>
+
+                        <img src="./images/sip_trunk-client_credentials_update_advanced.png">
+                      </li>
+
+                      <li>
+                        <p>
+                          Configure Basic VoIP configuration for each group created above, as per the instructions in
+                          <a href="#client_gateway_configuration_guide_goip_basic_voip_configuration" class="link"> Step 2 of the GoIP Configuration Guide</a>.
+                        </p>
+
+                        <p>
+                          For each group specify:
+                          <ul>
+                            <li>
+                              <strong>Authentication ID</strong>. This should match the <strong>Username</strong> generated from the previous step.
+                            </li>
+                            <li>
+                              <strong>Password</strong>. This should match the <strong>Password</strong> generated from the previous step.
+                            </li>
+                            <li>
+                              <strong>SIP Registrar Server</strong>. This should match the <strong>Domain</strong> obtained from the previous step.
+                            </li>
+                            <li>
+                              <strong>Routing Prefix</strong>: This should match the <strong>Dial string prefix</strong> configured above.
+                              For example if you set the dial string prefix to <code>1</code> then you should specify a routing prefix as follows: <code>1:-1|</code>.
+                              This will match the dial string prefix <code>1</code> to the group and remove the prefix, leaving only the destination number.
+                            </li>
+                          </ul>
+                        </p>
+                      </li>
+                    </ol>
+                  </div>
+
+
+                  <div id="client_gateway_configuration_guide_goip_additional_resources">
+                    <h6>
+                      7. Additional Resources
+                    </h6>
+
+                    <p>
+                      Below is a list of additional resoruces for the GoIP Gateway.
+                    </p>
+
+                    <ul>
+                      <li>
+                        <a href="files/goip-v1.5-user-manual.pdf" class="link">GoIP User Manual</a>
+                      </li>
+                      <li>
+                        <a href="http://en.dbltek.com/latestfirmwares.html" class="link" target="_blank">Latest Firmware <i class="fa fa-external-link"></i></a>.
+                      </li>
+                      <li>
+                        <a href="http://www.hybertone.com/en/products.asp" class="link" target="_blank">Official Website <i class="fa fa-external-link"></i></a>.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
