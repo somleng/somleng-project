@@ -2181,10 +2181,10 @@ module "somleng_proxy_api" {
                       In order to handle this situation complete the following steps.
                     </p>
 
-                    <ol>
+                    <ol type="a">
                       <li>
                         <p>
-                          Configure 3 seperate SIP Trunks (one for each Telco) as per the instructions in
+                          Configure 3 separate SIP Trunks (one for each Telco) as per the instructions in
                           <a href="#client_gateway_configuration_guide_instructions_sip_trunk" class="link"> Step 1 of the Client Configuration Guide</a>.
                         </p>
                         <p>
@@ -2194,7 +2194,7 @@ module "somleng_proxy_api" {
                               <strong>Max channels</strong>. This should equal the number of SIM cards installed for the telco.
                             </li>
                             <li>
-                              <strong>Route prefixes</strong>. A comma seperated list of route prefixes for the telco. Must include the country code.
+                              <strong>Route prefixes</strong>. A comma separated list of route prefixes for the telco. Must include the country code.
                             </li>
                             <li>
                               <strong>Dial string prefix</strong>. A unique numeric identifier for the group prepended to the dial string. This will be used by GoIP to identify the channel group.
@@ -2228,11 +2228,22 @@ module "somleng_proxy_api" {
                             </li>
                             <li>
                               <strong>Routing Prefix</strong>: This should match the <strong>Dial string prefix</strong> configured above.
-                              For example if you set the dial string prefix to <code>1</code> then you should specify a routing prefix as follows: <code>1:-1|</code>.
-                              This will match the dial string prefix <code>1</code> to the group and remove the prefix, leaving only the destination number.
                             </li>
                           </ul>
                         </p>
+
+                        <img src="./images/goip_configurations_basic_voip_route_prefixes.png">
+                      </li>
+                      <li>
+                        <p>
+                          Configure Call Out configuration for each channel.
+                        </p>
+
+                        <p>
+                          For each channel, specify a <strong>Dial Plan</strong> to remove the routing prefix setup in the previous step. This removes the prefix before calling out.
+                        </p>
+
+                        <img src="./images/goip_configurations_call_out.png">
                       </li>
                     </ol>
                   </div>
@@ -2244,7 +2255,7 @@ module "somleng_proxy_api" {
                     </h6>
 
                     <p>
-                      Below is a list of additional resoruces for the GoIP Gateway.
+                      Below is a list of additional resources for the GoIP Gateway.
                     </p>
 
                     <ul>
