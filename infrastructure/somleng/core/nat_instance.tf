@@ -260,6 +260,13 @@ resource "aws_route" "zamtel_media" {
   network_interface_id      = aws_network_interface.nat_instance.id
 }
 
+resource "aws_route" "telecom_cambodia_signalling" {
+  route_table_id            = module.vpc.private_route_table_ids[0]
+  destination_cidr_block    = "203.223.42.142/32"
+  network_interface_id      = aws_network_interface.nat_instance.id
+}
+
+
 resource "aws_route" "telecom_cambodia_media" {
   route_table_id            = module.vpc.private_route_table_ids[0]
   destination_cidr_block    = "203.223.42.132/32"
