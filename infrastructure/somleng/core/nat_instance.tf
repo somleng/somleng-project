@@ -9,12 +9,8 @@ data "aws_subnet" "nat_instance" {
 }
 
 # https://aws.amazon.com/ec2/instance-types/t4/
-data "aws_ssm_parameter" "nat_instance_arm64" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2"
-}
-
 data "aws_ssm_parameter" "nat_instance" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
 }
 
 resource "aws_eip" "nat_instance" {
@@ -110,7 +106,7 @@ resource "aws_network_interface" "nat_instance" {
 
 resource "aws_launch_template" "nat_instance" {
   name_prefix                 = "nat-instance"
-  image_id                    = data.aws_ssm_parameter.nat_instance_arm64.value
+  image_id                    = data.aws_ssm_parameter.nat_instance.value
   instance_type               = "t4g.small"
 
   iam_instance_profile {
