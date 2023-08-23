@@ -1,5 +1,5 @@
 [Unit]
-Description = SNAT via ENI eth1
+Description = SNAT via secondary interface
 
 [Service]
 ExecStart = /opt/nat/snat.sh
