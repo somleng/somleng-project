@@ -6,10 +6,8 @@
 
 set -e
 
-yum -y update
-
-# install the version of postgres which matches the restore version
-yum -y install postgresql13
+dnf update
+dnf -y install postgresql15
 
 TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
 AWS_REGION="$(wget --header "X-aws-ec2-metadata-token: $TOKEN" -q -O - http://169.254.169.254/latest/meta-data/placement/region)"

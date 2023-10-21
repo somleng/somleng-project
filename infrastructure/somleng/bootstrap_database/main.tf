@@ -1,6 +1,6 @@
 # https://aws.amazon.com/ec2/instance-types/t4/
 data "aws_ssm_parameter" "arm64_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/al2022-ami-kernel-default-arm64"
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
 }
 
 data "aws_ssm_parameter" "db_master_password" {

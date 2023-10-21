@@ -1,5 +1,5 @@
 data "aws_ssm_parameter" "arm64_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/al2022-ami-kernel-default-arm64"
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
 }
 
 data "aws_s3_bucket" "backups" {
