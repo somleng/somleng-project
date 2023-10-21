@@ -893,7 +893,74 @@
                     </p>
                   </div>
                 </div>
+
+                <div id="tts">
+                  <h5>
+                    Text To Speech (TTS)
+                  </h5>
+
+                  <p>
+                    Text To Speech (TTS), also known as speech synthesis, is a process in which text is converted into a human-sounding voice.
+                  </p>
+
+                  <p>
+                    The <code>&lt;Say&gt;</code> verb allows you to provide plain text that Somleng converts to synthesized speech.
+
+                    For example, when Somleng executes the following TwiML during a call, the caller hears "Hello world!"
+                    The synthesized voice the caller hears is the default voice and language of the Somleng Account
+                    (configured in the <a href="#accounts" class="link">Account Settings</a>).
+                  </p>
+
+
+<p><pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say&gt;Hello world!&lt;/Say&gt;
+&lt;/Response&gt;
+</code></pre></p>
+
+                </div>
+
+                <p>
+                  <code>&lt;Say&gt;</code> also allows you to modify the language, accent, and voice of the synthesized speech via the <code>language</code> and <code>voice</code> attributes.
+                  The example below uses Amazon Polly's "Joanna" voice and American English:
+                </p>
+<p><pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say language=&quot;en-US&quot; voice=&quot;Polly.Joanna&quot;&gt;Hello. I am Joanna and I speak American English!&lt;/Say&gt;
+&lt;/Response&gt;
+</code></pre></p>
               </div>
+
+              <p>
+                The language attribute of <code>&lt;Say&gt;</code> also allows you to override the default voice that is configured for the Somleng Account.
+                For example, if the account's default TTS voice is <code>Polly.Joanna (Female, en-US)</code>, but wish to use German for a specific call, set the <code>language</code> attribute to <code>de-DE</code> in your TwiML.
+                This will choose another voice from the Polly provider which supports German.
+              </p>
+
+              <p><pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say language=&quot;de-DE&quot;&gt;Hallo. Ich spreche Deutsch!&lt;/Say&gt;
+&lt;/Response&gt;
+</code></pre></p>
+
+              <p>
+                Note: the TTS provider is always preserved when using this feature.
+                For example if the account's default TTS voice is <code>Basic.Kal (Male, en-US)</code>, using the TwiML above won't have any effect
+                because German is not available in the Basic provider.
+              </p>
+
+              <p>
+                You can also use Premium voices which are generated using the latest technology and innovation in synthesized speech,
+                providing the most human-like, expressive and natural-sounding text-to-speech voices possible, with higher quality than Standard voices.
+                The voices in this tier are currently provided by Amazon (Amazon Polly Neural).
+              </p>
+
+              <p>
+                As well as setting the default TTS voice to a premium voice in the dashboard, you can also use the <code>voice</code> attribute to override a premium voice.
+                For example:
+
+<p><pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say voice=&quot;Polly.Danielle-Neural&quot;&gt;Hello. I am Danielle!&lt;/Say&gt;
+&lt;/Response&gt;
+</code></pre></p>
+
               <div id="messaging">
                 <h4>
                   Messaging
