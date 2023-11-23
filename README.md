@@ -1,5 +1,11 @@
 # The Somleng Project
 
+<p align="center">
+  <a href="https://digitalpublicgoods.net/registry/somleng.html">
+    <img src="https://user-images.githubusercontent.com/667909/181150972-e59a77ab-b657-4893-aef9-d3df1384a506.png" alt="DPG Approved" height="40">
+  </a>
+</p>
+
 ## About this Repository
 
 This repository is the entry point for The Somleng Project. The README links to the individual software components that make up Somleng. The repository also contains the source code for [somleng.org](https://www.somleng.org).
