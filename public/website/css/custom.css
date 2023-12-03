@@ -38,3 +38,9 @@ h6 {
 .teams img {
   margin-right: 10px;
 }
+
+.ivr-prompt {
+  margin: 0;
+  background: #eee;
+  border-radius: 5px;
+}
