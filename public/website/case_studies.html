@@ -608,64 +608,62 @@
                   <p>
                     For example the menu for collecting the beneficiary’s child age group is as follows (recorded in
                     <a href="https://en.wikipedia.org/wiki/Khmer_language" class="link" target="_blank">Khmer <i
-                      class="fa fa-external-link"></i></a>).
+                        class="fa fa-external-link"></i></a>).
                   </p>
 
                   <blockquote class="ivr-prompt">
-                    <p>
-                      Please choose an age group for your child. (សូមជ្រើសរើសក្រុមអាយុមួយសម្រាប់កូនរបស់អ្នក។)
-                      <ul>
-                        <li>
-                          If you are pregnant, please press 1. (បើកំពុងមានផ្ទៃពោះ សូមចុចលេខ១។)
-                        </li>
-                        <li>
-                          If your baby is under 2 years old, press 2. (បើមានទារកអាយុក្រោម២ឆ្នាំ សូមចុចលេខ២។)
-                        </li>
-                        <li>
-                          If your child is between 3 and 5 years old, press 3. (បើកុមារតូចអាយុចន្លោះពី៣ដល់៥ឆ្នាំ សូមចុចលេខ៣។)
-                        </li>
-                      </ul>
-                    </p>
+                    Please choose an age group for your child. (សូមជ្រើសរើសក្រុមអាយុមួយសម្រាប់កូនរបស់អ្នក។)
+                    <ul>
+                      <li>
+                        If you are pregnant, please press 1. (បើកំពុងមានផ្ទៃពោះ សូមចុចលេខ១។)
+                      </li>
+                      <li>
+                        If your baby is under 2 years old, press 2. (បើមានទារកអាយុក្រោម២ឆ្នាំ សូមចុចលេខ២។)
+                      </li>
+                      <li>
+                        If your child is between 3 and 5 years old, press 3. (បើកុមារតូចអាយុចន្លោះពី៣ដល់៥ឆ្នាំ
+                        សូមចុចលេខ៣។)
+                      </li>
+                    </ul>
                   </blockquote>
 
                   <p>
-                    The beneficiary’s responses are then saved in RapidPro for later use.
+                    The beneficiary's responses are then saved in RapidPro for later use.
                   </p>
 
                   <p>
                     Below is a more low-level view of what happens during beneficiary registration.
 
                     <img src="./images/unicef-parenting-tips-ivr-registration-flow.png">
-                    <cite>Figure 3: ParentingTipsIVR Registration Flow</cite>
-
-                    <ol>
-                      <li>
-                        Beneficiary opts-in by calling to 1279.
-                      </li>
-                      <li>
-                        The Mobile Network Operator (MNO) forwards the call to a number managed by Telecom Cambodia.
-                      </li>
-                      <li>
-                        Telecom Cambodia sends a
-                        <a href="https://en.wikipedia.org/wiki/Session_Initiation_Protocol" class="link" target="_blank">SIP Invite <i
-                          class="fa fa-external-link"></i></a>
-                        to Somleng
-                      </li>
-                      <li>
-                        Somleng connects to RapidPro via the IVR channel URL.
-                      </li>
-                      <li>
-                        A RapidPro flow is configured to run when the incoming call is received.
-                      </li>
-                    </ol>
+                    <cite>Figure 3: ParentingTips IVR Registration Flow</cite>
                   </p>
+
+                  <ol>
+                    <li>
+                      Beneficiary opts-in by calling to 1279.
+                    </li>
+                    <li>
+                      The Mobile Network Operator (MNO) forwards the call to a number managed by Telecom Cambodia.
+                    </li>
+                    <li>
+                      Telecom Cambodia sends a
+                      <a href="https://en.wikipedia.org/wiki/Session_Initiation_Protocol" class="link"
+                        target="_blank">SIP Invite <i class="fa fa-external-link"></i></a>
+                      to Somleng
+                    </li>
+                    <li>
+                      Somleng connects to RapidPro via the IVR channel URL.
+                    </li>
+                    <li>
+                      A RapidPro flow is configured to run when the incoming call is received.
+                    </li>
+                  </ol>
                 </div>
 
                 <div>
                   <h5>Chatbot Initiated Interactions</h5>
 
                   <p>
-
                   </p>
                 </div>
               </div>
