@@ -602,7 +602,8 @@
                   <p>
                     Beneficiaries opt-in to the chatbot by simply calling the short-code 1279 and following the IVR
                     prompts configured in the RapidPro flow. The audio prompts collect beneficiary data such as: gender,
-                    child's age group, and preferred topic via a series of menus.
+                    child's age group, and preferred topic via a series of menus which are saved in RapidPro for later
+                    use.
                   </p>
 
                   <p>
@@ -628,11 +629,7 @@
                   </blockquote>
 
                   <p>
-                    The beneficiary's responses are then saved in RapidPro for later use.
-                  </p>
-
-                  <p>
-                    Below is a more low-level view of what happens during beneficiary registration.
+                    Below is a technical explanation of what happens during beneficiary registration.
 
                     <img src="./images/unicef-parenting-tips-ivr-registration-flow.png">
                     <cite>Figure 3: ParentingTips IVR Registration Flow</cite>
@@ -664,14 +661,122 @@
                   <h5>Chatbot Initiated Interactions</h5>
 
                   <p>
+                    After the beneficiary is registered, the chatbot can be configured to generate periodic reminders.
+                    In order to keep the beneficiary engaged, these reminders are designed to be interactive. Configured
+                    on a rolling schedule (e.g. Weekly), the chatbot will generate an automated phone call to the
+                    beneficiary. The beneficiary picks up the phone, listens to the interactive IVR, chooses a topic of
+                    interest and listens to the message. They can choose to stay on the call as long as they want and
+                    choose different topics. When they are done, they simply hang up the call.
                   </p>
+                  <p>
+                    Here's an example of a Chatbot initiated interaction (recorded in Khmer).
+                  </p>
+
+                  <blockquote class="ivr-prompt">
+                    Welcome to Parenting tips! Parenting tips is a chatbot designed with the support of the Ministry of
+                    Health and Ministry of Women Affairs to help you as a parent or caregiver provide optimal parenting
+                    for your child. Please choose a topic below: (សូមស្វាគមន៍មកកាន់កម្មវិធីគន្លឺះនៃការចិញ្ចឹមកូន!
+                    កម្មវិធី​នេះ​បង្កើតឡើងដោយមានការសម្របសម្រួលពី ក្រសួងកិច្ចការនារី និង​គណៈកម្មាធិការអប៉រំ
+                    និងអភិវឌ្ឈន៌កុមារតូច ដើម្បីជួយឪពុកម្តាយ ឬអាណាព្យាបាលពីរបៀបនៃការចិញ្ចឹម​កូនអោយបានល្អប្រសើរ។
+                    សូមជ្រើសរើសប្រធានបទខាងក្រោម៖)
+                    <ul>
+                      <li>
+                        For Maternal Health during Pregnancy please press 1. (សូមចុចលេខ១
+                        សម្រាប់ប្រធានបទសុខភាពមាតាក្នុងអំឡុងពេលមានផ្ទៃពោះ។)
+                      </li>
+                      <li>
+                        For maternal and newborn health up to 6 months please press 2. (ចុចលេខ២
+                        សម្រាប់ប្រធានបទសុខភាពមាតានិងទារកទើបកើតដល់អាយុ៦ខែ។)
+                      </li>
+                      <li>
+                        For Maternal and Child Health from 6 months to 2 years old please press 3. (ចុចលេខ៣
+                        សម្រាប់ប្រធានបទសុខភាពមាតានិងកុមារអាយុ៦ខែ​ដល់២ឆ្នាំ។)
+                      </li>
+                    </ul>
+                  </blockquote>
+
+                  <p>
+                    Below is a technical explanation of what happens during beneficiary registration.
+
+                    <img src="./images/unicef-parenting-tips-chatbot-initiated-ivr-flow.png">
+                    <cite>Figure 4: Chatbot Initiated IVR Flow</cite>
+                  </p>
+
+                  <ol>
+                    <li>
+                      A RapidPro schedule is configured to generate automated phone calls to beneficiaries on a periodic
+                      basis.
+                    </li>
+                    <li>
+                      RapidPro creates the call on Somleng via the
+
+                      <a href="docs/twilio_api" class="link" target="_blank">REST API <i
+                          class="fa fa-external-link"></i></a>.
+                    </li>
+                    <li>
+                      Somleng sends a
+                      <a href="https://en.wikipedia.org/wiki/Session_Initiation_Protocol" class="link"
+                        target="_blank">SIP Invite <i class="fa fa-external-link"></i></a>
+                      to Telecom Cambodia.
+                    </li>
+                    <li>
+                      Telecom Cambodia forwards the call to the Mobile Network Operator.
+                    </li>
+                    <li>
+                      The Mobile Network Operator initiates the call to the beneficiary.
+                    </li>
+                    <li>
+                      The beneficiary answers the call and follows the IVR prompts specified in the RapidPro flow.
+                    </li>
+                  </ol>
                 </div>
               </div>
 
               <div>
                 <h4>
-                  Considerations
+                  Challenges
                 </h4>
+
+                <p>
+                  One of the biggest challenges in replicating this kind of program in another country or region is
+                  negotiating directly
+                  with the local Mobile Network Operators. This can be a challenge for many reasons. For example, it can
+                  be
+                  difficult to get a commercial agreement with a Mobile Network Operator and often there are multiple
+                  Mobile Network Operators in a given country or region.
+                </p>
+              </div>
+
+              <div>
+                <h4>
+                  Solutions
+                </h4>
+
+                <p>
+                  In order to overcome these issues, Somleng has developed a
+                  <a href="blog.html#introducing-diy-programmable-voice" target="_blank" class="link">
+                    Carrier Bypass feature <i class="fa fa-external-link"></i></a>.
+                  This feature allows entities such as UNICEF to completely bypass negotiating with local Mobile
+                  Network Operators, which can increase the speed of deploying a program like ParentingTips by an order
+                  of magnitude.
+                </p>
+
+                <p>
+                  The Carrier Bypass feature works by replacing the Mobile Network Operators with an off-the-shelf
+                  <a href="https://en.wikipedia.org/wiki/VoIP_gateway" class="link" target="_blank">VoIP gateway <i
+                      class="fa fa-external-link"></i></a>
+                  such as the one pictured below.
+
+                  <img src="./images/goip-32-short_antennas.png">
+                </p>
+
+                <p>
+                  The VoIP Gateway is connected to Somleng and loaded with local SIM cards, replacing the role of the
+                  Mobile Network Operators.
+                  For more information on this feature please refer to the
+                  <a href="docs/twilio_api" class="link" target="_blank">Client Gateway Configuration Guide <i
+                      class="fa fa-external-link"></i></a> in our documentation.
+                </p>
               </div>
             </div>
           </div>
