@@ -182,40 +182,57 @@
 
               <img src="./images/undraw_Savings_dwkw.svg" class="expanded__image">
 
-              <p>
-                In Somalia returnee households from Dadaab refugee camp in Kenya and vulnerable households in Bay and
-                Bakool
-                received emergency unconditional cash-based transfer assistance package to help them meet their needs
-                during the current drought period.
-              </p>
-              <p>
-                In order to share information and get feedback about the program,
-                a voice-based messaging solution was proposed.
-                In the proposal voice messages and surveys would be recorded in the Somali language
-                and delivered to the household head by mobile phone calls.
-              </p>
 
-              <p>
-                The price for terminating a call through Twilio in Somalia is <a
-                  href="https://www.twilio.com/voice/pricing/so" target="_blank" class="link">$0.7680 per minute <i
-                    class="fa fa-external-link"></i></a>.
-                To date more than 75.8 K minutes worth of calls have been sent out which would equate to $58,238.98 on
-                Twilio.
-              </p>
-              <p>
-                In order to reduce costs and promote local businesses, <a href="https://www.africasvoices.org/"
-                  target="_blank" class="link">Africa's Voices Foundation <i class="fa fa-external-link"></i></a>
-                in conjunction with <a href="https://www.unicef.org/somalia/" target="_blank" class="link">UNICEF
-                  Somalia <i class="fa fa-external-link"></i></a> partnered with <a href="https://www.hormuud.com/"
-                  target="_blank" class="link">Hormuud <i class="fa fa-external-link"></i></a>, a local MNO in Somalia.
-                In comparison, Hormuud's pricing is between $0.04 and $0.07 per minute.
-              </p>
+              <div>
+                <h4>
+                  Problem
+                </h4>
 
-              <p>
-                Somleng SCFM was again used in this project to provide Africa's Voices Foundation with a dashboard for
-                scheduling callouts and managing recipients.
-                Automated voice messages were sent to beneficiaries via Somleng through Hormuud.
-              </p>
+                <p>
+                  In Somalia, UNICEF needed to arrange an emergency cash-based transfer assistance package to help
+                  vulnerable households in Bay and Bakool during a recent drought period. In order to share information
+                  and get feedback about the program, the preferred communication method was Programmable Voice (also
+                  known as IVR). This technology allows voice messages to be recorded in local dialects and delivered to
+                  the household head by an ordinary mobile phone call, thereby allowing both illiterate and
+                  non-smartphone
+                  beneficiaries to access the service.
+                </p>
+
+                <p>
+                  For this program, UNICEF placed to calls to 13,913 beneficiaries totaling 43,724 call minutes. The
+                  only
+                  other CPaaS provider other than Somleng able to provide this service was Twilio. Twilio's pricing to
+                  Somalia is
+                  <a href="https://www.twilio.com/voice/pricing/so" target="_blank" class="link">$0.7680 per minute <i
+                      class="fa fa-external-link"></i></a>
+                  which equates to a cost of $33,580.
+                </p>
+                <p>
+                  In addition to the
+                  prohibitively high cost, initial tests showed that the call quality through Twilio was poor due to
+                  Twilio not having any local telecom partners in Somalia so calls were initiated internationally.
+                  Furthermore, all money spent by UNICEF on this service would essentially go back to Twilio and not
+                  contribute to Somalia's economy.
+                </p>
+              </div>
+              <div>
+                <h4>Solution</h4>
+
+                <p>
+                  Through UNICEF's existing connections, Somleng partnered with a local Somali telecom company (Hormuud
+                  Telecom) to provide network connectivity to Somali mobile subscribers. Hormuud was able to offer their
+                  network for only $0.04 per minute. Compared to Twilio's pricing ($0.7680 per minute) this is a 95%
+                  price reduction. Somleng then provided the Programmable Voice APIs to UNICEF necessary to deliver
+                  voice messages to 13,913 beneficiaries.
+                </p>
+
+                <p>
+                  As a result, UNICEF was able to save $31,831 (95%) in programmable voice costs. Call quality was also
+                  dramatically improved as calls originated through a local MNO as opposed to internationally.
+                  Furthermore Hormuud Telecom was able to generate revenue through this solution contributing to the
+                  local economy of Somalia.
+                </p>
+              </div>
             </div>
 
             <div id="mhealth-unicef-guatemala">
