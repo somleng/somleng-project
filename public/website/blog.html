@@ -96,7 +96,7 @@
               </h3>
 
               <p>
-                Somleng is the world's only Open Source Communications-Platform-as-a-Service (CPaaS) and
+                Somleng is an Open Source Communications-Platform-as-a-Service (CPaaS) and
                 Telco-as-a-Service (TaaS). On the CPaaS side, Somleng includes an Open Source implementation of Twilio's
                 APIs for Programmable Voice and Messaging as well as a Dashboard for customers to configure their
                 account, manage their credentials, configure phone numbers, manage Text-to-Speech (TTS) etc. Somleng
@@ -185,7 +185,7 @@
               </p>
 
               <img src="./images/somleng-infrastructure-uac.png">
-              <cite>Figure 2: Somleng Switch Infrastructure</cite>
+              <cite>Figure 2: Somleng UAC Infrastructure</cite>
 
               <p>
                 Internal API requests are received from Somleng via an Application Load Balancer to Nginx Reverse
@@ -396,7 +396,7 @@
               </p>
 
               <img src="./images/somleng-infrastructure-blog-symmetric-rtp.png">
-              <cite>Figure 6: UAC Behind NAT Gateway Symmetric RTP</cite>
+              <cite>Figure 7: UAC Behind NAT Gateway Symmetric RTP</cite>
 
               <p>
                 In some cases, our customer's devices do not support symmetric RTP, or they cannot enable it. In these
@@ -419,17 +419,338 @@
               </p>
 
               <img src="./images/somleng-infrastructure-blog-1-1-nat.png">
-              <cite>Figure 7: UAC Behind 1-1 NAT Instance</cite>
+              <cite>Figure 8: UAC Behind 1-1 NAT Instance</cite>
 
               <h4>
                 SIP Load Balancing
               </h4>
 
               <p>
-
+                So far we have managed to get away with using off-the-shelf managed services such as an AWS Application
+                Load Balancer and an AWS NAT Gateway to horizontally scale FreeSWITCH when used as a User Agent Client
+                (UAC). But we also want to use FreeSWITCH as a User Agent Server (UAS) to handle inbound calls. This
+                poses a new set of challenges described in the following section.
               </p>
 
-              <p></p>
+              <p>
+                Incoming SIP and RTP are sent over UDP. We want these requests to be load balanced to our FreeSWITCH
+                tasks, but we cannot use the existing Application Load Balancer which operates on layer 7 (or the
+                application layer of the OSI Model). AWS also has a managed layer 4
+
+                <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html"
+                  target="_blank" class="link">Network Load Balancer</a>
+                which can
+                be used to load balance UDP, however this type of load balancer is not SIP aware. Here's what happens
+                when we try to load balance SIP directly to the FreeSWITCH tasks using a managed Network Load Balancer.
+              </p>
+
+              <img src="./images/somleng-infrastructure-blog-no-proxy.png">
+              <cite>Figure 9: UAS Behind Network Load Balancer</cite>
+
+              <p>
+                The non-SIP-aware Network Load Balancer, just distributes requests between the ECS tasks running
+                FreeSWITCH. In the example above the SIP Invite is sent to one ECS task, but the SIP BYE is sent to
+                another.
+              </p>
+
+              <p>
+                In order to handle this we need a SIP-aware proxy that sits between the managed Network Load Balancer
+                and the FreeSWITCH UAS tasks. The proxy will be able to handle incoming requests and route them to the
+                correct FreeSWITCH task. For this we use
+                <a href="https://opensips.org/" target="_blank" class="link">OpenSIPS</a>.
+                OpenSIPS comes with a load balancer module which
+                supports FreeSWITCH out of the box.
+              </p>
+
+              <img src="./images/somleng-infrastructure-blog-opensips-proxy.png">
+              <cite>Figure 10: UAS Behind OpenSIPS Proxy</cite>
+
+              <p>
+                With an OpenSIPS proxy in place, new requests (SIP Invites) will be load balanced across the available
+                FreeSWITCH tasks. In order to illustrate this better let's look at a complete example.
+              </p>
+
+              <img src="./images/somleng-infrastructure-blog-full-sip-invite.png">
+              <cite>Figure 11: SIP Invite</cite>
+
+              <ol>
+                <li>
+                  UAC (<code>10.65.104.1</code>) sends SIP Invite to the UAC's SIP Proxy (<code>175.100.32.29</code>)
+                </li>
+                <li>
+                  UAC's SIP Proxy forwards the request to the Network Load Balancer (<code>52.74.4.205</code>)
+                </li>
+                <li>
+                  Network Load Balancer forwards the request to the OpenSIPS proxy ECS task (<code>10.10.1.162</code>)
+                </li>
+                <li>
+                  OpenSIPS proxy forwards the request to the FreeSWITCH task (<code>10.10.1.21</code>)
+                </li>
+              </ol>
+
+              <p>
+                When the SIP invite arrives at the OpenSIPS proxy it will add a new Record-Route header containing its
+                own address above any existing Record-Route headers. In our setup, OpenSIPS is configured to add two
+                Record-Route headers. This is known as double Record-Route headers and handles the special situation
+                where the proxy receives a request on one network interface and sends it onwards using a different
+                interface. In our case the request is received on by Network Load Balancer but sent out via the private
+                IP address of the OpenSIPS ECS Task.
+              </p>
+
+              <p>
+                The set of Record-Route headers describes the path through all proxy nodes. Combined with the Contact
+                header, this provides a complete description of the upstream path that leads back to the UAC.
+              </p>
+
+              <p>
+                Here's an
+                example of a request containing the Record-Route headers and contact headers for a SIP Invite
+                proxied to the UAS (FreeSWITCH ECS Task):
+              </p>
+
+              <pre>
+                <code>
+                  Request-Line: INVITE sip:1294@52.74.4.205:5060;user=phone SIP/2.0
+
+                  Message Header:
+                  Record-Route: &lt;sip:10.10.1.162:5060;lr;did=05d.f7db99b7;r2=on&gt;
+                  Record-Route: &lt;sip:52.74.4.205:5060;lr;did=05d.f7db99b7;r2=on&gt;
+                  Record-Route: &lt;sip:175.100.32.29:5060;lr;transport=udp&gt;
+                  Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;
+                </code>
+              </pre>
+
+              <p>
+                Note the following:
+              </p>
+
+              <ul>
+                <li>
+                  The Request-Line contains the advertised IP address of the Network Load Balancer, which the UAC knows
+                  before it sends the request.
+                </li>
+                <li>
+                  <code>10.10.1.162</code> is the internal IP address of the OpenSIPS ECS task. This Record-Route header
+                  is added by
+                  the OpenSIPS proxy before it sends the request to the UAS.
+                </li>
+                <li>
+                  <code>52.74.4.205</code> is the public IP address of the Network Load Balancer. This Record-Route
+                  header is added by the OpenSIPS proxy before it sends the request to the UAS.
+                </li>
+                <li>
+                  The attribute <code>r2=on</code> in the Record-Route headers indicates double Record-Route headers.
+                </li>
+                <li>
+                  <code>175.100.32.29</code> is the public IP address of the SIP proxy associated with the UAC and is
+                  added by the UAC's proxy.
+                </li>
+                <li>
+                  <code>10.65.104.1</code> (in the contact header) is the internal IP address of the UAC.
+                </li>
+              </ul>
+
+              <p>
+                Now the UAS (FreeSWITCH ECS task) has a complete description of the path back to the UAC, but at this
+                point the UAC doesn't have any knowledge of the path, the proxy nodes or even the address of the
+                UAS. It needs to know the path too, for example when it wants to send more requests to the UAS within
+                the current dialogue. This information is exchanged by the UAS in the response, which includes a
+                complete copy of all the Record-Route headers. It also includes its own Contact header in the response.
+                The path that the response follows is defined by the Via headers - the Record-Route headers are present
+                in the response but do not influence its transmission path.
+              </p>
+
+              <img src="./images/somleng-infrastructure-blog-sip-response.png">
+              <cite>Figure 12: SIP Response</cite>
+
+              <ol>
+                <li>
+                  The UAS FreeSWITCH ECS Task (<code>10.10.1.21</code>) sends the response to the OpenSIPS proxy's
+                  internal IP address (<code>10.10.1.162</code>) obtained from the Via Header.
+                </li>
+                <li>
+                  The OpenSIPS proxy ECS task forwards the response to the UAC's proxy via the NAT Gateway.
+                </li>
+                <li>
+                  The NAT Gateway forwards the response to the UAC's SIP Proxy (<code>175.100.32.29</code>) obtained
+                  from the Via Header.
+                </li>
+                <li>
+                  The UAC's SIP proxy forwards the response to the UAC (<code>10.65.104.1</code>) obtained from the Via
+                  Header.
+                </li>
+              </ol>
+
+              <p>
+                Here's the SIP response from the UAS:
+              </p>
+
+              <pre>
+                <code>
+                  Status-Line: SIP/2.0 183 Session Progress
+
+                  Message Header:
+                  Via: SIP/2.0/UDP 52.74.4.205:5060;branch=z9hG4bK918f.3a1eef55.0;received=10.10.1.162
+                  Via: SIP/2.0/UDP 175.100.32.29:5060;branch=z9hG4bK08B4d2dd80314813a74
+                  Via: SIP/2.0/UDP 10.65.104.1:5065;branch=z9hG4bKqgyjqqdfz0g5zqhhysze7m0de;X-DptMsg=139
+                  Record-Route: &lt;sip:10.10.1.162:5060;lr;did=05d.f7db99b7;r2=on&gt;
+                  Record-Route: &lt;sip:52.74.4.205:5060;lr;did=05d.f7db99b7;r2=on&gt;
+                  Record-Route: &lt;sip:175.100.32.29:5060;lr;transport=udp&gt;
+                  Contact: &lt;sip:1294@10.10.1.21:5060;transport=udp&gt;
+                </code>
+              </pre>
+
+              <p>
+                Note the following:
+              </p>
+
+              <ul>
+                <li>
+                  The Via Headers are used to route the response back to the UAC, the Record-Route headers are present
+                  but do not influence the transmission path.
+                </li>
+                <li>
+                  <code>10.10.1.162</code> is the internal IP address of the OpenSIPS ECS task seen in the "received"
+                  parameter of the first
+                  Via Header. This "received" parameter is used to determine the first hop back to the the OpenSIPS
+                  Proxy in the
+                  response, <em>not</em> the Record-Route header.
+                </li>
+                <li>
+                  <code>10.10.1.21</code> (in the contact header) is the internal IP address of the UAS (FreeSWITCH ECS
+                  Task). This is set by the UAS in the response.
+                </li>
+              </ul>
+
+              <p>
+                So now, both the UAC and the UAS have a copy of the full set of Record-Route headers and is remembered
+                by both endpoints. Once the dialogue is established, the proxies should not insert any more Record-Route
+                headers after that initial transaction. Instead, all the sequential SIP requests should contain Route
+                headers.
+              </p>
+
+              <p>
+                The Route Set is used to create a set of Route headers. The sequence of these headers is important - the
+                upstream server will invert the order, but a downstream server does not.
+              </p>
+
+              <img src="./images/somleng-infrastructure-blog-sip-bye.png">
+              <cite>Figure 13: Downstream SIP Bye</cite>
+
+              <ol>
+                <li>
+                  The UAC sends an in-dialog BYE directly to the UAS via the obtained via the UAS's Contact header. The
+                  first hop
+                  is determined by the Route first Route header, which points to the UAC's Proxy
+                  (<code>175.100.32.29</code>).
+                </li>
+
+                <li>
+                  The UAC's Proxy
+                  removes the route header and forwards the request to the next Route header which points to the Network
+                  Load Balancer (<code>52.74.4.205</code>).
+                </li>
+
+                <li>
+                  The Network Load Balancer forwards the request to the OpenSIPS proxy ECS Task
+                  (<code>10.10.1.162</code>).
+                </li>
+
+                <li>
+                  The OpenSIPS proxy removes the the double Route Headers that it owns (<code>52.74.4.205</code> and
+                  <code>10.10.1.162</code>) and forwards the request
+                  to UAS obtained from the value in the Request-Line (<code>10.10.1.21</code>).
+                </li>
+              </ol>
+
+              <p>
+                Here's the downstream BYE request from the UAC.
+              </p>
+
+              <pre>
+                <code>
+                  Request-Line: BYE sip:1294@10.10.1.21:5060;transport=udp SIP/2.0
+
+                  Message Header:
+                  Route: &lt;sip:175.100.32.29:5060;lr;did=7c1.f350d215;&gt;
+                  Route: &lt;sip:52.74.4.205:5060;lr;did=7c1.f350d215;r2=on&gt;
+                  Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;
+                </code>
+              </pre>
+
+              <p>
+                Note the following:
+              </p>
+
+              <ul>
+                <li>
+                  The Request Line contains the private IP address of the FreeSWITCH ECS task (<code>10.10.1.21</code>)
+                  which it got from the Contact Header of the Response (see above).
+                </li>
+                <li>
+                  When the request reaches OpenSIPS, it will strip both of the Route Headers and forward the request to
+                  the private IP address of the FreeSWITCH ECS task which it gets from the Request-Line.
+                </li>
+              </ul>
+
+              <h4>
+                Auto-scaling FreeSWITCH Tasks
+              </h4>
+
+              <p>
+                So far we have discussed how we deploy FreeSWITCH behind both an Application Load Balancer (when acting
+                as a UAC) and a SIP proxy (when acting as a UAS). This section discusses how we automatically scale
+                FreeSWITCH tasks based on CPU and Session count.
+              </p>
+
+              <p>
+                We use two separate
+                <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-autoscaling-targettracking.html"
+                  target="_blank" class="link">Target Tracking scaling policies</a>
+                which track both the CPU usage and session count of the FreeSWITCH tasks.
+              </p>
+
+              <img src="./images/somleng-infrastructure-blog-autoscaling.png">
+              <cite>Figure 14: ECS Autoscaling</cite>
+
+              <p>
+                When a scaling policy adds a new task, a Lambda function is triggered which adds a load balancer target
+                to the OpenSIPS load balancer table. OpenSIPS will then start load balancing SIP requests to the new
+                task. When FreeSWITCH is acting as a UAC, this happens automatically when ECS registers the task with
+                the Application Load Balancer.
+              </p>
+
+              <p>
+                Similarly, when a task scales-in the Lambda function is triggered which removes the load balancer target
+                from the OpenSIPS load balancer table. OpenSIPS then stops sending new requests to this endpoint. When
+                FreeSWITCH is acting as a UAC, this happens automatically when ECS de-registers the task from the
+                Application Load Balancer. After a specified timeout period, the task is terminated.
+              </p>
+
+              <h4>
+                Open Source Infrastructure
+              </h4>
+
+
+              <a href="https://digitalpublicgoods.net/registry/somleng.html" target="_blank"><img
+                src="./images/dpg-badge.png" class="expanded__image"></a>
+
+              <p>
+                All of the Infrastructure described in this post is available as Terraform configuration
+                files as part of our commitment to
+                being 100% Open Source and a Digital Public Good. The configuration files can be found under the
+                infrastructure directory in the following repositories:
+              </p>
+
+              <ol>
+                <li>
+                  <a href="https://github.com/somleng/somleng" target="_blank" class="link">Somleng Dashboard and
+                    API</a>
+                </li>
+                <li>
+                  <a href="https://github.com/somleng/somleng-switch" target="_blank" class="link"> Somleng Switch</a>
+                </li>
+              </ol>
             </div>
 
             <div id="from-cambodia-to-laos-by-motorbike-to-setup-an-early-warning-system">
