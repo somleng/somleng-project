@@ -44,3 +44,7 @@ h6 {
   background: #eee;
   border-radius: 5px;
 }
+
+pre, code {
+  white-space: pre-line;
+}
