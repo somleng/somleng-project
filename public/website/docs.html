@@ -18,6 +18,7 @@
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#06d19c">
   <meta name="msapplication-TileColor" content="#6c63ff">
   <meta name="theme-color" content="#6C63FF">
+  <script src="https://embed.runkit.com"></script>
 </head>
 
 <body>
@@ -68,10 +69,19 @@
             <li><a href="#introduction">Introduction</a></li>
             <li><a href="#getting_started">Getting Started</a></li>
             <li>
-              <a href="#quick_start">Quick Start</a>
+              <a href="#quick-starts">Quick Starts</a>
               <ul>
                 <li>
                   <a href="#quick_start_programmable_voice_chime">Setting up Programmable Voice with Amazon Chime</a>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#tutorials">Tutorials</a>
+              <ul>
+                <li>
+                  <a href="#verify-tutorial">Build your own Phone Verification Service</a>
                 </li>
               </ul>
             </li>
@@ -183,17 +193,17 @@
                 Getting Started
               </h3>
               <p>
-                We recommend you try out Somleng by signing up for a carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/main/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note: This requires some technical knowledge.
+                We recommend you try out Somleng by signing up for a free carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a>. If you're looking to install Somleng on your local machine read the <a href="https://github.com/somleng/somleng-project/blob/main/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>. Note: This requires some technical knowledge.
               </p>
 
               <p>
-                Once you have an account you can begin configuring your it to handle programmable voice and SMS.
+                Once you have a carrier account you can begin configuring it to handle programmable voice and SMS.
               </p>
             </div>
 
-            <div id="quick_start">
+            <div id="quick-starts">
               <h3 class="page__main__title">
-                Quick Start
+                Quick Starts
               </h3>
               <p>
                 This section contains quick start guides to get you up and running with Somleng.
@@ -350,7 +360,7 @@
                     </li>
                   </ol>
 
-                  <img src="./images/chime_quickstart_new_sip_trunk.png">
+                  <img src="./images/dashboard-new-sip-trunk-ip-address.png">
                 </div>
 
                 <div id="quick_start_programmable_voice_chime_create_an_account">
@@ -365,11 +375,14 @@
                       Give the account a name.
                     </li>
                     <li>
+                      Choose a premium TTS voice such as <strong>Polly.Joanna</strong> from the default TTS Voice dropdown.
+                    </li>
+                    <li>
                       Press <strong>Create Account</strong>. The rest of the form is optional.
                     </li>
                   </ol>
 
-                  <img src="./images/chime_quickstart_new_account.png">
+                  <img src="./images/dashboard-new-account.png">
                 </div>
 
                 <div>
@@ -394,7 +407,7 @@
                     </li>
                   </ol>
 
-                  <img src="./images/chime_quickstart_new_phone_number.png">
+                  <img src="./images/dashboard-new-phone-number.png">
                 </div>
 
                 <div id="quick_start_programmable_voice_chime_test_it_out">
@@ -409,12 +422,7 @@
                     <li>
                       Use the following snippit to create an outbound call using the <a href="docs/twilio_api/#helper-libraries" target="_blank" class="link">somleng-node <i class="fa fa-external-link"></i></a> helper library.
 
-                      <script src="https://embed.runkit.com"></script>
-                      <div id="quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit">
-                      </div>
-                      <div id=quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit_code" style="visibility:hidden;">
-
-                      </div>
+                      <div id="quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit"></div>
                       <script>
                         var notebook = RunKit.createNotebook({
                           element: document.getElementById("quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit"),
@@ -428,6 +436,286 @@
                     </li>
                   </ol>
                 </div>
+              </div>
+            </div>
+
+            <div id="tutorials">
+              <h3 class="page__main__title">
+                Tutorials
+              </h3>
+              <div id="verify-tutorial">
+                <h4>
+                  Build your own Phone Verification Service
+                </h4>
+
+                <p>
+                  In this tutorial we will build our own Phone Verification Service, which you can use
+                  in your own applications.
+                </p>
+
+                <h5>
+                  Prerequisites
+                </h5>
+
+                <ol>
+                  <li>
+                    Sign up for a free carrier account <a href="https://app.somleng.org/users/sign_up" class="link" target="_blank">here <i class="fa fa-external-link"></i></a> or install Somleng on your local machine
+                    by following the <a href="https://github.com/somleng/somleng-project/blob/main/docs/GETTING_STARTED.md" class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>.
+                  </li>
+                </ol>
+
+                <h5>
+                  Overview
+                </h5>
+
+                <p>
+                  Below is an overview of the steps required to build your own phone verification service using Somleng:
+                </p>
+
+                <ol>
+                  <li>
+                    <a href="#verify-tutorial-step-1" class="link">
+                      Create an account which will be used to authenticate to the Verify API.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-2" class="link">
+                      Create a phone number and assign it to your account.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-3" class="link">
+                      Create a verification service and assign it to your account.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-4" class="link">
+                      Create a SMS Gateway to handle delivery of verification codes via SMS.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-5" class="link">
+                      Create a SIP Trunk to handle delivery of verification codes via phone call.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-6" class="link">
+                      Run the Somleng SMS Gateway Application on your local machine to simulate receiving a real SMS.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-7" class="link">
+                      Register your local soft-phone with Somleng to simulate receiving a real voice call.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-8" class="link">
+                      Start a new verification flow from your application using the somleng-node helper library.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-9" class="link">
+                      Receive the verification code via SMS using the SMS Gateway application.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-10" class="link">
+                      Resend the verification code via an automated phone call.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-11" class="link">
+                      Receive the verification via an automated call to your soft-phone.
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#verify-tutorial-step-12" class="link">
+                      Complete the verification flow by confirming the verification code from your application.
+                    </a>
+                  </li>
+                </ol>
+
+                <div id="verify-tutorial-step-1">
+                  <h5>
+                    1. Create an account which will be used to authenticate to the Verify API.
+                  </h5>
+
+                  <em>
+                    Note: If you are running Somleng on your local machine you can skip this step.
+                    An account should already be configured which will be used to authenticate to the Verify API.
+                  </em>
+
+                  <p>
+                    Under the <strong>Accounts</strong> menu, create a new account.
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Give the account a name.
+                    </li>
+                    <li>
+                      Choose a premium TTS voice such as <strong>Polly.Joanna</strong> from the default TTS Voice dropdown.
+                      This will be used by your verification service to determine the TTS provider (Basic or Polly) when sending verification codes via phone call.
+                    </li>
+                    <li>
+                      Press <strong>Create Account</strong>. The rest of the form is optional.
+                    </li>
+                  </ol>
+
+                  <img src="./images/dashboard-new-account.png">
+                </div>
+
+                <div id="verify-tutorial-step-2">
+                  <h5>
+                    2. Create a phone number and assign it to your account.
+                  </h5>
+
+                  <em>
+                    Note: If you are running Somleng on your local machine you can skip this step.
+                    A phone number should already be configured which will be used to send out verification codes.
+                  </em>
+
+                  <p>
+                    Under the <strong>Phone Numbers</strong> menu, create a new phone number.
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Enter a phone number. This number will be used to send out verification codes.
+                    </li>
+                    <li>
+                      Assign it to the account you created in <a><a href="#verify-tutorial-step-1" class="link">Step 1</a>.
+                    </li>
+                    <li>
+                      Press <strong>Create Phone number</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/dashboard-new-phone-number.png">
+                </div>
+
+                <div id="verify-tutorial-step-3">
+                  <h5>
+                    3. Create a verification service and assign it to your account.
+                  </h5>
+
+                  <p>
+                    Under the <strong>Verify</strong> menu, create a new Verification Service.
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Give your verification service a friendly name which will appear in your verification messages.
+                    </li>
+                    <li>
+                      Optionally configure a custom verification code length.
+                    </li>
+                    <li>
+                      Assign your verification service to the account you created in <a href="#verify-tutorial-step-1" class="link">Step 1</a>.
+                    </li>
+                    <li>
+                      Press <strong>Create Verification service</strong>.
+                    </li>
+                  </ol>
+
+                  <img src="./images/dashboard-new-verification-service.png">
+                </div>
+
+                <div id="verify-tutorial-step-4">
+                  <h5>
+                    4. Create a SMS Gateway to handle delivery of verification codes via SMS.
+                  </h5>
+
+                  <p>
+                    Under the <strong>Messaging</strong> menu, create a new SMS gateway.
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Give your SMS Gateway a name.
+                    </li>
+                    <li>
+                      Press <strong>Create SMS gateway</strong>. The rest of the form is optional.
+                    </li>
+                  </ol>
+
+                  <img src="./images/dashboard-new-sms-gateway.png">
+                </div>
+
+                <div id="verify-tutorial-step-5">
+                  <h5>
+                    5. Create a SIP Trunk to handle delivery of verification codes via phone call.
+                  </h5>
+
+                  <em>
+                    Note: If you are running Somleng on your local machine you can skip this step.
+                    A SIP trunk should already be configured which will connect to your soft-phone running on your local machine.
+                  </em>
+
+                  <p>
+                    Under the <strong>Voice</strong> menu, create a new SIP Trunk.
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Under Authentication mode, choose <strong>Client credentials</strong>.
+                    </li>
+                    <li>
+                      Give your SIP Trunk a name.
+                    </li>
+                    <li>
+                      Press <strong>Create SIP trunk</strong>. The rest of the form is optional.
+                    </li>
+                  </ol>
+
+                  <img src="./images/dashboard-new-sip-trunk-client-credentials.png">
+                </div>
+
+                <div id="verify-tutorial-step-6">
+                  <h5>
+                    6. Run the Somleng SMS Gateway Application on your local machine to simulate receiving a real SMS.
+                  </h5>
+
+                  <p>
+                    Use the following command to run the Somleng SMS Gateway Application in dummy mode on your local machine. Make sure you replace <em>&lt;replace-me-with-your-device-token&gt;</em>
+                    with the SMS gateway device token you created in <a href="#verify-tutorial-step-4" class="link">Step 4</a>.
+                  </p>
+
+                  <p>
+                    <em>Note: this requires that you have Docker already installed.</em>
+                    See <a href="https://github.com/somleng/somleng-sms-gateway" target="_blank" class="link">somleng/somleng-sms-gateway <i class="fa fa-external-link"></i></a> for more info.
+                  </p>
+
+                  <p>
+  <pre><code class="shell">$ docker run -p 3210:3210 somleng/sms-gateway somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy</code></pre>
+                  </p>
+
+                  After your SMS Gateway Application is running on your local machine you should see the connection status update to <strong>Connected</strong>.
+                  You can also view the connection status on your local machine by visiting <a href="http://localhost:3210" class="link" target="_blank">http://localhost:3210 <i class="fa fa-external-link"></i></a>.
+
+                  <img src="./images/dashboard-show-sms-gateway.png">
+
+                </div>
+
+                <div id="verify-tutorial-start-verification-node-snippit"></div>
+                <script>
+                  var notebook = RunKit.createNotebook({
+                    element: document.getElementById("verify-tutorial-start-verification-node-snippit"),
+                    nodeVersion: "18.x.x",
+                    source: "// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst verificationServiceSid = \"change-me\";\nconst client = require('somleng@4.20.1')(accountSid, authToken);\n\nclient.verify.v2.services(verificationServiceSid)\n      .verifications\n      .create({to: '+15017122661', channel: 'sms'})\n      .then(verification => console.log(verification.sid));",
+                  })
+                </script>
               </div>
             </div>
 
@@ -459,6 +747,7 @@
                   or your password manager to setup 2FA.
                 </p>
               </div>
+
               <div id="carrier_settings">
                 <h4>
                   Carrier Settings

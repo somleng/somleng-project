@@ -57,7 +57,7 @@ You can find you Account SID and Auth Token under the [Accounts](http://my-carri
 
 ## Install and configure Linphone
 
-In order to test out Somleng's programmable voice feature on your local machine you'll need a SIP client. We recommend using Linphhone.
+In order to test out Somleng's programmable voice feature on your local machine you'll need a SIP client. We recommend using Linphone.
 
 1. Install Linphone from [https://www.linphone.org/](https://www.linphone.org/).
 2. Configure your SIP account under Preferences -> SIP Accounts. Note you must set your Username to `299221234` (or another valid phone number in Greenland). The SIP address should be automatically filled with your local IP.
