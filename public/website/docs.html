@@ -158,6 +158,8 @@
               </p>
             </div>
 
+            <hr/>
+
             <div id="audience">
               <h3 class="page__main__title">
                 Audience
@@ -166,6 +168,8 @@
                 This documentation is intended for Carriers and BYOC Users, and Network Providers as defined above.
               </p>
             </div>
+
+            <hr/>
 
             <div id="introduction">
               <h3 class="page__main__title">
@@ -188,6 +192,8 @@
               </ol>
             </div>
 
+            <hr/>
+
             <div id="getting_started">
               <h3 class="page__main__title">
                 Getting Started
@@ -200,6 +206,8 @@
                 Once you have a carrier account you can begin configuring it to handle programmable voice and SMS.
               </p>
             </div>
+
+            <hr/>
 
             <div id="quick-starts">
               <h3 class="page__main__title">
@@ -511,7 +519,7 @@
 
                   <li>
                     <a href="#verify-tutorial-step-7" class="link">
-                      Register your local soft-phone with Somleng to simulate receiving a real voice call.
+                      Register your local soft-phone with the SIP trunk to simulate receiving a real voice call.
                     </a>
                   </li>
 
@@ -523,25 +531,25 @@
 
                   <li>
                     <a href="#verify-tutorial-step-9" class="link">
-                      Receive the verification code via SMS using the SMS Gateway application.
+                      Receive the verification code the SMS Gateway Application.
                     </a>
                   </li>
 
                   <li>
                     <a href="#verify-tutorial-step-10" class="link">
-                      Resend the verification code via an automated phone call.
+                      Resend the verification code via a call.
                     </a>
                   </li>
 
                   <li>
                     <a href="#verify-tutorial-step-11" class="link">
-                      Receive the verification via an automated call to your soft-phone.
+                      Receive the verification via a call.
                     </a>
                   </li>
 
                   <li>
                     <a href="#verify-tutorial-step-12" class="link">
-                      Complete the verification flow by confirming the verification code from your application.
+                      Complete the flow by confirming the verification code.
                     </a>
                   </li>
                 </ol>
@@ -705,19 +713,167 @@
                   You can also view the connection status on your local machine by visiting <a href="http://localhost:3210" class="link" target="_blank">http://localhost:3210 <i class="fa fa-external-link"></i></a>.
 
                   <img src="./images/dashboard-show-sms-gateway.png">
-
                 </div>
 
-                <div id="verify-tutorial-start-verification-node-snippit"></div>
-                <script>
-                  var notebook = RunKit.createNotebook({
-                    element: document.getElementById("verify-tutorial-start-verification-node-snippit"),
-                    nodeVersion: "18.x.x",
-                    source: "// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst verificationServiceSid = \"change-me\";\nconst client = require('somleng@4.20.1')(accountSid, authToken);\n\nclient.verify.v2.services(verificationServiceSid)\n      .verifications\n      .create({to: '+15017122661', channel: 'sms'})\n      .then(verification => console.log(verification.sid));",
-                  })
-                </script>
+                <div id="verify-tutorial-step-7">
+                  <h5>
+                    7. Register your local soft-phone with the SIP trunk to simulate receiving a real voice call.
+                  </h5>
+
+                  <p>
+                    In this step you'll register you local soft-phone with the SIP trunk we created in <a href="#verify-tutorial-step-5" class="link">Step 5</a>.
+                  </p>
+
+                  <p>
+                    In this example I'm using the <a href="https://apps.apple.com/us/app/telephone/id406825478?mt=12" class="link" target="_blank">Telephone application <i class="fa fa-external-link"></i></a> for Mac, but you can use
+                    whichever application you prefer. In the account settings for your SIP phone do the following:
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Fill in the <strong>Domain</strong>, <strong>User Name</strong> and <strong>Password</strong> fields the values shown under <strong>Client Credentials</strong> from the SIP trunk you created in <a href="#verify-tutorial-step-5" class="link">Step 5</a>.
+                    </li>
+                  </ol>
+
+                  <p>
+                    After you have registered your soft-phone with the SIP trunk you should see the SIP registration status update to <strong>Available</strong> on your soft-phone.
+                  </p>
+
+                  <img src="./images/telephone-app-sip-registration.png">
+                  <img src="./images/dashboard-show-sip-trunk-client-credentials.png">
+                </div>
+
+                <div id="verify-tutorial-step-8">
+                  <h5>
+                    8. Start a new verification flow from your application using the somleng-node helper library.
+                  </h5>
+
+                  <p>
+                    Run the code below substituting the following:
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Set <strong><code>accountSid</code></strong> and <strong><code>authToken</code></strong> from the account you created in step <a href="#verify-tutorial-step-1" class="link">Step 1</a>.
+                    </li>
+                    <li>
+                      Set <strong><code>verificationServiceSid</code></strong> from the verification service you created in step <a href="#verify-tutorial-step-3" class="link">Step 3</a>.
+                    </li>
+                  </ol>
+
+                  <div id="verify-tutorial-step-8-snippit"></div>
+                  <script>
+                    var notebook = RunKit.createNotebook({
+                      element: document.getElementById("verify-tutorial-step-8-snippit"),
+                      nodeVersion: "18.x.x",
+                      source: "// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst verificationServiceSid = \"change-me\";\nconst client = require('somleng')(accountSid, authToken);\n\nclient.verify.v2.services(verificationServiceSid)\n      .verifications\n      .create({to: '+15017122661', channel: 'sms'})\n      .then(verification => console.log(verification.sid));",
+                    })
+                  </script>
+                </div>
+
+                <div id="verify-tutorial-step-9">
+                  <h5>
+                    9. Receive the verification code via the SMS Gateway Application.
+                  </h5>
+
+                  <p>
+                    After running the code in the previous step, check your terminal which is running the SMS Gateway Application on your local machine.
+                    You should see the verification message appear in the logs.
+                  </p>
+
+                  <p>
+                    <em>
+                      Note: Since you're running the SMS Gateway Application in Dummy mode, a real SMS will not be sent to the recipients phone.
+                    </em>
+                  </p>
+
+                  <img src="./images/terminal-sms-gateway-dummy-message-received.png">
+                </div>
+
+                <div id="verify-tutorial-step-10">
+                  <h5>
+                    10. Resend the verification code via a call.
+                  </h5>
+
+                  <p>
+                    Repeat the process in step <a href="#verify-tutorial-step-8" class="link">Step 8</a>, but update the channel to <strong><code>call</code></strong>.
+                  </p>
+
+                  <div id="verify-tutorial-step-10-snippit"></div>
+                  <script>
+                    var notebook = RunKit.createNotebook({
+                      element: document.getElementById("verify-tutorial-step-10-snippit"),
+                      nodeVersion: "18.x.x",
+                      source: "// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst verificationServiceSid = \"change-me\";\nconst client = require('somleng')(accountSid, authToken);\n\nclient.verify.v2.services(verificationServiceSid)\n      .verifications\n      .create({to: '+15017122661', channel: 'call'})\n      .then(verification => console.log(verification.sid));",
+                    })
+                  </script>
+                </div>
+
+                <div id="verify-tutorial-step-11">
+                  <h5>
+                    11. Receive the verification via a call.
+                  </h5>
+
+                  <p>
+                    After running the code in the previous step, you should receive a call to the soft-phone you configured in step <a href="#verify-tutorial-step-7" class="link">Step 7</a>.
+                    Answer the call to hear the verification code.
+                  </p>
+
+                  <img src="./images/telephone-in-call.png">
+                </div>
+
+                <div id="verify-tutorial-step-12">
+                  <h5>
+                    12. Complete the flow by confirming the verification code.
+                  </h5>
+
+                  <p>
+                    Complete the verification flow by running the code below, substituting the following:
+                  </p>
+
+                  <ol type="a">
+                    <li>
+                      Set <strong><code>accountSid</code></strong> and <strong><code>authToken</code></strong> from the account you created in step <a href="#verify-tutorial-step-1" class="link">Step 1</a>.
+                    </li>
+                    <li>
+                      Set <strong><code>verificationServiceSid</code></strong> from the verification service you created in step <a href="#verify-tutorial-step-3" class="link">Step 3</a>.
+                    </li>
+                    <li>
+                      Set <strong><code>verificationCode</code></strong> from the verification code received by SMS or call in <a href="#verify-tutorial-step-9" class="link">Step 9</a> or <a href="#verify-tutorial-step-11" class="link">Step 11</a>.
+                    </li>
+                  </ol>
+
+                  <div id="verify-tutorial-step-12-snippit"></div>
+                  <script>
+                    var notebook = RunKit.createNotebook({
+                      element: document.getElementById("verify-tutorial-step-12-snippit"),
+                      nodeVersion: "18.x.x",
+                      source: "// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst verificationServiceSid = \"change-me\";\nconst verificationCode = \"change-me\"\nconst client = require('somleng')(accountSid, authToken);\n\nclient.verify.v2.services(verificationServiceSid)\n      .verificationChecks\n      .create({to: '+15017122661', code: verificationCode})\n      .then(verification_check => console.log(verification_check.status));",
+                    })
+                  </script>
+
+                  <p>
+                    You can view your completed Verification and the associated logs from the Dashboard.
+                  </p>
+
+                  <img src="./images/dashboard-show-verification.png">
+                </div>
+
+                <div id="verify-tutorial">
+                  <h5>Next steps</h5>
+
+                  <p>
+                    🎉 Congratulations! You have successfully built your own phone verification service using Somleng!
+                  </p>
+
+                  <p>
+                    You can learn more about the Somleng API <a href="docs/twilio_api" target="_blank" class="link">here</a>.
+                  </p>
+                </div>
               </div>
             </div>
+
+            <hr/>
 
             <div id="using_the_dashboard">
               <h3 class="page__main__title">
