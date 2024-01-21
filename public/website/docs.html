@@ -672,6 +672,11 @@
                     <li>
                       Paste them into the corresponding fields in the account configuration of your softphone.
                     </li>
+                    <li>
+                      Set the Reregister (or equivalent keep-alive setting) in your softphone to a value of less than 30 seconds.
+                      This will cause your softphone to re-register with Somleng at a regular interval to ensure the
+                      connection stays alive. <em>Note: In order to enable this setting in the Telephone App you need to disable the account first.</em>
+                    </li>
                   </ol>
 
                   <p>
@@ -687,6 +692,7 @@
 
                   <img src="./images/dashboard-show-sip-trunk-client-credentials.png">
                   <img src="./images/telephone-app-sip-registration.png">
+                  <img src="./images/telephone-app-advanced-reregister.png">
                 </div>
 
                 <div id="verify-tutorial-step-8">
@@ -881,7 +887,7 @@
                   <img src="./images/dashboard-show-verification.png">
                 </div>
 
-                <div id="verify-tutorial">
+                <div>
                   <h5>🎉 Congratulations!</h5>
 
                   <p>
@@ -890,7 +896,7 @@
                   </p>
 
                   <p>
-                    Some key concepts you learned along the way:
+                    What we learned:
                   </p>
 
                   <ol>
@@ -1206,37 +1212,44 @@
                   <img src="./images/dashboard-new-sip-trunk-ip-address-obfuscated.png">
                 </div>
 
-                <div>
+                <div id="chime-tutorial-step-4">
                   <h5>
                     4. Test a call to your own number
                   </h5>
 
                   <p>
                     In this step you'll test a call to your own phone number which should be routed though Chime.
-                    Below is an of how to create a generic call using the <a
+                  </p>
+
+                  <p>
+                    Below is an example of how to use the <a href="docs/twilio_api#create-a-call" class="link"
+                      target="_blank">Phone Calls API <i class="fa fa-external-link"></i></a> using the <a
                       href="https://github.com/somleng/somleng-node" class="link" target="_blank">somleng-node <i
                         class="fa fa-external-link"></i></a> helper library.
                   </p>
 
                   <p>
-                    Note that this example is different from the examples in the previous tutorial.
-                    Here we are using the
-                    <a href="docs/twilio_api#create-a-call" class="link" target="_blank">Phone Calls API <i
-                        class="fa fa-external-link"></i></a>
-                    as opposed to the
-                    <a href="docs/twilio_api#start-new-call-verification" class="link" target="_blank"> Verification API
-                      <i class="fa fa-external-link"></i></a>.
+                    The Phone Calls API is different from the <a href="docs/twilio_api#start-new-call-verification"
+                      class="link" target="_blank"> Verification API
+                      <i class="fa fa-external-link"></i></a> used in the
+                    <a href="#verify-tutorial-step-8" class="link">previous tutorial.</a>
+                    It allows you to send automated phone calls and control them using
+                    <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i
+                        class="fa fa-external-link"></i></a> and requires the following parameters:
                   </p>
 
-                  <p>
-                    The Phone Calls API allows you to send automated phone calls and control them using
-                    <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i
-                        class="fa fa-external-link"></i></a>.
-                    This following example plays the message: &quot;Hello World from the Somleng Chime Tutorial! How
-                    are you today?&quot; followed by some music. If you wanted to start a verification flow, you could
-                    also use the same example from the
-                    <a href="#verify-tutorial-step-10" class="link">previous tutorial</a>.
-                  </p>
+
+                  <dl>
+                    <dt><strong><code>to</code></strong></dt>
+                    <dd>The phone number that will receive the call.</dd>
+                    <dt><strong><code>from</code></strong></dt>
+                    <dd>The phone number that will be used to make the call. <em>This number must be assigned to the
+                        customer account you created in the previous tutorial, and must match the number created in <a
+                          href="#chime-tutorial-step-2" class="link">Step 2</a>.</em></dd>
+                    <dt><strong><code>twiml</code></strong></dt>
+                    <dd><a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML <i
+                          class="fa fa-external-link"></i></a> instructions to control the call.</dd>
+                  </dl>
 
                   <p>
                     Run the code below substituting the following:
@@ -1248,10 +1261,11 @@
                       account you created in the <a href="#verify-tutorial-step-1" class="link">previous tutorial</a>.
                     </li>
                     <li>
-                      Set <strong><code>destination</code></strong> to the phone number which will receive the call.
+                      Set <strong><code>to</code></strong> to the phone number which will receive the call.
                     </li>
                     <li>
-                      Set <strong><code>sender</code></strong> to the number you configured in <a href="#chime-tutorial-step-2" class="link">Step 2</a>.
+                      Set <strong><code>from</code></strong> to the number you configured in <a
+                        href="#chime-tutorial-step-2" class="link">Step 2</a>.
                     </li>
                     <li>
                       Optionally update the <strong><code>twiml</code></strong> as you like.
@@ -1263,17 +1277,97 @@
                     var notebook = RunKit.createNotebook({
                       element: document.getElementById("chime-tutorial-step-4-snippit"),
                       nodeVersion: "18.x.x",
-                      source: "// IMPORTANT: This code requires somleng-node >= 4.20.2\n// Due to an issue with RunKit the latest version might not be always available.\n// If you have issues running the code in RunKit, please try running it locally with the latest version of somleng-node.\n// Download the helper library from https://github.com/somleng/somleng-node and follow the instructions\n\n// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst destination = \"change-me\"; // A phone number which will receive the call\nconst sender = \"change-me\"; // This should exactly match the number configured in Step 2.\nconst twiml = '<Response><Say>Hello World from the Somleng Chime Tutorial! How are you today?\"</Say><Play>https://demo.twilio.com/docs/classic.mp3</Play></Response>'\n\nconst client = require('somleng')(accountSid, authToken);\n\nclient.calls\n  .create({\n      twiml: twiml,\n      to: destination,\n      from: sender\n    })\n  .then(call => console.log(call.sid));",
+                      source: "// IMPORTANT: This code requires somleng-node >= 4.20.2\n// Due to an issue with RunKit the latest version might not be always available.\n// If you have issues running the code in RunKit, please try running it locally with the latest version of somleng-node.\n// Download the helper library from https://github.com/somleng/somleng-node and follow the instructions\n\n// Download the helper library from somleng.org/docs/twilio_api/#helper-libraries\n// Find your Account SID and Auth Token from the Somleng console\n// and set the environment variables.\n// const accountSid = process.env.SOMLENG_ACCOUNT_SID;\n// const authToken = process.env.SOMLENG_AUTH_TOKEN;\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst to = \"change-me\"; // A phone number which will receive the call\nconst from = \"change-me\"; // This should exactly match the number configured in Step 2.\nconst twiml = '<Response><Say>Hello World from the Somleng Chime Tutorial! How are you today?\"</Say><Play>https://demo.twilio.com/docs/classic.mp3</Play></Response>'\n\nconst client = require('somleng')(accountSid, authToken);\n\nclient.calls\n  .create({ to: to, from: from, twiml: twiml })\n  .then(call => console.log(call.sid));",
                     })
                   </script>
+
+                  <p>
+                    You should receive a phone call to your real phone number delivered through the SIP Trunk connected
+                    to Chime. Pick up the call and listen to the message. It should match what you have entered in the
+                    TwiML instructions above.
+                  </p>
+
+                  <p>
+                    <em>
+                      Note: Instead of running this code, you could also re-run the Verification Flow as show in the
+                      <a href="#verify-tutorial-step-8" class="link">previous tutorial.</a>
+                      You should receive the verification code on your real phone number delivered through Chime.
+                    </em>
+                  </p>
                 </div>
 
-                <div>
+                <div id="chime-tutorial-step-5">
                   <h5>
                     5. Test a call to an international number
                   </h5>
+
+                  <p>
+                    In this step you'll test a call to an international number (with a prefix different from your own
+                    number), which should be routed to your local softphone.
+                  </p>
+
+                  <p>
+                    In order to complete this step, simply update the <strong><code>to</code></strong> parameter to a
+                    phone number which
+                    <em>does not</em> match the international prefix of your own number. This will result in the SIP
+                    trunk from the
+                    <a href="#verify-tutorial-step-5" class="link">previous tutorial</a>
+                    being selected and
+                    therefore the call should be routed to your local softphone.
+                  </p>
+
+                  <p>
+                    Go ahead and run the code again from the <a href="#chime-tutorial-step-4" class="link">previous
+                      step</a>. Remember to replace the <strong><code>to</code></strong> parameter and keep the rest the
+                    same.
+                  </p>
+
+                  <p>
+                    You should receive a phone call to your real phone number delivered through the SIP Trunk connected
+                    to your local softphone. Pick up the call and listen to the message. It should match what you have
+                    entered in the
+                    TwiML instructions from the <a href="#chime-tutorial-step-4" class="link">previous step</a>.
+                  </p>
                 </div>
               </div>
+
+              <div>
+                <h5>🎉 Congratulations!</h5>
+
+                <p>
+                  Congratulations! You have successfully completed the tutorial and connected Somleng to Chime.
+                </p>
+
+                <p>
+                  What we learned:
+                </p>
+
+                <ol>
+                  <li>
+                    How to connect Somleng to Amazon Chime.
+                  </li>
+
+                  <li>
+                    A Phone number must be assigned to a customer account in order to use it in the <a
+                      href="docs/twilio_api#create-a-call" class="link" target="_blank">Phone Calls API <i
+                        class="fa fa-external-link"></i></a>.
+                  </li>
+
+                  <li>
+                    Multiple SIP Trunks can be configured to handle routing based on the destination phone number.
+                  </li>
+
+                  <li>
+                    The <a href="docs/twilio_api#create-a-call" class="link" target="_blank">Phone Calls API <i
+                        class="fa fa-external-link"></i></a> is different from the <a
+                      href="docs/twilio_api#start-new-call-verification" class="link" target="_blank"> Verification API
+                      <i class="fa fa-external-link"></i></a>. It can be used to create outbound calls and control the
+                    call via <a href="https://www.twilio.com/docs/voice/twiml" class="link" target="_blank">TwiML
+                      instructions <i class="fa fa-external-link"></i></a>.
+                  </li>
+                </ol>
+              </div>
+
               <hr />
             </div>
 
