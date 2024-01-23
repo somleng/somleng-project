@@ -45,6 +45,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    command:
+      - "./bin/rails"
+      - "server"
+      - "-b"
+      - "0.0.0.0"
 
   somleng-switch:
     image: ghcr.io/somleng/somleng-switch

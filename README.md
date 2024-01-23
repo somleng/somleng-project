@@ -68,9 +68,11 @@ Below is a link to the documentation start page.
 
 ## Getting Started
 
-We recommend you play around with our hosted version to get a feel for how the product works before trying to run it locally. You can find a link to the sign-up page in our [documentation](https://www.somleng.org/docs.html).
+Follow the [Getting Started Guide](https://www.somleng.org/docs#getting-started) and run through the tutorials to learn about Somleng.
 
-Follow the [GETTING STARTED](https://github.com/somleng/somleng-project/blob/main/docs/GETTING_STARTED.md) guide to get Somleng up and running on your local development machine.
+## Installation
+
+Follow the [Installation](https://www.somleng.org/docs#installation) guide to get Somleng up and running on your local development machine.
 
 ## Deployment
 
@@ -86,7 +88,7 @@ You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking 
 
 ## Roadmap
 
-Our 2022 Roadmap is structured around the following strategic building blocks.
+Our 2024 Roadmap is structured around the following strategic building blocks.
 
 * Create more network reachability.
 * Add more communication channels.

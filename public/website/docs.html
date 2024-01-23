@@ -69,21 +69,15 @@
             <li><a href="#terminology">Terminology</a></li>
             <li><a href="#audience">Audience</a></li>
             <li><a href="#introduction">Introduction</a></li>
-            <li><a href="#getting_started">Getting Started</a></li>
-            <li>
-              <a href="#quick-starts">Quick Starts</a>
-              <ul>
-                <li>
-                  <a href="#quick_start_programmable_voice_chime">Setting up Programmable Voice with Amazon Chime</a>
-                </li>
-              </ul>
-            </li>
-
+            <li><a href="#getting-started">Getting Started</a></li>
             <li>
               <a href="#tutorials">Tutorials</a>
               <ul>
                 <li>
                   <a href="#verify-tutorial">Build your own Phone Verification Service</a>
+                </li>
+                <li>
+                  <a href="#chime-tutorial">Connect Somleng to Amazon Chime</a>
                 </li>
               </ul>
             </li>
@@ -117,6 +111,7 @@
             <li><a href="#custom_domains_configuration_guide">Custom Domain Configuration Guide</a></li>
             <li><a href="#client_gateway_configuration_guide">Client Gateway Configuration Guide</a></li>
             <li><a href="#sms_gateway_configuration_guide">SMS Gateway Configuration Guide</a></li>
+            <li><a href="#installation-guide">Installation Guide</a></li>
             <li><a href="#rtp_symmetric_latching">RTP and Symmetric Latching</a></li>
             <li><a href="docs/carrier_api" target="_blank">API Reference</a> <i class="fa fa-external-link"></i></li>
             <li><a href="docs/twilio_api" target="_blank">Account API Reference</a> <i class="fa fa-external-link"></i>
@@ -231,7 +226,7 @@
 
             <hr />
 
-            <div id="getting_started">
+            <div id="getting-started">
               <h3 class="page__main__title">
                 Getting Started
               </h3>
@@ -247,8 +242,7 @@
 
               <p>
                 If you are looking to install Somleng on your local machine, please
-                read the <a href="https://github.com/somleng/somleng-project/blob/main/docs/GETTING_STARTED.md"
-                  class="link" target="_blank">Getting Started Guide <i class="fa fa-external-link"></i></a>.
+                read the <a href="#installation-guide" class="link">Installation Guide</a>.
               </p>
 
               <p>
@@ -276,18 +270,18 @@
               </p>
 
               <div id="verify-tutorial">
-                <h4>
-                  Tutorial 1: Build your own Phone Verification Service
-                </h4>
+                <h3>
+                  Build your own Phone Verification Service
+                </h3>
 
                 <p>
                   In this tutorial you will build your own Phone Verification Service which can then be used by your own
                   applications.
                 </p>
 
-                <h5>
+                <h4>
                   Prerequisites
-                </h5>
+                </h4>
 
                 <ol>
                   <li>
@@ -301,14 +295,14 @@
                     Login and setup two factor authentication (2FA).
                   </li>
                   <li>
-                    <a href="#https://docs.docker.com/engine/install/" class="link" , target="_blank">Install Docker <i
+                    <a href="https://docs.docker.com/engine/install/" class="link" target="_blank">Install Docker <i
                         class="fa fa-external-link"></i></a> on your local machine.
                   </li>
                 </ol>
 
-                <h5>
+                <h4>
                   Overview
-                </h5>
+                </h4>
 
                 <p>
                   Below is an overview of the steps required to complete this tutorial:
@@ -389,9 +383,9 @@
                 </ol>
 
                 <div id="verify-tutorial-step-1">
-                  <h5>
+                  <h4>
                     1. Create a Customer Account.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create a new
@@ -427,9 +421,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-2">
-                  <h5>
+                  <h4>
                     2. Create a Phone Number.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create a new phone number. This number will be
@@ -460,9 +454,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-3">
-                  <h5>
+                  <h4>
                     3. Create a Verification Service.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create a new Verification Service and assign it to the account created in
@@ -500,9 +494,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-4">
-                  <h5>
+                  <h4>
                     4. Create a SMS Gateway.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create a new SMS Gateway which will handle the delivery of verification codes via
@@ -544,9 +538,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-5">
-                  <h5>
+                  <h4>
                     5. Create a SIP Trunk.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create a new SIP Trunk which will handle the delivery of verification codes via
@@ -593,9 +587,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-6">
-                  <h5>
+                  <h4>
                     6. Run the Somleng SMS Gateway Application.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you'll run the
@@ -639,9 +633,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-7">
-                  <h5>
+                  <h4>
                     7. Register your softphone with the SIP Trunk.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you'll register your softphone with the SIP trunk we created in <a
@@ -673,9 +667,11 @@
                       Paste them into the corresponding fields in the account configuration of your softphone.
                     </li>
                     <li>
-                      Set the Reregister (or equivalent keep-alive setting) in your softphone to a value of less than 30 seconds.
+                      Set the Reregister (or equivalent keep-alive setting) in your softphone to a value of less than 30
+                      seconds.
                       This will cause your softphone to re-register with Somleng at a regular interval to ensure the
-                      connection stays alive. <em>Note: In order to enable this setting in the Telephone App you need to disable the account first.</em>
+                      connection stays alive. <em>Note: In order to enable this setting in the Telephone App you need to
+                        disable the account first.</em>
                     </li>
                   </ol>
 
@@ -696,9 +692,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-8">
-                  <h5>
+                  <h4>
                     8. Start a new Verification Flow
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you start a new Verification Flow using the <a
@@ -751,9 +747,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-9">
-                  <h5>
+                  <h4>
                     9. Receive the verification code via the SMS Gateway Application.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you will receive the verification code via the SMS Gateway Application running on your
@@ -778,9 +774,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-10">
-                  <h5>
+                  <h4>
                     10. Resend the verification code via a call.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you resend the verification code via a call.
@@ -806,9 +802,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-11">
-                  <h5>
+                  <h4>
                     11. Receive the verification via a call.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you will receive the verification code via a call.
@@ -833,9 +829,9 @@
                 </div>
 
                 <div id="verify-tutorial-step-12">
-                  <h5>
+                  <h4>
                     12. Complete the flow by confirming the verification code.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you complete the flow by confirming the verification code.
@@ -888,7 +884,7 @@
                 </div>
 
                 <div>
-                  <h5>🎉 Congratulations!</h5>
+                  <h4>🎉 Congratulations!</h4>
 
                   <p>
                     Congratulations! You have successfully completed the tutorial and built your own phone verification
@@ -940,9 +936,9 @@
               <hr />
 
               <div id="chime-tutorial">
-                <h4>
-                  Tutorial 2: Connecting Somleng to Amazon Chime
-                </h4>
+                <h3>
+                  Connect Somleng to Amazon Chime
+                </h3>
 
                 <p>
                   In this tutorial you will learn how to connect Somleng to your Amazon Chime account.
@@ -957,9 +953,9 @@
                   repeated.
                 </p>
 
-                <h5>
+                <h4>
                   Prerequisites
-                </h5>
+                </h4>
 
                 <ol>
                   <li>
@@ -972,9 +968,9 @@
                   </li>
                 </ol>
 
-                <h5>
+                <h4>
                   Overview
-                </h5>
+                </h4>
 
                 <p>
                   The following diagram shows how it works:
@@ -1017,9 +1013,9 @@
                 </ol>
 
                 <div id="chime-tutorial-step-1">
-                  <h5>
+                  <h4>
                     1. Create a new Chime Voice Connector
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create and configure a new Voice Connector on Amazon Chime.
@@ -1084,9 +1080,9 @@
                 </div>
 
                 <div id="chime-tutorial-step-2">
-                  <h5>
+                  <h4>
                     2. Create a new Phone Number
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you create a new phone number on Somleng which matches the phone number you configured
@@ -1134,9 +1130,9 @@
                 </div>
 
                 <div id="chime-tutorial-step-3">
-                  <h5>
+                  <h4>
                     3. Configure a new SIP Trunk.
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you configure a new SIP Trunk on Somleng to point to the newly created Voice Connector
@@ -1213,9 +1209,9 @@
                 </div>
 
                 <div id="chime-tutorial-step-4">
-                  <h5>
+                  <h4>
                     4. Test a call to your own number
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you'll test a call to your own phone number which should be routed though Chime.
@@ -1283,7 +1279,7 @@
 
                   <p>
                     You should receive a phone call to your real phone number delivered through the SIP Trunk connected
-                    to Chime. Pick up the call and listen to the message. It should match what you have entered in the
+                    to Chime. Pick up the call and listen to the message. You should hear what you have entered in the
                     TwiML instructions above.
                   </p>
 
@@ -1297,9 +1293,9 @@
                 </div>
 
                 <div id="chime-tutorial-step-5">
-                  <h5>
+                  <h4>
                     5. Test a call to an international number
-                  </h5>
+                  </h4>
 
                   <p>
                     In this step you'll test a call to an international number (with a prefix different from your own
@@ -1324,7 +1320,7 @@
 
                   <p>
                     You should receive a phone call to your real phone number delivered through the SIP Trunk connected
-                    to your local softphone. Pick up the call and listen to the message. It should match what you have
+                    to your local softphone. Pick up the call and listen to the message. You should hear what you have
                     entered in the
                     TwiML instructions from the <a href="#chime-tutorial-step-4" class="link">previous step</a>.
                   </p>
@@ -1366,198 +1362,6 @@
                       instructions <i class="fa fa-external-link"></i></a>.
                   </li>
                 </ol>
-              </div>
-
-              <hr />
-            </div>
-
-            <hr />
-
-            <div id="quick-starts">
-              <h3 class="page__main__title">
-                Quick Starts
-              </h3>
-              <p>
-                This section contains quick start guides to get you up and running with Somleng.
-              </p>
-
-              <div id="quick_start_programmable_voice_chime">
-                <h4>
-                  Setting up Programmable Voice with Amazon Chime
-                </h4>
-
-                <h5>
-                  Overview
-                </h5>
-
-                <p>
-                  After following this guide you'll be able to use the Somleng API to initiate control voice calls via
-                  your Amazon Chime account.
-                </p>
-
-                <p>
-                  The following diagram shows how it works:
-                </p>
-
-                <img src="./images/chime_quickstart_how_it_works.png">
-
-                <p>
-                  Below is an overview of the steps required to configure programmable voice via Amazon Chime:
-                </p>
-
-                <ol>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_create_amazon_chime_voice_connector" class="link">
-                      Create a new Amazon Chime Voice Connector
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_assign_phone_number_to_connector" class="link">
-                      Assign a new phone number to the connector
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_sign_up_for_a_free_somleng_carrier_account"
-                      class="link">
-                      Sign up for a free Somleng Carrier Account
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_configure_a_sip_trunk" class="link">
-                      Configure a SIP Trunk
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_create_an_account" class="link">
-                      Create an account
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_assign_a_phone_number" class="link">
-                      Assign a phone number
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#quick_start_programmable_voice_chime_test_it_out" class="link">
-                      Test it out
-                    </a>
-                  </li>
-                </ol>
-
-                <div id="quick_start_programmable_voice_chime_configure_a_sip_trunk">
-                  <h5>
-                    4. Configure a SIP trunk
-                  </h5>
-
-                  Under the <strong>Voice</strong> menu, create a new SIP trunk.
-
-                  <ol type="a">
-                    <li>
-                      Under Authentication mode, choose <strong>IP address</strong>.
-                    </li>
-
-                    <li>
-                      Give your SIP trunk a name, e.g. Amazon Chime
-                    </li>
-
-                    <li>
-                      Under Outbound Dialing, set the Host to the Outbound host name that was generated when you created
-                      the Amazon Chime Voice connector in
-                      <a href="#quick_start_programmable_voice_chime_create_amazon_chime_voice_connector"
-                        class="link">Step 1</a>. The value should be <strong>your-host.voiceconnector.chime.aws</strong>
-                    </li>
-
-                    <li>
-                      Ensure that you <strong>enable</strong> Plus prefix. This is required by Amazon Chime.
-                    </li>
-                  </ol>
-
-                  <img src="./images/dashboard-new-sip-trunk-ip-address.png">
-                </div>
-
-                <div id="quick_start_programmable_voice_chime_create_an_account">
-                  <h5>
-                    5. Create an account
-                  </h5>
-
-                  Under the <strong>Accounts</strong> menu, create a new account.
-
-                  <ol type="a">
-                    <li>
-                      Give the account a name.
-                    </li>
-                    <li>
-                      Choose a premium TTS voice such as <strong>Polly.Joanna</strong> from the default TTS Voice
-                      dropdown.
-                    </li>
-                    <li>
-                      Press <strong>Create Account</strong>. The rest of the form is optional.
-                    </li>
-                  </ol>
-
-                  <img src="./images/dashboard-new-account.png">
-                </div>
-
-                <div>
-                  <h5 id="quick_start_programmable_voice_chime_assign_a_phone_number">
-                    6. Assign a phone number
-                  </h5>
-
-                  Under the <strong>Phone Numbers</strong> menu, create a phone number and assign it to the account
-                  created in the previous step.
-
-                  <ol type="a">
-                    <li>
-                      Enter the number that you assigned to your Chime Voice Connector in <a
-                        href="#quick_start_programmable_voice_chime_assign_phone_number_to_connector" class="link">Step
-                        2</a>.
-                    </li>
-                    <li>
-                      Select the account that you created in <a
-                        href="#quick_start_programmable_voice_chime_create_an_account" class="link">Step 5</a>.
-                    </li>
-                    <li>
-                      Ensure the phone number is <strong>Enabled</strong>.
-                    </li>
-                    <li>
-                      Press <strong>Create Phone Number</strong>
-                    </li>
-                  </ol>
-
-                  <img src="./images/dashboard-new-phone-number.png">
-                </div>
-
-                <div id="quick_start_programmable_voice_chime_test_it_out">
-                  <h5>
-                    7. Test it out
-                  </h5>
-
-                  <ol type="a">
-                    <li>
-                      Obtain your Somleng API credentials from the account page that you created in <a
-                        href="#quick_start_programmable_voice_chime_create_an_account" class="link">Step 5</a>. Copy the
-                      Accound SID and Auth Token.
-                    </li>
-                    <li>
-                      Use the following snippit to create an outbound call using the <a
-                        href="docs/twilio_api/#helper-libraries" target="_blank" class="link">somleng-node <i
-                          class="fa fa-external-link"></i></a> helper library.
-
-                      <div id="quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit"></div>
-                      <script>
-                        var notebook = RunKit.createNotebook({
-                          element: document.getElementById("quick_start_programmable_voice_chime_test_it_out_somleng_node_snippit"),
-                          nodeVersion: "18.x.x",
-                          source: "// Replace \"accountSid\" and \"authToken\" with your Somleng account credentials from Step 5.\n// Replace \"to\" with the destination number and \"from\" with a number you configured in Step 6.\n// Optionally, instead of passing the Twiml parameter, you can provide a \"Url\": that returns TwiML Voice instructions.\n\nconst accountSid = \"change-me\";\nconst authToken = \"change-me\";\nconst client = require('somleng')(accountSid, authToken);\n\nclient.calls\n  .create({\n      twiml: '<Response><Say voice=\"Polly.Joanna\">Ahoy, World! I am Joanna, from Amazon Polly. How are you today?</Say><Play>https://demo.twilio.com/docs/classic.mp3</Play></Response>',\n      to: 'change-me',\n      from: 'change-me'\n    })\n  .then(call => console.log(call.sid));\n",
-                        })
-                      </script>
-                    </li>
-                    <li>
-                      You should see the created call on the Dashboard by clicking on <strong>Phone Calls</strong> under
-                      the <strong>Voice</strong> menu.
-                    </li>
-                  </ol>
-                </div>
               </div>
             </div>
 
@@ -2383,6 +2187,8 @@
               </div>
             </div>
 
+            <hr />
+
             <div id="custom_domains_configuration_guide">
               <h3>
                 Custom Domain Configuration Guide
@@ -2898,6 +2704,8 @@ module "somleng_proxy_api" {
                 </p>
               </div>
             </div>
+
+            <hr />
 
             <div id="client_gateway_configuration_guide">
               <h3>
@@ -3624,6 +3432,8 @@ module "somleng_proxy_api" {
               </div>
             </div>
 
+            <hr />
+
             <div id="sms_gateway_configuration_guide">
               <h3>
                 SMS Gateway Configuration Guide
@@ -3973,6 +3783,137 @@ curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X 
               </div>
             </div>
 
+            <hr />
+
+            <div id="installation-guide">
+              <h3 class="page__main__title">
+                Installation Guide
+              </h3>
+
+              <p>
+                This guide is intended to get you up and running with Somleng on your local machine. It is not intended
+                for production. If you are just getting started with Somleng we recommend following the
+                <a href="#getting-started" class="link">Getting Started</a> guide before
+                attempting to install Somleng on your local machine.
+              </p>
+
+              <h4>
+                Prerequisites
+              </h4>
+
+              <ol>
+                <li>
+                  Install <a href="https://docs.docker.com/engine/install/" class="link" target="_blank">Docker <i
+                      class="fa fa-external-link"></i></a> and <a href="https://git-scm.com/downloads" class="link"
+                    target="_blank">git <i class="fa fa-external-link"></i></a> on your local machine.
+                </li>
+              </ol>
+
+              <h4>
+                Overview
+              </h4>
+
+              <p>
+                Below is an overview of the steps required to complete this guide:
+              </p>
+
+              <ol>
+                <li>
+                  <a href="#installation-guide-step-1" class="link">Clone the somleng-project repository.</a>
+                </li>
+
+                <li>
+                  <a href="#installation-guide-step-2" class="link">Pull the latest Docker images.</a>
+                </li>
+
+                <li>
+                  <a href="#installation-guide-step-3" class="link">Start Somleng.</a>
+                </li>
+
+                <li>
+                  <a href="#installation-guide-step-4" class="link">Seed the Database.</a>
+                </li>
+
+                <li>
+                  <a href="#installation-guide-step-5" class="link">Login to the Dashboard.</a>
+                </li>
+              </ol>
+
+              <div id="installation-guide-step-1">
+                <h4>
+                  1. Clone the somleng-project repository.
+                </h4>
+
+                <p>
+                  Clone the <a href="https://github.com/somleng/somleng-project" class="link"
+                    target="_blank">somleng-project <i class="fa fa-external-link"></i></a> repository.
+                </p>
+
+                <pre><code class="language-bash">$ git clone https://github.com/somleng/somleng-project.git && cd somleng-project</code></pre>
+              </div>
+
+              <div id="installation-guide-step-2">
+                <h4>
+                  2. Pull the latest Docker images.
+                </h4>
+
+                <pre><code class="language-bash">$ docker-compose pull</code></pre>
+              </div>
+
+              <div id="installation-guide-step-3">
+                <h4>
+                  3. Start Somleng.
+                </h4>
+
+                <pre><code class="language-bash">$ docker-compose up</code></pre>
+              </div>
+
+              <div id="installation-guide-step-4">
+                <h4>
+                  4. Seed the Database
+                </h4>
+
+                <pre><code class="language-bash">$ docker-compose exec somleng bundle exec rails db:setup</code></pre>
+
+                You should get the following output:
+
+                <pre>
+<code class="language-bash">
+Account SID:           account-sid
+Auth Token:            auth-token
+Inbound Phone Number:  1234
+---------------------------------------------
+URL:                   http://my-carrier.app.lvh.me:3000/
+Carrier User Email:    johndoe@carrier.com
+Carrier User Password: Somleng1234!
+Carrier API Key:       carrier-api-key
+</code></pre>
+              </div>
+
+              <div id="installation-guide-step-5">
+                <h4>
+                  5. Login to the Dashboard
+                </h4>
+
+                <p>
+                  You should be now able to log in to the Somleng dashboard at
+                  <a href="http://my-carrier.app.lvh.me:3000" class="link" target="_blank">http://my-carrier.app.lvh.me:3000 <i class="fa fa-external-link"></i></a> with the credentials from the
+                  output of the <a href="#installation-guide-step-4" class="link">previous step.</a>
+                </p>
+
+                <p>
+                  <em>
+                    Note: You'll need to setup two factor authentication (2FA) after the first time you sign in to the Dashboard.
+                    You can use the
+                    <a href="https://authenticator.cc" class="link" target="_blank">Authenticator browser extension <i class="fa fa-external-link"></i></a>
+                    if you don't already have another 2FA application.
+                  </em>
+                </p>
+              </div>
+            </div>
+
+            <hr />
+
             <div id="rtp_symmetric_latching">
               <h3>
                 RTP and Symmetric Latching
@@ -4003,6 +3944,8 @@ curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X 
                 Currently this option is not configurable on the dashboard. Please contact us for assistance.
               </p>
             </div>
+
+            <hr />
           </div>
         </div>
       </div>
