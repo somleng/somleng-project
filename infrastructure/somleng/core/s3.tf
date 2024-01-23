@@ -116,3 +116,21 @@ resource "aws_s3_bucket_acl" "backups" {
   bucket = aws_s3_bucket.backups.id
   acl = "private"
 }
+
+resource "aws_s3_bucket" "ci_artifacts" {
+  bucket = "ci-artifacts.somleng.org"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "ci_artifacts" {
+  bucket = aws_s3_bucket.ci_artifacts.id
+
+  rule {
+    id = "rule-1"
+    filter {}
+    status = "Enabled"
+
+    expiration {
+      days = 1
+    }
+  }
+}

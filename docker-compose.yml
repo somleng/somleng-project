@@ -14,10 +14,19 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   somleng:
     image: ghcr.io/somleng/somleng
     environment:
       RAILS_ENV: development
+      REDIS_URL: "redis://redis:6379/1"
       DATABASE_HOST: db
       DASHBOARD_URL_HOST: "http://dashboard.lvh.me:3000"
       SWITCH_HOST: "http://somleng-switch:8080"
@@ -25,6 +34,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
       - somleng-switch
     networks:
       default:
@@ -35,6 +45,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    command:
+      - "./bin/rails"
+      - "server"
+      - "-b"
+      - "0.0.0.0"
 
   somleng-switch:
     image: ghcr.io/somleng/somleng-switch
