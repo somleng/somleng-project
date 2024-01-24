@@ -262,9 +262,14 @@ resource "aws_route" "telecom_cambodia_signalling" {
   network_interface_id      = aws_network_interface.nat_instance.id
 }
 
-
 resource "aws_route" "telecom_cambodia_media" {
   route_table_id            = module.vpc.private_route_table_ids[0]
   destination_cidr_block    = "203.223.42.132/32"
+  network_interface_id      = aws_network_interface.nat_instance.id
+}
+
+resource "aws_route" "telecom_cambodia_media2" {
+  route_table_id            = module.vpc.private_route_table_ids[0]
+  destination_cidr_block    = "203.223.42.148/32"
   network_interface_id      = aws_network_interface.nat_instance.id
 }
