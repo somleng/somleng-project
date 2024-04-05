@@ -30,13 +30,13 @@ resource "aws_security_group_rule" "http_egress" {
   protocol    = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
 
-  security_group_id =  aws_security_group.somleng_application_load_balancer.id
+  security_group_id = aws_security_group.somleng_application_load_balancer.id
 }
 
 resource "aws_lb" "somleng_application" {
-  name = "somleng-application"
+  name               = "somleng-application"
   load_balancer_type = "application"
-  subnets = module.vpc.public_subnets
+  subnets            = module.vpc.public_subnets
   security_groups    = [aws_security_group.somleng_application_load_balancer.id]
 
   access_logs {
@@ -50,7 +50,7 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.somleng_application.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-FS-1-2-Res-2019-08"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = aws_acm_certificate.certificate.arn
 
   default_action {

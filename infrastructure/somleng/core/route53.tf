@@ -2,6 +2,14 @@ resource "aws_route53_zone" "somleng_org" {
   name = "somleng.org."
 }
 
+resource "aws_route53_zone" "somleng_org_private" {
+  name = "internal.somleng.org."
+
+  vpc {
+    vpc_id = module.vpc.vpc_id
+  }
+}
+
 resource "aws_route53_record" "somleng_org_mx" {
   zone_id = aws_route53_zone.somleng_org.zone_id
   name    = ""
@@ -62,4 +70,3 @@ resource "aws_route53_record" "somleng_website" {
     evaluate_target_health = true
   }
 }
-
