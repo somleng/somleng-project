@@ -68,9 +68,17 @@ services:
       ANYCABLE_PUBSUB: redis
       ANYCABLE_HEADERS: x-device-key
       ANYCABLE_DEBUG: 1
+      ANYCABLE_SECRET: secret
+      ANYCABLE_HEALTH_PATH: "/health"
     depends_on:
       redis:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:8080/health 2>&1 | grep '200 OK' > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
 
   anycable:
     <<: *somleng
