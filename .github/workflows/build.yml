@@ -19,8 +19,11 @@ jobs:
           output=$(docker-compose run -T somleng bundle exec rails db:setup)
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
+          phone_number=$(echo $output | grep -Po 'Phone\s+Number:\s+\K\b[a-zA-Z0-9-]+\b')
           echo "account_sid=$account_sid" >> $GITHUB_OUTPUT
           echo "auth_token=$auth_token" >> $GITHUB_OUTPUT
+          echo "phone_number=$phone_number" >> $GITHUB_OUTPUT
+
 
       - name: Test an outbound call
         run: |
@@ -30,7 +33,7 @@ jobs:
             --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
             --data-urlencode "Method=GET" \
             --data-urlencode "To=+299221234" \
-            --data-urlencode "From=1294"
+            --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
 
   deploy:
     name: Deploy
@@ -58,4 +61,3 @@ jobs:
 
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id E3962XCJFZ0KB1 --paths /\*
-

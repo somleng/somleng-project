@@ -23,9 +23,7 @@ services:
       retries: 5
 
   somleng: &somleng
-    image: somleng:latest
-    build:
-      context: ../somleng
+    image: ghcr.io/somleng/somleng
     environment: &somleng_environment
       RAILS_ENV: development
       DATABASE_HOST: db
@@ -33,6 +31,7 @@ services:
       SWITCH_HOST: "http://somleng-switch:8080"
       DB_POOL: 30
       REDIS_URL: redis://redis:6379/0
+      ANYCABLE_SECRET: secret
     ports:
       - "3000:3000"
     depends_on: &somleng_depends_on
@@ -62,7 +61,7 @@ services:
     environment:
       ANYCABLE_HOST: "0.0.0.0"
       ANYCABLE_PORT: "8080"
-      ANYCABLE_NOAUTH: "true"
+      ANYCABLE_DISABLE_TELEMETRY: "true"
       ANYCABLE_REDIS_URL: redis://redis:6379/0
       ANYCABLE_RPC_HOST: anycable:50051
       ANYCABLE_BROADCAST_ADAPTER: redisx
@@ -72,6 +71,8 @@ services:
       ANYCABLE_DEBUG: 1
       ANYCABLE_SECRET: secret
       ANYCABLE_HEALTH_PATH: "/health"
+      ANYCABLE_LOG_LEVEL: "debug"
+      ANYCABLE_LOG_FORMAT: "json"
     depends_on:
       redis:
         condition: service_healthy
@@ -89,6 +90,7 @@ services:
       <<: *somleng_environment
       ANYCABLE_REDIS_URL: redis://redis:6379/0
       ANYCABLE_RPC_HOST: 0.0.0.0:50051
+      ANYCABLE_SECRET: secret
       ANYCABLE_DEBUG: 1
     ports:
       - '50051'
