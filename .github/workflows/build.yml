@@ -52,7 +52,13 @@ jobs:
       - name: Show SMS Gateway Logs
         run: |
           docker logs $(docker ps -qf "name=sms-gateway")
+          echo "Sleeping 15"
           sleep 15
+          echo "Running logs again"
+          docker logs $(docker ps -qf "name=sms-gateway")
+          echo "Sleeping 15"
+          sleep 15
+          echo "Running logs again"
           docker logs $(docker ps -qf "name=sms-gateway")
 
   deploy:
