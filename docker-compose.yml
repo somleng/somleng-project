@@ -143,6 +143,7 @@ services:
     image: ghcr.io/somleng/sms-gateway
     ports:
       - "3210:3210"
+    command: somleng-sms-gateway -v -k $DEVICE_TOKEN -d ws://ws:8080 dummy
     depends_on:
       ws:
         condition: service_healthy
