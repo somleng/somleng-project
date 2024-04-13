@@ -51,15 +51,22 @@ jobs:
 
       - name: Show SMS Gateway Logs
         run: |
-          docker logs $(docker ps -qf "name=sms-gateway")
+          echo "-----SMS Gateway Logs------"
+          docker-compose logs sms-gateway
+          echo "-----Somleng Logs ------"
+          docker-compose logs somleng
           echo "Sleeping 15"
           sleep 15
-          echo "Running logs again"
-          docker logs $(docker ps -qf "name=sms-gateway")
+          echo "-----SMS Gateway Logs------"
+          docker-compose logs sms-gateway
+          echo "-----Somleng Logs ------"
+          docker-compose logs somleng
           echo "Sleeping 15"
           sleep 15
-          echo "Running logs again"
-          docker logs $(docker ps -qf "name=sms-gateway")
+          echo "-----SMS Gateway Logs------"
+          docker-compose logs sms-gateway
+          echo "-----Somleng Logs ------"
+          docker-compose logs somleng
 
   deploy:
     name: Deploy
