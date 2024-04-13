@@ -51,6 +51,7 @@ jobs:
 
       - name: Show SMS Gateway Logs
         run: |
+          sleep 30
           docker-compose logs sms-gateway
 
   deploy:
