@@ -32,6 +32,7 @@ services:
       DB_POOL: 30
       REDIS_URL: redis://redis:6379/0
       ANYCABLE_SECRET: secret
+      ANYCABLE_BROADCAST_ADAPTER: redisx
     ports:
       - "3000:3000"
     depends_on: &somleng_depends_on
@@ -59,10 +60,10 @@ services:
     ports:
       - '8080:8080'
     environment:
+      REDIS_URL: redis://redis:6379/0
       ANYCABLE_HOST: "0.0.0.0"
       ANYCABLE_PORT: "8080"
       ANYCABLE_DISABLE_TELEMETRY: "true"
-      ANYCABLE_REDIS_URL: redis://redis:6379/0
       ANYCABLE_RPC_HOST: anycable:50051
       ANYCABLE_BROADCAST_ADAPTER: redisx
       ANYCABLE_BROKER: memory
@@ -76,28 +77,25 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+      anycable:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:8080/health 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
       timeout: 5s
       retries: 10
 
-
   anycable:
     <<: *somleng
     command: bundle exec anycable
     environment:
       <<: *somleng_environment
-      ANYCABLE_REDIS_URL: redis://redis:6379/0
       ANYCABLE_RPC_HOST: 0.0.0.0:50051
-      ANYCABLE_SECRET: secret
       ANYCABLE_DEBUG: 1
     ports:
       - '50051'
     depends_on:
       <<: *somleng_depends_on
-      ws:
-        condition: service_started
     healthcheck:
       test: ["CMD-SHELL", "grpc-health-probe -addr :50051"]
       interval: 10s
@@ -140,3 +138,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+
+  sms-gateway:
+    image: ghcr.io/somleng/sms-gateway
+    ports:
+      - "3210:3210"
+    depends_on:
+      ws:
+        condition: service_healthy
+    profiles:
+      - donotstart

@@ -11,7 +11,7 @@ jobs:
 
       - name: Run docker-compose
         run: |
-          docker-compose up -d
+          docker-compose up -d --wait
 
       - name: Bootstrap DB
         id: bootstrap_db
@@ -20,10 +20,15 @@ jobs:
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
           phone_number=$(echo $output | grep -Po 'Phone\s+Number:\s+\K\b[a-zA-Z0-9-]+\b')
+          sms_gateway_device_token=$(echo $output | grep -Po 'SMS\s+Gateway\s+Device\s+Token:\s+\K\b[a-zA-Z0-9-]+\b')
           echo "account_sid=$account_sid" >> $GITHUB_OUTPUT
           echo "auth_token=$auth_token" >> $GITHUB_OUTPUT
           echo "phone_number=$phone_number" >> $GITHUB_OUTPUT
+          echo "sms_gateway_device_token=$sms_gateway_device_token" >> $GITHUB_OUTPUT
 
+      - name: Start SMS Gateway
+        run: |
+          docker-compose run -T -d --wait sms-gateway somleng-sms-gateway -v -k "${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" -d ws://ws:8080 dummy
 
       - name: Test an outbound call
         run: |
@@ -33,6 +38,15 @@ jobs:
             --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
             --data-urlencode "Method=GET" \
             --data-urlencode "To=+299221234" \
+            --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
+
+      - name: Test an outbound SMS
+        run: |
+          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages" \
+            -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+            -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
+            --data-urlencode "To=+299221234" \
+            --data-urlencode "Body=Hello World from Integration Test" \
             --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
 
   deploy:
