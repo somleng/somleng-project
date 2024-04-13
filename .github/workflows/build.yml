@@ -28,7 +28,7 @@ jobs:
 
       - name: Start SMS Gateway
         run: |
-          docker-compose run -T -d --wait sms-gateway somleng-sms-gateway -v -k "${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" -d ws://ws:8080 dummy
+          docker-compose run -T -d sms-gateway somleng-sms-gateway -v -k "${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" -d ws://ws:8080 dummy
 
       - name: Test an outbound call
         run: |

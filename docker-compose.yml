@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    image: postgres
+    image: public.ecr.aws/docker/library/postgres:alpine
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
       - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
@@ -15,7 +15,7 @@ services:
       retries: 5
 
   redis:
-    image: redis
+    image: public.ecr.aws/docker/library/redis:alpine
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping"]
       interval: 10s
