@@ -49,6 +49,10 @@ jobs:
             --data-urlencode "Body=Hello World from Integration Test" \
             --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
 
+      - name: Show SMS Gateway Logs
+        run: |
+          docker-compose logs sms-gateway
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
