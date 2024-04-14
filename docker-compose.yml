@@ -143,9 +143,16 @@ services:
     image: ghcr.io/somleng/sms-gateway
     ports:
       - "3210:3210"
+    environment:
+      DEVICE_TOKEN: change-me
     command: somleng-sms-gateway -v -k $DEVICE_TOKEN -d ws://ws:8080 dummy
     depends_on:
       ws:
         condition: service_healthy
     profiles:
       - donotstart
+    healthcheck:
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:3210 2>&1 | grep '200 OK' > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
