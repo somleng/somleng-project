@@ -11,6 +11,7 @@ jobs:
 
       - name: Run docker-compose
         run: |
+          docker-compose version --short
           docker-compose up -d
 
       - name: Bootstrap DB
