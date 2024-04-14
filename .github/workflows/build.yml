@@ -9,18 +9,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Run docker-compose
         run: |
-          docker-compose version --short
-          docker-compose up -d
+          docker compose version --short
+          docker compose up -d
 
       - name: Bootstrap DB
         id: bootstrap_db
         run: |
-          output=$(docker-compose run -T somleng bundle exec rails db:setup)
+          output=$(docker compose run -T somleng bundle exec rails db:setup)
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
           phone_number=$(echo $output | grep -Po 'Phone\s+Number:\s+\K\b[a-zA-Z0-9-]+\b')
@@ -32,7 +29,7 @@ jobs:
 
       - name: Start SMS Gateway
         run: |
-          DEVICE_TOKEN="${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" docker-compose up -d sms-gateway
+          DEVICE_TOKEN="${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" docker compose up --wait -d sms-gateway
 
       - name: Test an outbound call
         run: |
@@ -56,21 +53,15 @@ jobs:
       - name: Show SMS Gateway Logs
         run: |
           echo "-----SMS Gateway Logs------"
-          docker-compose logs sms-gateway
-          echo "-----Somleng Logs ------"
-          docker-compose logs somleng
+          docker compose logs sms-gateway
           echo "Sleeping 15"
           sleep 15
           echo "-----SMS Gateway Logs------"
-          docker-compose logs sms-gateway
-          echo "-----Somleng Logs ------"
-          docker-compose logs somleng
+          docker compose logs sms-gateway
           echo "Sleeping 15"
           sleep 15
           echo "-----SMS Gateway Logs------"
-          docker-compose logs sms-gateway
-          echo "-----Somleng Logs ------"
-          docker-compose logs somleng
+          docker compose logs sms-gateway
 
   deploy:
     name: Deploy
