@@ -9,9 +9,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run docker-compose
+      - name: Run docker compose
         run: |
-          docker compose version --short
           docker compose up -d
 
       - name: Bootstrap DB
@@ -50,18 +49,9 @@ jobs:
             --data-urlencode "Body=Hello World from Integration Test" \
             --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
 
-      - name: Show SMS Gateway Logs
+      - name: Assert SMS Gateway received message
         run: |
-          echo "-----SMS Gateway Logs------"
-          docker compose logs sms-gateway
-          echo "Sleeping 15"
-          sleep 15
-          echo "-----SMS Gateway Logs------"
-          docker compose logs sms-gateway
-          echo "Sleeping 15"
-          sleep 15
-          echo "-----SMS Gateway Logs------"
-          docker compose logs sms-gateway
+          docker compose logs sms-gateway | grep "Hello World from Integration Test"
 
   deploy:
     name: Deploy
