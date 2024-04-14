@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    image: postgres
+    image: public.ecr.aws/docker/library/postgres:alpine
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
       - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
@@ -14,18 +14,32 @@ services:
       timeout: 5s
       retries: 5
 
-  somleng:
+  redis:
+    image: public.ecr.aws/docker/library/redis:alpine
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  somleng: &somleng
     image: ghcr.io/somleng/somleng
-    environment:
+    environment: &somleng_environment
       RAILS_ENV: development
       DATABASE_HOST: db
       DASHBOARD_URL_HOST: "http://dashboard.lvh.me:3000"
       SWITCH_HOST: "http://somleng-switch:8080"
+      DB_POOL: 30
+      REDIS_URL: redis://redis:6379/0
+      ANYCABLE_SECRET: secret
+      ANYCABLE_BROADCAST_ADAPTER: redisx
     ports:
       - "3000:3000"
-    depends_on:
-      - db
-      - somleng-switch
+    depends_on: &somleng_depends_on
+      db:
+        condition: service_healthy
+      somleng-switch:
+        condition: service_healthy
     networks:
       default:
         aliases:
@@ -41,6 +55,53 @@ services:
       - "-b"
       - "0.0.0.0"
 
+  ws:
+    image: anycable/anycable-go:latest-alpine
+    ports:
+      - '8080:8080'
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      ANYCABLE_HOST: "0.0.0.0"
+      ANYCABLE_PORT: "8080"
+      ANYCABLE_DISABLE_TELEMETRY: "true"
+      ANYCABLE_RPC_HOST: anycable:50051
+      ANYCABLE_BROADCAST_ADAPTER: redisx
+      ANYCABLE_BROKER: memory
+      ANYCABLE_PUBSUB: redis
+      ANYCABLE_HEADERS: x-device-key
+      ANYCABLE_DEBUG: 1
+      ANYCABLE_SECRET: secret
+      ANYCABLE_HEALTH_PATH: "/health"
+      ANYCABLE_LOG_LEVEL: "debug"
+      ANYCABLE_LOG_FORMAT: "json"
+    depends_on:
+      redis:
+        condition: service_healthy
+      anycable:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:8080/health 2>&1 | grep '200 OK' > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  anycable:
+    <<: *somleng
+    command: bundle exec anycable
+    environment:
+      <<: *somleng_environment
+      ANYCABLE_RPC_HOST: 0.0.0.0:50051
+      ANYCABLE_DEBUG: 1
+    ports:
+      - '50051'
+    depends_on:
+      <<: *somleng_depends_on
+    healthcheck:
+      test: ["CMD-SHELL", "grpc-health-probe -addr :50051"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   somleng-switch:
     image: ghcr.io/somleng/somleng-switch
     platform: linux/amd64
@@ -48,8 +109,12 @@ services:
       AHN_CORE_HOST: freeswitch
       AHN_CORE_HTTP_PORT: 8080
       CALL_PLATFORM_HOST: "http://api.somleng.dev:3000"
+      REDIS_URL: "redis://redis:6379/1"
     depends_on:
-      - freeswitch
+      redis:
+        condition: service_healthy
+      freeswitch:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:8080/health_checks 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
@@ -70,6 +135,24 @@ services:
       - db
     healthcheck:
       test: ["CMD-SHELL", "nc -z -w 5 localhost 5222"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  sms-gateway:
+    image: ghcr.io/somleng/sms-gateway
+    ports:
+      - "3210:3210"
+    environment:
+      DEVICE_TOKEN: change-me
+    command: somleng-sms-gateway -v -k $DEVICE_TOKEN -d ws://ws:8080 dummy
+    depends_on:
+      ws:
+        condition: service_healthy
+    profiles:
+      - donotstart
+    healthcheck:
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:3210 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
       timeout: 5s
       retries: 10
