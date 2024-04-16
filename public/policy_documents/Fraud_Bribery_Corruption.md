@@ -1,8 +1,4 @@
-![Chatterbox Logo](../assets/images/chatterbox.png)
-
 # Fraud, Bribery and Corruption Policy
-
-Last updated: April 16, 2024
 
 ## 1. Purpose
 
