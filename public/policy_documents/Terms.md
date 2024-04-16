@@ -1,6 +1,6 @@
 # TERMS OF SERVICE
 
-**Last updated** **April 16, 2024**
+Last updated: April 16, 2024
 
 ## TABLE OF CONTENTS
 
