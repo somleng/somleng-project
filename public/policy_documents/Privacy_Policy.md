@@ -1,5 +1,3 @@
-![Chatterbox Logo](../assets/images/chatterbox.png)
-
 # Privacy Policy
 
 Last updated: April 16, 2024
