@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: May 9, 2023
+Last updated: April 16, 2024
 
 This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.
 
@@ -169,13 +169,13 @@ The security of your personal data is important to Us, but remember that no meth
 
 ## Applicable Laws
 
-Somleng is an open source [Digital Public Good](https://digitalpublicgoods.net/registry/somleng.html) which is deployed in a number of different countries around the world. It is incumbant on the entity that deploys and runs Somleng to adhear to the applicable privacy laws in their country.
+Somleng is an open source [Digital Public Good](https://digitalpublicgoods.net/registry/somleng.html) which is deployed in a number of different countries around the world. It is incumbant on the entity that deploys and runs Somleng to adhere to the applicable privacy laws in their country.
 
 ### Somleng as a Service
 
 Somleng as a Service (available at [https://app.somleng.org/users/sign_up](https://app.somleng.org/users/sign_up)) is a service made available to organizations and individuals who don't want to manage their own Somleng infrastructure. This service is run by Chatterbox Solutions, which is registered in the Kingdom of Cambodia.
 
-Chatterbox Solutions adheares to all applicable privacy laws in relation to running Somleng as a Service.
+Chatterbox Solutions adheres to all applicable privacy laws in relation to running Somleng as a Service.
 
 # Children's Privacy
 
