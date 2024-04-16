@@ -1,5 +1,3 @@
-![Chatterbox Logo](../assets/images/chatterbox.png)
-
 # Corporate Risk Register - Chatterbox Solutions
 
 ## Introduction
