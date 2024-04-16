@@ -54,4 +54,6 @@ This policy applies to all employees, contractors, consultants, vendors, and bus
 
 - For questions or concerns regarding this policy or its implementation, employees may contact the Human Resources department or the designated compliance officer.
 
+---
+
 **Chatterbox Solutions is committed to maintaining a culture of integrity, transparency, and ethical conduct in all aspects of its operations. This policy reflects our dedication to upholding the highest standards of business ethics and compliance with legal and regulatory requirements.**
