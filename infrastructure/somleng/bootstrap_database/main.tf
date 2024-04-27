@@ -33,16 +33,32 @@ resource "aws_security_group_rule" "egress" {
   protocol          = "-1"
   from_port         = 0
   security_group_id = aws_security_group.this.id
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_instance" "this" {
-  ami           = data.aws_ssm_parameter.arm64_ami.value
-  instance_type = "t4g.micro"
-  security_groups = [aws_security_group.this.id, data.aws_security_group.db.id]
-  subnet_id = element(data.terraform_remote_state.core_infrastructure.outputs.vpc.private_subnets, 0)
+  ami                  = data.aws_ssm_parameter.arm64_ami.value
+  instance_type        = "t4g.micro"
+  security_groups      = [aws_security_group.this.id, data.aws_security_group.db.id]
+  subnet_id            = element(data.terraform_remote_state.core_infrastructure.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
-  user_data = data.template_file.user_data.rendered
+  user_data = templatefile(
+    "${path.module}/user-data.sh",
+    {
+      db_host                           = data.aws_rds_cluster.db_cluster.endpoint
+      db_username                       = data.aws_rds_cluster.db_cluster.master_username
+      db_master_password_parameter_name = data.aws_ssm_parameter.db_master_password.name
+      db_name                           = var.db_name
+      create_db                         = var.create_db
+      restore_db                        = var.restore_db
+      restore_db_from_backup_name       = var.restore_db_from_backup_name
+    }
+  )
+
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
 
   tags = {
     Name = "bootstrap-database"
@@ -50,9 +66,9 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_iam_role" "this" {
-name  = "bootstrap-database"
+  name = "bootstrap-database"
 
-assume_role_policy = <<EOF
+  assume_role_policy = <<EOF
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -69,8 +85,8 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "this" {
-  name  = aws_iam_role.this.name
-  role  = aws_iam_role.this.name
+  name = aws_iam_role.this.name
+  role = aws_iam_role.this.name
 }
 
 resource "aws_iam_policy" "this" {
@@ -126,12 +142,12 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    db_host = data.aws_rds_cluster.db_cluster.endpoint
-    db_username = data.aws_rds_cluster.db_cluster.master_username
+    db_host                           = data.aws_rds_cluster.db_cluster.endpoint
+    db_username                       = data.aws_rds_cluster.db_cluster.master_username
     db_master_password_parameter_name = data.aws_ssm_parameter.db_master_password.name
-    db_name = var.db_name
-    create_db = var.create_db
-    restore_db = var.restore_db
-    restore_db_from_backup_name = var.restore_db_from_backup_name
+    db_name                           = var.db_name
+    create_db                         = var.create_db
+    restore_db                        = var.restore_db
+    restore_db_from_backup_name       = var.restore_db_from_backup_name
   }
 }

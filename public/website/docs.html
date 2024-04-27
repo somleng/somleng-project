@@ -2084,18 +2084,30 @@
                           <td>short_code</td>
                         </tr>
                         <tr>
-                          <td>enabled</td>
+                          <td>visibility</td>
                           <td>Optional</td>
-                          <td>Whether to enable or disable the phone number</td>
-                          <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
-                          <td><code>true</code></td>
+                          <td>The visibility of the phone number</td>
+                          <td>
+                            One of either <code>private</code>, <code>public</code>, or <code>disabled</code> defaults
+                            to <code>public</code> for phone numbers with a price or <code>private</code> for phone
+                            numbers without one.
+                            <code>true</code>
+                          </td>
+                          <td><code>public</code></td>
                         </tr>
                         <tr>
                           <td>country</td>
                           <td>Optional</td>
-                          <td>The country of the phone number </td>
+                          <td>The country of the phone number</td>
                           <td>Optional ISO 3166-1 alpha-2 country code. Defaults to the country </td>
                           <td><code>CA</code></td>
+                        </tr>
+                        <tr>
+                          <td>price</td>
+                          <td>Optional</td>
+                          <td>The monthly price you want to charge for the phone number</td>
+                          <td>A positive value in the billing currency of the carrier</td>
+                          <td><code>1.15</code></td>
                         </tr>
                       </tbody>
                     </table>
