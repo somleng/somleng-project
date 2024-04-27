@@ -6,7 +6,7 @@ variable "create_db" {
   description = "y or n"
 }
 variable "restore_db" {
-  description = "y or n"
+  description = "y or n (BE CAREFUL! THIS WILL DROP THE DATABASE IF IN DOUBT SELECT 'n')"
 }
 variable "restore_db_from_backup_name" {
   description = "somleng"

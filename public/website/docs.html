@@ -2059,6 +2059,7 @@
                       <thead>
                         <tr>
                           <th>Column Header</th>
+                          <th>Required/Optional</th>
                           <th>Content</th>
                           <th>Possible Values</th>
                           <th>Example</th>
@@ -2067,21 +2068,46 @@
                       <tbody>
                         <tr>
                           <td>number</td>
+                          <td>Required</td>
                           <td>The phone number or short code</td>
                           <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
                           <td>1234</td>
                         </tr>
                         <tr>
-                          <td>enabled</td>
-                          <td>Whether to enable or disable the phone number</td>
-                          <td><code>true</code> or <code>false</code> defaults to <code>true</code></td>
-                          <td><code>true</code></td>
+                          <td>type</td>
+                          <td>Required</td>
+                          <td>The type of phone number</td>
+                          <td>
+                            One of either <code>local</code>, <code>mobile</code>, <code>toll_free</code> or
+                            <code>short_code</code>
+                          </td>
+                          <td>short_code</td>
                         </tr>
                         <tr>
-                          <td>account_sid</td>
-                          <td>Optionally associate an account with the phone number</td>
-                          <td>SID of account to associate</td>
-                          <td><code>ccdb7202-e487-436c-b964-c3acb7884c8f</code></td>
+                          <td>visibility</td>
+                          <td>Optional</td>
+                          <td>The visibility of the phone number</td>
+                          <td>
+                            One of either <code>private</code>, <code>public</code>, or <code>disabled</code> defaults
+                            to <code>public</code> for phone numbers with a price or <code>private</code> for phone
+                            numbers without one.
+                            <code>true</code>
+                          </td>
+                          <td><code>public</code></td>
+                        </tr>
+                        <tr>
+                          <td>country</td>
+                          <td>Optional</td>
+                          <td>The country of the phone number</td>
+                          <td>Optional ISO 3166-1 alpha-2 country code. Defaults to the country </td>
+                          <td><code>CA</code></td>
+                        </tr>
+                        <tr>
+                          <td>price</td>
+                          <td>Optional</td>
+                          <td>The monthly price you want to charge for the phone number</td>
+                          <td>A positive value in the billing currency of the carrier</td>
+                          <td><code>1.15</code></td>
                         </tr>
                       </tbody>
                     </table>
