@@ -9,6 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Avoid rate limit errors
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
       - name: Run docker compose
         run: |
           docker compose up -d
