@@ -2070,8 +2070,8 @@
                           <td>number</td>
                           <td>Required</td>
                           <td>The phone number or short code</td>
-                          <td>E.164 formatted number or short code. e.g. 85512345678 or 1234</td>
-                          <td>1234</td>
+                          <td>E.164 formatted number or short code. e.g. +12505550199 or 77730</td>
+                          <td>12505550199</td>
                         </tr>
                         <tr>
                           <td>type</td>
@@ -2081,7 +2081,7 @@
                             One of either <code>local</code>, <code>mobile</code>, <code>toll_free</code> or
                             <code>short_code</code>
                           </td>
-                          <td>short_code</td>
+                          <td>local</td>
                         </tr>
                         <tr>
                           <td>visibility</td>
@@ -2118,9 +2118,8 @@
                     </h6>
 
                     <pre>
-  number,enabled,account_sid
-  1234,false,ccdb7202-e487-436c-b964-c3acb7884c8f
-  85512345678,true</pre>
+number,type,visibility,country,price
++12505550199,local,public,CA,1.15</pre>
                   </div>
                 </div>
 
