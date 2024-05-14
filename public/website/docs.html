@@ -624,7 +624,7 @@
                   </p>
 
                   <p>
-                  <pre><code class="shell">$ docker run -p 3210:3210 somleng/sms-gateway somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy</code></pre>
+                  <pre><code class="language-bash">docker run -p 3210:3210 somleng/sms-gateway somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy</code></pre>
                   </p>
 
                   After your SMS Gateway Application is running on your local machine you should see the connection
@@ -2173,9 +2173,8 @@ client.verify.v2.services(verificationServiceSid)
                     Sample CSV Data
                   </h6>
 
-                  <pre>
-number,type,visibility,country,price
-+12505550199,local,public,CA,1.15</pre>
+                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price
++12505550199,local,public,CA,1.15</code></pre>
                 </div>
               </div>
 
@@ -4253,8 +4252,7 @@ module "somleng_proxy_api" {
                     following code to
                     send an SMS:
 
-                  <pre><code class="language-bash">
-curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X POST \
+                  <pre><code class="language-bash">curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X POST \
 --data-urlencode 'To=+855715100860' \
 --data-urlencode 'From=+85568308531' \
 --data-urlencode 'Body=Hello from Somleng' \
@@ -4390,7 +4388,7 @@ curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X 
                     target="_blank">somleng-project <i class="fa fa-external-link"></i></a> repository.
                 </p>
 
-                <pre><code class="language-bash">$ git clone https://github.com/somleng/somleng-project.git && cd somleng-project</code></pre>
+                <pre><code class="language-bash">git clone https://github.com/somleng/somleng-project.git && cd somleng-project</code></pre>
               </div>
 
               <div id="installation-guide-step-2">
@@ -4398,7 +4396,7 @@ curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X 
                   2. Pull the latest Docker images.
                 </h4>
 
-                <pre><code class="language-bash">$ docker-compose pull</code></pre>
+                <pre><code class="language-bash">docker compose pull</code></pre>
               </div>
 
               <div id="installation-guide-step-3">
@@ -4406,7 +4404,7 @@ curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X 
                   3. Start Somleng.
                 </h4>
 
-                <pre><code class="language-bash">$ docker-compose up</code></pre>
+                <pre><code class="language-bash">docker compose up</code></pre>
               </div>
 
               <div id="installation-guide-step-4">
@@ -4414,20 +4412,19 @@ curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X 
                   4. Seed the Database
                 </h4>
 
-                <pre><code class="language-bash">$ docker-compose exec somleng bundle exec rails db:setup</code></pre>
+                <pre><code class="language-bash">docker compose exec somleng bundle exec rails db:setup</code></pre>
 
                 You should get the following output:
 
-                <pre>
-<code class="language-bash">
-Account SID:           account-sid
-Auth Token:            auth-token
-Phone Number:  1234
+                <pre><code class="line-numbers language-bash">Account SID:              account-sid
+Auth Token:               auth-token
+Phone Number:             1294
+SMS Gateway Device Token: sms-gateway-device-token
 ---------------------------------------------
-URL:                   http://my-carrier.app.lvh.me:3000/
-Carrier User Email:    johndoe@carrier.com
-Carrier User Password: Somleng1234!
-Carrier API Key:       carrier-api-key
+URL:                      http://my-carrier.app.lvh.me:3000/
+Carrier User Email:       johndoe@carrier.com
+Carrier User Password:    Somleng1234!
+Carrier API Key:          carrier-api-key
 </code></pre>
               </div>
 
