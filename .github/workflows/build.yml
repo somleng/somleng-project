@@ -9,12 +9,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Avoid rate limit errors
+      # Avoid rate limit errors by logging into Docker registries
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # Login to AWS to avoid rate limit
+      - name: Configure AWS credentials
+        id: aws-login
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-skip-session-tagging: true
+          role-duration-seconds: 3600
+          aws-region: ap-southeast-1
+
+      - name: Login to AWS Public ECR
+        uses: docker/login-action@v3
+        with:
+          registry: public.ecr.aws
+        env:
+          AWS_REGION: us-east-1
 
       - name: Run docker compose
         run: |
