@@ -2176,7 +2176,8 @@ client.verify.v2.services(verificationServiceSid)
                         <td>country</td>
                         <td>Optional</td>
                         <td>The country of the phone number</td>
-                        <td>Optional ISO 3166-1 alpha-2 country code. Defaults to the country </td>
+                        <td>Optional ISO 3166-1 alpha-2 country code. If not provided, will try to resolve from the
+                          phone number</td>
                         <td><code>CA</code></td>
                       </tr>
                       <tr>
@@ -2186,6 +2187,20 @@ client.verify.v2.services(verificationServiceSid)
                         <td>A positive value in the billing currency of the carrier</td>
                         <td><code>1.15</code></td>
                       </tr>
+                      <tr>
+                        <td>region</td>
+                        <td>Optional</td>
+                        <td>The state or province abbreviation of this phone number's location</td>
+                        <td>Optional ISO 3166-2 subdivision code</td>
+                        <td><code>ON</code></td>
+                      </tr>
+                      <tr>
+                        <td>locality</td>
+                        <td>Optional</td>
+                        <td>The locality or city of this phone number's location</td>
+                        <td>The name of a city or locality</td>
+                        <td><code>Toronto</code></td>
+                      </tr>
                     </tbody>
                   </table>
                   </p>
@@ -2194,8 +2209,8 @@ client.verify.v2.services(verificationServiceSid)
                     Sample CSV Data
                   </h6>
 
-                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price
-+12505550199,local,public,CA,1.15</code></pre>
+                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality
++12505550199,local,public,CA,1.15,ON,Toronto</code></pre>
                 </div>
               </div>
 
