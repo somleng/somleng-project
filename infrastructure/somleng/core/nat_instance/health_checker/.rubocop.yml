@@ -1,0 +1,25 @@
+require:
+  - rubocop-rspec
+  - rubocop-performance
+
+# Omakase Ruby styling for Rails
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
+
+AllCops:
+  NewCops: enable
+
+Lint:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+RSpec/DescribedClass:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false

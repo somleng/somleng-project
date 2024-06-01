@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+gem "aws-sdk-cloudwatch"
+gem "ox" # XML parser. required by aws-sdk
+
+group :development do
+  gem "rake"
+  gem "rubocop-rails-omakase"
+end
+
+group :test do
+  gem "pry"
+  gem "rspec"
+  gem "simplecov", require: false
+  gem "simplecov-cobertura", require: false
+end

@@ -1,0 +1,13 @@
+{
+  "version": "0",
+  "id": "49eb970c-ac2f-4328-7f17-555f93d45302",
+  "detail-type": "Scheduled Event",
+  "source": "aws.events",
+  "account": "111122223333",
+  "time": "2024-06-01T05:39:37Z",
+  "region": "ap-southeast-1",
+  "resources": [
+    "arn:aws:events:ap-southeast-1:111122223333:rule/nat-instance-health-checker"
+  ],
+  "detail": {}
+}

@@ -18,10 +18,28 @@ TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-m
 AWS_REGION="$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/region)"
 INSTANCE_ID="$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)"
 
+retries=60
+
+# Associate the EIP
+
+for ((i=0; i<retries; i++)); do
+  aws ec2 associate-address \
+    --instance-id $INSTANCE_ID \
+    --allocation-id "${eip_allocation_id}"
+
+  [[ $? -eq 0 ]] && break
+
+  echo "Failed to associate EIP. Pausing 10s then retrying"
+
+  sleep 10
+done
+
+aws ec2 modify-instance-attribute \
+  --instance-id $INSTANCE_ID \
+  --no-source-dest-check
+
 # attach the ENI
 # Retry incase this instance boots before the old one shuts down
-
-retries=60
 
 for ((i=0; i<retries; i++)); do
   aws ec2 attach-network-interface \
@@ -36,16 +54,6 @@ for ((i=0; i<retries; i++)); do
 
   sleep 10
 done
-
-# Update the cloudwatch alarm dimensions to terminate instance if in alarm
-
-describe_alarm_result=$(aws cloudwatch describe-alarms --alarm-names ${cloudwatch_alarm_name} --query 'MetricAlarms[0]' --region $AWS_REGION | jq '{AlarmName,MetricName,Period,EvaluationPeriods,ComparisonOperator,Namespace,Statistic,Threshold}')
-
-aws cloudwatch put-metric-alarm \
-  --cli-input-json "$describe_alarm_result" \
-  --dimensions "Name=InstanceId,Value=$INSTANCE_ID" \
-  --alarm-actions arn:aws:automate:$AWS_REGION:ec2:terminate \
-  --region $AWS_REGION
 
 # start SNAT
 systemctl enable snat
