@@ -10,7 +10,9 @@ class NATInstanceHealthChecker
     end
   end
 
-  attr_reader :health_check_target, :nat_instance_ip, :eni_id, :metric_namespace, :metric_name, :cloudwatch_client
+  attr_reader :health_check_target, :nat_instance_ip, :eni_id,
+              :metric_namespace, :metric_name, :cloudwatch_client,
+              :health_check_client
 
   def initialize(**options)
     health_check_target = options.fetch(:health_check_target) { ENV.fetch("HEALTH_CHECK_TARGET", "54.169.198.37") }
@@ -22,6 +24,12 @@ class NATInstanceHealthChecker
     @metric_namespace = options.fetch(:metric_namespace) { ENV.fetch("CLOUDWATCH_METRIC_NAMESPACE", "NatInstance") }
     @metric_name = options.fetch(:metric_name) { ENV.fetch("CLOUDWATCH_METRIC_NAME", "NatInstanceHealthyRoutes") }
     @cloudwatch_client = options.fetch(:cloudwatch_client) { Aws::CloudWatch::Client.new }
+    @health_check_client = options.fetch(:health_check_client) do
+      client = Net::HTTP.new(@health_check_target.host, @health_check_target.port)
+      client.read_timeout = 5
+      client.open_timeout = 5
+      client
+    end
   end
 
   def call
@@ -31,8 +39,10 @@ class NATInstanceHealthChecker
   private
 
   def ping
-    response = Net::HTTP.get(health_check_target)
-    PingResponse.new(success: response.strip == nat_instance_ip)
+    response = health_check_client.get("/")
+    PingResponse.new(success: response.body.strip == nat_instance_ip)
+  rescue Timeout::Error
+    PingResponse.new(success: false)
   end
 
   def publish_metric_data(value)

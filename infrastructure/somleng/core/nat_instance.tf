@@ -368,7 +368,21 @@ resource "aws_iam_policy" "nat_instance_health_checker_custom_policy" {
               "cloudwatch:namespace" = "NatInstance"
             }
           }
-        }
+        },
+        {
+          Action = [
+            "ec2:DescribeNetworkInterfaceAttribute"
+          ]
+          Effect   = "Allow"
+          Resource = "*"
+        },
+        {
+          Action = [
+            "autoscaling:SetInstanceHealth"
+          ]
+          Effect   = "Allow"
+          Resource = aws_autoscaling_group.nat_instance.arn
+        },
       ]
     }
   )
@@ -425,6 +439,7 @@ resource "aws_lambda_function" "nat_instance_health_checker" {
     variables = {
       NAT_INSTANCE_ENI_ID         = aws_network_interface.nat_instance.id
       CLOUDWATCH_METRIC_NAMESPACE = "NatInstance"
+      CLOUDWATCH_METRIC_NAME      = "NatInstanceHealthyRoutes"
       HEALTH_CHECK_TARGET         = aws_route.health_check_target.destination_cidr_block
       NAT_INSTANCE_IP             = aws_eip.nat_instance.public_ip
     }
@@ -435,6 +450,8 @@ resource "aws_lambda_function" "nat_instance_health_checker" {
     docker_registry_image.nat_instance_health_checker
   ]
 }
+
+# CloudWatch Event Rule
 
 resource "aws_cloudwatch_event_rule" "nat_instance_health_checker" {
   name                = local.nat_instance_health_checker_name
@@ -452,4 +469,34 @@ resource "aws_cloudwatch_event_target" "nat_instance_health_checker" {
   target_id = aws_cloudwatch_event_rule.nat_instance_health_checker.name
   arn       = aws_lambda_function.nat_instance_health_checker.arn
   rule      = aws_cloudwatch_event_rule.nat_instance_health_checker.name
+}
+
+# Metric Alarm
+
+resource "aws_cloudwatch_metric_alarm" "nat_instance_health_checker" {
+  alarm_name          = local.nat_instance_health_checker_name
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = 2
+  metric_name         = aws_lambda_function.nat_instance_health_checker.environment[0].variables.CLOUDWATCH_METRIC_NAME
+  namespace           = aws_lambda_function.nat_instance_health_checker.environment[0].variables.CLOUDWATCH_METRIC_NAMESPACE
+  period              = 120
+  statistic           = "Average"
+  threshold           = 0
+  alarm_description   = "A value of 0 indicates that the NAT instance is unhealthy"
+  alarm_actions       = [aws_lambda_function.nat_instance_health_checker.arn]
+
+  dimensions = {
+    EniId = aws_network_interface.nat_instance.id
+  }
+
+  treat_missing_data = "breaching"
+}
+
+# Lambda permission
+
+resource "aws_lambda_permission" "nat_instance_health_checker_alarm" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.nat_instance_health_checker.arn
+  principal     = "lambda.alarms.cloudwatch.amazonaws.com"
+  source_arn    = aws_cloudwatch_metric_alarm.nat_instance_health_checker.arn
 }

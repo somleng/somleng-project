@@ -23,6 +23,8 @@ module App
       case event.event_type
       when :scheduled
         NATInstanceHealthChecker.new.call
+      when :alarm
+        AlarmHandler.new.call
       end
     end
   end
