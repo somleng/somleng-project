@@ -6,7 +6,7 @@ data "aws_network_interface" "nat_gateway" {
 }
 
 resource "aws_cloudwatch_log_group" "nat_gateway" {
-  name = "nat_gateway"
+  name              = "nat_gateway"
   retention_in_days = 7
 }
 
@@ -14,31 +14,9 @@ resource "aws_flow_log" "nat_gateway" {
   iam_role_arn    = aws_iam_role.flow_logs.arn
   log_destination = aws_cloudwatch_log_group.nat_gateway.arn
   traffic_type    = "ALL"
-  eni_id = data.aws_network_interface.nat_gateway.id
+  eni_id          = data.aws_network_interface.nat_gateway.id
   tags = {
     Name = "NAT Gateway"
-  }
-}
-
-data "aws_network_interface" "nlb_ap_southeast_1a" {
-  filter {
-    name   = "addresses.association.public-ip"
-    values = [aws_eip.nlb[0].public_ip]
-  }
-}
-
-resource "aws_cloudwatch_log_group" "nlb_ap_southeast_1a" {
-  name = "nlb-ap-southeast-1a-${aws_eip.nlb[0].public_ip}"
-  retention_in_days = 7
-}
-
-resource "aws_flow_log" "nlb_ap_southeast_1a" {
-  iam_role_arn    = aws_iam_role.flow_logs.arn
-  log_destination = aws_cloudwatch_log_group.nlb_ap_southeast_1a.arn
-  traffic_type    = "ALL"
-  eni_id = data.aws_network_interface.nlb_ap_southeast_1a.id
-  tags = {
-    Name = "NLB ap-southeast-1a (${aws_eip.nlb[0].public_ip})"
   }
 }
 

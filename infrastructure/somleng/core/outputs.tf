@@ -52,20 +52,12 @@ output "internal_application_load_balancer" {
   value = aws_lb.somleng_internal_application
 }
 
-output "network_load_balancer" {
-  value = aws_lb.somleng_network
-}
-
 output "https_listener" {
   value = aws_lb_listener.https
 }
 
 output "internal_https_listener" {
   value = aws_lb_listener.internal_https
-}
-
-output "nlb_eips" {
-  value = aws_eip.nlb.*
 }
 
 output "route53_zone_somleng_org" {
