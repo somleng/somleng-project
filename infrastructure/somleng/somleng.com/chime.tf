@@ -2,7 +2,7 @@ resource "aws_chime_voice_connector" "this" {
   name               = "somleng"
   require_encryption = false
   aws_region         = "us-east-1"
-  provider          = aws.us-east-1
+  provider           = aws.us-east-1
 }
 
 resource "aws_chime_voice_connector_termination" "this" {
@@ -15,7 +15,7 @@ resource "aws_chime_voice_connector_origination" "this" {
   voice_connector_id = aws_chime_voice_connector.this.id
 
   route {
-    host     = "52.74.4.205"
+    host     = "15.197.218.231"
     port     = 5060
     protocol = "UDP"
     priority = 1

@@ -260,7 +260,7 @@ resource "aws_route" "telecom_cambodia_media2" {
 
 resource "aws_route" "health_check_target" {
   route_table_id         = module.vpc.private_route_table_ids[0]
-  destination_cidr_block = "54.169.198.37/32"
+  destination_cidr_block = "13.228.108.148/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 

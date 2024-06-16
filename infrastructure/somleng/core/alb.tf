@@ -23,7 +23,7 @@ resource "aws_security_group_rule" "http_ingress" {
   security_group_id = aws_security_group.somleng_application_load_balancer.id
 }
 
-resource "aws_security_group_rule" "egress" {
+resource "aws_security_group_rule" "alb_tcp_egress" {
   type        = "egress"
   from_port   = 0
   to_port     = 65535

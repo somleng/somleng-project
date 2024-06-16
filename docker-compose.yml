@@ -45,7 +45,7 @@ services:
         aliases:
           - api.somleng.dev
     healthcheck:
-      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:3000/health_checks 2>&1 | grep '200 OK' > /dev/null"]
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://0.0.0.0:3000/health_checks 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -80,7 +80,7 @@ services:
       anycable:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:8080/health 2>&1 | grep '200 OK' > /dev/null"]
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://0.0.0.0:8080/health 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -116,7 +116,7 @@ services:
       freeswitch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://localhost:8080/health_checks 2>&1 | grep '200 OK' > /dev/null"]
+      test: ["CMD-SHELL", "wget --server-response --spider --quiet http://0.0.0.0:8080/health_checks 2>&1 | grep '200 OK' > /dev/null"]
       interval: 10s
       timeout: 5s
       retries: 10
