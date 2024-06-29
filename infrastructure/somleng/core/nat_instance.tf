@@ -258,9 +258,16 @@ resource "aws_route" "telecom_cambodia_media2" {
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 
+# Health checker routes
+# dig +short api.ipify.org
+# 172.67.74.152
+# 104.26.13.205
+# 104.26.12.205
+
 resource "aws_route" "health_check_target" {
+  for_each               = toset(["172.67.74.152", "104.26.13.205", "104.26.12.205"])
   route_table_id         = module.vpc.private_route_table_ids[0]
-  destination_cidr_block = "13.228.108.148/32"
+  destination_cidr_block = "${each.key}/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 
@@ -440,14 +447,14 @@ resource "aws_lambda_function" "nat_instance_health_checker" {
       NAT_INSTANCE_ENI_ID         = aws_network_interface.nat_instance.id
       CLOUDWATCH_METRIC_NAMESPACE = "NatInstance"
       CLOUDWATCH_METRIC_NAME      = "NatInstanceHealthyRoutes"
-      HEALTH_CHECK_TARGET         = aws_route.health_check_target.destination_cidr_block
       NAT_INSTANCE_IP             = aws_eip.nat_instance.public_ip
     }
   }
 
   depends_on = [
     aws_cloudwatch_log_group.nat_instance_health_checker,
-    docker_registry_image.nat_instance_health_checker
+    docker_registry_image.nat_instance_health_checker,
+    aws_route.health_check_target
   ]
 }
 
