@@ -15,9 +15,11 @@ class NATInstanceHealthChecker
               :health_check_client
 
   def initialize(**options)
-    health_check_target = options.fetch(:health_check_target) { ENV.fetch("HEALTH_CHECK_TARGET", "54.169.198.37") }
-    health_check_target = IPAddr.new(health_check_target).to_s
-    health_check_target.prepend("http://")
+    health_check_target = options.fetch(:health_check_target) { ENV.fetch("HEALTH_CHECK_TARGET", "https://api.ipify.org") }
+    unless health_check_target.start_with?("http")
+      health_check_target = IPAddr.new(health_check_target).to_s
+      health_check_target.prepend("http://")
+    end
     @health_check_target = URI(health_check_target)
     @nat_instance_ip = options.fetch(:nat_instance_ip) { ENV.fetch("NAT_INSTANCE_IP") }
     @eni_id = options.fetch(:eni_id) { ENV.fetch("NAT_INSTANCE_ENI_ID") }
@@ -28,6 +30,7 @@ class NATInstanceHealthChecker
       client = Net::HTTP.new(@health_check_target.host, @health_check_target.port)
       client.read_timeout = 5
       client.open_timeout = 5
+      client.use_ssl = @health_check_target.scheme == "https"
       client
     end
   end

@@ -38,10 +38,11 @@ RSpec.describe NATInstanceHealthChecker do
 
   it "handles timeouts" do
     cloudwatch_client = Aws::CloudWatch::Client.new(stub_responses: true)
-    health_check_target = URI("http://54.169.198.37")
+    health_check_target = URI("https://api.ipify.org")
     health_check_client = Net::HTTP.new(health_check_target.host, health_check_target.port)
     health_check_client.read_timeout = 0
     health_check_client.open_timeout = 0
+    health_check_client.use_ssl = health_check_target.scheme == "https"
 
     health_checker = NATInstanceHealthChecker.new(
       nat_instance_ip: Net::HTTP.get(URI("https://checkip.amazonaws.com")).strip,
