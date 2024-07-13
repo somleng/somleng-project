@@ -8,6 +8,11 @@
   <link rel='stylesheet' href='css/style.min.css' />
   <link rel='stylesheet' href='css/custom.css' />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
 
   <!-- favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -217,7 +222,7 @@
               </p>
 
               <p>
-                <code>Via: SIP/2.0/UDP 10.10.1.21;branch=z9hG4bKv5jFZ8am7aZQc</code>
+              <pre><code class="language-plain">Via: SIP/2.0/UDP 10.10.1.21;branch=z9hG4bKv5jFZ8am7aZQc</code></pre>
               </p>
 
               <p>
@@ -267,7 +272,7 @@
               </p>
 
               <p>
-                <code>Via: SIP/2.0/UDP 10.10.1.21;received=13.250.230.15;branch=z9hG4bKv5jFZ8am7aZQc</code>
+              <pre><code class="language-plain">Via: SIP/2.0/UDP 10.10.1.21;received=13.250.230.15;branch=z9hG4bKv5jFZ8am7aZQc</code></pre>
               </p>
 
               <p>
@@ -303,7 +308,7 @@
               </p>
 
               <p>
-                <code>Via: SIP/2.0/UDP 10.10.1.21;rport;branch=z9hG4bKv5jFZ8am7aZQc</code>
+              <pre><code class="language-plain">Via: SIP/2.0/UDP 10.10.1.21;rport;branch=z9hG4bKv5jFZ8am7aZQc</code></pre>
               </p>
 
               <p>
@@ -311,7 +316,7 @@
               </p>
 
               <p>
-                <code>Via: SIP/2.0/UDP 10.10.1.21;received=13.250.230.15;rport=37058;branch=z9hG4bKv5jFZ8am7aZQc</code>
+              <pre><code class="language-plain">Via: SIP/2.0/UDP 10.10.1.21;received=13.250.230.15;rport=37058;branch=z9hG4bKv5jFZ8am7aZQc</code></pre>
               </p>
 
               <p>
@@ -335,20 +340,17 @@
                 which describes multimedia communication information. Here's an truncated example from Somleng:
               </p>
 
-              <pre>
-                <code>
-                  Session Description Protocol Version (v): 0
-                  Connection Information (c): IN IP4 13.250.230.15
-                  Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
-                </code>
-              </pre>
+              <pre><code class="language-plain line-numbers">Session Description Protocol Version (v): 0
+Connection Information (c): IN IP4 13.250.230.15
+Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
+</code></pre>
 
               <p>
                 The following line shows the media connection information:
               </p>
 
               <p>
-                <code>Connection Information (c): IN IP4 13.250.230.15</code>
+              <pre><code class="language-plain">Connection Information (c): IN IP4 13.250.230.15</code></pre>
               </p>
 
               <p>
@@ -364,9 +366,8 @@
               </p>
 
               <p>
-                <code>
-                  Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
-                </code>
+              <pre
+                class="language-plain"><code>Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13</code></pre>
               </p>
 
               <p>
@@ -508,17 +509,12 @@
                 proxied to the UAS (FreeSWITCH ECS Task):
               </p>
 
-              <pre>
-                <code>
-                  Request-Line: INVITE sip:1294@52.74.4.205:5060;user=phone SIP/2.0
-
-                  Message Header:
-                  Record-Route: &lt;sip:10.10.1.162:5060;lr;did=05d.f7db99b7;r2=on&gt;
-                  Record-Route: &lt;sip:52.74.4.205:5060;lr;did=05d.f7db99b7;r2=on&gt;
-                  Record-Route: &lt;sip:175.100.32.29:5060;lr;transport=udp&gt;
-                  Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;
-                </code>
-              </pre>
+              <pre><code class="language-plain line-numbers">Request-Line: INVITE sip:1294@52.74.4.205:5060;user=phone SIP/2.0
+Message Header:
+Record-Route: &lt;sip:10.10.1.162:5060;lr;did=05d.f7db99b7;r2=on&gt;
+Record-Route: &lt;sip:52.74.4.205:5060;lr;did=05d.f7db99b7;r2=on&gt;
+Record-Route: &lt;sip:175.100.32.29:5060;lr;transport=udp&gt;
+Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;</code></pre>
 
               <p>
                 Note the following:
@@ -566,14 +562,15 @@
               <ol>
                 <li>
                   The UAS FreeSWITCH ECS Task (<code>10.10.1.21</code>) sends the response to the OpenSIPS proxy's
-                  internal IP address (<code>10.10.1.162</code>) obtained from the Via Header.
+                  internal IP address (<code>10.10.1.162</code>) obtained from the received parameter in the Via Header.
                 </li>
                 <li>
-                  The OpenSIPS proxy ECS task forwards the response to the UAC's proxy via the NAT Gateway.
+                  The OpenSIPS proxy ECS task forwards the response to the UAC's proxy via the Network Load Balancer.
+                  Note: Subsequent requests (e.g. upstream BYEs) are also forwarded via the Network Load Balancer.
                 </li>
                 <li>
-                  The NAT Gateway forwards the response to the UAC's SIP Proxy (<code>175.100.32.29</code>) obtained
-                  from the Via Header.
+                  The Network Load Balancer forwards the response to the UAC's SIP Proxy (<code>175.100.32.29</code>)
+                  obtained from the Via Header.
                 </li>
                 <li>
                   The UAC's SIP proxy forwards the response to the UAC (<code>10.65.104.1</code>) obtained from the Via
@@ -585,20 +582,15 @@
                 Here's the SIP response from the UAS:
               </p>
 
-              <pre>
-                <code>
-                  Status-Line: SIP/2.0 183 Session Progress
-
-                  Message Header:
-                  Via: SIP/2.0/UDP 52.74.4.205:5060;branch=z9hG4bK918f.3a1eef55.0;received=10.10.1.162
-                  Via: SIP/2.0/UDP 175.100.32.29:5060;branch=z9hG4bK08B4d2dd80314813a74
-                  Via: SIP/2.0/UDP 10.65.104.1:5065;branch=z9hG4bKqgyjqqdfz0g5zqhhysze7m0de;X-DptMsg=139
-                  Record-Route: &lt;sip:10.10.1.162:5060;lr;did=05d.f7db99b7;r2=on&gt;
-                  Record-Route: &lt;sip:52.74.4.205:5060;lr;did=05d.f7db99b7;r2=on&gt;
-                  Record-Route: &lt;sip:175.100.32.29:5060;lr;transport=udp&gt;
-                  Contact: &lt;sip:1294@10.10.1.21:5060;transport=udp&gt;
-                </code>
-              </pre>
+              <pre><code class="language-plain line-numbers">Status-Line: SIP/2.0 183 Session Progress
+Message Header:
+Via: SIP/2.0/UDP 52.74.4.205:5060;branch=z9hG4bK918f.3a1eef55.0;received=10.10.1.162
+Via: SIP/2.0/UDP 175.100.32.29:5060;branch=z9hG4bK08B4d2dd80314813a74
+Via: SIP/2.0/UDP 10.65.104.1:5065;branch=z9hG4bKqgyjqqdfz0g5zqhhysze7m0de;X-DptMsg=139
+Record-Route: &lt;sip:10.10.1.162:5060;lr;did=05d.f7db99b7;r2=on&gt;
+Record-Route: &lt;sip:52.74.4.205:5060;lr;did=05d.f7db99b7;r2=on&gt;
+Record-Route: &lt;sip:175.100.32.29:5060;lr;transport=udp&gt;
+Contact: &lt;sip:1294@10.10.1.21:5060;transport=udp&gt;</code></pre>
 
               <p>
                 Note the following:
@@ -667,16 +659,11 @@
                 Here's the downstream BYE request from the UAC.
               </p>
 
-              <pre>
-                <code>
-                  Request-Line: BYE sip:1294@10.10.1.21:5060;transport=udp SIP/2.0
-
-                  Message Header:
-                  Route: &lt;sip:175.100.32.29:5060;lr;did=7c1.f350d215;&gt;
-                  Route: &lt;sip:52.74.4.205:5060;lr;did=7c1.f350d215;r2=on&gt;
-                  Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;
-                </code>
-              </pre>
+              <pre><code class="language-plain line-numbers">Request-Line: BYE sip:1294@10.10.1.21:5060;transport=udp SIP/2.0
+Message Header:
+Route: &lt;sip:175.100.32.29:5060;lr;did=7c1.f350d215;&gt;
+Route: &lt;sip:52.74.4.205:5060;lr;did=7c1.f350d215;r2=on&gt;
+Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;</code></pre>
 
               <p>
                 Note the following:
@@ -1961,6 +1948,18 @@
         </div>
       </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js">
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
 </body>
 
 </html>
