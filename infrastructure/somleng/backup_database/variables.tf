@@ -1,4 +1,4 @@
-variable "aws_region" {
+variable "aws_default_region" {
   default = "ap-southeast-1"
 }
 
@@ -17,4 +17,3 @@ variable "cluster_identifier" {
 variable "db_master_password_parameter_identifier" {
   description = "somleng"
 }
-
