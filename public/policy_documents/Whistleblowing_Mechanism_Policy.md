@@ -10,14 +10,16 @@ This Policy applies to all employees, contractors, vendors, and other stakeholde
 Chatterbox Solutions is committed to conducting its business activities with integrity, honesty, and in compliance with all applicable laws and regulations. We encourage individuals to report any concerns related to unethical, illegal, or improper conduct that may have a detrimental impact on the organization, its employees, stakeholders, or the community at large.
 
 ## Reporting Mechanism
-### Confidential Reporting
+
+### Internal Reporting
 Reports of unethical, illegal, or improper conduct can be made through the following confidential channels:
 - **Direct Supervisor or Manager**: Employees are encouraged to report concerns to their direct supervisor or manager.
 - **Human Resources Department**: Concerns can be reported to the Human Resources Department either in person or through email.
-- **CEO**: Concerns can be reported to the CEO either in person or through email.
+- **CEO**: Concerns can be reported to the CEO either in person or through email to: dwilkie@somleng.org
 
 ### External Reporting
-If individuals are uncomfortable reporting concerns internally or believe that internal reporting mechanisms have not adequately addressed the issue, they have the right to report the matter externally to regulatory authorities or appropriate external organizations.
+
+If individuals are uncomfortable reporting concerns internally or believe that internal reporting mechanisms have not adequately addressed the issue, or they do not belong to the organization, they have the right to report the matter externally. Whistleblowers can report concerns can be reported through anonymous email at whistleblowers@somleng.org. Upon reporting a concern, a whistleblower can expect a response acknowledging the receipt of the concern.
 
 ## Protection Against Retaliation
 Chatterbox Solutions prohibits retaliation against individuals who, in good faith, report concerns or cooperate with investigations related to unethical, illegal, or improper conduct. Any form of retaliation against whistleblowers will be subject to disciplinary action, up to and including termination of employment or contract.
