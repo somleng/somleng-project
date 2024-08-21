@@ -9,7 +9,7 @@ data "archive_file" "test_files" {
 }
 
 resource "aws_security_group" "this" {
-  name   = "somleng-switch-testing"
+  name   = "somleng-e2e-testing"
   vpc_id = data.terraform_remote_state.core_infrastructure.outputs.vpc.vpc_id
 }
 
@@ -62,7 +62,7 @@ resource "aws_instance" "this" {
   }
 
   tags = {
-    Name = "somleng-switch-testing"
+    Name = "somleng-e2e-testing"
   }
 
   user_data = base64encode(join("\n", [
@@ -93,7 +93,7 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_iam_role" "this" {
-  name = "somleng-switch-testing"
+  name = "somleng-e2e-testing"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

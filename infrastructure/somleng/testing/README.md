@@ -7,7 +7,7 @@ It is useful for load testing and recording SIP traces from the customer side.
 ## Setup
 
 1. Run `terraform apply`
-2. Open a SSM session to `somleng-switch-testing`
+2. Open a SSM session to `somleng-e2e-testing`
 3. Run `sudo docker ps`
 4. Run `sudo docker exec -it <docker-id> /bin/sh`
 
