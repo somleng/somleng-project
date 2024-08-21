@@ -84,13 +84,13 @@ resource "aws_route" "hydrogen_private_tg_test" {
 }
 
 resource "aws_ec2_transit_gateway_route" "hydrogen_helium_peer_test" {
-  destination_cidr_block         = "159.89.140.122/32"
+  destination_cidr_block         = "0.0.0.0/0"
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_peering_attachment.hydrogen_helium.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway.hydrogen.association_default_route_table_id
 }
 
 resource "aws_ec2_transit_gateway_route" "helium_to_vpc_test" {
-  destination_cidr_block         = "159.89.140.122/32"
+  destination_cidr_block         = "0.0.0.0/32"
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.vpc_helium.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway.helium.association_default_route_table_id
   provider                       = aws.helium
