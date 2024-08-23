@@ -17,6 +17,10 @@ output "vpc" {
   value = module.vpc
 }
 
+output "vpc_helium" {
+  value = module.vpc_helium
+}
+
 output "db_cluster" {
   value     = aws_rds_cluster.db
   sensitive = true

@@ -8,6 +8,11 @@ resource "aws_route53_zone" "somleng_org_private" {
   vpc {
     vpc_id = module.vpc.vpc_id
   }
+
+  vpc {
+    vpc_id     = module.vpc_helium.vpc_id
+    vpc_region = var.aws_helium_region
+  }
 }
 
 resource "aws_route53_record" "somleng_org_mx" {
