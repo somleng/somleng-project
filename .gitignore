@@ -21,3 +21,5 @@ terraform.tfstate
 terraform.tfstate.*
 
 .gitignore
+
+*.zip
