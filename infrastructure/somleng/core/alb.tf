@@ -1,6 +1,6 @@
 resource "aws_security_group" "somleng_application_load_balancer" {
   name   = "Somleng Application Load Balancer Security Group"
-  vpc_id = module.vpc.vpc_id
+  vpc_id = module.vpc_hydrogen.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "https_ingress" {
@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "alb_tcp_egress" {
 resource "aws_lb" "somleng_application" {
   name               = "somleng-application"
   load_balancer_type = "application"
-  subnets            = module.vpc.public_subnets
+  subnets            = module.vpc_hydrogen.vpc.public_subnets
   security_groups    = [aws_security_group.somleng_application_load_balancer.id]
 
   access_logs {

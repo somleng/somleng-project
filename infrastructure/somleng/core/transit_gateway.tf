@@ -42,9 +42,9 @@
 # }
 
 # resource "aws_ec2_transit_gateway_vpc_attachment" "vpc_hydrogen" {
-#   subnet_ids         = module.vpc.private_subnets
+#   subnet_ids         = module.vpc_hydrogen.vpc.private_subnets
 #   transit_gateway_id = aws_ec2_transit_gateway.hydrogen.id
-#   vpc_id             = module.vpc.vpc_id
+#   vpc_id             = module.vpc_hydrogen.vpc.vpc_id
 
 #   tags = {
 #     Name = "Hydrogen"
@@ -70,7 +70,7 @@
 # }
 
 # resource "aws_ec2_transit_gateway_route" "helium_hydrogen" {
-#   destination_cidr_block         = module.vpc.vpc_cidr_block
+#   destination_cidr_block         = module.vpc_hydrogen.vpc.vpc_cidr_block
 #   transit_gateway_attachment_id  = aws_ec2_transit_gateway_peering_attachment_accepter.helium_hydrogen.id
 #   transit_gateway_route_table_id = aws_ec2_transit_gateway.helium.association_default_route_table_id
 
@@ -78,7 +78,7 @@
 # }
 
 # resource "aws_route" "hydrogen_private_tg_test" {
-#   route_table_id         = module.vpc.private_route_table_ids[0]
+#   route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
 #   destination_cidr_block = "159.89.140.122/32"
 #   transit_gateway_id     = aws_ec2_transit_gateway.hydrogen.id
 # }
@@ -98,7 +98,7 @@
 
 # resource "aws_route" "helium_hydrogen_public" {
 #   route_table_id         = module.vpc_helium.public_route_table_ids[0]
-#   destination_cidr_block = module.vpc.vpc_cidr_block
+#   destination_cidr_block = module.vpc_hydrogen.vpc.vpc_cidr_block
 #   transit_gateway_id     = aws_ec2_transit_gateway.helium.id
 
 #   provider = aws.helium
@@ -106,7 +106,7 @@
 
 # resource "aws_route" "helium_hydrogen_private" {
 #   route_table_id         = module.vpc_helium.private_route_table_ids[0]
-#   destination_cidr_block = module.vpc.vpc_cidr_block
+#   destination_cidr_block = module.vpc_hydrogen.vpc.vpc_cidr_block
 #   transit_gateway_id     = aws_ec2_transit_gateway.helium.id
 
 #   provider = aws.helium

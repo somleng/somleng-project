@@ -1,6 +1,6 @@
 resource "aws_security_group" "somleng_internal_application_load_balancer" {
   name   = "Somleng Internal Application Load Balancer Security Group"
-  vpc_id = module.vpc.vpc_id
+  vpc_id = module.vpc_hydrogen.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "internal_https_ingress" {
@@ -8,7 +8,7 @@ resource "aws_security_group_rule" "internal_https_ingress" {
   from_port   = 443
   to_port     = 443
   protocol    = "tcp"
-  cidr_blocks = [module.vpc.vpc_cidr_block]
+  cidr_blocks = [module.vpc_hydrogen.vpc.vpc_cidr_block]
 
   security_group_id = aws_security_group.somleng_internal_application_load_balancer.id
 }
@@ -18,7 +18,7 @@ resource "aws_security_group_rule" "internal_http_ingress" {
   from_port   = 80
   to_port     = 80
   protocol    = "tcp"
-  cidr_blocks = [module.vpc.vpc_cidr_block]
+  cidr_blocks = [module.vpc_hydrogen.vpc.vpc_cidr_block]
 
   security_group_id = aws_security_group.somleng_internal_application_load_balancer.id
 }
@@ -28,7 +28,7 @@ resource "aws_security_group_rule" "internal_egress" {
   from_port   = 0
   to_port     = 65535
   protocol    = "tcp"
-  cidr_blocks = [module.vpc.vpc_cidr_block]
+  cidr_blocks = [module.vpc_hydrogen.vpc.vpc_cidr_block]
 
   security_group_id = aws_security_group.somleng_internal_application_load_balancer.id
 }
@@ -37,7 +37,7 @@ resource "aws_lb" "somleng_internal_application" {
   name                             = "somleng-ialb"
   load_balancer_type               = "application"
   internal                         = true
-  subnets                          = module.vpc.intra_subnets
+  subnets                          = module.vpc_hydrogen.vpc.intra_subnets
   security_groups                  = [aws_security_group.somleng_internal_application_load_balancer.id]
   enable_cross_zone_load_balancing = true
 

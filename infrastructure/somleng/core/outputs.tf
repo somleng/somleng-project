@@ -13,8 +13,8 @@ output "cdn_certificate" {
   sensitive = true
 }
 
-output "vpc" {
-  value = module.vpc
+output "vpc_hydrogen" {
+  value = module.vpc_hydrogen
 }
 
 output "vpc_helium" {
@@ -69,7 +69,7 @@ output "route53_zone_somleng_org" {
 }
 
 output "route53_zone_internal_somleng_org" {
-  value = aws_route53_zone.somleng_org_private
+  value = aws_route53_zone.somleng_org_internal
 }
 
 output "nat_instance_ip" {
