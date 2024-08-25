@@ -28,7 +28,7 @@ resource "aws_globalaccelerator_endpoint_group" "somleng" {
   listener_arn = aws_globalaccelerator_listener.somleng.id
 
   endpoint_configuration {
-    endpoint_id                    = aws_lb.somleng_application.arn
+    endpoint_id                    = module.public_load_balancer.this.arn
     client_ip_preservation_enabled = true
   }
 }

@@ -39,19 +39,19 @@ output "ci_deploy_role" {
 }
 
 output "application_load_balancer" {
-  value = aws_lb.somleng_application
+  value = module.public_load_balancer.this
 }
 
 output "internal_application_load_balancer" {
-  value = aws_lb.somleng_internal_application
+  value = module.internal_load_balancer.this
 }
 
 output "https_listener" {
-  value = aws_lb_listener.https
+  value = module.public_load_balancer.https_listener
 }
 
 output "internal_https_listener" {
-  value = aws_lb_listener.internal_https
+  value = module.internal_load_balancer.https_listener
 }
 
 output "route53_zone_somleng_org" {
