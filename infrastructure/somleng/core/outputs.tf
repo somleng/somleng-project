@@ -1,13 +1,3 @@
-output "acm_certificate" {
-  value     = aws_acm_certificate.certificate
-  sensitive = true
-}
-
-output "internal_certificate" {
-  value     = aws_acm_certificate.internal_certificate
-  sensitive = true
-}
-
 output "cdn_certificate" {
   value     = aws_acm_certificate.cdn_certificate
   sensitive = true
@@ -70,6 +60,10 @@ output "route53_zone_somleng_org" {
 
 output "route53_zone_internal_somleng_org" {
   value = aws_route53_zone.somleng_org_internal
+}
+
+output "route53_zone_internal_somleng_org_old" {
+  value = aws_route53_zone.somleng_org_private_old
 }
 
 output "nat_instance_ip" {
