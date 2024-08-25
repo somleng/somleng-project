@@ -20,10 +20,6 @@ output "db_security_group" {
   value = aws_security_group.db
 }
 
-output "logs_bucket" {
-  value = aws_s3_bucket.logs
-}
-
 output "db_master_password_parameter" {
   value     = aws_ssm_parameter.db_master_password
   sensitive = true
@@ -36,22 +32,6 @@ output "ci_deploy_key" {
 
 output "ci_deploy_role" {
   value = aws_iam_role.ci_deploy
-}
-
-output "application_load_balancer" {
-  value = module.public_load_balancer.this
-}
-
-output "internal_application_load_balancer" {
-  value = module.internal_load_balancer.this
-}
-
-output "https_listener" {
-  value = module.public_load_balancer.https_listener
-}
-
-output "internal_https_listener" {
-  value = module.internal_load_balancer.https_listener
 }
 
 output "route53_zone_somleng_org" {
