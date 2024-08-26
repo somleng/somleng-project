@@ -13,3 +13,11 @@ output "internal_load_balancer" {
 output "logs_bucket" {
   value = aws_s3_bucket.logs
 }
+
+output "alias" {
+  value = var.alias
+}
+
+output "aws_region" {
+  value = data.aws_region.this.name
+}

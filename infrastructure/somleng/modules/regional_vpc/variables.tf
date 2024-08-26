@@ -1,4 +1,5 @@
-variable "name" {}
+variable "alias" {}
+variable "vpc_name" {}
 variable "vpc_cidr_block" {}
 variable "vpc_cidr_block_identifier" {}
 variable "public_subnets" {

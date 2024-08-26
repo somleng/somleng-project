@@ -1,7 +1,7 @@
 locals {
-  public_load_balancer_name                  = var.public_load_balancer_name == null ? var.name : var.public_load_balancer_name
+  public_load_balancer_name                  = var.public_load_balancer_name == null ? var.vpc_name : var.public_load_balancer_name
   public_load_balancer_security_group_name   = var.public_load_balancer_security_group_name == null ? local.public_load_balancer_name : var.public_load_balancer_security_group_name
-  internal_load_balancer_name                = var.internal_load_balancer_name == null ? var.name : var.internal_load_balancer_name
+  internal_load_balancer_name                = var.internal_load_balancer_name == null ? var.vpc_name : var.internal_load_balancer_name
   internal_load_balancer_security_group_name = var.internal_load_balancer_security_group_name == null ? local.internal_load_balancer_name : var.internal_load_balancer_security_group_name
 }
 

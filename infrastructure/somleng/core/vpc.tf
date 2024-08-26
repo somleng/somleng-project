@@ -1,6 +1,8 @@
 module "vpc_hydrogen" {
-  source                                     = "../modules/regional_vpc"
-  name                                       = "somleng"
+  source = "../modules/regional_vpc"
+
+  vpc_name                                   = "somleng"
+  alias                                      = "hydrogen"
   vpc_cidr_block                             = "10.10.0.0/22"
   vpc_cidr_block_identifier                  = "10.10"
   public_subnets                             = ["10.10.0.0/26", "10.10.0.64/26", "10.10.0.128/26"]
@@ -24,8 +26,10 @@ module "vpc_hydrogen" {
 }
 
 module "vpc_helium" {
-  source                        = "../modules/regional_vpc"
-  name                          = "somleng"
+  source = "../modules/regional_vpc"
+
+  vpc_name                      = "somleng"
+  alias                         = "helium"
   vpc_cidr_block                = "10.20.0.0/20"
   vpc_cidr_block_identifier     = "10.20"
   create_internal_load_balancer = true

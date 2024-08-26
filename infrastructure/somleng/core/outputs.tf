@@ -3,11 +3,11 @@ output "cdn_certificate" {
   sensitive = true
 }
 
-output "vpc_hydrogen" {
+output "hydrogen_region" {
   value = module.vpc_hydrogen
 }
 
-output "vpc_helium" {
+output "helium_region" {
   value = module.vpc_helium
 }
 

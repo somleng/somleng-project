@@ -9,7 +9,7 @@ locals {
 
 module "vpc" {
   source                       = "terraform-aws-modules/vpc/aws"
-  name                         = var.name
+  name                         = var.vpc_name
   cidr                         = var.vpc_cidr_block
   public_subnets               = local.public_subnets
   private_subnets              = local.private_subnets
