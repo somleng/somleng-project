@@ -1,5 +1,5 @@
-module "vpc_hydrogen" {
-  source = "../modules/regional_vpc"
+module "hydrogen_region" {
+  source = "../modules/region"
 
   vpc_name                                   = "somleng"
   alias                                      = "hydrogen"
@@ -20,21 +20,22 @@ module "vpc_hydrogen" {
     "*.app.somleng.org",
     "*.app-staging.somleng.org",
   ]
-  internal_ssl_certificate_subject_alternative_names = ["*.internal.somleng.org"]
+  internal_ssl_certificate_subject_alternative_names = ["*.hydrogen.somleng.org", "*.internal.somleng.org"]
   route53_zone                                       = aws_route53_zone.somleng_org
   logs_bucket_name                                   = "logs.somleng.org"
 }
 
-module "vpc_helium" {
-  source = "../modules/regional_vpc"
+module "helium_region" {
+  source = "../modules/region"
 
-  vpc_name                      = "somleng"
-  alias                         = "helium"
-  vpc_cidr_block                = "10.20.0.0/20"
-  vpc_cidr_block_identifier     = "10.20"
-  create_internal_load_balancer = true
-  ssl_certificate_domain_name   = "*.somleng.org"
-  route53_zone                  = aws_route53_zone.somleng_org
+  vpc_name                                           = "somleng"
+  alias                                              = "helium"
+  vpc_cidr_block                                     = "10.20.0.0/20"
+  vpc_cidr_block_identifier                          = "10.20"
+  create_internal_load_balancer                      = true
+  ssl_certificate_domain_name                        = "*.somleng.org"
+  internal_ssl_certificate_subject_alternative_names = ["*.helium.somleng.org"]
+  route53_zone                                       = aws_route53_zone.somleng_org
 
   logs_bucket_name = "logs-helium.somleng.org"
 
@@ -48,8 +49,8 @@ module "vpc_peering_hydrogen_to_helium" {
 
   requester_alias  = "hydrogen"
   accepter_alias   = "helium"
-  requester_vpc_id = module.vpc_hydrogen.vpc.vpc_id
-  accepter_vpc_id  = module.vpc_helium.vpc.vpc_id
+  requester_vpc_id = module.hydrogen_region.vpc.vpc_id
+  accepter_vpc_id  = module.helium_region.vpc.vpc_id
 
   providers = {
     aws.requester = aws

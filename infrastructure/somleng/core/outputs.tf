@@ -4,11 +4,11 @@ output "cdn_certificate" {
 }
 
 output "hydrogen_region" {
-  value = module.vpc_hydrogen
+  value = module.hydrogen_region
 }
 
 output "helium_region" {
-  value = module.vpc_helium
+  value = module.helium_region
 }
 
 output "db_cluster" {

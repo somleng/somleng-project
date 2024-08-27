@@ -5,7 +5,7 @@ locals {
 
 resource "aws_security_group" "db" {
   name   = "somleng"
-  vpc_id = module.vpc_hydrogen.vpc.vpc_id
+  vpc_id = module.hydrogen_region.vpc.vpc_id
 
   ingress {
     from_port = local.database_port
@@ -32,7 +32,7 @@ resource "aws_ssm_parameter" "db_master_password" {
 resource "aws_db_subnet_group" "db" {
   name        = local.identifier
   description = "For Aurora cluster ${local.identifier}"
-  subnet_ids  = module.vpc_hydrogen.vpc.database_subnets
+  subnet_ids  = module.hydrogen_region.vpc.database_subnets
 
   tags = {
     Name = "aurora-${local.identifier}"

@@ -26,7 +26,7 @@ resource "aws_cloudfront_distribution" "somleng_website" {
 
   logging_config {
     include_cookies = false
-    bucket          = module.vpc_hydrogen.logs_bucket.bucket_domain_name
+    bucket          = module.hydrogen_region.logs_bucket.bucket_domain_name
     prefix          = "cloudfront/${aws_s3_bucket_website_configuration.somleng_website.website_endpoint}"
   }
 
@@ -73,7 +73,7 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
 
   logging_config {
     include_cookies = false
-    bucket          = module.vpc_hydrogen.logs_bucket.bucket_domain_name
+    bucket          = module.hydrogen_region.logs_bucket.bucket_domain_name
     prefix          = "cloudfront/${aws_s3_bucket_website_configuration.naked_redirect.website_endpoint}"
   }
 

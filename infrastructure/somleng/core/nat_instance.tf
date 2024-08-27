@@ -81,7 +81,7 @@ resource "aws_iam_role_policy_attachment" "nat_instance_ssm" {
 }
 
 resource "aws_network_interface" "nat_instance" {
-  subnet_id         = module.vpc_hydrogen.vpc.public_subnets[0]
+  subnet_id         = module.hydrogen_region.vpc.public_subnets[0]
   description       = "NAT Instance"
   security_groups   = [aws_security_group.nat_instance.id]
   source_dest_check = false
@@ -148,7 +148,7 @@ resource "aws_launch_template" "nat_instance" {
 
 resource "aws_security_group" "nat_instance" {
   name   = "nat-instance"
-  vpc_id = module.vpc_hydrogen.vpc.vpc_id
+  vpc_id = module.hydrogen_region.vpc.vpc_id
 }
 
 # https://docs.aws.amazon.com/vpc/latest/userguide/VPC_NAT_Instance.html#NATSG
@@ -167,7 +167,7 @@ resource "aws_security_group_rule" "nat_instance_ingress" {
   protocol          = "-1"
   from_port         = 0
   security_group_id = aws_security_group.nat_instance.id
-  cidr_blocks       = module.vpc_hydrogen.vpc.private_subnets_cidr_blocks
+  cidr_blocks       = module.hydrogen_region.vpc.private_subnets_cidr_blocks
 }
 
 resource "aws_autoscaling_group" "nat_instance" {
@@ -229,31 +229,31 @@ resource "aws_ssm_association" "update_ssm_agent" {
 # Routes that need to use the NAT Instance
 
 resource "aws_route" "zamtel" {
-  route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
+  route_table_id         = module.hydrogen_region.vpc.private_route_table_ids[0]
   destination_cidr_block = "165.57.32.1/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 
 resource "aws_route" "zamtel_media" {
-  route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
+  route_table_id         = module.hydrogen_region.vpc.private_route_table_ids[0]
   destination_cidr_block = "165.57.33.2/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 
 resource "aws_route" "telecom_cambodia_signaling" {
-  route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
+  route_table_id         = module.hydrogen_region.vpc.private_route_table_ids[0]
   destination_cidr_block = "203.223.42.142/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 
 resource "aws_route" "telecom_cambodia_media" {
-  route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
+  route_table_id         = module.hydrogen_region.vpc.private_route_table_ids[0]
   destination_cidr_block = "203.223.42.132/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
 
 resource "aws_route" "telecom_cambodia_media2" {
-  route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
+  route_table_id         = module.hydrogen_region.vpc.private_route_table_ids[0]
   destination_cidr_block = "203.223.42.148/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
@@ -266,7 +266,7 @@ resource "aws_route" "telecom_cambodia_media2" {
 
 resource "aws_route" "health_check_target" {
   for_each               = toset(["172.67.74.152", "104.26.13.205", "104.26.12.205"])
-  route_table_id         = module.vpc_hydrogen.vpc.private_route_table_ids[0]
+  route_table_id         = module.hydrogen_region.vpc.private_route_table_ids[0]
   destination_cidr_block = "${each.key}/32"
   network_interface_id   = aws_network_interface.nat_instance.id
 }
@@ -404,7 +404,7 @@ resource "aws_iam_role_policy_attachment" "nat_instance_health_checker_custom_po
 
 resource "aws_security_group" "nat_instance_health_checker" {
   name   = local.nat_instance_health_checker_name
-  vpc_id = module.vpc_hydrogen.vpc.vpc_id
+  vpc_id = module.hydrogen_region.vpc.vpc_id
 
   tags = {
     "Name" = "NAT Instance Health Checker"
@@ -439,7 +439,7 @@ resource "aws_lambda_function" "nat_instance_health_checker" {
 
   vpc_config {
     security_group_ids = [aws_security_group.nat_instance_health_checker.id]
-    subnet_ids         = module.vpc_hydrogen.vpc.private_subnets
+    subnet_ids         = module.hydrogen_region.vpc.private_subnets
   }
 
   environment {

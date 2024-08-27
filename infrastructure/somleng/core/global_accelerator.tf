@@ -4,7 +4,7 @@ resource "aws_globalaccelerator_accelerator" "somleng" {
 
   attributes {
     flow_logs_enabled   = true
-    flow_logs_s3_bucket = module.vpc_hydrogen.logs_bucket.id
+    flow_logs_s3_bucket = module.hydrogen_region.logs_bucket.id
     flow_logs_s3_prefix = "ga-flow-logs/"
   }
 }
@@ -28,7 +28,7 @@ resource "aws_globalaccelerator_endpoint_group" "somleng" {
   listener_arn = aws_globalaccelerator_listener.somleng.id
 
   endpoint_configuration {
-    endpoint_id                    = module.vpc_hydrogen.public_load_balancer.this.arn
+    endpoint_id                    = module.hydrogen_region.public_load_balancer.this.arn
     client_ip_preservation_enabled = true
   }
 }

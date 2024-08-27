@@ -1,7 +1,7 @@
 data "aws_network_interface" "nat_gateway" {
   filter {
     name   = "association.allocation-id"
-    values = module.vpc_hydrogen.vpc.nat_ids
+    values = module.hydrogen_region.vpc.nat_ids
   }
 }
 
