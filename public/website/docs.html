@@ -2201,16 +2201,30 @@ client.verify.v2.services(verificationServiceSid)
                         <td>The name of a city or locality</td>
                         <td><code>Toronto</code></td>
                       </tr>
+                      <tr>
+                        <td>marked_for_deletion</td>
+                        <td>Optional</td>
+                        <td>Marks the phone number for deletion</td>
+                        <td>true</td>
+                        <td><code>true</code></td>
+                      </tr>
                     </tbody>
                   </table>
                   </p>
 
                   <h6>
-                    Sample CSV Data
+                    Sample CSV for creating phone numbers
                   </h6>
 
                   <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality
 +12505550199,local,public,CA,1.15,ON,Toronto</code></pre>
+
+                  <h6>
+                    Sample CSV for deleting phone numbers
+                  </h6>
+
+                  <pre class="line-numbers language-csv"><code>number,marked_for_deletion
++12505550199,true</code></pre>
                 </div>
               </div>
 
