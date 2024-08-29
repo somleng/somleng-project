@@ -1,11 +1,7 @@
 # Role to be used by other region event buses to put events to the default event bus in this region.
 
 locals {
-  event_bus_target_role_name = "${var.alias}-default-event-bus-target"
-}
-
-data "aws_cloudwatch_event_bus" "default" {
-  name = "default"
+  event_bus_target_role_name = "${var.identifier}-default-event-bus-target"
 }
 
 data "aws_iam_policy_document" "event_bus_target_assume_role_policy" {
@@ -30,7 +26,7 @@ data "aws_iam_policy_document" "invoke_event_bus" {
   statement {
     effect    = "Allow"
     actions   = ["events:PutEvents"]
-    resources = [data.aws_cloudwatch_event_bus.default.arn]
+    resources = [data.aws_cloudwatch_event_bus.this.arn]
   }
 }
 

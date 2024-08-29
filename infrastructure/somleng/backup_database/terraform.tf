@@ -15,7 +15,7 @@ data "terraform_remote_state" "core" {
   config = {
     bucket = "infrastructure.somleng.org"
     key    = "core.tfstate"
-    region = var.default_aws_region
+    region = var.aws_default_region
   }
 }
 

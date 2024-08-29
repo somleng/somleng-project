@@ -22,6 +22,6 @@ output "aws_region" {
   value = data.aws_region.this.name
 }
 
-output "event_bus_target_role" {
-  value = aws_iam_role.event_bus_target
+output "event_bus" {
+  value = module.event_bus
 }
