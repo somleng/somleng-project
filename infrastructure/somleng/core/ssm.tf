@@ -6,13 +6,13 @@ resource "aws_ssm_parameter" "somleng_regions_production" {
       {
         alias      = "hydrogen",
         identifier = var.aws_default_region,
-        human_name = "Asia",
+        human_name = "South East Asia (Singapore)",
         group_id   = 1,
       },
       {
         alias      = "helium",
         identifier = var.aws_helium_region,
-        human_name = "North America",
+        human_name = "North America (Virginia, US)",
         group_id   = 2
       }
     ]
@@ -27,13 +27,13 @@ resource "aws_ssm_parameter" "somleng_regions_staging" {
       {
         alias      = "hydrogen",
         identifier = var.aws_default_region,
-        human_name = "Asia",
+        human_name = "South East Asia (Singapore)",
         group_id   = 1
       },
       {
         alias      = "helium",
         identifier = var.aws_helium_region,
-        human_name = "North America",
+        human_name = "North America (Virginia, US)",
         group_id   = 2
       }
     ]
