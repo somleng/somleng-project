@@ -47,10 +47,10 @@ module "helium_region" {
 module "vpc_peering_hydrogen_to_helium" {
   source = "../modules/vpc_peering"
 
-  requester_alias  = "hydrogen"
-  accepter_alias   = "helium"
-  requester_vpc_id = module.hydrogen_region.vpc.vpc_id
-  accepter_vpc_id  = module.helium_region.vpc.vpc_id
+  requester_alias = module.hydrogen_region.alias
+  accepter_alias  = module.helium_region.alias
+  requester_vpc   = module.hydrogen_region.vpc
+  accepter_vpc    = module.helium_region.vpc
 
   providers = {
     aws.requester = aws
