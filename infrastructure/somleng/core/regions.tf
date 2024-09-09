@@ -10,6 +10,7 @@ module "hydrogen_region" {
   database_subnets                           = ["10.10.1.192/26", "10.10.2.0/26", "10.10.2.64/26"]
   intra_subnets                              = ["10.10.2.128/26", "10.10.2.192/26", "10.10.3.0/26"]
   create_public_load_balancer                = true
+  create_nat_instance                        = true
   public_load_balancer_name                  = "somleng-application"
   public_load_balancer_security_group_name   = "Somleng Application Load Balancer Security Group"
   create_internal_load_balancer              = true

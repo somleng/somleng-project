@@ -25,6 +25,10 @@ variable "create_public_load_balancer" {
   default = false
 }
 
+variable "create_nat_instance" {
+  default = false
+}
+
 variable "internal_load_balancer_name" {
   default = null
 }
