@@ -4,16 +4,16 @@ resource "aws_ssm_parameter" "somleng_regions_production" {
   value = jsonencode(
     [
       {
-        alias      = "hydrogen",
-        identifier = var.aws_default_region,
+        alias      = module.hydrogen_region.alias,
+        identifier = module.hydrogen_region.aws_region,
         human_name = "South East Asia (Singapore)",
         group_id   = 1,
         nat_ip     = module.hydrogen_region.vpc.nat_public_ips[0]
       },
       {
-        alias      = "helium",
-        identifier = var.aws_helium_region,
-        human_name = "North America (North Virginia, USA)",
+        alias      = module.helium_region.alias,
+        identifier = module.helium_region.aws_region,
+        human_name = "North America (N. Virginia, USA)",
         group_id   = 2,
         nat_ip     = module.helium_region.vpc.nat_public_ips[0]
       }
@@ -27,16 +27,16 @@ resource "aws_ssm_parameter" "somleng_regions_staging" {
   value = jsonencode(
     [
       {
-        alias      = "hydrogen",
-        identifier = var.aws_default_region,
+        alias      = module.hydrogen_region.alias,
+        identifier = module.hydrogen_region.aws_region,
         human_name = "South East Asia (Singapore)",
         group_id   = 1,
         nat_ip     = module.hydrogen_region.vpc.nat_public_ips[0]
       },
       {
-        alias      = "helium",
-        identifier = var.aws_helium_region,
-        human_name = "North America (North Virginia, USA)",
+        alias      = module.helium_region.alias,
+        identifier = module.helium_region.aws_region,
+        human_name = "North America (N. Virginia, USA)",
         group_id   = 2,
         nat_ip     = module.helium_region.vpc.nat_public_ips[0]
       }

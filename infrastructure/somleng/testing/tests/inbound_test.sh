@@ -10,7 +10,13 @@ read -p "1. Add (or modify) a SIP trunk on Somleng with the following Source IP 
 read -p "2. Configure the number: $DESTINATION_NUMBER on Somleng: Press any key when done."
 read -p "3. Start TCP dump. In another terminal run the following: sudo docker run -it --rm --net container:cid nicolaka/netshoot followed by tcpdump -Xvv -i ens5 -s0 -w capture.pcap. Press any key when done."
 
+echo "Enter the Load Balancer IP. Valid values are 15.197.218.231 (Global Accelerator) or 52.74.4.205 (NLB)"
+read remote_ip
+
+echo "Enter the destination port. E.g. 5060 (Default), 5080 (NAT Instance), 6060 (Staging)."
+read remote_port
+
 log_file="uac_*_messages.log"
 rm -f $log_file
 
-sipp -sf scenarios/uac.xml 15.197.218.231:5080 -d 20000 -mi "$AWS_PUBLIC_IP" --key username "+855715100850" --key advertised_ip "$AWS_PUBLIC_IP" -s 1234 -m 1 -min_rtp_port 10000 -max_rtp_port 50000 -trace_msg > /dev/null
+sipp -sf scenarios/uac.xml $remote_ip:$remote_port -d 20000 -mi "$AWS_PUBLIC_IP" --key username "+855715100850" --key advertised_ip "$AWS_PUBLIC_IP" -s 1234 -m 1 -min_rtp_port 10000 -max_rtp_port 50000 -trace_msg > /dev/null

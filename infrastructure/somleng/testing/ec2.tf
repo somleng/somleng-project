@@ -10,7 +10,7 @@ data "archive_file" "test_files" {
 
 resource "aws_security_group" "this" {
   name   = "somleng-e2e-testing"
-  vpc_id = data.terraform_remote_state.core_infrastructure.outputs.vpc.vpc_id
+  vpc_id = local.region.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "ingress" {
@@ -20,8 +20,9 @@ resource "aws_security_group_rule" "ingress" {
   from_port         = 0
   security_group_id = aws_security_group.this.id
   cidr_blocks = [
-    "${data.terraform_remote_state.core_infrastructure.outputs.nat_instance_ip}/32",
-    "${data.terraform_remote_state.core_infrastructure.outputs.vpc.nat_public_ips[0]}/32",
+    "${data.terraform_remote_state.core_infrastructure.outputs.hydrogen_region.nat_instance.public_ip}/32",
+    "${data.terraform_remote_state.core_infrastructure.outputs.hydrogen_region.vpc.nat_public_ips[0]}/32",
+    "${data.terraform_remote_state.core_infrastructure.outputs.helium_region.vpc.nat_public_ips[0]}/32",
   ]
 }
 
@@ -34,24 +35,18 @@ resource "aws_security_group_rule" "egress" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-data "aws_network_interface" "nat_instance" {
-  filter {
-    name   = "tag:Name"
-    values = ["NAT Instance"]
-  }
-}
-
 resource "aws_route" "nat_instance" {
-  route_table_id         = data.terraform_remote_state.core_infrastructure.outputs.vpc.private_route_table_ids[0]
+  count                  = local.region.nat_instance == null ? 0 : 1
+  route_table_id         = local.region.vpc.private_route_table_ids[0]
   destination_cidr_block = "${aws_instance.this.public_ip}/32"
-  network_interface_id   = data.aws_network_interface.nat_instance.id
+  network_interface_id   = local.region.nat_instance[0].network_interface.id
 }
 
 resource "aws_instance" "this" {
   ami                         = data.aws_ssm_parameter.arm64_ami.value
   instance_type               = "t4g.small"
   vpc_security_group_ids      = [aws_security_group.this.id]
-  subnet_id                   = element(data.terraform_remote_state.core_infrastructure.outputs.vpc.public_subnets, 0)
+  subnet_id                   = element(local.region.vpc.public_subnets, 0)
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.this.id
   user_data_replace_on_change = true
