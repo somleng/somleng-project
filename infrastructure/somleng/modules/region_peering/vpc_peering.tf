@@ -23,7 +23,7 @@ resource "aws_vpc_peering_connection_options" "requester" {
 }
 
 resource "aws_route" "requester" {
-  for_each                  = toset(var.requester_region.vpc.private_route_table_ids)
+  for_each                  = toset(concat(var.requester_region.vpc.public_route_table_ids, var.requester_region.vpc.private_route_table_ids, var.requester_region.vpc.intra_route_table_ids))
   route_table_id            = each.value
   destination_cidr_block    = var.accepter_region.vpc.vpc_cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.requester.id
@@ -50,7 +50,7 @@ resource "aws_vpc_peering_connection_options" "accepter" {
 }
 
 resource "aws_route" "accepter" {
-  for_each                  = toset(var.accepter_region.vpc.private_route_table_ids)
+  for_each                  = toset(concat(var.accepter_region.vpc.public_route_table_ids, var.accepter_region.vpc.private_route_table_ids, var.accepter_region.vpc.intra_route_table_ids))
   route_table_id            = each.value
   destination_cidr_block    = var.requester_region.vpc.vpc_cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection_accepter.accepter.id
