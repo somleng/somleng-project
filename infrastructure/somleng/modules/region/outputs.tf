@@ -25,3 +25,7 @@ output "aws_region" {
 output "event_bus" {
   value = module.event_bus
 }
+
+output "nat_instance" {
+  value = local.nat_instance
+}

@@ -7,7 +7,7 @@ resource "aws_ssm_association" "update_ssm_agent" {
 
   targets {
     key    = "tag:Name"
-    values = [var.name]
+    values = [var.identifier]
   }
 
   schedule_expression = "cron(0 19 ? * SAT *)"

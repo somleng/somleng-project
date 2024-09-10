@@ -1,5 +1,5 @@
 resource "aws_iam_role" "this" {
-  name = "nat_instance_role"
+  name_prefix = var.identifier
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,12 +16,12 @@ resource "aws_iam_role" "this" {
 }
 
 resource "aws_iam_instance_profile" "this" {
-  name = "nat_instance_profile"
+  name = aws_iam_role.this.name
   role = aws_iam_role.this.name
 }
 
 resource "aws_iam_policy" "policy" {
-  name = "nat-instance-policy"
+  name_prefix = var.identifier
 
   policy = jsonencode(
     {

@@ -2,6 +2,7 @@ variable "alias" {}
 variable "vpc_name" {}
 variable "vpc_cidr_block" {}
 variable "vpc_cidr_block_identifier" {}
+variable "flow_logs_role" {}
 variable "public_subnets" {
   default = null
 }
@@ -58,5 +59,13 @@ variable "public_load_balancer_security_group_name" {
 }
 
 variable "route53_zone" {
+  default = null
+}
+
+variable "nat_instance_health_checker_image" {
+  default = null
+}
+
+variable "nat_instance_iam_instance_profile" {
   default = null
 }

@@ -1,7 +1,13 @@
+locals {
+  health_checker_image = var.health_checker_image == null ? docker_registry_image.nat_instance_health_checker[0] : var.health_checker_image
+  health_checker_name  = var.health_checker_name == null ? "${var.identifier}-health-checker" : var.health_checker_name
+}
+
 ## ECR
 
 resource "aws_ecr_repository" "health_checker" {
-  name = var.health_checker_name
+  count = var.health_checker_image == null ? 1 : 0
+  name  = local.health_checker_name
 
   image_scanning_configuration {
     scan_on_push = true
@@ -11,7 +17,8 @@ resource "aws_ecr_repository" "health_checker" {
 ## Docker image
 
 resource "docker_image" "health_checker" {
-  name = "${aws_ecr_repository.health_checker.repository_url}:latest"
+  count = var.health_checker_image == null ? 1 : 0
+  name  = "${aws_ecr_repository.health_checker[0].repository_url}:latest"
   build {
     context = abspath("${path.module}/health_checker")
   }
@@ -22,16 +29,17 @@ resource "docker_image" "health_checker" {
 }
 
 resource "docker_registry_image" "nat_instance_health_checker" {
-  name          = docker_image.health_checker.name
+  count         = var.health_checker_image == null ? 1 : 0
+  name          = docker_image.health_checker[0].name
   keep_remotely = true
   triggers = {
-    image_id = docker_image.health_checker.image_id
+    image_id = docker_image.health_checker[0].image_id
   }
 }
 
 # IAM
 resource "aws_iam_role" "health_checker" {
-  name = var.health_checker_name
+  name_prefix = local.health_checker_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -53,7 +61,7 @@ resource "aws_iam_role_policy_attachment" "health_checker_vpc_access_execution_r
 }
 
 resource "aws_iam_policy" "health_checker_custom_policy" {
-  name = var.health_checker_name
+  name_prefix = aws_iam_role.health_checker.name
 
   policy = jsonencode(
     {
@@ -98,7 +106,7 @@ resource "aws_iam_role_policy_attachment" "health_checker_custom_policy" {
 # Security Group
 
 resource "aws_security_group" "health_checker" {
-  name   = var.health_checker_name
+  name   = local.health_checker_name
   vpc_id = var.vpc.vpc_id
 
   tags = {
@@ -123,14 +131,14 @@ resource "aws_cloudwatch_log_group" "health_checker" {
 # Lambda Function
 
 resource "aws_lambda_function" "health_checker" {
-  function_name    = var.health_checker_name
+  function_name    = local.health_checker_name
   role             = aws_iam_role.health_checker.arn
   package_type     = "Image"
   architectures    = ["arm64"]
-  image_uri        = docker_registry_image.nat_instance_health_checker.name
+  image_uri        = local.health_checker_image.name
   timeout          = 300
   memory_size      = 512
-  source_code_hash = docker_registry_image.nat_instance_health_checker.sha256_digest
+  source_code_hash = local.health_checker_image.sha256_digest
 
   vpc_config {
     security_group_ids = [aws_security_group.health_checker.id]
@@ -156,7 +164,7 @@ resource "aws_lambda_function" "health_checker" {
 # CloudWatch Event Rule
 
 resource "aws_cloudwatch_event_rule" "health_checker" {
-  name                = var.health_checker_name
+  name                = local.health_checker_name
   schedule_expression = "rate(1 minute)"
 }
 
@@ -176,7 +184,7 @@ resource "aws_cloudwatch_event_target" "health_checker" {
 # Metric Alarm
 
 resource "aws_cloudwatch_metric_alarm" "health_checker" {
-  alarm_name          = var.health_checker_name
+  alarm_name          = local.health_checker_name
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = 2
   metric_name         = aws_lambda_function.health_checker.environment[0].variables.CLOUDWATCH_METRIC_NAME

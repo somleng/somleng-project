@@ -24,6 +24,7 @@ module "hydrogen_region" {
   internal_ssl_certificate_subject_alternative_names = ["*.hydrogen.somleng.org", "*.internal.somleng.org"]
   route53_zone                                       = aws_route53_zone.somleng_org
   logs_bucket_name                                   = "logs.somleng.org"
+  flow_logs_role                                     = aws_iam_role.flow_logs
 }
 
 module "helium_region" {
@@ -37,6 +38,7 @@ module "helium_region" {
   ssl_certificate_domain_name                        = "*.somleng.org"
   internal_ssl_certificate_subject_alternative_names = ["*.helium.somleng.org"]
   route53_zone                                       = aws_route53_zone.somleng_org
+  flow_logs_role                                     = aws_iam_role.flow_logs
 
   logs_bucket_name = "logs-helium.somleng.org"
 
@@ -45,13 +47,11 @@ module "helium_region" {
   }
 }
 
-module "vpc_peering_hydrogen_to_helium" {
-  source = "../modules/vpc_peering"
+module "region_peering_hydrogen_to_helium" {
+  source = "../modules/region_peering"
 
-  requester_alias = module.hydrogen_region.alias
-  accepter_alias  = module.helium_region.alias
-  requester_vpc   = module.hydrogen_region.vpc
-  accepter_vpc    = module.helium_region.vpc
+  requester_region = module.hydrogen_region
+  accepter_region  = module.helium_region
 
   providers = {
     aws.requester = aws

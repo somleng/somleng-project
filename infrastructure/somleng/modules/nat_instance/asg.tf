@@ -20,7 +20,7 @@ resource "aws_autoscaling_group" "this" {
 
   tag {
     key                 = "Name"
-    value               = var.name
+    value               = var.identifier
     propagate_at_launch = true
   }
 

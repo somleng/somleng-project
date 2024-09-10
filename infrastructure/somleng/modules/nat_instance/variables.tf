@@ -1,7 +1,12 @@
 variable "vpc" {}
-variable "name" {
+variable "flow_logs_role" {}
+variable "identifier" {
   default = "nat-instance"
 }
 variable "health_checker_name" {
-  default = "nat-instance-health-checker"
+  default = null
+}
+
+variable "health_checker_image" {
+  default = null
 }

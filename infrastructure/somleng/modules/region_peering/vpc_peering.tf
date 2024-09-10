@@ -5,12 +5,12 @@ data "aws_region" "accepter" {
 }
 
 resource "aws_vpc_peering_connection" "requester" {
-  vpc_id      = var.requester_vpc.vpc_id
-  peer_vpc_id = var.accepter_vpc.vpc_id
+  vpc_id      = var.requester_region.vpc.vpc_id
+  peer_vpc_id = var.accepter_region.vpc.vpc_id
   peer_region = data.aws_region.accepter.name
 
   tags = {
-    Name = "${var.requester_alias} <-> ${var.accepter_alias}"
+    Name = "${var.requester_region.alias} <-> ${var.accepter_region.alias}"
   }
 }
 
@@ -23,9 +23,9 @@ resource "aws_vpc_peering_connection_options" "requester" {
 }
 
 resource "aws_route" "requester" {
-  for_each                  = toset(var.requester_vpc.private_route_table_ids)
+  for_each                  = toset(var.requester_region.vpc.private_route_table_ids)
   route_table_id            = each.value
-  destination_cidr_block    = var.accepter_vpc.vpc_cidr_block
+  destination_cidr_block    = var.accepter_region.vpc.vpc_cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.requester.id
 }
 
@@ -34,7 +34,7 @@ resource "aws_vpc_peering_connection_accepter" "accepter" {
 
   auto_accept = true
   tags = {
-    Name = "${var.accepter_alias} <-> ${var.requester_alias}"
+    Name = "${var.accepter_region.alias} <-> ${var.requester_region.alias}"
   }
   provider = aws.accepter
 }
@@ -50,9 +50,9 @@ resource "aws_vpc_peering_connection_options" "accepter" {
 }
 
 resource "aws_route" "accepter" {
-  for_each                  = toset(var.accepter_vpc.private_route_table_ids)
+  for_each                  = toset(var.accepter_region.vpc.private_route_table_ids)
   route_table_id            = each.value
-  destination_cidr_block    = var.requester_vpc.vpc_cidr_block
+  destination_cidr_block    = var.requester_region.vpc.vpc_cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection_accepter.accepter.id
 
   provider = aws.accepter
