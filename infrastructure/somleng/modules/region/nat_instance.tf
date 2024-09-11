@@ -8,4 +8,5 @@ module "nat_instance" {
   vpc                  = module.vpc
   flow_logs_role       = var.flow_logs_role
   health_checker_image = var.nat_instance_health_checker_image
+  custom_routes        = var.nat_instance_custom_routes
 }

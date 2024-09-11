@@ -10,3 +10,8 @@ variable "health_checker_name" {
 variable "health_checker_image" {
   default = null
 }
+
+variable "custom_routes" {
+  type    = map(string)
+  default = {}
+}

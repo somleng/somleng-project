@@ -69,3 +69,7 @@ variable "nat_instance_health_checker_image" {
 variable "nat_instance_iam_instance_profile" {
   default = null
 }
+
+variable "nat_instance_custom_routes" {
+  default = {}
+}

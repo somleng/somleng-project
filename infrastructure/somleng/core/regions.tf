@@ -25,6 +25,13 @@ module "hydrogen_region" {
   route53_zone                                       = aws_route53_zone.somleng_org
   logs_bucket_name                                   = "logs.somleng.org"
   flow_logs_role                                     = aws_iam_role.flow_logs
+  nat_instance_custom_routes = {
+    "zamtel"                     = "165.57.32.1/32",
+    "zamtel_media"               = "165.57.33.2/32",
+    "telecom_cambodia_signaling" = "203.223.42.142/32",
+    "telecom_cambodia_media1"    = "203.223.42.132/32",
+    "telecom_cambodia_media2"    = "203.223.42.148/32"
+  }
 }
 
 module "helium_region" {
