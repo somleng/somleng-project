@@ -451,8 +451,9 @@
                   </h4>
 
                   <p>
-                    In this step you create a new phone number. This number will be
-                    used to send out verification codes. One phone number can be used to send out verification codes
+                    In this step you create a new alphanumeric sender. This number will be
+                    used to send out verification codes. The alphanumeric sender can be used to send out verification
+                    codes
                     across multiple customer accounts, so there is no need to assign it to the customer account.
                   </p>
 
@@ -462,13 +463,20 @@
 
                   <ol type="a">
                     <li>
-                      Under the <strong>Phone Numbers</strong> menu, click the <strong><i
-                          class="fas fa-plus"></i></strong> icon to create a new phone number.
+                      Under the <strong>Phone Numbers</strong> menu, click <strong>Inventory</strong> then the
+                      <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
                     </li>
                     <li>
-                      Enter a <strong>number</strong>. It can be a short-code or a full phone number in
+                      Enter a <strong>number</strong>. The alphanumeric sender can be a short-code or a full phone
+                      number in
                       <a href="https://en.wikipedia.org/wiki/E.164" class="link">E.164 format <i
                           class="fas fa-external-link"></i></a>.
+                    </li>
+                    <li>
+                      Under <strong>Properties</strong> select <strong>Private</strong>.
+                    </li>
+                    <li>
+                      Under Type, choose <strong>Alphanumeric sender</strong>.
                     </li>
                     <li>
                       Press <strong>Create Phone number</strong>.
@@ -2163,8 +2171,8 @@ client.verify.v2.services(verificationServiceSid)
                         <td>Required</td>
                         <td>The type of phone number</td>
                         <td>
-                          One of either <code>local</code>, <code>mobile</code>, <code>toll_free</code> or
-                          <code>short_code</code>
+                          One of either <code>local</code>, <code>mobile</code>, <code>toll_free</code>,
+                          <code>short_code</code>, or <code>alphanumeric_sender_id</code>
                         </td>
                         <td>local</td>
                       </tr>
