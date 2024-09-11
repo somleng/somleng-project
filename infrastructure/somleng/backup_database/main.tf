@@ -1,3 +1,7 @@
+locals {
+  vpc = data.terraform_remote_state.core.outputs.hydrogen_region.vpc
+}
+
 data "aws_ssm_parameter" "arm64_ami" {
   name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
 }
@@ -16,7 +20,7 @@ data "aws_ssm_parameter" "db_master_password" {
 
 resource "aws_security_group" "this" {
   name   = "backup-database"
-  vpc_id = data.terraform_remote_state.core.outputs.vpc.vpc_id
+  vpc_id = local.vpc.vpc_id
 }
 
 data "aws_security_group" "db" {
@@ -42,7 +46,7 @@ resource "aws_instance" "this" {
     aws_security_group.this.id,
     data.aws_security_group.db.id
   ]
-  subnet_id            = element(data.terraform_remote_state.core.outputs.vpc.private_subnets, 0)
+  subnet_id            = element(local.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = templatefile(
     "${path.module}/user-data.sh",

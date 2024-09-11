@@ -26,7 +26,7 @@ resource "aws_cloudfront_distribution" "somleng_website" {
 
   logging_config {
     include_cookies = false
-    bucket          = aws_s3_bucket.logs.bucket_domain_name
+    bucket          = module.hydrogen_region.logs_bucket.bucket_domain_name
     prefix          = "cloudfront/${aws_s3_bucket_website_configuration.somleng_website.website_endpoint}"
   }
 
@@ -35,8 +35,8 @@ resource "aws_cloudfront_distribution" "somleng_website" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = aws_s3_bucket_website_configuration.somleng_website.website_endpoint
 
-    viewer_protocol_policy = "redirect-to-https"
-    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
+    viewer_protocol_policy   = "redirect-to-https"
+    cache_policy_id          = data.aws_cloudfront_cache_policy.caching_optimized.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.user_agent_referer_headers.id
   }
 
@@ -73,7 +73,7 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
 
   logging_config {
     include_cookies = false
-    bucket          = aws_s3_bucket.logs.bucket_domain_name
+    bucket          = module.hydrogen_region.logs_bucket.bucket_domain_name
     prefix          = "cloudfront/${aws_s3_bucket_website_configuration.naked_redirect.website_endpoint}"
   }
 
@@ -82,8 +82,8 @@ resource "aws_cloudfront_distribution" "somleng_naked_redirect" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = aws_s3_bucket_website_configuration.naked_redirect.website_endpoint
 
-    viewer_protocol_policy = "redirect-to-https"
-    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
+    viewer_protocol_policy   = "redirect-to-https"
+    cache_policy_id          = data.aws_cloudfront_cache_policy.caching_optimized.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.user_agent_referer_headers.id
   }
 

@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = local.region.aws_region
 }
 
 data "terraform_remote_state" "core_infrastructure" {
@@ -17,6 +17,6 @@ data "terraform_remote_state" "core_infrastructure" {
   config = {
     bucket = "infrastructure.somleng.org"
     key    = "core.tfstate"
-    region = var.aws_region
+    region = "ap-southeast-1"
   }
 }

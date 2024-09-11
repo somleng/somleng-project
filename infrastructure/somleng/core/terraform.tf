@@ -10,10 +10,25 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = var.aws_default_region
 }
 
 provider "aws" {
-  region  = "us-east-1"
-  alias   = "us-east-1"
+  region = "us-east-1"
+  alias  = "us-east-1"
+}
+
+provider "aws" {
+  region = var.aws_helium_region
+  alias  = "helium"
+}
+
+data "aws_ecr_authorization_token" "this" {}
+
+provider "docker" {
+  registry_auth {
+    address  = data.aws_ecr_authorization_token.this.proxy_endpoint
+    username = data.aws_ecr_authorization_token.this.user_name
+    password = data.aws_ecr_authorization_token.this.password
+  }
 }

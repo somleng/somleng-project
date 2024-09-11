@@ -1,20 +1,14 @@
-output "acm_certificate" {
-  value     = aws_acm_certificate.certificate
-  sensitive = true
-}
-
-output "internal_certificate" {
-  value     = aws_acm_certificate.internal_certificate
-  sensitive = true
-}
-
 output "cdn_certificate" {
   value     = aws_acm_certificate.cdn_certificate
   sensitive = true
 }
 
-output "vpc" {
-  value = module.vpc
+output "hydrogen_region" {
+  value = module.hydrogen_region
+}
+
+output "helium_region" {
+  value = module.helium_region
 }
 
 output "db_cluster" {
@@ -24,10 +18,6 @@ output "db_cluster" {
 
 output "db_security_group" {
   value = aws_security_group.db
-}
-
-output "logs_bucket" {
-  value = aws_s3_bucket.logs
 }
 
 output "db_master_password_parameter" {
@@ -44,32 +34,12 @@ output "ci_deploy_role" {
   value = aws_iam_role.ci_deploy
 }
 
-output "application_load_balancer" {
-  value = aws_lb.somleng_application
-}
-
-output "internal_application_load_balancer" {
-  value = aws_lb.somleng_internal_application
-}
-
-output "https_listener" {
-  value = aws_lb_listener.https
-}
-
-output "internal_https_listener" {
-  value = aws_lb_listener.internal_https
-}
-
 output "route53_zone_somleng_org" {
   value = aws_route53_zone.somleng_org
 }
 
 output "route53_zone_internal_somleng_org" {
-  value = aws_route53_zone.somleng_org_private
-}
-
-output "nat_instance_ip" {
-  value = aws_eip.nat_instance.public_ip
+  value = aws_route53_zone.somleng_org_internal
 }
 
 output "global_accelerator" {
