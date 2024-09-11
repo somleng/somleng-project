@@ -3,6 +3,10 @@
 ## Purpose
 The purpose of this Whistleblowing Mechanism Policy ("Policy") is to establish a framework for reporting and addressing concerns regarding unethical, illegal, or improper conduct within Chatterbox Solutions. This Policy aims to encourage employees, contractors, vendors, and other stakeholders to report any such concerns without fear of retaliation.
 
+## Availability
+
+This document is publicly available online at: [https://github.com/somleng/somleng-project/blob/main/public/policy_documents/Whistleblowing_Mechanism_Policy.md](https://github.com/somleng/somleng-project/blob/main/public/policy_documents/Whistleblowing_Mechanism_Policy.md)
+
 ## Scope
 This Policy applies to all employees, contractors, vendors, and other stakeholders of Chatterbox Solutions.
 
@@ -19,7 +23,7 @@ Reports of unethical, illegal, or improper conduct can be made through the follo
 
 ### External Reporting
 
-If individuals are uncomfortable reporting concerns internally or believe that internal reporting mechanisms have not adequately addressed the issue, or they do not belong to the organization, they have the right to report the matter externally. Whistleblowers can report concerns can be reported through anonymous email at whistleblowers@somleng.org. Upon reporting a concern, a whistleblower can expect a response acknowledging the receipt of the concern.
+If individuals are uncomfortable reporting concerns internally or believe that internal reporting mechanisms have not adequately addressed the issue, or they do not belong to the organization, they have the right to report the matter externally. Whistleblowers can report concerns through anonymous email at whistleblowers@somleng.org. Upon reporting a concern, a whistleblower can expect a response acknowledging the receipt of the concern.
 
 ## Protection Against Retaliation
 Chatterbox Solutions prohibits retaliation against individuals who, in good faith, report concerns or cooperate with investigations related to unethical, illegal, or improper conduct. Any form of retaliation against whistleblowers will be subject to disciplinary action, up to and including termination of employment or contract.
