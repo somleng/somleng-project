@@ -1109,8 +1109,16 @@ client.verify.v2.services(verificationServiceSid)
                           On the Termination tab, set Termination status to <strong>Enabled</strong>.
                         </li>
                         <li>
-                          Under Allowed hosts list, add the following IP <strong>13.250.230.15/32</strong>.
-                          This is Somleng's public IP address documented <a
+                          Under Allowed hosts list, add the following IP addresses:
+                          <ul>
+                            <li>
+                              <strong>13.250.230.15/32</strong>
+                            </li>
+                            <li>
+                              <strong>52.4.242.134/32</strong>
+                            </li>
+                          </ul>
+                          These are Somleng's public IP address documented <a
                             href="#sip_trunks_ip_address_configuration_outbound_dialing" class="link">here</a>.
                         </li>
                         <li>
@@ -2332,10 +2340,13 @@ client.verify.v2.services(verificationServiceSid)
                           qualified domain name (FQDN) or IP address.
                         </li>
                         <li>
-                          You <em>must</em> allow the following IP address on your firewall:
+                          You <em>must</em> allow the following IP addresses on your firewall:
                           <ul>
                             <li>
-                              13.250.230.15
+                              <em>Singapore Region:</em> 13.250.230.15
+                            </li>
+                            <li>
+                              <em>North America Region:</em> 52.4.242.134
                             </li>
                           </ul>
                           Note: Both media and SIP is sent from this IP address.

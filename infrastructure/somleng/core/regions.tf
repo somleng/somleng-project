@@ -11,9 +11,9 @@ module "hydrogen_region" {
   intra_subnets                              = ["10.10.2.128/26", "10.10.2.192/26", "10.10.3.0/26"]
   create_public_load_balancer                = true
   create_nat_instance                        = true
+  create_internal_load_balancer              = true
   public_load_balancer_name                  = "somleng-application"
   public_load_balancer_security_group_name   = "Somleng Application Load Balancer Security Group"
-  create_internal_load_balancer              = true
   internal_load_balancer_name                = "somleng-ialb"
   internal_load_balancer_security_group_name = "Somleng Internal Application Load Balancer Security Group"
   ssl_certificate_domain_name                = "*.somleng.org"

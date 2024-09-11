@@ -42,10 +42,6 @@ output "route53_zone_internal_somleng_org" {
   value = aws_route53_zone.somleng_org_internal
 }
 
-output "route53_zone_internal_somleng_org_old" {
-  value = aws_route53_zone.somleng_org_private_old
-}
-
 output "global_accelerator" {
   value = aws_globalaccelerator_accelerator.somleng
 }

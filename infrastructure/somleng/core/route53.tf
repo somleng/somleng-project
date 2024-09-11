@@ -2,14 +2,6 @@ resource "aws_route53_zone" "somleng_org" {
   name = "somleng.org."
 }
 
-resource "aws_route53_zone" "somleng_org_private_old" {
-  name = "internal.somleng.org."
-
-  vpc {
-    vpc_id = module.hydrogen_region.vpc.vpc_id
-  }
-}
-
 resource "aws_route53_zone" "somleng_org_internal" {
   name = "somleng.org."
 
