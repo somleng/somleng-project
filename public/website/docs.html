@@ -342,66 +342,60 @@
 
                   <li>
                     <a href="#verify-tutorial-step-2" class="link">
-                      Create a Phone Number.
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="#verify-tutorial-step-3" class="link">
                       Create a Verification Service.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-4" class="link">
+                    <a href="#verify-tutorial-step-3" class="link">
                       Create a SMS Gateway.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-5" class="link">
+                    <a href="#verify-tutorial-step-4" class="link">
                       Create a SIP Trunk.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-6" class="link">
+                    <a href="#verify-tutorial-step-5" class="link">
                       Run the Somleng SMS Gateway Application.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-7" class="link">
+                    <a href="#verify-tutorial-step-6" class="link">
                       Register your softphone with the SIP Trunk.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-8" class="link">
+                    <a href="#verify-tutorial-step-7" class="link">
                       Start a new Verification Flow.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-9" class="link">
+                    <a href="#verify-tutorial-step-8" class="link">
                       Receive the verification code via the SMS Gateway Application.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-10" class="link">
+                    <a href="#verify-tutorial-step-9" class="link">
                       Resend the verification code via a call.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-11" class="link">
+                    <a href="#verify-tutorial-step-10" class="link">
                       Receive the verification via a call.
                     </a>
                   </li>
 
                   <li>
-                    <a href="#verify-tutorial-step-12" class="link">
+                    <a href="#verify-tutorial-step-11" class="link">
                       Complete the Verification Flow.
                     </a>
                   </li>
@@ -447,48 +441,7 @@
 
                 <div id="verify-tutorial-step-2">
                   <h4>
-                    2. Create a Phone Number.
-                  </h4>
-
-                  <p>
-                    In this step you create a new alphanumeric sender. This number will be
-                    used to send out verification codes. The alphanumeric sender can be used to send out verification
-                    codes
-                    across multiple customer accounts, so there is no need to assign it to the customer account.
-                  </p>
-
-                  <p>
-                    Perform the following steps:
-                  </p>
-
-                  <ol type="a">
-                    <li>
-                      Under the <strong>Phone Numbers</strong> menu, click <strong>Inventory</strong> then the
-                      <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
-                    </li>
-                    <li>
-                      Enter a <strong>number</strong>. The alphanumeric sender can be a short-code or a full phone
-                      number in
-                      <a href="https://en.wikipedia.org/wiki/E.164" class="link">E.164 format <i
-                          class="fas fa-external-link"></i></a>.
-                    </li>
-                    <li>
-                      Under <strong>Properties</strong> select <strong>Private</strong>.
-                    </li>
-                    <li>
-                      Under Type, choose <strong>Alphanumeric sender</strong>.
-                    </li>
-                    <li>
-                      Press <strong>Create Phone number</strong>.
-                    </li>
-                  </ol>
-
-                  <img src="./images/dashboard-new-phone-number.png">
-                </div>
-
-                <div id="verify-tutorial-step-3">
-                  <h4>
-                    3. Create a Verification Service.
+                    2. Create a Verification Service.
                   </h4>
 
                   <p>
@@ -526,15 +479,14 @@
                   <img src="./images/dashboard-new-verification-service.png">
                 </div>
 
-                <div id="verify-tutorial-step-4">
+                <div id="verify-tutorial-step-3">
                   <h4>
-                    4. Create a SMS Gateway.
+                    3. Create a SMS Gateway.
                   </h4>
 
                   <p>
                     In this step you create a new SMS Gateway which will handle the delivery of verification codes via
-                    SMS. You'll set the SMS Gateway's default sender to the phone number you created in <a
-                      href="#verify-tutorial-step-2" class="link">Step 2</a>.
+                    SMS.
                   </p>
 
                   <p>
@@ -559,8 +511,8 @@
                       Give your SMS Gateway a <strong>name</strong>.
                     </li>
                     <li>
-                      Select the phone number you created in <a href="#verify-tutorial-step-2" class="link">Step 2</a>
-                      as the <strong>Default sender</strong>.
+                      Enter a <strong>Default sender</strong>. This will be used as the sender id when sending
+                      verification codes. A default sender can an E.164 number or short code.
                     </li>
                     <li>
                       Press <strong>Create SMS gateway</strong>.
@@ -570,15 +522,14 @@
                   <img src="./images/dashboard-new-sms-gateway.png">
                 </div>
 
-                <div id="verify-tutorial-step-5">
+                <div id="verify-tutorial-step-4">
                   <h4>
-                    5. Create a SIP Trunk.
+                    4. Create a SIP Trunk.
                   </h4>
 
                   <p>
                     In this step you create a new SIP Trunk which will handle the delivery of verification codes via
-                    phone call. You'll set the SIP Trunk's default sender to the phone number you created in <a
-                      href="#verify-tutorial-step-2" class="link">Step 2</a>.
+                    phone call.
                   </p>
 
                   <p>
@@ -608,8 +559,8 @@
                       Give your SIP Trunk a <strong>name</strong>.
                     </li>
                     <li>
-                      Select the phone number you created in <a href="#verify-tutorial-step-2" class="link">Step 2</a>
-                      as the <strong>Default sender</strong>.
+                      Enter a <strong>Default sender</strong>. This will be used as the sender id when sending
+                      verification codes via phone call. A default sender can an E.164 number or short code.
                     </li>
                     <li>
                       Press <strong>Create SIP trunk</strong>.
@@ -619,9 +570,9 @@
                   <img src="./images/dashboard-new-sip-trunk-client-credentials.png">
                 </div>
 
-                <div id="verify-tutorial-step-6">
+                <div id="verify-tutorial-step-5">
                   <h4>
-                    6. Run the Somleng SMS Gateway Application.
+                    5. Run the Somleng SMS Gateway Application.
                   </h4>
 
                   <p>
@@ -665,9 +616,9 @@
                   <img src="./images/dashboard-show-sms-gateway.png">
                 </div>
 
-                <div id="verify-tutorial-step-7">
+                <div id="verify-tutorial-step-6">
                   <h4>
-                    7. Register your softphone with the SIP Trunk.
+                    6. Register your softphone with the SIP Trunk.
                   </h4>
 
                   <p>
@@ -724,9 +675,9 @@
                   <img src="./images/telephone-app-advanced-reregister.png">
                 </div>
 
-                <div id="verify-tutorial-step-8">
+                <div id="verify-tutorial-step-7">
                   <h4>
-                    8. Start a new Verification Flow
+                    7. Start a new Verification Flow
                   </h4>
 
                   <p>
@@ -791,9 +742,9 @@ client.verify.v2.services(verificationServiceSid)
                   </pre>
                 </div>
 
-                <div id="verify-tutorial-step-9">
+                <div id="verify-tutorial-step-8">
                   <h4>
-                    9. Receive the verification code via the SMS Gateway Application.
+                    8. Receive the verification code via the SMS Gateway Application.
                   </h4>
 
                   <p>
@@ -818,9 +769,9 @@ client.verify.v2.services(verificationServiceSid)
                   <img src="./images/terminal-sms-gateway-dummy-message-received.png">
                 </div>
 
-                <div id="verify-tutorial-step-10">
+                <div id="verify-tutorial-step-9">
                   <h4>
-                    10. Resend the verification code via a call.
+                    9. Resend the verification code via a call.
                   </h4>
 
                   <p>
@@ -857,9 +808,9 @@ client.verify.v2.services(verificationServiceSid)
       .then(verification => console.log(verification.sid));</code></pre>
                 </div>
 
-                <div id="verify-tutorial-step-11">
+                <div id="verify-tutorial-step-10">
                   <h4>
-                    11. Receive the verification via a call.
+                    10. Receive the verification via a call.
                   </h4>
 
                   <p>
@@ -884,9 +835,9 @@ client.verify.v2.services(verificationServiceSid)
                   <img src="./images/telephone-in-call.png">
                 </div>
 
-                <div id="verify-tutorial-step-12">
+                <div id="verify-tutorial-step-11">
                   <h4>
-                    12. Complete the flow by confirming the verification code.
+                    11. Complete the flow by confirming the verification code.
                   </h4>
 
                   <p>
@@ -966,10 +917,6 @@ client.verify.v2.services(verificationServiceSid)
                     <li>
                       Customer accounts (not to be confused with your carrier account) are used
                       to manage access to the API. You can create as many customer accounts as you need.
-                    </li>
-
-                    <li>
-                      A Phone Number is required to send out verification codes.
                     </li>
 
                     <li>
@@ -1268,7 +1215,7 @@ client.verify.v2.services(verificationServiceSid)
                       This will be used to correctly select this SIP trunk based on the destination number.
                     </li>
                     <li>
-                      Select the phone number you created in <a href="#chime-tutorial-step-2" class="link">Step 2</a>
+                      Enter the phone number you created in <a href="#chime-tutorial-step-2" class="link">Step 2</a>
                       as the <strong>Default sender</strong>.
                     </li>
                     <li>
