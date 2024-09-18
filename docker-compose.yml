@@ -103,7 +103,7 @@ services:
       retries: 10
 
   somleng-switch:
-    image: ghcr.io/somleng/somleng-switch
+    image: ghcr.io/somleng/switch-app
     platform: linux/amd64
     environment:
       AHN_CORE_HOST: freeswitch
