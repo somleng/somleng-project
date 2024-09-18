@@ -67,8 +67,8 @@
       <div class="page__inner">
         <div class="page__menu">
           <ul class="vMenu">
-            <li><a href="#reverse-engineering-twilio-connect">September 12, 2024 - Reverse Engineering Twilio's
-                &lt;Connect&gt; Verb</a></li>
+            <li><a href="#open-source-ai-powered-voice">September 12, 2024 - Implementing AI-Powered Voice at Somleng: A
+                Technical Deep Dive</a></li>
             <li><a href="#infrastructure-at-somleng">December 15, 2023 - Infrastructure @ Somleng</a></li>
             <li><a href="#from-cambodia-to-laos-by-motorbike-to-setup-an-early-warning-system">September 2, 2023 - From
                 Cambodia to Laos by Motorbike to setup an Early Warning System</a></li>
@@ -83,31 +83,308 @@
         <div class="page__main">
           <div class="text-container">
 
-            <div id="reverse-engineering-twilio-connect">
+            <div id="open-source-ai-powered-voice">
               <h2 class="page__main__title">
-                Reverse Engineering Twilio's &lt;Connect&gt; Verb
+                Implementing AI-Powered Voice at Somleng: A Technical Deep Dive
               </h2>
               <h5>
                 September 12, 2024
               </h5>
 
-              <img src="./images/reverse-engineering-twilio.png" class="expanded__image">
+              <img src="./images/blog-open-source-ai-powered-voice.png" class="expanded__image">
+
+              <p>
+                Many AI voice systems, such as <a href="https://www.retellai.com/" class="link" target="_blank">Retell
+                  AI</a>
+                and <a href="https://vocode.dev/" class="link" target="_blank">Vocode</a> are built on top of Twilio.
+                While Twilio is an excellent platform for rapid development, building an AI voice business solely on
+                top of it comes with significant risks such as deplatforming and prohibitive costs.
+              </p>
+
+              <p>
+                Somleng addresses these risks by offering an open-source alternative, giving businesses the freedom to
+                self-host or work with lower-cost providers. Since Somleng offers full compatibility with the Twilio
+                API, AI-powered voice systems built on Twilio can
+                easily transition to Somleng without requiring significant changes to their existing codebase or
+                architecture. This enables businesses to easily transition to a more customizable and cost-effective
+                open-source alternative, without having to overhaul their existing Twilio-based workflows.
+              </p>
+
+              <p>
+                In this post, we'll walk you through the technical journey of integrating AI into Somleng's voice
+                platform—combining key architectural decisions, the challenges we faced and the solutions we developed
+                to overcome them.
+              </p>
 
               <h3>
-                What is Twilio's &lt;Connect&gt; Verb and &lt;Stream&gt; noun?
+                Background: Twilio's &lt;Connect&gt; Verb and &lt;Stream&gt; noun
               </h3>
 
               <p>
                 Twilio's <a href="https://www.twilio.com/docs/voice/media-streams#bidirectional-media-streams"
                   target="_blank" class="link"><code></code>&lt;Stream&gt;</a> noun,
-                used within the <code>&lt;Connect&gt;</code> verb, enables
+                used within the <a href="https://www.twilio.com/docs/voice/twiml/connect" target="_blank"
+                  class="link"><code>&lt;Connect&gt;</code></a> verb, is a set of <a
+                  href="https://www.twilio.com/docs/voice/twiml" target="_blank" class="link">TwiML&trade;</a>
+                instructions which enables
                 real-time streaming of voice data to external systems for AI processing. It allows live audio from a
                 call to be streamed over WebSockets to AI-driven platforms, where speech recognition, natural language
                 processing, or machine learning algorithms can analyze the conversation in real time. This makes it
                 ideal for building voice-powered AI applications like interactive voice response (IVR), real-time
                 transcription, sentiment analysis, and intelligent customer support bots, enhancing the call experience
-                with AI capabilities.
+                with AI capabilities. Most existing AI Voice systems, such as <a href="https://www.retellai.com/"
+                  class="link" target="_blank">Retell
+                  AI</a>
+                and <a href="https://vocode.dev/" class="link" target="_blank">Vocode</a> return the following TwiML
+                instructions to initiate a connection with Twilio.
               </p>
+
+              <p>
+              <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Response&gt;
+  &lt;Connect&gt;
+    &lt;Stream url=&quot;wss://example.com/audiostream&quot; /&gt;
+  &lt;/Connect&gt;
+&lt;/Response&gt;</code></pre>
+              </p>
+
+              <p>
+                After Twilio parses this TwiML document, it opens a Websockets connection to the AI voice system by
+                connecting to the
+                URL
+                provided in the
+                <code>url</code> attribute of the <code>&lt;Stream&gt;</code> noun. Audio is Base64 encoded, included
+                in a
+                <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages" class="link"
+                  target="_blank">Twilio defined Websocket message</a>
+                and sent
+                bi-directionally between Twilio and the AI voice system. Below is an example of a
+                <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#media-messages" class="link"
+                  target="_blank">Media message</a>.
+              </p>
+
+              <p>
+              <pre><code class="language-json">{
+  &quot;event&quot;: &quot;media&quot;,
+  &quot;sequenceNumber&quot;: &quot;3&quot;,
+  &quot;media&quot;: {
+    &quot;track&quot;: &quot;outbound&quot;,
+    &quot;chunk&quot;: &quot;1&quot;,
+    &quot;timestamp&quot;: &quot;5&quot;,
+    &quot;payload&quot;: &quot;no+JhoaJjpz...&quot;
+  } ,
+  &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+}</code></pre>
+              </p>
+              <p>
+                Twilio receives websockets messages sent from the AI voice system over the websockets connection and
+                returns audio to
+                the caller, while the AI Voice system
+                receives websockets messages from Twilio to interperate audio from the caller. See below:
+              </p>
+              <p>
+                <img src="./images/blog-open-source-ai-powered-voice-twilio-connect-sequence-diagram.png">
+              </p>
+
+              <h3>
+                How Somleng handles incoming calls
+              </h3>
+
+              <p>
+                When you make a call to Twilio a bunch of stuff happens behind the scenes which allows developers to
+                programmatically control the call using TwiML&trade;. Twilio encapsulates this logic into a black box.
+                In this section we'll open up the black box and do a bit of a deep dive into how Somleng handles this
+                process. We'll then build on this knowledge to explain how we handle the &lt;Connect&gt; verb.
+              </p>
+
+              <img src="./images/blog-open-source-ai-powered-voice-somleng-incoming-call-sequence-diagram.png">
+
+              <p>
+                The diagram above is a high-level overview of how incoming calls are handled by Somleng explained in
+                more detail below:
+              <ol>
+                <li>
+                  Alice makes a call to 999. For simplicity let's assume she called using a SIP phone registered to
+                  Somleng. She could have also called over the PSTN to carrier which is connected to Somleng. In either
+                  case, the call
+                  reaches the Gateway (part of the <a href="https://github.com/somleng/somleng-switch" class="link"
+                    target="_blank">SomlengSWITCH project</a>) which is running an <a href="https://opensips.org/"
+                    class="link" target="_blank">OpenSIPS</a> SIP
+                  Proxy.
+                </li>
+                <li>
+                  The Gateway is responsible for load balancing the call to the appropriate <a
+                    href="https://github.com/signalwire/freeswitch" class="link" target="_blank">FreeSWITCH</a> task. It
+                  picks a
+                  task based on Alice's location and forwards it accordingly.
+                </li>
+                <li>
+                  FreeSWITCH hands the call over to Somleng Switch (also part of the <a
+                    href="https://github.com/somleng/somleng-switch" class="link" target="_blank">SomlengSWITCH
+                    project</a>) for controlling the call.
+                </li>
+                <li>
+                  Somleng Switch makes an internal call to the <a href="https://github.com/somleng/somleng" class="link"
+                    target="_blank">Somleng API</a> with the details of the call including Alice's number, the callee's
+                  number (999) and the IP address of Alice's SIP phone.
+                </li>
+                <li>
+                  Using this information, the Somleng API returns the TwiML endpoint associated with the callee's
+                  number (999). This endpoint is pre-configured in Somleng by the application developer.
+                </li>
+                <li>
+                  Somleng Switch makes a HTTP request to the TwiML endpoint.
+                </li>
+                <li>
+                  The TwiML endpoint returns TwiML. In this example let's assume it returns the following:
+
+                  <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Response&gt;
+  &lt;Say&gt;Hello World&lt;&lt;/Say&gt;
+&lt;/Response&gt;
+</code></pre>
+                </li>
+                <li>
+                  Somleng Switch processes the TwiML instructions.
+                </li>
+                <li>
+                  Somleng Switch instructs the FreeSWITCH task to play &quot;Hello World&quot; from the TwiML
+                  instructions.
+                </li>
+                <li>
+                  FreeSWITCH sends RTP Media to Alice who hears the response &quot;Hello World&quot;.
+                </li>
+              </ol>
+              </p>
+
+              <h3>
+                Introducing the &lt;Connect&gt; verb
+              </h3>
+
+              <p>
+                Now that we have a high-level overview of how Somleng handles incoming calls, let's take a look at
+                introducing the &lt;Connect&gt; verb.
+              </p>
+
+              <img src="./images/blog-open-source-ai-powered-voice-somleng-connect-sequence-diagram.png">
+
+              <p>
+                The diagram above shows what happens when we introduce the &lt;Connect&gt; verb.
+                Note that steps 1-6 are the same as in the previous section and we have just
+                replaced the Customer App with the AI voice system. Let's explore what happens from step 7 in more
+                detail below:
+              </p>
+
+              <p>
+              <ol start="7">
+                <li>
+                  The AI voice system returns the following TwiML:
+
+                  <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Response&gt;
+  &lt;Connect&gt;
+    &lt;Stream url=&quot;wss://openvoice.ai&quot; /&gt;
+  &lt;/Connect&gt;
+&lt;/Response&gt;</code></pre>
+                </li>
+                <li>
+                  Somleng Switch processes the TwiML instructions.
+                </li>
+                <li>
+                  Somleng Switch instructs the FreeSWITCH task to open a Websocket connection to
+                  <code>wss://openvoice.ai</code>
+                </li>
+                <li>
+                  The FreeSWITCH task establishes a Websocket connection to the AI Voice System
+                  at <code>wss://openvoice.ai</code> and sends
+                  the <code>connected</code> message followed by the <code>start</code> message.
+                  <pre><code class="language-json">{
+  &quot;event&quot;: &quot;connected&quot;,
+  &quot;protocol&quot;: &quot;Call&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;
+}</code></pre>
+                  <pre><code class="language-json">{
+  &quot;event&quot;: &quot;start&quot;,
+  &quot;sequenceNumber&quot;: &quot;1&quot;,
+  &quot;start&quot;: {
+    &quot;accountSid&quot;: &quot;ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+    &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+    &quot;callSid&quot;: &quot;CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+    &quot;tracks&quot;: [ &quot;inbound&quot; ],
+    &quot;mediaFormat&quot;: {
+      &quot;encoding&quot;: &quot;audio/x-mulaw&quot;,
+      &quot;sampleRate&quot;: 8000,
+      &quot;channels&quot;: 1
+    },
+    &quot;customParameters&quot;: {
+      &quot;FirstName&quot;: &quot;Jane&quot;,
+      &quot;LastName&quot;: &quot;Doe&quot;,
+      &quot;RemoteParty&quot;: &quot;Bob&quot;,
+    },
+  },
+  &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+}</code></pre>
+                </li>
+                <li>
+                  Th AI Voice System sends <code>media</code> messages to the FreeSWITCH task via the Websockets
+                  connection such as:
+                  <pre><code class="language-json">{
+  &quot;event&quot;: &quot;media&quot;,
+  &quot;sequenceNumber&quot;: &quot;3&quot;,
+  &quot;media&quot;: {
+    &quot;track&quot;: &quot;outbound&quot;,
+    &quot;chunk&quot;: &quot;1&quot;,
+    &quot;timestamp&quot;: &quot;5&quot;,
+    &quot;payload&quot;: &quot;no+JhoaJjpz...&quot;
+  },
+  &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+}</code></pre>
+                </li>
+                <li>
+                  The FreeSWITCH task decodes and buffers the audio received from the AI voice system then sends it back
+                  to Alice.
+                </li>
+                <li>
+                  Alice responds to the audio received.
+                </li>
+                <li>
+                  The FreeSWITCH task encodes the received audio as a <code>media</code> message and sends it to the AI
+                  voice
+                  system over the Websockets connection.
+                  <pre><code class="language-json">{
+  &quot;event&quot;: &quot;media&quot;,
+  &quot;sequenceNumber&quot;: &quot;135&quot;,
+  &quot;media&quot;: {
+    &quot;track&quot;: &quot;outbound&quot;,
+    &quot;chunk&quot;: &quot;1&quot;,
+    &quot;timestamp&quot;: &quot;10&quot;,
+    &quot;payload&quot;: &quot;no+JhoaJjpz...&quot;
+  },
+  &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+}</code></pre>
+                </li>
+              </ol>
+              </p>
+
+              <h3>
+                Building the missing components
+              </h3>
+
+              <p>
+                In order to achieve the above functionality, we needed to build the missing components.
+              </p>
+
+              <h3>
+                Interrupting the AI via live call updates
+              </h3>
+
+              <h3>
+                Automated Testing using SIPp
+              </h3>
+
+              <h3>
+                Reducing Latency
+              </h3>
             </div>
 
             <div id="infrastructure-at-somleng">
@@ -255,16 +532,20 @@
               </p>
 
               <p>
-                In the example above, the responses will be sent back to <code>10.10.1.21</code> at the default port for
+                In the example above, the responses will be sent back to <code>10.10.1.21</code> at the default port
+                for
                 UDP <code>5060</code>.
               </p>
 
               <p>
-                Here you can see a problem immediately with our infrastructure above. 10.10.1.21 is the IP address of
-                the FreeSWITCH ECS task and is not publicly routable from the Internet. Therefore any responses from the
+                Here you can see a problem immediately with our infrastructure above. 10.10.1.21 is the IP address
+                of
+                the FreeSWITCH ECS task and is not publicly routable from the Internet. Therefore any responses from
+                the
                 UAS
                 will not be received by the UAC. This is because FreeSWITCH (acting as the UAC) constructs the SIP
-                header and is only aware of its own IP address and port. When the request passes through the managed NAT
+                header and is only aware of its own IP address and port. When the request passes through the managed
+                NAT
                 Gateway, it will do
                 <a href="https://en.wikipedia.org/wiki/Port_address_translation" target="_blank" class="link">Port
                   Address Translation (PAT)</a>
@@ -289,10 +570,14 @@
 
               <p>
                 This parameter was designed to assist routing of responses
-                not only where NAT is involved but also where the upstream device has used a hostname rather than an IP
-                address in the Via it inserted. The default behavior for routing of SIP responses over UDP, as described
-                in RFC 3261, is to use address and port information embedded in the relevant Via header - the address is
-                taken from the "received" parameter value and the port is taken from the "sent-by" component. If there
+                not only where NAT is involved but also where the upstream device has used a hostname rather than an
+                IP
+                address in the Via it inserted. The default behavior for routing of SIP responses over UDP, as
+                described
+                in RFC 3261, is to use address and port information embedded in the relevant Via header - the
+                address is
+                taken from the "received" parameter value and the port is taken from the "sent-by" component. If
+                there
                 is no port, it defaults to port 5060 for UDP and TCP, or port 5061 for TLS.
               </p>
 
@@ -306,8 +591,10 @@
 
               <p>
                 The UAS has added the "received" parameter which correctly corresponds to the public IP of the NAT
-                gateway. However this alone is not enough. Responses from the UAS will still be sent to the port 5060
-                (default for UDP). Since this port is not mapped by the NAT gateway, responses cannot be received by the
+                gateway. However this alone is not enough. Responses from the UAS will still be sent to the port
+                5060
+                (default for UDP). Since this port is not mapped by the NAT gateway, responses cannot be received by
+                the
                 UAS.
               </p>
 
@@ -332,7 +619,8 @@
 
               <p>
                 Fortunately FreeSWITCH automatically adds this empty "rport" parameter to the via parameter when it
-                detects it's behind a NAT. Here's how the Via header looks with the empty "rport" parameter when sent
+                detects it's behind a NAT. Here's how the Via header looks with the empty "rport" parameter when
+                sent
                 via the UAC (FreeSWITCH):
               </p>
 
@@ -349,9 +637,11 @@
               </p>
 
               <p>
-                The addition of an "rport" parameter alongside the "received" parameter means that SIP responses can be
+                The addition of an "rport" parameter alongside the "received" parameter means that SIP responses can
+                be
                 passed back to the source using symmetric routing. Responses will now be sent from the UAS to
-                13.250.230.15 on port 37058 which correspond to the IP address and port address mapping of the managed
+                13.250.230.15 on port 37058 which correspond to the IP address and port address mapping of the
+                managed
                 NAT Gateway. The NAT gateway will then map this port back to the FreeSWITCH task which is running on
                 10.10.1.21.
               </p>
@@ -389,7 +679,8 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
                 we set the
                 <code>ext-rtp-ip</code>
                 parameter to the IP address of the NAT Gateway which causes
-                FreeSWITCH to insert the correct value. Without this configuration FreeSWITCH would insert the private
+                FreeSWITCH to insert the correct value. Without this configuration FreeSWITCH would insert the
+                private
                 IP address of the ECS task's network interface into the SDP. However there's also an issue with the
                 following line:
               </p>
@@ -400,16 +691,21 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               </p>
 
               <p>
-                This line specifies the port in which the media should be sent and received from. FreeSWITCH opens this
-                port (25984) for sending media and inserts it into the SDP. By default FreeSWITCH will select a random
+                This line specifies the port in which the media should be sent and received from. FreeSWITCH opens
+                this
+                port (25984) for sending media and inserts it into the SDP. By default FreeSWITCH will select a
+                random
                 port in
                 the range 16384-32768.
               </p>
 
               <p>
-                However when RTP media is sent out through the NAT gateway to the UAS, the port will be translated and
-                will no longer match the value in the SDP. This typically results in one-way audio issues because the
-                media server on the UAS side will try to send audio back to the port specified in the SDP which cannot
+                However when RTP media is sent out through the NAT gateway to the UAS, the port will be translated
+                and
+                will no longer match the value in the SDP. This typically results in one-way audio issues because
+                the
+                media server on the UAS side will try to send audio back to the port specified in the SDP which
+                cannot
                 be reached as illustrated below:
               </p>
 
@@ -419,7 +715,8 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               <p>
                 In order to work around this issue, we typically require UAS/Media Servers connecting to Somleng to
                 enable Symmetric RTP. Symmetric RTP means that the IP address and port pair used by an
-                outbound RTP flow is reused for the inbound flow. The IP address and port are learned when the initial
+                outbound RTP flow is reused for the inbound flow. The IP address and port are learned when the
+                initial
                 RTP flow is received on the UAS. The flow's source address and port are latched onto and used as the
                 destination for the RTP sourced by the UAC. The IP address and port in the c line and m line
                 respectively in the SDP message are ignored. This is illustrated below:
@@ -429,21 +726,28 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               <cite>Figure 7: UAC Behind NAT Gateway Symmetric RTP</cite>
 
               <p>
-                In some cases, our customer's devices do not support symmetric RTP, or they cannot enable it. In these
-                cases, we work around the issue by bypassing the Managed NAT Gateway and routing RTP through a 1-1 NAT
+                In some cases, our customer's devices do not support symmetric RTP, or they cannot enable it. In
+                these
+                cases, we work around the issue by bypassing the Managed NAT Gateway and routing RTP through a 1-1
+                NAT
                 instance.
               </p>
 
               <p>
-                The 1-1 NAT instance does not automatically apply PAT to outgoing packets. Instead, it will try to keep
-                the outbound port of the client and only apply PAT if there is a conflicting port. Given that FreeSWITCH
-                generates a random port for RTP for each session in the range 16384-32768 it should be relatively rare
+                The 1-1 NAT instance does not automatically apply PAT to outgoing packets. Instead, it will try to
+                keep
+                the outbound port of the client and only apply PAT if there is a conflicting port. Given that
+                FreeSWITCH
+                generates a random port for RTP for each session in the range 16384-32768 it should be relatively
+                rare
                 to see conflicts and PAT.
               </p>
 
               <p>
-                Routing RTP through the 1-1 NAT instance means that the UAS will receive RTP packets from the port which
-                corresponds to the value in the (m) line of the SDP. The UAS media server can therefore send RTP back to
+                Routing RTP through the 1-1 NAT instance means that the UAS will receive RTP packets from the port
+                which
+                corresponds to the value in the (m) line of the SDP. The UAS media server can therefore send RTP
+                back to
                 this port
                 which will be routed back to the FreeSWITCH media server as illustrated below:
               </p>
@@ -456,8 +760,10 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               </h4>
 
               <p>
-                So far we have managed to get away with using off-the-shelf managed services such as an AWS Application
-                Load Balancer and an AWS NAT Gateway to horizontally scale FreeSWITCH when used as a User Agent Client
+                So far we have managed to get away with using off-the-shelf managed services such as an AWS
+                Application
+                Load Balancer and an AWS NAT Gateway to horizontally scale FreeSWITCH when used as a User Agent
+                Client
                 (UAC). But we also want to use FreeSWITCH as a User Agent Server (UAS) to handle inbound calls. This
                 poses a new set of challenges described in the following section.
               </p>
@@ -470,8 +776,10 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
                 <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html"
                   target="_blank" class="link">Network Load Balancer</a>
                 which can
-                be used to load balance UDP, however this type of load balancer is not SIP aware. Here's what happens
-                when we try to load balance SIP directly to the FreeSWITCH tasks using a managed Network Load Balancer.
+                be used to load balance UDP, however this type of load balancer is not SIP aware. Here's what
+                happens
+                when we try to load balance SIP directly to the FreeSWITCH tasks using a managed Network Load
+                Balancer.
               </p>
 
               <img src="./images/somleng-infrastructure-blog-no-proxy.png">
@@ -484,8 +792,10 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               </p>
 
               <p>
-                In order to handle this we need a SIP-aware proxy that sits between the managed Network Load Balancer
-                and the FreeSWITCH UAS tasks. The proxy will be able to handle incoming requests and route them to the
+                In order to handle this we need a SIP-aware proxy that sits between the managed Network Load
+                Balancer
+                and the FreeSWITCH UAS tasks. The proxy will be able to handle incoming requests and route them to
+                the
                 correct FreeSWITCH task. For this we use
                 <a href="https://opensips.org/" target="_blank" class="link">OpenSIPS</a>.
                 OpenSIPS comes with a load balancer module which
@@ -496,7 +806,8 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               <cite>Figure 10: UAS Behind OpenSIPS Proxy</cite>
 
               <p>
-                With an OpenSIPS proxy in place, new requests (SIP Invites) will be load balanced across the available
+                With an OpenSIPS proxy in place, new requests (SIP Invites) will be load balanced across the
+                available
                 FreeSWITCH tasks. In order to illustrate this better let's look at a complete example.
               </p>
 
@@ -505,13 +816,15 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
 
               <ol>
                 <li>
-                  UAC (<code>10.65.104.1</code>) sends SIP Invite to the UAC's SIP Proxy (<code>175.100.32.29</code>)
+                  UAC (<code>10.65.104.1</code>) sends SIP Invite to the UAC's SIP Proxy
+                  (<code>175.100.32.29</code>)
                 </li>
                 <li>
                   UAC's SIP Proxy forwards the request to the Network Load Balancer (<code>52.74.4.205</code>)
                 </li>
                 <li>
-                  Network Load Balancer forwards the request to the OpenSIPS proxy ECS task (<code>10.10.1.162</code>)
+                  Network Load Balancer forwards the request to the OpenSIPS proxy ECS task
+                  (<code>10.10.1.162</code>)
                 </li>
                 <li>
                   OpenSIPS proxy forwards the request to the FreeSWITCH task (<code>10.10.1.21</code>)
@@ -519,16 +832,19 @@ Media Description, name and address (m): audio 25984 RTP/AVP 0 8 101 13
               </ol>
 
               <p>
-                When the SIP invite arrives at the OpenSIPS proxy it will add a new Record-Route header containing its
+                When the SIP invite arrives at the OpenSIPS proxy it will add a new Record-Route header containing
+                its
                 own address above any existing Record-Route headers. In our setup, OpenSIPS is configured to add two
                 Record-Route headers. This is known as double Record-Route headers and handles the special situation
                 where the proxy receives a request on one network interface and sends it onwards using a different
-                interface. In our case the request is received on by Network Load Balancer but sent out via the private
+                interface. In our case the request is received on by Network Load Balancer but sent out via the
+                private
                 IP address of the OpenSIPS ECS Task.
               </p>
 
               <p>
-                The set of Record-Route headers describes the path through all proxy nodes. Combined with the Contact
+                The set of Record-Route headers describes the path through all proxy nodes. Combined with the
+                Contact
                 header, this provides a complete description of the upstream path that leads back to the UAC.
               </p>
 
@@ -551,11 +867,13 @@ Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;</code></pre>
 
               <ul>
                 <li>
-                  The Request-Line contains the advertised IP address of the Network Load Balancer, which the UAC knows
+                  The Request-Line contains the advertised IP address of the Network Load Balancer, which the UAC
+                  knows
                   before it sends the request.
                 </li>
                 <li>
-                  <code>10.10.1.162</code> is the internal IP address of the OpenSIPS ECS task. This Record-Route header
+                  <code>10.10.1.162</code> is the internal IP address of the OpenSIPS ECS task. This Record-Route
+                  header
                   is added by
                   the OpenSIPS proxy before it sends the request to the UAS.
                 </li>
@@ -564,10 +882,12 @@ Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;</code></pre>
                   header is added by the OpenSIPS proxy before it sends the request to the UAS.
                 </li>
                 <li>
-                  The attribute <code>r2=on</code> in the Record-Route headers indicates double Record-Route headers.
+                  The attribute <code>r2=on</code> in the Record-Route headers indicates double Record-Route
+                  headers.
                 </li>
                 <li>
-                  <code>175.100.32.29</code> is the public IP address of the SIP proxy associated with the UAC and is
+                  <code>175.100.32.29</code> is the public IP address of the SIP proxy associated with the UAC and
+                  is
                   added by the UAC's proxy.
                 </li>
                 <li>
@@ -576,12 +896,16 @@ Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;</code></pre>
               </ul>
 
               <p>
-                Now the UAS (FreeSWITCH ECS task) has a complete description of the path back to the UAC, but at this
+                Now the UAS (FreeSWITCH ECS task) has a complete description of the path back to the UAC, but at
+                this
                 point the UAC doesn't have any knowledge of the path, the proxy nodes or even the address of the
-                UAS. It needs to know the path too, for example when it wants to send more requests to the UAS within
+                UAS. It needs to know the path too, for example when it wants to send more requests to the UAS
+                within
                 the current dialogue. This information is exchanged by the UAS in the response, which includes a
-                complete copy of all the Record-Route headers. It also includes its own Contact header in the response.
-                The path that the response follows is defined by the Via headers - the Record-Route headers are present
+                complete copy of all the Record-Route headers. It also includes its own Contact header in the
+                response.
+                The path that the response follows is defined by the Via headers - the Record-Route headers are
+                present
                 in the response but do not influence its transmission path.
               </p>
 
@@ -591,18 +915,22 @@ Contact: &lt;sip:0715100860@10.65.104.1:5060;user=phone&gt;</code></pre>
               <ol>
                 <li>
                   The UAS FreeSWITCH ECS Task (<code>10.10.1.21</code>) sends the response to the OpenSIPS proxy's
-                  internal IP address (<code>10.10.1.162</code>) obtained from the received parameter in the Via Header.
+                  internal IP address (<code>10.10.1.162</code>) obtained from the received parameter in the Via
+                  Header.
                 </li>
                 <li>
-                  The OpenSIPS proxy ECS task forwards the response to the UAC's proxy via the Network Load Balancer.
+                  The OpenSIPS proxy ECS task forwards the response to the UAC's proxy via the Network Load
+                  Balancer.
                   Note: Subsequent requests (e.g. upstream BYEs) are also forwarded via the Network Load Balancer.
                 </li>
                 <li>
-                  The Network Load Balancer forwards the response to the UAC's SIP Proxy (<code>175.100.32.29</code>)
+                  The Network Load Balancer forwards the response to the UAC's SIP Proxy
+                  (<code>175.100.32.29</code>)
                   obtained from the Via Header.
                 </li>
                 <li>
-                  The UAC's SIP proxy forwards the response to the UAC (<code>10.65.104.1</code>) obtained from the Via
+                  The UAC's SIP proxy forwards the response to the UAC (<code>10.65.104.1</code>) obtained from the
+                  Via
                   Header.
                 </li>
               </ol>
@@ -627,31 +955,38 @@ Contact: &lt;sip:1294@10.10.1.21:5060;transport=udp&gt;</code></pre>
 
               <ul>
                 <li>
-                  The Via Headers are used to route the response back to the UAC, the Record-Route headers are present
+                  The Via Headers are used to route the response back to the UAC, the Record-Route headers are
+                  present
                   but do not influence the transmission path.
                 </li>
                 <li>
-                  <code>10.10.1.162</code> is the internal IP address of the OpenSIPS ECS task seen in the "received"
+                  <code>10.10.1.162</code> is the internal IP address of the OpenSIPS ECS task seen in the
+                  "received"
                   parameter of the first
                   Via Header. This "received" parameter is used to determine the first hop back to the the OpenSIPS
                   Proxy in the
                   response, <em>not</em> the Record-Route header.
                 </li>
                 <li>
-                  <code>10.10.1.21</code> (in the contact header) is the internal IP address of the UAS (FreeSWITCH ECS
+                  <code>10.10.1.21</code> (in the contact header) is the internal IP address of the UAS (FreeSWITCH
+                  ECS
                   Task). This is set by the UAS in the response.
                 </li>
               </ul>
 
               <p>
-                So now, both the UAC and the UAS have a copy of the full set of Record-Route headers and is remembered
-                by both endpoints. Once the dialogue is established, the proxies should not insert any more Record-Route
-                headers after that initial transaction. Instead, all the sequential SIP requests should contain Route
+                So now, both the UAC and the UAS have a copy of the full set of Record-Route headers and is
+                remembered
+                by both endpoints. Once the dialogue is established, the proxies should not insert any more
+                Record-Route
+                headers after that initial transaction. Instead, all the sequential SIP requests should contain
+                Route
                 headers.
               </p>
 
               <p>
-                The Route Set is used to create a set of Route headers. The sequence of these headers is important - the
+                The Route Set is used to create a set of Route headers. The sequence of these headers is important -
+                the
                 upstream server will invert the order, but a downstream server does not.
               </p>
 
@@ -660,7 +995,8 @@ Contact: &lt;sip:1294@10.10.1.21:5060;transport=udp&gt;</code></pre>
 
               <ol>
                 <li>
-                  The UAC sends an in-dialog BYE directly to the UAS via the obtained via the UAS's Contact header. The
+                  The UAC sends an in-dialog BYE directly to the UAS via the obtained via the UAS's Contact header.
+                  The
                   first hop
                   is determined by the Route first Route header, which points to the UAC's Proxy
                   (<code>175.100.32.29</code>).
@@ -668,7 +1004,8 @@ Contact: &lt;sip:1294@10.10.1.21:5060;transport=udp&gt;</code></pre>
 
                 <li>
                   The UAC's Proxy
-                  removes the route header and forwards the request to the next Route header which points to the Network
+                  removes the route header and forwards the request to the next Route header which points to the
+                  Network
                   Load Balancer (<code>52.74.4.205</code>).
                 </li>
 
@@ -700,11 +1037,13 @@ Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;</code></pre>
 
               <ul>
                 <li>
-                  The Request Line contains the private IP address of the FreeSWITCH ECS task (<code>10.10.1.21</code>)
+                  The Request Line contains the private IP address of the FreeSWITCH ECS task
+                  (<code>10.10.1.21</code>)
                   which it got from the Contact Header of the Response (see above).
                 </li>
                 <li>
-                  When the request reaches OpenSIPS, it will strip both of the Route Headers and forward the request to
+                  When the request reaches OpenSIPS, it will strip both of the Route Headers and forward the request
+                  to
                   the private IP address of the FreeSWITCH ECS task which it gets from the Request-Line.
                 </li>
               </ul>
@@ -714,7 +1053,8 @@ Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;</code></pre>
               </h4>
 
               <p>
-                So far we have discussed how we deploy FreeSWITCH behind both an Application Load Balancer (when acting
+                So far we have discussed how we deploy FreeSWITCH behind both an Application Load Balancer (when
+                acting
                 as a UAC) and a SIP proxy (when acting as a UAS). This section discusses how we automatically scale
                 FreeSWITCH tasks based on CPU and Session count.
               </p>
@@ -730,15 +1070,19 @@ Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;</code></pre>
               <cite>Figure 14: ECS Autoscaling</cite>
 
               <p>
-                When a scaling policy adds a new task, a Lambda function is triggered which adds a load balancer target
+                When a scaling policy adds a new task, a Lambda function is triggered which adds a load balancer
+                target
                 to the OpenSIPS load balancer table. OpenSIPS will then start load balancing SIP requests to the new
-                task. When FreeSWITCH is acting as a UAC, this happens automatically when ECS registers the task with
+                task. When FreeSWITCH is acting as a UAC, this happens automatically when ECS registers the task
+                with
                 the Application Load Balancer.
               </p>
 
               <p>
-                Similarly, when a task scales-in the Lambda function is triggered which removes the load balancer target
-                from the OpenSIPS load balancer table. OpenSIPS then stops sending new requests to this endpoint. When
+                Similarly, when a task scales-in the Lambda function is triggered which removes the load balancer
+                target
+                from the OpenSIPS load balancer table. OpenSIPS then stops sending new requests to this endpoint.
+                When
                 FreeSWITCH is acting as a UAC, this happens automatically when ECS de-registers the task from the
                 Application Load Balancer. After a specified timeout period, the task is terminated.
               </p>
@@ -764,7 +1108,8 @@ Route: &lt;sip:10.10.1.162:5060;lr;did=7c1.f350d215;r2=on&gt;</code></pre>
                     API</a>
                 </li>
                 <li>
-                  <a href="https://github.com/somleng/somleng-switch" target="_blank" class="link"> Somleng Switch</a>
+                  <a href="https://github.com/somleng/somleng-switch" target="_blank" class="link"> Somleng
+                    Switch</a>
                 </li>
               </ol>
             </div>
