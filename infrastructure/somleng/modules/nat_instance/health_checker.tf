@@ -14,6 +14,29 @@ resource "aws_ecr_repository" "health_checker" {
   }
 }
 
+resource "aws_ecr_lifecycle_policy" "health_checker" {
+  count      = var.health_checker_image == null ? 1 : 0
+  repository = aws_ecr_repository.health_checker[0].name
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Expire untagged images"
+        selection = {
+          tagStatus   = "untagged"
+          countType   = "sinceImagePushed"
+          countUnit   = "days"
+          countNumber = 1
+        }
+        action = {
+          type = "expire"
+        }
+      }
+    ]
+  })
+}
+
 ## Docker image
 
 resource "docker_image" "health_checker" {
