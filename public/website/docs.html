@@ -2165,6 +2165,15 @@ client.verify.v2.services(verificationServiceSid)
                         <td><code>Toronto</code></td>
                       </tr>
                       <tr>
+                        <td>meta_*</td>
+                        <td>Optional</td>
+                        <td>Custom metadata. The column name must start with <code>meta_</code>. E.g.
+                          <code>meta_my_custom_field</code>
+                        </td>
+                        <td>The value for the custom field: E.g. <code>My custom value</code></td>
+                        <td><code>My custom value</code></td>
+                      </tr>
+                      <tr>
                         <td>marked_for_deletion</td>
                         <td>Optional</td>
                         <td>Marks the phone number for deletion</td>
@@ -2179,8 +2188,8 @@ client.verify.v2.services(verificationServiceSid)
                     Sample CSV for creating phone numbers
                   </h6>
 
-                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality
-+12505550199,local,public,CA,1.15,ON,Toronto</code></pre>
+                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality,meta_my_custom_field,meta_another_custom_field
++12505550199,local,public,CA,1.15,ON,Toronto,My custom value,Another custom value</code></pre>
 
                   <h6>
                     Sample CSV for deleting phone numbers
