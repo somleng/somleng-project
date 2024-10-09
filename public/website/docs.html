@@ -599,7 +599,7 @@
 
                   <p>
                     <em>Note: this step requires that you have Docker already installed.</em>
-                    See <a href="https://github.com/somleng/somleng-sms-gateway" target="_blank"
+                    See <a href="https://github.com/somleng/sms-gateway" target="_blank"
                       class="link">somleng/somleng-sms-gateway <i class="fa fa-external-link"></i></a> for more info.
                   </p>
 
@@ -2165,6 +2165,24 @@ client.verify.v2.services(verificationServiceSid)
                         <td><code>Toronto</code></td>
                       </tr>
                       <tr>
+                        <td>lata</td>
+                        <td>Optional</td>
+                        <td>The local access and transport area (<a
+                            href="https://en.wikipedia.org/wiki/Local_access_and_transport_area" class="link"
+                            target="_blank">LATA</a>) code.
+                        </td>
+                        <td>LATA code</td>
+                        <td><code>888</code></td>
+                      </tr>
+                      <tr>
+                        <td>rate_center</td>
+                        <td>Optional</td>
+                        <td>The <a href="https://en.wikipedia.org/wiki/Rate_center" class="link" target="_blank">Rate
+                            center</a> of this phone number.</td>
+                        <td>Rate center name</td>
+                        <td><code>NEWTORONTO</code></td>
+                      </tr>
+                      <tr>
                         <td>meta_*</td>
                         <td>Optional</td>
                         <td>Custom metadata. The column name must start with <code>meta_</code>. E.g.
@@ -2188,8 +2206,8 @@ client.verify.v2.services(verificationServiceSid)
                     Sample CSV for creating phone numbers
                   </h6>
 
-                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality,meta_my_custom_field,meta_another_custom_field
-+12505550199,local,public,CA,1.15,ON,Toronto,My custom value,Another custom value</code></pre>
+                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality,lata,rate_center,meta_my_custom_field,meta_another_custom_field
++12505550199,local,public,CA,1.15,ON,Toronto,888,NEWTORONTO,My custom value,Another custom value</code></pre>
 
                   <h6>
                     Sample CSV for deleting phone numbers
