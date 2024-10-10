@@ -2169,7 +2169,8 @@ client.verify.v2.services(verificationServiceSid)
                         <td>Optional</td>
                         <td>The local access and transport area (<a
                             href="https://en.wikipedia.org/wiki/Local_access_and_transport_area" class="link"
-                            target="_blank">LATA</a>) code.
+                            target="_blank">LATA</a>). Applicable only for phone numbers from the US
+                          and Canada.
                         </td>
                         <td>LATA code</td>
                         <td><code>888</code></td>
@@ -2178,9 +2179,26 @@ client.verify.v2.services(verificationServiceSid)
                         <td>rate_center</td>
                         <td>Optional</td>
                         <td>The <a href="https://en.wikipedia.org/wiki/Rate_center" class="link" target="_blank">Rate
-                            center</a> of this phone number.</td>
+                            center</a> of this phone number. Applicable only for phone numbers from the US
+                          and Canada.</td>
                         <td>Rate center name</td>
                         <td><code>NEWTORONTO</code></td>
+                      </tr>
+                      <tr>
+                        <td>latitude</td>
+                        <td>Optional</td>
+                        <td>The latitude of this phone number's location. Applicable only for phone numbers from the US
+                          and Canada.</td>
+                        <td>Latitude</td>
+                        <td><code>43.6008</code></td>
+                      </tr>
+                      <tr>
+                        <td>longitude</td>
+                        <td>Optional</td>
+                        <td>The longitude of this phone number's location. Applicable only for phone numbers from the US
+                          and Canada.</td>
+                        <td>Longitude</td>
+                        <td><code>-79.5053</code></td>
                       </tr>
                       <tr>
                         <td>meta_*</td>
@@ -2206,8 +2224,9 @@ client.verify.v2.services(verificationServiceSid)
                     Sample CSV for creating phone numbers
                   </h6>
 
-                  <pre class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality,lata,rate_center,meta_my_custom_field,meta_another_custom_field
-+12505550199,local,public,CA,1.15,ON,Toronto,888,NEWTORONTO,My custom value,Another custom value</code></pre>
+                  <pre
+                    class="line-numbers language-csv"><code>number,type,visibility,country,price,region,locality,lata,rate_center,latitude,longitude,meta_my_custom_field,meta_another_custom_field
++12505550199,local,public,CA,1.15,ON,Toronto,888,NEWTORONTO,43.6008,-79.5053,My custom value,Another custom value</code></pre>
 
                   <h6>
                     Sample CSV for deleting phone numbers
