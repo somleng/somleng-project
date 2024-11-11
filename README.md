@@ -52,6 +52,7 @@ More information on the various components are listed below. More detailed infor
 
 * TTS engines
 * Open source TwiML parser
+* AI Voice Agent
 
 ### Somleng Simple Call Flow Manager (SCFM)
 
@@ -88,33 +89,87 @@ You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking 
 
 ## Roadmap
 
-Our 2024 Roadmap is structured around the following strategic building blocks.
+### 🆘 1. Develop the world's first Open Source Emergency Warning System Dissemination Dashboard
 
-* Create more network reachability.
-* Add more communication channels.
-* Global customer onboarding.
+![image](public/assets/images/somleng-ews-dissemination-dashboard-drawing.png)
 
-### Create more network reachability
+The [EWS4All](https://www.un.org/en/climatechange/early-warnings-for-all) initiative calls for:
 
-In order to provide a cheaper alternative to existing CPaaS companies, especially in emerging markets, we need to partner with carriers and individuals who can provide in-country network reachability.
+> Every person on Earth to be protected by early warning systems within by 2027.
 
-We plan to achieve this by the following approaches:
+We will help to achieve this goal building and [certifying](https://www.digitalpublicgoods.net/submission-guide) the world's first Open Source Emergency Warning System Dissemination Dashboard.
 
-1. Encourage local carriers to use Somleng.
+The EWS Dissemination Dashboard is intended to be used by Governments and/or NGOs acting on behalf of Governments to disseminate warning messages to beneficiaries in case of a natural disaster or other public health emergency.
 
-   Local carriers can offer [much cheaper](https://www.somleng.org/case_studies.html#cash-assistance-programme-somalia) pricing than global aggregators which are used by existing CPaaS providers. By using Somleng to offer white-labeled programmable voice and SMS to their customers, local carriers can generate extra revenue which would otherwise go to global CPaaS providers. Additionally local carriers can publish their routes to be used by global customers in the Somleng network.
+The EWS Dissemination Dashboard will be:
 
-2. Empower individuals to become in-country network providers.
+* 👯‍♀️ Aesthetically Beautiful
+* 🧘 Easy to use
+* ញ Localizable
+* 🛜 Interoperable
+* 💖 Free and Open Source
+* ✅ DPG Certified
 
-   Individuals across the globe can generate income by using their own hardware (GSM modem, SIM Box, etc)to provide network connectivity for Somleng. Individuals register their device with Somleng and Somleng will automatically route calls to devices based on network quality and pricing.
+### 🔌 2. Connect the Dissemination Dashboard to Somleng
 
-### Add more communication channels
+In order to deliver the emergency warning messages to the beneficiaries the EWS Dissemination Dashboard will connect to Somleng out of the box. [Somleng](https://github.com/somleng/somleng) (Part of the Somleng Project) is the world's only Open Source, [DPG Certified](https://www.digitalpublicgoods.net/registry#:~:text=Somleng), Telco-as-a-Service (TaaS) and Communications-Platform-as-a-Service (CPaaS).
 
-Add programmable SMS to the Somleng stack by developing an open source implementation of [Twilio's Programmable SMS API](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource). Carriers and network providers can configure SMPP routes for programmable SMS similar to programmable voice.
+Using Somleng, Local Mobile Network Operators (MNOs) can deliver emergency warning messages to beneficiaries on their networks via the following channels.
 
-### Global customer onboarding
+* 📲 Voice Alerts (IVR)
+* 💬 SMS
+* 🗼 Cell Broadcast
 
-Once there are local carriers and network providers providing pubic routes on the Somleng network, we can open up global customer onboarding. Customers can then sign-up and use programmable voice and SMS through these providers without the need for a direct relationship with them.
+### 💳 3. Add billing and payments functionality to Somleng
+
+![image](public/assets/images/jazz-available-numbers-dashboard.png)
+
+Somleng's offering for MNOs (described above) includes a white-label Communications Platform as a Service (CPaaS) out of the box. MNOs can use this feature to offer their own branded CPaaS to their customers.
+
+For example a dental clinic could use an MNO's branded CPaaS to build an AI powered virtual secretary to handle dental appointments:
+
+<figure>
+  <figcaption>Listen to an appointment booking powered by Somleng's white-labeled CPaaS and Retell AI.</figcaption>
+  <audio controls src="public/assets/audio/voice-agent-demo.mp3"></audio>
+</figure>
+
+MNOs can generate additional revenue by offering these types of solutions to their customers while maintaining their branding. From Somleng's perspective this is a Business-to-Telco-to-Business (B2T2B) model.
+
+In order to financially incentivize local MNOs to use Somleng we are adding billing and payment functionality. Local MNOs will be able to automatically bill their customers and collect payment.
+
+By onboarding with Somleng, local MNOs can generate additional revenue while supporting dissemination of warning messages generated from the EWS Dissemination Dashboard.
+
+### 🛖 4. Support Local Governments and EWS Caretakers
+
+![image](public/assets/images/somleng-roadmap-gsm-gateway.png)
+
+While financially incentivizing Local MNOs to be apart of EWS4All can provide a solution to EWS dissemination on a national level, it's often local governments that can react more quickly to natural disasters in their jurisdictions.
+
+For example, a Local Government Official such as a village leader could use the EWS Dissemination Dashboard to alert villagers of an impending flood or other natural disaster.
+
+In addition, the dissemination dashboard could also be used as a mass communication tool to organize village events or provide information to villagers. The dissemination dashboard will be designed with this use-case in mind.
+
+Ideally, the dissemination of EWS messages to villagers would be done through a local MNO which is connected to Somleng (as described above), however setting up this arrangement can take time.
+
+For smaller EWS disseminations (such as for villages or communes), Somleng can operate in [stand-alone mode](https://www.somleng.org/docs.html#client_gateway_configuration_guide) without being connected to an MNO. This feature works by installing an inexpensive off-the-shelf piece of hardware known as a GSM gateway. The GSM gateway connects to Somleng via the Internet and contains a bank of SIM cards which are used to deliver SMS and Voice alerts to beneficiaries.
+
+GSM Gateways require some maintenance. For example, maintainers need to ensure the gateway has a stable Internet connection as well as ensuring the installed bank of SIM cards remain active and usable in the event of an emergency.
+
+We'll refer to the entity that maintains the GSM gateway as a "Network Provider" from now on, because they provide access to the GSM Network via the GSM Gateway that they manage. This is different from to a local MNO who manages the GSM network itself. A Network Provider could be any entity such as an NGO, a tech-savy individual, a community leader or an entrepreneur.
+
+It's important to note that a Network Provider **need not** be the same entity as the entity using the dissemination dashboard. Put another way, whilst the Network Provider and entity using the dissemination dashboard *could* be the same entity, it's *not* a requirement. In fact, the GSM gateway doesn't even need to be installed in the location where it will be used. It only needs to be installed within the same country. This arrangement is possible because the EWS Dissemination Dashboard (described in part 1) is a completely separate piece of software from Somleng (described in part 2).
+
+This design feature opens a new business model. Network providers could generate revenue from providing connectivity to the GSM Network via their Gateway. To illustrate this better, let's re-consider the use case described in [part 3](#add-billing-and-payments-functionality-to-somleng).
+
+A dental clinic in Laos wants to build an AI powered virtual secretary to handle dental appointments. Unfortunately there is no local MNO in the country connected to Somleng offering this service.
+
+In order to fill the gap in the market, a network provider connects their GSM Gateway to Somleng, providing access to the GSM Network in Laos. The dental clinic can then sign-up on Somleng directly, purchase a local phone number (managed by the Network Provider) and configure the AI powered virtual secretary. When a customer calls the phone number to make an appointment, the Network Provider's GSM Gateway forwards the call to Somleng which will initiate the AI as demonstrated in part 3.
+
+This new model is a B2B model as opposed to a B2T2B model described in part 3. The dental clinic has a direct relationship with Somleng but no relationship with the network provider.
+
+In order to financially reward the Network Provider in this new business model we need to develop a revenue-sharing feature and micro-payment mechanism which allows for the network provider to be paid for providing this service based on usage.
+
+This section is about bundling those new features into Somleng.
 
 ### Learn more
 
