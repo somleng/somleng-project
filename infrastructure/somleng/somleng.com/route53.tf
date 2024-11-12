@@ -1,3 +1,7 @@
+resource "aws_route53domains_registered_domain" "somleng_com" {
+  domain_name = "somleng.com"
+}
+
 resource "aws_route53_zone" "somleng_com" {
   name = "somleng.com"
 }
@@ -8,7 +12,7 @@ resource "aws_route53_record" "somleng_com" {
   type    = "A"
 
   alias {
-    name                   = aws_s3_bucket.somleng_com.website_domain
+    name                   = aws_s3_bucket_website_configuration.somleng_com.website_domain
     zone_id                = aws_s3_bucket.somleng_com.hosted_zone_id
     evaluate_target_health = true
   }
@@ -20,7 +24,7 @@ resource "aws_route53_record" "www_somleng_com" {
   type    = "A"
 
   alias {
-    name                   = aws_s3_bucket.www_somleng_com.website_domain
+    name                   = aws_s3_bucket_website_configuration.www_somleng_com.website_domain
     zone_id                = aws_s3_bucket.www_somleng_com.hosted_zone_id
     evaluate_target_health = true
   }
