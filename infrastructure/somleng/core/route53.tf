@@ -1,3 +1,7 @@
+resource "aws_route53domains_registered_domain" "somleng_org" {
+  domain_name = "somleng.org"
+}
+
 resource "aws_route53_zone" "somleng_org" {
   name = "somleng.org."
 }
