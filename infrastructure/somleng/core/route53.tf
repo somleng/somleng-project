@@ -6,10 +6,6 @@ resource "aws_route53_zone" "somleng_org" {
   name = "somleng.org."
 }
 
-resource "aws_route53_zone" "open_ews_org" {
-  name = "open-ews.org."
-}
-
 resource "aws_route53_zone" "somleng_org_internal" {
   name = "somleng.org."
 
