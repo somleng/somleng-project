@@ -11,7 +11,7 @@ resource "aws_s3_bucket_website_configuration" "somleng_com" {
 
   redirect_all_requests_to {
     host_name = "www.somleng.org"
-    protocol = "https"
+    protocol  = "https"
   }
 }
 
@@ -20,6 +20,6 @@ resource "aws_s3_bucket_website_configuration" "www_somleng_com" {
 
   redirect_all_requests_to {
     host_name = "www.somleng.org"
-    protocol = "https"
+    protocol  = "https"
   }
 }
