@@ -135,7 +135,7 @@ For example a dental clinic could use an MNO's branded CPaaS to build an AI powe
   </a>
 </figure>
 
-[![Video Title](public/assets/images/somleng-retell-ai-demo.png)](public/assets/audio/voice-agent-demo.mp4)
+[![Video Title](public/assets/images/somleng-retell-ai-demo.png)](https://github.com/user-attachments/assets/d0b4cf89-02ab-4293-ad88-558799e7879f)
 
 MNOs can generate additional revenue by offering these types of solutions to their customers while maintaining their branding. From Somleng's perspective this is a Business-to-Telco-to-Business (B2T2B) model.
 
