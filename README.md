@@ -89,7 +89,11 @@ You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking 
 
 ## Roadmap
 
-### 🆘 1. Develop the world's first Open Source Emergency Warning System Dissemination Dashboard
+<details>
+
+### OpenEWS: The world's first Open Source Emergency Warning System Dissemination Dashboard
+
+<summary>🆘 OpenEWS</summary>
 
 ![image](public/assets/images/somleng-ews-dissemination-dashboard-drawing.png)
 
@@ -97,11 +101,11 @@ The [EWS4All](https://www.un.org/en/climatechange/early-warnings-for-all) initia
 
 > Every person on Earth to be protected by early warning systems within by 2027.
 
-We will help to achieve this goal building and [certifying](https://www.digitalpublicgoods.net/submission-guide) the world's first Open Source Emergency Warning System Dissemination Dashboard.
+We will help to achieve this goal building and [certifying](https://www.digitalpublicgoods.net/submission-guide) OpenEWS - the world's first Open Source Emergency Warning System Dissemination Dashboard.
 
-The EWS Dissemination Dashboard is intended to be used by Governments and/or NGOs acting on behalf of Governments to disseminate warning messages to beneficiaries in case of a natural disaster or other public health emergency.
+OpenEWS is intended to be used by Governments and/or NGOs acting on behalf of Governments to disseminate warning messages to beneficiaries in case of a natural disaster or other public health emergency.
 
-The EWS Dissemination Dashboard will be:
+OpenEWS will be:
 
 * 👯‍♀️ Aesthetically Beautiful
 * 🧘 Easy to use
@@ -110,23 +114,39 @@ The EWS Dissemination Dashboard will be:
 * 💖 Free and Open Source
 * ✅ DPG Certified
 
-### 🔌 2. Connect the Dissemination Dashboard to Somleng
+</details>
 
-In order to deliver the emergency warning messages to the beneficiaries the EWS Dissemination Dashboard will connect to Somleng out of the box. [Somleng](https://github.com/somleng/somleng) (Part of the Somleng Project) is the world's only Open Source, [DPG Certified](https://www.digitalpublicgoods.net/registry#:~:text=Somleng), Telco-as-a-Service (TaaS) and Communications-Platform-as-a-Service (CPaaS).
+<details>
 
-Using Somleng, Local Mobile Network Operators (MNOs) can deliver emergency warning messages to beneficiaries on their networks via the following channels.
+<summary>💖 OpenEWS + Somleng</summary>
+
+### OpenEWS + Somleng
+
+In order to deliver the emergency warning messages to the beneficiaries OpenEWS will connect to Somleng out of the box. [Somleng](https://github.com/somleng/somleng) (Part of the Somleng Project) is an Open Source, [DPG Certified](https://www.digitalpublicgoods.net/registry#:~:text=Somleng), Telco-as-a-Service (TaaS) and Communications-Platform-as-a-Service (CPaaS).
+
+Local Mobile Network Operators (MNOs) can use Somleng to  deliver EWS messages to beneficiaries on their networks via the following channels.
 
 * 📲 Voice Alerts (IVR)
 * 💬 SMS
 * 🗼 Cell Broadcast
 
-### 💳 3. Add billing and payments functionality to Somleng
+</details>
+
+<details>
+
+<summary>📈 Sustainable business models for Local MNOs</summary>
+
+### Sustainable Business Models for Local MNOs
 
 ![image](public/assets/images/jazz-available-numbers-dashboard.png)
 
-Somleng's offering for MNOs (described above) includes a white-label Communications Platform as a Service (CPaaS) out of the box. MNOs can use this feature to offer their own branded CPaaS to their customers.
+In order to incentivize Local MNOs to use Somleng for the delivery of EWS messages to beneficiaries, we're developing sustainable business models which can generate additional revenue for Local MNOs.
 
-For example a dental clinic could use an MNO's branded CPaaS to build an AI powered virtual secretary to handle dental appointments:
+[Somleng's current TaaS offering](#openews--somleng) already includes a white-label Communications Platform as a Service (CPaaS) out of the box. Local MNOs can use this feature to offer their own branded CPaaS to their customers.
+
+To illustrate how this works, let's consider a fictional dental clinic called Sore My Tooth 🦷. Sore My Tooth wants to reduce its costs and improve customer service by deploying an AI powered virtual secretary to handle dental appointments.
+
+*Click the audio below to listen to a dental booking powered by Somleng and Retell AI.*
 
 <div align="center">
   <a href="https://github.com/user-attachments/assets/d0b4cf89-02ab-4293-ad88-558799e7879f" target="_blank">
@@ -134,15 +154,19 @@ For example a dental clinic could use an MNO's branded CPaaS to build an AI powe
   </a>
 </div>
 
-*Click the image above to listen to an appointment booking powered by Somleng's white-labeled CPaaS and Retell AI.*
+Local MNOs can generate additional revenue by offering these types of solutions to their customers while maintaining their own branding. Continuing with the example above, Sore My Tooth dental clinic could buy this service from a Local MNO called Jazz.
 
-MNOs can generate additional revenue by offering these types of solutions to their customers while maintaining their branding. From Somleng's perspective this is a Business-to-Telco-to-Business (B2T2B) model.
+Sore My Tooth would log into the Jazz Dashboard.
+
+From Somleng's perspective this is a Business-to-Telco-to-Business (B2T2B) model.
 
 In order to financially incentivize local MNOs to use Somleng we are adding billing and payment functionality. Local MNOs will be able to automatically bill their customers and collect payment.
 
 By onboarding with Somleng, local MNOs can generate additional revenue while supporting dissemination of warning messages generated from the EWS Dissemination Dashboard.
 
-### 🛖 4. Support Local Governments and EWS Caretakers
+</details>
+
+### 🛖 Support Local Governments and EWS Caretakers
 
 ![image](public/assets/images/somleng-roadmap-gsm-gateway.png)
 
