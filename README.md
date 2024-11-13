@@ -128,6 +128,9 @@ Somleng's offering for MNOs (described above) includes a white-label Communicati
 
 For example a dental clinic could use an MNO's branded CPaaS to build an AI powered virtual secretary to handle dental appointments:
 
+https://github.com/user-attachments/assets/d0b4cf89-02ab-4293-ad88-558799e7879f
+
+
 [![Listen to an appointment booking powered by Somleng's white-labeled CPaaS and Retell AI.](public/assets/images/somleng-retell-ai-demo.png)](https://github.com/somleng/somleng-project/blob/update_readme/public/assets/audio/voice-agent-demo.mp4)
 
 MNOs can generate additional revenue by offering these types of solutions to their customers while maintaining their branding. From Somleng's perspective this is a Business-to-Telco-to-Business (B2T2B) model.
