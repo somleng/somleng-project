@@ -129,7 +129,7 @@ Somleng's offering for MNOs (described above) includes a white-label Communicati
 For example a dental clinic could use an MNO's branded CPaaS to build an AI powered virtual secretary to handle dental appointments:
 
 <a href="https://github.com/user-attachments/assets/d0b4cf89-02ab-4293-ad88-558799e7879f" target="_blank">
-  <img src="public/assets/images/somleng-retell-ai-demo.png">
+  <img src="public/assets/images/somleng-retell-ai-demo.png" width="200">
 </a>
 
 *Click the image above to listen to an appointment booking powered by Somleng's white-labeled CPaaS and Retell AI.*
