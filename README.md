@@ -130,7 +130,7 @@ For example a dental clinic could use an MNO's branded CPaaS to build an AI powe
 
 <figure>
   <figcaption>Click the image below to listen to an appointment booking powered by Somleng's white-labeled CPaaS and Retell AI.</figcaption>
-  <a href="public/assets/audio/voice-agent-demo.mp3" target="_blank">
+  <a href="public/assets/audio/voice-agent-demo.mp3?raw=1" target="_blank">
     <img src="public/assets/images/somleng-retell-ai-demo.png">
   </a>
 </figure>
