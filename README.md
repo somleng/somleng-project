@@ -54,12 +54,9 @@ More information on the various components are listed below. More detailed infor
 * Open source TwiML parser
 * AI Voice Agent
 
-### Somleng Simple Call Flow Manager (SCFM)
+### OpenEWS
 
-[Somleng Simple Call Flow Manager (SCFM)](https://github.com/somleng/somleng-scfm) is an application which can be used to connect and process calls through Somleng (or Twilio). Some features include:
-
-* Contact management
-* Callflow management
+[OpenEWS](https://github.com/somleng/open-ews) is world's first Open Source Emergency Warning System Dissemination Dashboard.
 
 ## Documentation
 
@@ -81,126 +78,11 @@ The [infrastructure directory](https://github.com/somleng/somleng-project/tree/m
 
 ## Hosting
 
-Chatterbox Solutions offers white-labeled Somleng hosting for Carriers. Currently this service is in private beta. Please [contact us](mailto:contact@somleng.org?subject=Somleng%20Inquiry&body=Hi%2C%0D%0A%0D%0AWe're%20interested%20in%20using%20your%20hosting%20services.) for more info.
+Chatterbox Solutions offers Somleng-as-a-Service for Carriers. Currently this service is in private beta. Please [contact us](mailto:contact@somleng.org?subject=Somleng%20Inquiry&body=Hi%2C%0D%0A%0D%0AWe're%20interested%20in%20using%20your%20hosting%20services.) for more info.
 
 ## Connect with the community
 
 You can join at the [Discord](https://discord.gg/QdrKCW2kPx) channel for asking questions about the project or talk about Somleng with other peers.
-
-## Roadmap
-
-<details>
-
-### OpenEWS: The world's first Open Source Emergency Warning System Dissemination Dashboard
-
-<summary>🆘 OpenEWS</summary>
-
-![image](public/assets/images/somleng-ews-dissemination-dashboard-drawing.png)
-
-The [EWS4All](https://www.un.org/en/climatechange/early-warnings-for-all) initiative calls for:
-
-> Every person on Earth to be protected by early warning systems within by 2027.
-
-We will help to achieve this goal building and [certifying](https://www.digitalpublicgoods.net/submission-guide) OpenEWS - the world's first Open Source Emergency Warning System Dissemination Dashboard.
-
-OpenEWS is intended to be used by Governments and/or NGOs acting on behalf of Governments to disseminate warning messages to beneficiaries in case of a natural disaster or other public health emergency.
-
-OpenEWS will be:
-
-* 👯‍♀️ Aesthetically Beautiful
-* 🧘 Easy to use
-* ញ Localizable
-* 🛜 Interoperable
-* 💖 Free and Open Source
-* ✅ DPG Certified
-
-</details>
-
-<details>
-
-<summary>💖 OpenEWS + Somleng</summary>
-
-### OpenEWS + Somleng
-
-In order to deliver the emergency warning messages to the beneficiaries OpenEWS will connect to Somleng out of the box. [Somleng](https://github.com/somleng/somleng) (Part of the Somleng Project) is an Open Source, [DPG Certified](https://www.digitalpublicgoods.net/registry#:~:text=Somleng), Telco-as-a-Service (TaaS) and Communications-Platform-as-a-Service (CPaaS).
-
-Local Mobile Network Operators (MNOs) can use Somleng to  deliver EWS messages to beneficiaries on their networks via the following channels.
-
-* 📲 Voice Alerts (IVR)
-* 💬 SMS
-* 🗼 Cell Broadcast
-
-</details>
-
-<details>
-
-<summary>📈 Sustainable business models for Local MNOs</summary>
-
-### Sustainable Business Models for Local MNOs
-
-![image](public/assets/images/jazz-available-numbers-dashboard.png)
-
-In order to incentivize Local MNOs to use Somleng for the delivery of EWS messages to beneficiaries, we're developing sustainable business models which can generate additional revenue for Local MNOs.
-
-[Somleng's current TaaS offering](#openews--somleng) already includes a white-label Communications Platform as a Service (CPaaS) out of the box. Local MNOs can use this feature to offer their own branded CPaaS to their customers.
-
-To illustrate how this works, let's consider a fictional dental clinic called Sore My Tooth 🦷. Sore My Tooth wants to reduce its costs and improve customer service by deploying an AI powered virtual secretary to handle dental appointments.
-
-*Click the audio below to listen to a dental booking powered by Somleng and Retell AI.*
-
-<div align="center">
-  <a href="https://github.com/user-attachments/assets/d0b4cf89-02ab-4293-ad88-558799e7879f" target="_blank">
-    <img src="public/assets/images/somleng-retell-ai-demo.png" width="200">
-  </a>
-</div>
-
-Local MNOs can generate additional revenue by offering these types of solutions to their customers while maintaining their own branding. Continuing with the example above, Sore My Tooth dental clinic could buy this service from a Local MNO called Jazz.
-
-Sore My Tooth would log into the Jazz Dashboard.
-
-From Somleng's perspective this is a Business-to-Telco-to-Business (B2T2B) model.
-
-In order to financially incentivize local MNOs to use Somleng we are adding billing and payment functionality. Local MNOs will be able to automatically bill their customers and collect payment.
-
-By onboarding with Somleng, local MNOs can generate additional revenue while supporting dissemination of warning messages generated from the EWS Dissemination Dashboard.
-
-</details>
-
-### 🛖 Support Local Governments and EWS Caretakers
-
-![image](public/assets/images/somleng-roadmap-gsm-gateway.png)
-
-While financially incentivizing Local MNOs to be apart of EWS4All can provide a solution to EWS dissemination on a national level, it's often local governments that can react more quickly to natural disasters in their jurisdictions.
-
-For example, a Local Government Official such as a village leader could use the EWS Dissemination Dashboard to alert villagers of an impending flood or other natural disaster.
-
-In addition, the dissemination dashboard could also be used as a mass communication tool to organize village events or provide information to villagers. The dissemination dashboard will be designed with this use-case in mind.
-
-Ideally, the dissemination of EWS messages to villagers would be done through a local MNO which is connected to Somleng (as described above), however setting up this arrangement can take time.
-
-For smaller EWS disseminations (such as for villages or communes), Somleng can operate in [stand-alone mode](https://www.somleng.org/docs.html#client_gateway_configuration_guide) without being connected to an MNO. This feature works by installing an inexpensive off-the-shelf piece of hardware known as a GSM gateway. The GSM gateway connects to Somleng via the Internet and contains a bank of SIM cards which are used to deliver SMS and Voice alerts to beneficiaries.
-
-GSM Gateways require some maintenance. For example, maintainers need to ensure the gateway has a stable Internet connection as well as ensuring the installed bank of SIM cards remain active and usable in the event of an emergency.
-
-We'll refer to the entity that maintains the GSM gateway as a "Network Provider" from now on, because they provide access to the GSM Network via the GSM Gateway that they manage. This is different from to a local MNO who manages the GSM network itself. A Network Provider could be any entity such as an NGO, a tech-savy individual, a community leader or an entrepreneur.
-
-It's important to note that a Network Provider **need not** be the same entity as the entity using the dissemination dashboard. Put another way, whilst the Network Provider and entity using the dissemination dashboard *could* be the same entity, it's *not* a requirement. In fact, the GSM gateway doesn't even need to be installed in the location where it will be used. It only needs to be installed within the same country. This arrangement is possible because the EWS Dissemination Dashboard (described in part 1) is a completely separate piece of software from Somleng (described in part 2).
-
-This design feature opens a new business model. Network providers could generate revenue from providing connectivity to the GSM Network via their Gateway. To illustrate this better, let's re-consider the use case described in [part 3](#add-billing-and-payments-functionality-to-somleng).
-
-A dental clinic in Laos wants to build an AI powered virtual secretary to handle dental appointments. Unfortunately there is no local MNO in the country connected to Somleng offering this service.
-
-In order to fill the gap in the market, a network provider connects their GSM Gateway to Somleng, providing access to the GSM Network in Laos. The dental clinic can then sign-up on Somleng directly, purchase a local phone number (managed by the Network Provider) and configure the AI powered virtual secretary. When a customer calls the phone number to make an appointment, the Network Provider's GSM Gateway forwards the call to Somleng which will initiate the AI as demonstrated in part 3.
-
-This new model is a B2B model as opposed to a B2T2B model described in part 3. The dental clinic has a direct relationship with Somleng but no relationship with the network provider.
-
-In order to financially reward the Network Provider in this new business model we need to develop a revenue-sharing feature and micro-payment mechanism which allows for the network provider to be paid for providing this service based on usage.
-
-This section is about bundling those new features into Somleng.
-
-### Learn more
-
-To dive deeper into our roadmap and progress please refer to our [Pivotal Tracker Project](https://www.pivotaltracker.com/n/projects/2148301).
 
 ## Contributing
 
@@ -212,7 +94,7 @@ All final decisions about the direction of this project will be decided by the S
 
 ## Who's sponsoring The Somleng Project?
 
-[The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](http://www.unicefstories.org/2016/11/14/somleng-open-source-telephony).
+[The Somleng Project](http://www.somleng.org) is among the first 5 start-ups to received investment from the the [UNICEF Innovation Fund](https://www.unicefventurefund.org/story/somleng-open-source-telephony).
 
 ## What does Somleng mean?
 
@@ -223,7 +105,6 @@ Somleng (សំឡេង) means Voice in Khmer.
 * [Stakeholders](https://miro.com/app/board/uXjVOKklTvw=/?invite_link_id=979877928721)
 * [Pitch Deck](https://tinyurl.com/somleng-investordeck)
 * [Community](https://discord.gg/QdrKCW2kPx)
-* [Pivotal Tracker Project](https://www.pivotaltracker.com/n/projects/2148301)
 
 ## Investors
 
