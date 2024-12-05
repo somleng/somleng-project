@@ -1,3 +1,7 @@
+<div align="right">
+  <img src="../assets/images/chatterbox.png" alt="Chatterbox Logo" width="300px">
+</div>
+
 # Sexual Harassment, Exploitation, and Abuse (SHEA) Policy
 
 ## 1. Introduction
@@ -29,9 +33,7 @@ Chatterbox Solutions prohibits all forms of SHEA, including but not limited to:
 
 ## 5. Reporting Procedure
 
-Employees, contractors, volunteers, clients, partners, or any individual who experiences or witnesses SHEA-related behavior within Chatterbox Solutions are encouraged to report such incidents promptly. Reports can be made to:
-
-- David Wilkie, CEO: dwilkie@somleng.org
+Employees, contractors, volunteers, clients, partners, or any individual who experiences or witnesses SHEA-related behavior within Chatterbox Solutions are encouraged to report such incidents promptly. Reports can be made anonymously to: <a href="mailto:whistleblowers@somleng.org?subject=Reporting of SHEA incident">whistleblowers@somleng.org</a>. Upon reporting a concern, a whistleblower can expect a response acknowledging the receipt of the concern.
 
 Reports may be made verbally or in writing, and confidentiality will be respected to the fullest extent possible. Chatterbox Solutions will take all reports seriously and investigate them promptly and impartially.
 

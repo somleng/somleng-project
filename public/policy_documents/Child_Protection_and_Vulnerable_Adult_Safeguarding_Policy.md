@@ -1,3 +1,7 @@
+<div align="right">
+  <img src="../images/chatterbox.png" alt="Chatterbox Logo" width="300px">
+</div>
+
 # Child Protection and Vulnerable Adult Safeguarding Policy
 
 ## Introduction
