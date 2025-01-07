@@ -26,7 +26,7 @@ resource "aws_security_group" "this" {
 data "aws_security_group" "db" {
   filter {
     name   = "tag:Name"
-    values = ["aurora-somlengv2"]
+    values = ["aurora-${var.cluster_identifier}"]
   }
 }
 
