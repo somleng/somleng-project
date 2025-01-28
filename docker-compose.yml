@@ -122,7 +122,6 @@ services:
 
   freeswitch:
     image: ghcr.io/somleng/freeswitch
-    platform: linux/amd64
     environment:
       - FS_DATABASE_HOST=db
       - FS_MOD_JSON_CDR_URL=http://api.somleng.dev:3000/services/call_data_records
