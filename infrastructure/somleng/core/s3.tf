@@ -72,8 +72,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "ci_artifacts" {
   bucket = aws_s3_bucket.ci_artifacts.id
 
   rule {
-    id = "rule-1"
-    filter {}
+    id     = "rule-1"
     status = "Enabled"
 
     expiration {

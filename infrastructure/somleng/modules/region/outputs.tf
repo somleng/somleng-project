@@ -2,6 +2,10 @@ output "vpc" {
   value = module.vpc
 }
 
+output "vpc_endpoints" {
+  value = module.vpc_endpoints
+}
+
 output "public_load_balancer" {
   value = var.create_public_load_balancer ? module.public_load_balancer[0] : null
 }

@@ -73,3 +73,7 @@ variable "nat_instance_iam_instance_profile" {
 variable "nat_instance_custom_routes" {
   default = {}
 }
+
+variable "create_s3_vpc_endpoint" {
+  default = false
+}

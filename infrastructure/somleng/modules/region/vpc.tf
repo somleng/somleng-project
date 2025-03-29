@@ -21,3 +21,42 @@ module "vpc" {
   create_database_subnet_group = false
   azs                          = data.aws_availability_zones.this.names
 }
+
+module "vpc_endpoints" {
+  source = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
+  count  = var.create_s3_vpc_endpoint ? 1 : 0
+
+  vpc_id = module.vpc.vpc_id
+
+  endpoints = {
+    s3 = {
+      # interface endpoint
+      service           = "s3"
+      tags              = { Name = "s3-vpc-endpoint" }
+      auto_accept       = true
+      vpc_endpoint_type = "Interface"
+      subnet_ids        = module.vpc.intra_subnets
+    }
+  }
+
+  create_security_group = true
+  security_group_name   = "vpc-endpoint-s3"
+  security_group_rules = {
+    s3_https = {
+      type                     = "ingress"
+      from_port                = 443
+      to_port                  = 443
+      protocol                 = "tcp"
+      source_security_group_id = module.internal_load_balancer[0].security_group.id
+      description              = "HTTPS from Load Balancer"
+    },
+    s3_http = {
+      type                     = "ingress"
+      from_port                = 80
+      to_port                  = 80
+      protocol                 = "tcp"
+      source_security_group_id = module.internal_load_balancer[0].security_group.id
+      description              = "HTTP from Load Balancer"
+    }
+  }
+}
