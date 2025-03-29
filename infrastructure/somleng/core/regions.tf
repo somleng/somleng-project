@@ -32,6 +32,7 @@ module "hydrogen_region" {
     "telecom_cambodia_media1"    = "203.223.42.132/32",
     "telecom_cambodia_media2"    = "203.223.42.148/32"
   }
+  create_s3_vpc_endpoint = true
 }
 
 module "helium_region" {
@@ -52,6 +53,8 @@ module "helium_region" {
   providers = {
     aws = aws.helium
   }
+
+  create_s3_vpc_endpoint = false
 }
 
 module "region_peering_hydrogen_to_helium" {
