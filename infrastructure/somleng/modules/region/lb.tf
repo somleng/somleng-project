@@ -27,3 +27,30 @@ module "internal_load_balancer" {
   ssl_certificate     = module.internal_ssl_certificate[0].this
   logs_bucket         = aws_s3_bucket.logs
 }
+
+# https://aws.amazon.com/blogs/networking-and-content-delivery/hosting-internal-https-static-websites-with-alb-s3-and-privatelink/
+resource "aws_lb_target_group" "s3" {
+  count       = var.create_s3_vpc_endpoint ? 1 : 0
+  name        = "${local.internal_load_balancer_name}-s3"
+  port        = 443
+  protocol    = "HTTPS"
+  vpc_id      = module.vpc.vpc_id
+  target_type = "ip"
+
+  health_check {
+    protocol = "HTTP"
+    path     = "/"
+    port     = 80
+    matcher  = "307,405"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "s3" {
+  for_each = var.create_s3_vpc_endpoint ? {
+    for subnet in module.vpc_endpoints.0.endpoints.s3.subnet_configuration :
+    subnet.ipv4 => subnet
+  } : {}
+  target_group_arn = aws_lb_target_group.s3.0.arn
+  target_id        = each.value.ipv4
+  port             = 443
+}
