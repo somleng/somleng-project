@@ -180,9 +180,11 @@ We reserve the right, but not the obligation, to: (1) monitor the Site for viola
 
 ## 13. PRIVACY POLICY
 
-We care about data privacy and security. Please review our **[Privacy Policy](https://github.com/somleng/somleng-project/blob/main/Privacy.md)**. By using the Site, you agree to be bound by our Privacy Policy, which is incorporated into these Terms of Use. Please be advised the Site is hosted in Singapore. If you access the Site from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in Singapore, then through your continued use of the Site, you are transferring your data to Singapore, and you agree to have your data transferred to and processed in Singapore.
+We care deeply about data privacy and security. Please review our **[Privacy Policy](https://github.com/somleng/somleng-project/blob/main/Privacy.md)**. By using the Site or our services, you agree to be bound by our Privacy Policy, which is incorporated into these Terms of Use.
 
-The Privacy Policy, which only applies if using Somleng as a Service, as outlined in the [Intended Audience](#1-intended-audience) section, sets out the basis which we may collect, use, disclose or otherwise process personal data of users in accordance with the [Personal Data Protection Act (2012) of Singapore](https://sso.agc.gov.sg/Act/PDPA2012) ("PDPA"). This Policy applies to personal data in our possession or under our control, including personal data in the possession of organizations which we have engaged to collect, use, disclose or process personal data for our purposes.
+Please note that our services, including **Somleng as a Service** and **OpenEWS as a Service**, are hosted in Singapore. If you access these services from a region with laws governing the collection, use, or disclosure of personal data that differ from Singapore’s laws, your continued use constitutes your consent to the transfer and processing of your data in Singapore.
+
+The Privacy Policy applies **only** to users of **Somleng as a Service** and **OpenEWS as a Service**, as described in the [Intended Audience](#1-intended-audience) section. It outlines how we may collect, use, disclose, or otherwise process personal data in accordance with the [Personal Data Protection Act (2012) of Singapore](https://sso.agc.gov.sg/Act/PDPA2012) ("PDPA"). This includes personal data in our possession or under our control, as well as data handled by third-party service providers engaged to process data on our behalf.
 
 ## 14. TERM AND TERMINATION
 
