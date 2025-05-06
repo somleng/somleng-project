@@ -180,7 +180,7 @@ We reserve the right, but not the obligation, to: (1) monitor the Site for viola
 
 ## 13. PRIVACY POLICY
 
-We care deeply about data privacy and security. Please review our **[Privacy Policy](https://github.com/somleng/somleng-project/blob/main/Privacy.md)**. By using the Site or our services, you agree to be bound by our Privacy Policy, which is incorporated into these Terms of Use.
+We care deeply about data privacy and security. Please review our **[Privacy Policy](Privacy_Policy.md)**. By using the Site or our services, you agree to be bound by our Privacy Policy, which is incorporated into these Terms of Use.
 
 Please note that our services, including **Somleng as a Service** and **OpenEWS as a Service**, are hosted in Singapore. If you access these services from a region with laws governing the collection, use, or disclosure of personal data that differ from Singapore’s laws, your continued use constitutes your consent to the transfer and processing of your data in Singapore.
 
