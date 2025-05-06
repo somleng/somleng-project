@@ -1,6 +1,10 @@
+<div align="right">
+  <img src="../assets/images/chatterbox.png" alt="Chatterbox Logo" width="300px">
+</div>
+
 # TERMS OF SERVICE
 
-Last updated: April 16, 2024
+Last updated: May 6, 2025
 
 ## TABLE OF CONTENTS
 
@@ -56,7 +60,7 @@ Last updated: April 16, 2024
 
 ## 1. INTENDED AUDIENCE
 
-These Terms of Use are intended only for users of Somleng as a Service, provided by Chatterbox Solutions. They do not apply to the usage of Somleng as an Open Source product or Digital Public Good. If you are using Somleng in this context please refer to the **[license agreement](https://github.com/somleng/somleng-project/blob/main/LICENSE)**.
+These Terms of Use apply exclusively to users of **Somleng as a Service** and **OpenEWS as a Service**, both provided by Chatterbox Solutions. They do **not** govern the use of Somleng or OpenEWS as open-source software or as Digital Public Goods. If you are using these platforms under their open-source licenses, please refer to the applicable license agreements: [Somleng License](https://github.com/somleng/somleng-project/blob/main/LICENSE) and [OpenEWS License](https://github.com/open-ews/open-ews/blob/develop/LICENSE).
 
 ## 2. AGREEMENT TO TERMS
 

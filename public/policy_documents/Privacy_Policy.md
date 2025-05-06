@@ -1,6 +1,10 @@
+<div align="right">
+  <img src="../assets/images/chatterbox.png" alt="Chatterbox Logo" width="300px">
+</div>
+
 # Privacy Policy
 
-Last updated: April 16, 2024
+Last updated: May 6, 2024
 
 This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.
 
@@ -169,13 +173,15 @@ The security of your personal data is important to Us, but remember that no meth
 
 ## Applicable Laws
 
-Somleng is an open source [Digital Public Good](https://digitalpublicgoods.net/registry/somleng.html) which is deployed in a number of different countries around the world. It is incumbant on the entity that deploys and runs Somleng to adhere to the applicable privacy laws in their country.
+[Somleng](https://digitalpublicgoods.net/r/somleng) and [OpenEWS](https://digitalpublicgoods.net/r/openews) are open-source [Digital Public Goods](https://digitalpublicgoods.net/) that may be deployed in various countries around the world. It is the responsibility of the entity that deploys and operates these platforms to comply with all applicable data protection and privacy laws in their respective jurisdictions.
 
 ### Somleng as a Service
 
-Somleng as a Service (available at [https://app.somleng.org/users/sign_up](https://app.somleng.org/users/sign_up)) is a service made available to organizations and individuals who don't want to manage their own Somleng infrastructure. This service is run by Chatterbox Solutions, which is registered in the Kingdom of Cambodia.
+[Somleng as a Service](https://app.somleng.org/users/sign_up) is a hosted version of Somleng, provided by Chatterbox Solutions for organizations and individuals who prefer not to manage their own Somleng infrastructure. Chatterbox Solutions is a company registered in the Kingdom of Cambodia and operates this service in accordance with all applicable privacy laws.
 
-Chatterbox Solutions adheres to all applicable privacy laws in relation to running Somleng as a Service.
+### OpenEWS as a Service
+
+[OpenEWS as a Service](https://open-ews.org) is a hosted version of the OpenEWS platform, also operated by Chatterbox Solutions. As with Somleng as a Service, Chatterbox Solutions ensures that OpenEWS as a Service complies with relevant data protection and privacy regulations applicable within the jurisdictions in which it operates.
 
 # Children's Privacy
 
