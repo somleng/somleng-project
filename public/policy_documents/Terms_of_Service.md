@@ -60,7 +60,7 @@ Last updated: May 6, 2025
 
 ## 1. INTENDED AUDIENCE
 
-These Terms of Use apply exclusively to users of **Somleng as a Service** and **OpenEWS as a Service**, both provided by Chatterbox Solutions. They do **not** govern the use of Somleng or OpenEWS as open-source software or as Digital Public Goods. If you are using these platforms under their open-source licenses, please refer to the applicable license agreements: [Somleng License](https://github.com/somleng/somleng-project/blob/main/LICENSE) and [OpenEWS License](https://github.com/open-ews/open-ews/blob/develop/LICENSE).
+These Terms of Use apply exclusively to users of **Somleng as a Service** and **OpenEWS as a Service**, both provided by Chatterbox Solutions. They do **not** govern the use of Somleng or OpenEWS as open-source software or as Digital Public Goods. If you are using these platforms under their open-source licenses, please refer to the applicable license agreements: [Somleng License](https://github.com/somleng/somleng/blob/develop/LICENSE) and [OpenEWS License](https://github.com/open-ews/open-ews/blob/develop/LICENSE).
 
 ## 2. AGREEMENT TO TERMS
 
