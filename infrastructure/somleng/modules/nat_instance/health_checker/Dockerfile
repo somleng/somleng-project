@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1-labs
-
 ARG RUBY_VERSION=3.3
 FROM public.ecr.aws/lambda/ruby:$RUBY_VERSION AS build-image
 
@@ -18,7 +16,7 @@ RUN rm -rf vendor/bundle/ruby/*/cache/ && find vendor/ -name "*.o" -delete && fi
 
 COPY app.rb ${LAMBDA_TASK_ROOT}/
 COPY app/ ${LAMBDA_TASK_ROOT}/app/
-COPY --exclude=*.key config/ ${LAMBDA_TASK_ROOT}/config/
+COPY config/ ${LAMBDA_TASK_ROOT}/config/
 
 # #############################
 
