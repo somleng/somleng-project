@@ -1,3 +1,7 @@
+locals {
+  open_ews_arn = "arn:aws:s3:::www.open-ews.org"
+}
+
 resource "aws_iam_user" "ci_deploy" {
   name = "ci-deploy"
 }
@@ -47,6 +51,7 @@ resource "aws_iam_policy" "ci_deploy" {
         "s3:ListBucket"
       ],
       "Resource": [
+        "${local.open_ews_arn}",
         "${aws_s3_bucket.somleng_website.arn}",
         "${aws_s3_bucket.ci_artifacts.arn}"
       ]
@@ -61,6 +66,7 @@ resource "aws_iam_policy" "ci_deploy" {
         "s3:DeleteObject"
       ],
       "Resource": [
+        "${local.open_ews_arn}/*",
         "${aws_s3_bucket.somleng_website.arn}/*",
         "${aws_s3_bucket.ci_artifacts.arn}/*"
       ]
