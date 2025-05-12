@@ -31,6 +31,18 @@ resource "aws_s3_bucket_website_configuration" "somleng_website" {
   index_document {
     suffix = "index.html"
   }
+
+  routing_rule {
+    condition {
+      key_prefix_equals = "docs/open-ews"
+    }
+    redirect {
+      host_name               = "www.open-ews.org"
+      http_redirect_code      = 301
+      protocol                = "https"
+      replace_key_prefix_with = "docs/api"
+    }
+  }
 }
 
 resource "aws_s3_bucket_policy" "somleng_website" {
