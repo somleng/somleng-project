@@ -1,3 +1,7 @@
+<div align="right">
+  <img src="../assets/images/chatterbox.png" alt="Chatterbox Logo" width="300px">
+</div>
+
 # Child Protection and Vulnerable Adult Safeguarding Policy
 
 ## Introduction
@@ -17,45 +21,67 @@ Chatterbox Solutions recognizes its responsibility to safeguard children and vul
 ## Definitions
 
 - **Child**: A person under the age of 18 years.
-- **Vulnerable Adult**: Any person aged 18 or over who is or may be in need of community care services by reason of mental or other disability, age, illness, or other factors, and who is or may be unable to take care of themselves or unable to protect themselves against significant harm or exploitation.
+- **Vulnerable Adult**: Any person aged 18 or over who is or may be in need of community care services by reason of mental or other disability, age, illness, or other factors, and who is or may be unable to take care of themselves or protect themselves against significant harm or exploitation.
 - **Abuse**: Any form of physical, emotional, sexual, or financial harm or mistreatment inflicted on a child or vulnerable adult, including neglect, exploitation, or discrimination.
 
 ## Responsibilities
 
 ### Management
 
-- Management is responsible for providing leadership, resources, and oversight to ensure the effective implementation of this Policy and the protection of children and vulnerable adults within the organization.
-- Management will appoint a designated safeguarding lead responsible for coordinating safeguarding efforts, providing guidance and support, and ensuring compliance with relevant laws, regulations, and best practices.
+- Provide leadership, resources, and oversight for effective policy implementation.
+- Appoint a designated safeguarding lead to coordinate all safeguarding efforts and ensure compliance with relevant legal and ethical standards.
 
 ### Employees, Contractors, and Volunteers
 
-- All employees, contractors, and volunteers have a responsibility to familiarize themselves with this Policy, adhere to safeguarding procedures and practices, and report any concerns or suspicions of abuse or harm.
-- Employees, contractors, and volunteers should undergo training on child protection and vulnerable adult safeguarding to recognize signs of abuse, understand reporting procedures, and respond appropriately to safeguarding concerns.
+- Must read, understand, and comply with this Policy.
+- Required to attend safeguarding training and report any concerns promptly.
 
 ### Designated Safeguarding Lead
 
-- The designated safeguarding lead is responsible for overseeing the implementation of this Policy, coordinating safeguarding efforts, and acting as the primary point of contact for safeguarding concerns.
-- The designated safeguarding lead will receive reports of safeguarding concerns, assess the level of risk, initiate appropriate actions, and liaise with relevant authorities or agencies as necessary.
+- Coordinates safeguarding activities and acts as the first point of contact for concerns.
+- Assesses risk levels, takes appropriate action, and liaises with external authorities where needed.
 
 ## Reporting Procedures
 
-- Any concerns or suspicions of abuse or harm towards a child or vulnerable adult should be reported immediately to the designated safeguarding lead or another designated individual within the organization.
-- Reports should be made in accordance with established reporting procedures, ensuring that all relevant information is documented and communicated to the appropriate authorities or agencies as required.
-- Confidentiality should be maintained throughout the reporting process, with information shared on a need-to-know basis and in accordance with data protection laws and regulations.
+- Any concerns or suspicions of abuse or harm must be reported **immediately** to the Designated Safeguarding Lead or another senior staff member.
+- If the concern involves someone in a leadership position or if the reporter is uncomfortable using internal channels, they can email **[whistleblowers@somleng.org](mailto:whistleblowers@somleng.org)** to report the issue confidentially.
+
+### Reporting Guidelines
+
+- Include as much detail as possible, including the names of those involved, dates, times, observed behaviors, and any actions already taken.
+- Anonymous reports will be accepted and investigated, though providing contact information may help with follow-up and clarification.
+- All reports will be acknowledged within **72 hours** of receipt.
+
+## Investigation Procedures
+
+Once a report is received, Chatterbox Solutions will take the following steps:
+
+1. **Initial Review**
+   The Designated Safeguarding Lead will assess the nature and seriousness of the concern within **24 hours**. If the concern involves criminal conduct or immediate danger, the appropriate authority (e.g., child protection services, law enforcement) will be contacted without delay.
+
+2. **Internal Investigation**
+   An internal investigation will be conducted, led by the Designated Safeguarding Lead or an independent investigator, depending on the nature of the concern. All investigations will follow due process, ensure fairness, and avoid conflicts of interest.
+
+3. **Confidentiality and Protection**
+   Information will be shared only on a **need-to-know basis**. Retaliation against whistleblowers or reporters is strictly prohibited and will result in disciplinary action.
+
+4. **Outcome and Action**
+   After investigation, appropriate action will be taken, which may include disciplinary measures, legal reporting, or support for affected individuals. Findings and actions will be documented and retained securely, in line with data protection regulations.
+
+5. **Feedback and Follow-Up**
+   The reporter will be informed (where appropriate and not breaching confidentiality) of the outcome of the investigation. Support and follow-up measures will be provided for any affected individuals.
 
 ## Response and Intervention
 
-- Upon receiving a report of safeguarding concerns, the designated safeguarding lead will assess the level of risk, initiate appropriate actions to safeguard the individual, and implement support measures as necessary.
-- This may include contacting relevant authorities or agencies, such as child protection services or adult safeguarding teams, to report concerns, seek advice, and coordinate interventions.
-- Chatterbox Solutions will cooperate fully with any investigations or inquiries conducted by relevant authorities or agencies and provide support to victims of abuse or harm throughout the process.
+- Timely action will be taken to mitigate any risks to individuals involved.
+- Chatterbox Solutions will cooperate fully with official investigations and maintain a survivor-centered approach throughout the process.
 
 ## Training and Awareness
 
-- Chatterbox Solutions will provide regular training and awareness programs on child protection and vulnerable adult safeguarding to employees, contractors, and volunteers.
-- Training will cover topics such as recognizing signs of abuse, understanding reporting procedures, safeguarding responsibilities, and maintaining confidentiality.
-- Ongoing awareness initiatives will be implemented to reinforce the importance of safeguarding and promote a culture of vigilance, empathy, and accountability.
+- Regular safeguarding training will be mandatory for all staff and contractors.
+- Refresher courses and awareness-raising sessions will be conducted at least **annually**.
 
 ## Review and Revision
 
-- This Child Protection and Vulnerable Adult Safeguarding Policy will be reviewed periodically to ensure its effectiveness, relevance, and compliance with applicable laws, regulations, and best practices.
-- Any updates or revisions to this Policy will be communicated to all relevant stakeholders, and training will be provided as necessary to ensure compliance and understanding.
+- This Policy will be reviewed at least **annually**, or sooner if required by law or after a serious incident.
+- Updates will be clearly communicated to all staff, and training will be revised accordingly.
