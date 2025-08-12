@@ -15,5 +15,5 @@ variable "cluster_identifier" {
 }
 
 variable "db_master_password_parameter_identifier" {
-  description = "somleng or scfm"
+  description = "somleng or open-ews"
 }

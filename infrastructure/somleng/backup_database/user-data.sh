@@ -10,7 +10,7 @@ dnf update
 dnf install -y docker
 service docker start
 
-POSTGRES_VERSION=16
+POSTGRES_VERSION=17
 
 TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
 AWS_REGION="$(wget --header "X-aws-ec2-metadata-token: $TOKEN" -q -O - http://169.254.169.254/latest/meta-data/placement/region)"
