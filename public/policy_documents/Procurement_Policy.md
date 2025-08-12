@@ -1,3 +1,7 @@
+<div align="right">
+  <img src="../assets/images/chatterbox.png" alt="Chatterbox Logo" width="300px">
+</div>
+
 # Procurement Policy
 
 ## Introduction
