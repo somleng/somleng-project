@@ -11,7 +11,7 @@ variable "db_name" {
 }
 
 variable "cluster_identifier" {
-  description = "somlengv2 or scfmv2"
+  description = "somlengv2 or open-ews"
 }
 
 variable "db_master_password_parameter_identifier" {
