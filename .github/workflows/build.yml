@@ -39,7 +39,7 @@ jobs:
         run: |
           ls -lat
           ls -lat tmp/db
-          chown -R 999:999 tmp/db  # Postgres UID in container
+          sudo chown -R 999:999 tmp/db  # Postgres UID in container
           ls -lat tmp/db
 
       - name: Run docker compose
