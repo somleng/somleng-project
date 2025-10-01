@@ -8,6 +8,8 @@
 /pkg/
 /spec/reports/
 /tmp/
+!/tmp/.keep
+!/tmp/db/.keep
 /vendor/ruby/
 /vendor/dynamizer/bundle
 /dynamizer/bundler/vendor
