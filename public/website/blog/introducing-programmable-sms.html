@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Somleng | Blog | Introducing Programmable SMS</title>
+  <link rel='stylesheet' href='../css/style.min.css' />
+  <link rel='stylesheet' href='../css/custom.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar navbar--extended">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo"><img src="../images/somleng_logo.png" height="75px"></a>
+        <nav class="navbar__menu">
+          <li><a href="../docs.html">Documentation</a></li>
+          <li><a href="../open_source.html">Open Source</a></li>
+          <li><a href="../case_studies.html">Case Studies</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero unit -->
+  <div class="page__header">
+    <div class="hero__overlay hero__overlay--gradient"></div>
+    <div class="hero__mask"></div>
+    <div class="page__header__inner">
+      <div class="container">
+        <div class="page__header__content">
+          <div class="page__header__content__inner">
+            <h1 class="page__header__title">Introducing Programmable SMS</h1>
+            <h5 class="page__header__title">January 27, 2023</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Post -->
+  <div class="page">
+    <div class="container">
+      <div class="page__inner">
+        <div class="page__main">
+          <div class="text-container">
+
+            <div id="introducing-programmable-sms">
+              <img src="../images/undraw_message_sent_re_q2kl.svg" class="expanded__image blog-image">
+
+              <p>
+                In October 2022,
+                <a href="introducing-diy-programmable-voice.html" class="link">we introduced DIY programmable voice</a>,
+                allowing customers to roll their own Twilio and make real calls
+                through their VoIP gateways.
+              </p>
+
+              <p>Today we're excited to announce official support for SMS.</p>
+
+              <p>
+                With this new feature carriers can offer programmable SMS to their customers by
+                <a href="../docs.html#sms_gateway_configuration_guide" target="_blank" class="link">configuring an SMS
+                  Gateway <i class="fa fa-external-link"></i></a> and connecting it to
+                their existing SMS infrastructure.
+              </p>
+
+              <p>
+                Individuals and organizations can also use this feature by connecting their SMS gateway to a device that
+                supports SMPP, such as a
+                <a href="https://en.wikipedia.org/wiki/VoIP_gateway" target="_blank" class="link">VoIP gateway <i
+                    class="fa fa-external-link"></i></a> or
+                <a href="https://en.wikipedia.org/wiki/SIM_box" target="_blank" class="link">SIM Box <i
+                    class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                After the connection is configured, customers can programmatically send and receive SMS through their
+                SMS gateway using the
+                <a href="../docs/twilio_api" target="_blank" class="link">REST API <i
+                    class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                Visit
+                <a href="../docs.html#sms_gateway_configuration_guide" target="_blank" class="link">our documentation <i
+                    class="fa fa-external-link"></i></a>
+                for more information on how to configure programmable SMS on Somleng.
+              </p>
+
+              <p>
+                <em>
+                  Note: Using SMS gateways is restricted in some countries.
+                  We recommend that you check your local laws and regulations before proceeding with
+                  this method.
+                </em>
+              </p>
+            </div>
+
+            <!-- Back to blog index -->
+            <div class="back-to-blog" style="margin-top:2em;">
+              <a href="../blog.html">&larr; Back to all posts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Somleng | Blog | Introducing Programmable Voice</title>
+  <link rel='stylesheet' href='../css/style.min.css' />
+  <link rel='stylesheet' href='../css/custom.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar navbar--extended">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo"><img src="../images/somleng_logo.png" height="75px"></a>
+        <nav class="navbar__menu">
+          <li><a href="../docs.html">Documentation</a></li>
+          <li><a href="../open_source.html">Open Source</a></li>
+          <li><a href="../case_studies.html">Case Studies</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero unit -->
+  <div class="page__header">
+    <div class="hero__overlay hero__overlay--gradient"></div>
+    <div class="hero__mask"></div>
+    <div class="page__header__inner">
+      <div class="container">
+        <div class="page__header__content">
+          <div class="page__header__content__inner">
+            <h1 class="page__header__title">Introducing Programmable
+              Voice</h1>
+            <h5 class="page__header__title">October 14, 2022</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Post -->
+  <div class="page">
+    <div class="container">
+      <div class="page__inner">
+        <div class="page__main">
+          <div class="text-container">
+            <div id="introducing-programmable-voice">
+              <img src="../images/undraw_recording_re_5xyq.svg" class="expanded__image blog-image">
+
+              <p>
+                At Somleng, one of our biggest customer bases are NGOs. One of the reasons that NGOs choose us is
+                because we work with local carriers
+                directly. This allows us to provide cloud communication services in new markets where it's otherwise
+                unavailable, or with better quality, and
+                <a href="../case_studies.html#cash-assistance-programme-somalia" target="_blank" class="link">a fraction
+                  of
+                  the cost of our competitors <i class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                Although working with local carriers improves quality and reduces costs, one of the biggest pain points
+                for our customers
+                is actually engaging with and arriving at a commercial agreement with a local carrier.
+                Often our customers want to get something up and running quickly to prove a concept or do a pilot,
+                without
+                engaging with their local carrier.
+              </p>
+
+              <h4>
+                Bypassing Carriers
+              </h4>
+
+              <p>
+                It turns out that it's actually possible to access the local public switched telephone network (PSTN)
+                without a commercial agreement with a local carrier.
+                All you need is a
+                <a href="https://en.wikipedia.org/wiki/VoIP_gateway" target="_blank" class="link">VoIP gateway <i
+                    class="fa fa-external-link"></i></a> and one or more SIM cards.
+                A VoIP gateway has interfaces to both IP networks and the PSTN and handles the bridging between them.
+                One interface can be connected to the Internet and the other
+                to the PSTN, via SIM card(s) inserted into the VoIP gateway.
+                VoIP gateways range in size 1 from to 128 channels or more. The more channels you have the more
+                concurrent calls you can support.
+              </p>
+
+              <p>
+                Today we're excited to announce official support for VoIP gateways on Somleng.
+              </p>
+
+              <p>
+                With this new feature customers can
+                <a href="https://app.somleng.org/users/sign_up" target="_blank" class="link">sign up <i
+                    class="fa fa-external-link"></i></a>
+                and connect their VoIP gateway to Somleng by
+                <a href="../docs.html#client_gateway_configuration_guide" target="_blank" class="link">configuring a
+                  client
+                  gateway connection <i class="fa fa-external-link"></i></a>.
+              </p>
+
+              <p>
+                After the connection is configured, customers can programmatically make outbound calls through your VoIP
+                gateway using the
+                <a href="../docs/twilio_api" target="_blank" class="link">REST API <i
+                    class="fa fa-external-link"></i></a>,
+                and programmatically control both outbound and inbound calls via TwiML.
+              </p>
+
+              <p>
+                <em>
+                  Note: Using VoIP gateways is restricted in some countries.
+                  We recommend that you check your local laws and regulations before proceeding with
+                  this method.
+                </em>
+              </p>
+
+              <h4>
+                Network Providers
+              </h4>
+
+              <p>
+                This new feature also opens up new business opportunities for individuals or organizations to provide
+                access to the
+                PSTN in their country via a VoIP gateway that they own or manage. We call this type of user a
+                <a href="../docs.html#network_provider" target="_blank" class="link">Network Provider <i
+                    class="fa fa-external-link"></i></a>,
+                and like carriers, they can also create customer accounts on Somleng.
+              </p>
+
+              <p>
+                Any account that the Network Provider creates, is managed by them and has its own set of
+                <a href="../docs/twilio_api" target="_blank" class="link">REST API <i
+                    class="fa fa-external-link"></i></a>
+                credentials and account management interface.
+                A network provider can therefore onboard their own customers,
+                by creating them an account and providing them with PSTN access through their VoIP gateway(s).
+              </p>
+
+              <p>
+                This can be combined with our
+                <a href="../docs.html#custom_domains" target="_blank" class="link">custom domains feature <i
+                    class="fa fa-external-link"></i></a>
+                feature resulting in a fully custom-branded experience for your customer.
+              </p>
+
+              <p>
+                We don't yet have a way for a network provider to monetize this business flow directly on the Somleng
+                platform, but it's something we will consider
+                if enough users request this feature.
+              </p>
+
+              <h4>
+                Stay Tuned
+              </h4>
+
+              <p>
+                Currently our client gateway feature only supports Programmable Voice, but stay tuned because we're
+                adding SMS support next!
+              </p>
+            </div>
+
+            <!-- Back to blog index -->
+            <div class="back-to-blog" style="margin-top:2em;">
+              <a href="../blog.html">&larr; Back to all posts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+</body>
+
+</html>

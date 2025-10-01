@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Somleng | Blog | Implementing AI-Powered Voice at Somleng: A Technical Deep Dive</title>
+  <link rel='stylesheet' href='../css/style.min.css' />
+  <link rel='stylesheet' href='../css/custom.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar navbar--extended">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="index.html" class="navbar__logo"><img src="../images/somleng_logo.png" height="75px"></a>
+        <nav class="navbar__menu">
+          <li><a href="../docs.html">Documentation</a></li>
+          <li><a href="../open_source.html">Open Source</a></li>
+          <li><a href="../case_studies.html">Case Studies</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero unit -->
+  <div class="page__header">
+    <div class="hero__overlay hero__overlay--gradient"></div>
+    <div class="hero__mask"></div>
+    <div class="page__header__inner">
+      <div class="container">
+        <div class="page__header__content">
+          <div class="page__header__content__inner">
+            <h1 class="page__header__title">Implementing AI-Powered Voice at Somleng: A Technical Deep Dive</h1>
+            <h5 class="page__header__title">September 30, 2024</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Post -->
+  <div class="page">
+    <div class="container">
+      <div class="page__inner">
+        <div class="page__main">
+          <div class="text-container">
+            <div id="open-source-ai-powered-voice">
+              <img src="../images/blog-open-source-ai-powered-voice.png" class="expanded__image blog-image">
+              <p>
+                Many AI voice systems, such as <a href="https://www.retellai.com/" class="link" target="_blank">Retell
+                  AI</a>
+                and <a href="https://vocode.dev/" class="link" target="_blank">Vocode</a> are built on top of Twilio.
+                While Twilio is an excellent platform for rapid development, building an AI voice business solely on
+                top of it comes with significant risks such as deplatforming and prohibitive costs.
+              </p>
+
+              <p>
+                Somleng addresses these risks by offering an open-source alternative, giving businesses the freedom to
+                self-host or work with lower-cost providers. Since Somleng offers full compatibility with the Twilio
+                API, AI-powered voice systems built on Twilio can
+                easily transition to Somleng without requiring significant changes to their existing codebase or
+                architecture. This enables businesses to easily transition to a more customizable and cost-effective
+                open-source alternative, without having to overhaul their existing Twilio-based workflows.
+              </p>
+
+              <p>
+                In this post, we'll walk you through the technical journey of integrating AI into Somleng's voice
+                platform—combining key architectural decisions, the challenges we faced and the solutions we developed
+                to overcome them.
+              </p>
+
+              <h3>
+                Background: Twilio's &lt;Connect&gt; Verb and &lt;Stream&gt; noun
+              </h3>
+
+              <p>
+                Twilio's <a href="https://www.twilio.com/docs/voice/media-streams#bidirectional-media-streams"
+                  target="_blank" class="link"><code></code>&lt;Stream&gt;</a> noun,
+                used within the <a href="https://www.twilio.com/docs/voice/twiml/connect" target="_blank"
+                  class="link"><code>&lt;Connect&gt;</code></a> verb, is a set of <a
+                  href="https://www.twilio.com/docs/voice/twiml" target="_blank" class="link">TwiML&trade;</a>
+                instructions which enables
+                real-time streaming of voice data to external systems for AI processing. It allows live audio from a
+                call to be streamed over WebSockets to AI-driven platforms, where speech recognition, natural language
+                processing, or machine learning algorithms can analyze the conversation in real time. This makes it
+                ideal for building voice-powered AI applications like interactive voice response (IVR), real-time
+                transcription, sentiment analysis, and intelligent customer support bots, enhancing the call experience
+                with AI capabilities. Most existing AI Voice systems, such as <a href="https://www.retellai.com/"
+                  class="link" target="_blank">Retell
+                  AI</a>
+                and <a href="https://vocode.dev/" class="link" target="_blank">Vocode</a> return the following TwiML
+                instructions to initiate a connection with Twilio.
+              </p>
+
+              <p>
+              <pre class="language-xml"><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Response&gt;
+    &lt;Connect&gt;
+      &lt;Stream url=&quot;wss://example.com/audiostream&quot; /&gt;
+    &lt;/Connect&gt;
+  &lt;/Response&gt;</code></pre>
+              </p>
+
+              <p>
+                After Twilio parses this TwiML document, it opens a Websockets connection to the AI voice system by
+                connecting to the
+                URL
+                provided in the
+                <code>url</code> attribute of the <code>&lt;Stream&gt;</code> noun. Audio is Base64 encoded, included
+                in a
+                <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages" class="link"
+                  target="_blank">Twilio defined Websocket message</a>
+                and sent
+                bi-directionally between Twilio and the AI voice system. Below is an example of a
+                <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#media-messages" class="link"
+                  target="_blank">Media message</a>.
+              </p>
+
+              <p>
+              <pre><code class="language-json">{
+    &quot;event&quot;: &quot;media&quot;,
+    &quot;sequenceNumber&quot;: &quot;3&quot;,
+    &quot;media&quot;: {
+      &quot;track&quot;: &quot;outbound&quot;,
+      &quot;chunk&quot;: &quot;1&quot;,
+      &quot;timestamp&quot;: &quot;5&quot;,
+      &quot;payload&quot;: &quot;no+JhoaJjpz...&quot;
+    } ,
+    &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+  }</code></pre>
+              </p>
+              <p>
+                Twilio receives websockets messages sent from the AI voice system over the websockets connection and
+                returns audio to
+                the caller, while the AI Voice system
+                receives websockets messages from Twilio to interperate audio from the caller. See below:
+              </p>
+              <p>
+                <img src="../images/blog-open-source-ai-powered-voice-twilio-connect-sequence-diagram.png">
+              </p>
+
+              <h3>
+                How Somleng handles incoming calls
+              </h3>
+
+              <p>
+                When you make a call to Twilio a bunch of stuff happens behind the scenes which allows developers to
+                programmatically control the call using TwiML&trade;. Twilio encapsulates this logic into a black box.
+                In this section we'll open up the black box and do a bit of a deep dive into how Somleng handles this
+                process. We'll then build on this knowledge to explain how we handle the &lt;Connect&gt; verb.
+              </p>
+
+              <img src="../images/blog-open-source-ai-powered-voice-somleng-incoming-call-sequence-diagram.png">
+
+              <p>
+                The diagram above is a high-level overview of how incoming calls are handled by Somleng explained in
+                more detail below:
+              <ol>
+                <li>
+                  Alice makes a call to 999. For simplicity let's assume she called using a SIP phone registered to
+                  Somleng. She could have also called over the PSTN to carrier which is connected to Somleng. In either
+                  case, the call
+                  reaches the Gateway (part of the <a href="https://github.com/somleng/somleng-switch" class="link"
+                    target="_blank">SomlengSWITCH project</a>) which is running an <a href="https://opensips.org/"
+                    class="link" target="_blank">OpenSIPS</a> SIP
+                  Proxy.
+                </li>
+                <li>
+                  The Gateway is responsible for load balancing the call to the appropriate <a
+                    href="https://github.com/signalwire/freeswitch" class="link" target="_blank">FreeSWITCH</a> task. It
+                  picks a
+                  task based on Alice's location and forwards it accordingly.
+                </li>
+                <li>
+                  FreeSWITCH hands the call over to Somleng Switch (also part of the <a
+                    href="https://github.com/somleng/somleng-switch" class="link" target="_blank">SomlengSWITCH
+                    project</a>) for controlling the call.
+                </li>
+                <li>
+                  Somleng Switch makes an internal call to the <a href="https://github.com/somleng/somleng" class="link"
+                    target="_blank">Somleng API</a> with the details of the call including Alice's number, the callee's
+                  number (999) and the IP address of Alice's SIP phone.
+                </li>
+                <li>
+                  Using this information, the Somleng API returns the TwiML endpoint associated with the callee's
+                  number (999). This endpoint is pre-configured in Somleng by the application developer.
+                </li>
+                <li>
+                  Somleng Switch makes a HTTP request to the TwiML endpoint.
+                </li>
+                <li>
+                  The TwiML endpoint returns TwiML. In this example let's assume it returns the following:
+
+                  <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Response&gt;
+    &lt;Say&gt;Hello World&lt;&lt;/Say&gt;
+  &lt;/Response&gt;
+  </code></pre>
+                </li>
+                <li>
+                  Somleng Switch processes the TwiML instructions.
+                </li>
+                <li>
+                  Somleng Switch instructs the FreeSWITCH task to play &quot;Hello World&quot; from the TwiML
+                  instructions.
+                </li>
+                <li>
+                  FreeSWITCH sends RTP Media to Alice who hears the response &quot;Hello World&quot;.
+                </li>
+              </ol>
+              </p>
+
+              <h3>
+                Introducing the &lt;Connect&gt; verb
+              </h3>
+
+              <p>
+                Now that we have a high-level overview of how Somleng handles incoming calls, let's take a look at
+                introducing the &lt;Connect&gt; verb.
+              </p>
+
+              <img src="../images/blog-open-source-ai-powered-voice-somleng-connect-sequence-diagram.png">
+
+              <p>
+                The diagram above shows what happens when we introduce the &lt;Connect&gt; verb.
+                Note that steps 1-6 are the same as in the previous section and we have just
+                replaced the Customer App with the AI voice system. Let's explore what happens from step 7 in more
+                detail below:
+              </p>
+
+              <p>
+              <ol start="7">
+                <li>
+                  The AI voice system returns the following TwiML:
+
+                  <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Response&gt;
+    &lt;Connect&gt;
+      &lt;Stream url=&quot;wss://openvoice.ai&quot; /&gt;
+    &lt;/Connect&gt;
+  &lt;/Response&gt;</code></pre>
+                </li>
+                <li>
+                  Somleng Switch processes the TwiML instructions.
+                </li>
+                <li>
+                  Somleng Switch instructs the FreeSWITCH task to open a Websocket connection to
+                  <code>wss://openvoice.ai</code>
+                </li>
+                <li>
+                  The FreeSWITCH task establishes a Websocket connection to the AI Voice System
+                  at <code>wss://openvoice.ai</code> and sends
+                  the <code>connected</code> message followed by the <code>start</code> message.
+                  <pre><code class="language-json">{
+    &quot;event&quot;: &quot;connected&quot;,
+    &quot;protocol&quot;: &quot;Call&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;
+  }</code></pre>
+                  <pre><code class="language-json">{
+    &quot;event&quot;: &quot;start&quot;,
+    &quot;sequenceNumber&quot;: &quot;1&quot;,
+    &quot;start&quot;: {
+      &quot;accountSid&quot;: &quot;ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+      &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+      &quot;callSid&quot;: &quot;CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+      &quot;tracks&quot;: [ &quot;inbound&quot; ],
+      &quot;mediaFormat&quot;: {
+        &quot;encoding&quot;: &quot;audio/x-mulaw&quot;,
+        &quot;sampleRate&quot;: 8000,
+        &quot;channels&quot;: 1
+      },
+      &quot;customParameters&quot;: {
+        &quot;FirstName&quot;: &quot;Jane&quot;,
+        &quot;LastName&quot;: &quot;Doe&quot;,
+        &quot;RemoteParty&quot;: &quot;Bob&quot;,
+      },
+    },
+    &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+  }</code></pre>
+                </li>
+                <li>
+                  The AI Voice System sends <code>media</code> messages to the FreeSWITCH task via the Websockets
+                  connection such as:
+                  <pre><code class="language-json">{
+    &quot;event&quot;: &quot;media&quot;,
+    &quot;sequenceNumber&quot;: &quot;3&quot;,
+    &quot;media&quot;: {
+      &quot;track&quot;: &quot;outbound&quot;,
+      &quot;chunk&quot;: &quot;1&quot;,
+      &quot;timestamp&quot;: &quot;5&quot;,
+      &quot;payload&quot;: &quot;no+JhoaJjpz...&quot;
+    },
+    &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+  }</code></pre>
+                </li>
+                <li>
+                  The FreeSWITCH task decodes and buffers the audio received from the AI voice system then sends it back
+                  to Alice.
+                </li>
+                <li>
+                  Alice responds to the audio received.
+                </li>
+                <li>
+                  The FreeSWITCH task encodes the received audio as a <code>media</code> message and sends it to the AI
+                  voice
+                  system over the Websockets connection.
+                  <pre><code class="language-json">{
+    &quot;event&quot;: &quot;media&quot;,
+    &quot;sequenceNumber&quot;: &quot;135&quot;,
+    &quot;media&quot;: {
+      &quot;track&quot;: &quot;outbound&quot;,
+      &quot;chunk&quot;: &quot;1&quot;,
+      &quot;timestamp&quot;: &quot;10&quot;,
+      &quot;payload&quot;: &quot;no+JhoaJjpz...&quot;
+    },
+    &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+  }</code></pre>
+                </li>
+              </ol>
+              </p>
+
+              <h3>
+                Writing a FreeSWITCH module: mod_twilio_stream
+              </h3>
+
+              <p>
+                In order to handle steps 10 through 14 above we got some help from an engineer at one of our customers
+                <a href="https://nucleus.com/" target="_blank" class="link">Nucleus</a> to write a FreeSWITCH module
+                called
+                <a href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                  target="_blank" class="link">mod_twilio_stream</a>. The module was based on the <a
+                  href="https://github.com/drachtio/drachtio-freeswitch-modules/tree/main/modules/mod_audio_fork"
+                  target="_blank" class="link">mod_audio_fork</a> by
+                <a href="https://drachtio.org/" target="_blank" class="link">Drachtio</a>, and adds support for <a
+                  href="https://www.twilio.com/docs/voice/media-streams/websocket-messages" class="link"
+                  target="_blank">Twilio defined Websocket messages</a>. The implementation details of the module is
+                beyond the
+                scope of this article, but the source code is available in the
+                <a href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                  target="_blank" class="link">Somleng Switch Github repository</a>.
+              </p>
+
+              <h3>
+                Invoking mod_twilio_stream from Somleng Switch
+              </h3>
+
+              <p>
+                In order to handle steps 8 and 9 we needed to figure out a way to invoke the new
+                <a href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                  target="_blank" class="link">mod_twilio_stream</a>
+                module with the websockets URL after parsing the TwiML received in step 7.
+                Somleng Switch uses <a href="https://github.com/somleng/adhearsion" target="_blank"
+                  class="link">Adhearsion</a> which is a Ruby based voice application development framework to handle
+                APIs such as playing audio files, recording calls and handing text-to-speech (TTS). Under the hood,
+                Adhearsion uses
+                <a href="https://developer.signalwire.com/freeswitch/FreeSWITCH-Explained/Modules/mod_rayo_3375450/"
+                  target="_blank" class="link">mod_rayo</a> to invoke commands on FreeSWITCH. Digging through the
+                <a href="https://github.com/signalwire/freeswitch/blob/master/src/mod/event_handlers/mod_rayo/mod_rayo.c#L3014"
+                  target="_blank" class="link">mod_rayo source code</a>, we found an API for executing arbitrary API
+                commands on FreeSWITCH. We can then make use of this API allows us to invoke <a
+                  href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                  target="_blank" class="link">mod_twilio_stream</a> with the required dynamic arguments such as the
+                websockets URL. The actual implementation details of this is beyond the scope of this article, but the
+                source code is available in the <a
+                  href="https://github.com/somleng/somleng-switch/blob/develop/components/app/app/workflows/execute_connect.rb"
+                  target="_blank" class="link">Somleng Switch Github repository</a>.
+              </p>
+
+              <h3>
+                Handling stream events
+              </h3>
+
+              <p>
+                The <a href="https://www.twilio.com/docs/voice/media-streams#bidirectional-media-streams"
+                  target="_blank" class="link">&lt;Connect&gt; verb specification</a> states that:
+              <blockquote>
+                &quot;To start a bidirectional Media Stream, use &lt;Connect&gt;
+                &lt;Stream&gt;. These TwiML instructions block subsequent TwiML instructions unless the WebSocket
+                connection
+                is disconnected.&quot;
+              </blockquote>
+              Therefore, we need to add code in order to handle events coming from <a
+                href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                target="_blank" class="link">mod_twilio_stream</a> such as stream disconnect events.
+              </p>
+
+              <p>
+                <a href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch_event_logger"
+                  target="_blank" class="link">FreeSWITCH event logger</a>
+                is a sidecar container written in <a href="https://go.dev/" target="_blank" class="link">Go</a> that
+                runs alongside
+                Somleng Switch and FreeSWITCH. Its main task is to log
+                <a href="https://developer.signalwire.com/freeswitch/FreeSWITCH-Explained/Introduction/Event-System/Event-List_7143557#heartbeat"
+                  target="_blank" class="link">FreeSWITCH heartbeat events</a> which is used to auto-scale FreeSWITCH
+                tasks based on
+                the
+                <code>Session-Count</code> attribute.
+              </p>
+
+              <p>
+                We can also use it to parse custom events from <a
+                  href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                  target="_blank" class="link">mod_twilio_stream</a> and publish them to a
+                <a href="https://redis.io/" target="_blank" class="link">Redis</a> channel for the audio
+                stream. Somleng Switch subscribes to this channel in order to handle the events.
+              </p>
+
+              <img src="../images/blog-open-source-ai-powered-voice-somleng-switch-event-handling.png">
+
+              <p>
+                The diagram above shows how events are handled.
+              <ol>
+                <li>
+                  Somleng Switch uses Redis pub/sub to subscribe to events on a given stream using a unique stream ID.
+                </li>
+                <li>
+                  Somleng Switch invokes <a
+                    href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                    target="_blank" class="link">mod_twilio_stream</a>.
+                </li>
+                <li>
+                  FreeSWITCH Event Logger sidecar container receives a custom event emitted from <a
+                    href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                    target="_blank" class="link">mod_twilio_stream</a>.
+                </li>
+                <li>
+                  FreeSWITCH Event Logger publishes the event to Redis.
+                </li>
+                <li>
+                  Somleng Switch receives the event.
+                </li>
+                <li>
+                  Somleng Switch handles the event.
+                </li>
+              </ol>
+              </p>
+
+              <h3>
+                Interrupting the AI with live call updates
+              </h3>
+
+              <p>
+                In order to modify an in-progress call which is connected to the AI, we had to implement our own version
+                of
+                <a href="https://www.twilio.com/docs/voice/api/call-resource#update-a-call-resource" target="_blank"
+                  class="link">Twilio's Update a Call resource API</a>. This API allows you to modify and in-progress
+                call by providing a new set of <a href="https://www.twilio.com/docs/voice/twiml" target="_blank"
+                  class="link">TwiML</a> instructions or a new URL providing TwiML instructions for the call.
+              </p>
+
+              <p>
+                In order to implement this feature we also make use of Redis pub/sub to publish call update events. More
+                details about the implementation can be found in the <a
+                  href="https://github.com/somleng/somleng-switch/blob/develop/components/app/app/web/api.rb"
+                  target="_blank" class="link">Somleng Switch Github repository</a>.
+              </p>
+
+              <img src="../images/blog-open-source-ai-powered-voice-somleng-live-call-updates.png">
+
+              <p>
+                The diagram above shows how live call updates are handled.
+              <ol>
+                <li>
+                  AI Voice System sends POST request to Somleng's <a
+                    href="https://www.somleng.org/docs/twilio_api/#04-update-a-call-in-progress-with-twiml"
+                    target="_blank" class="link">Update a call resource API</a>.
+                </li>
+                <li>
+                  Somleng API sends an internal API request to Somleng Switch with the new TwiML instructions.
+                </li>
+                <li>
+                  Somleng Switch publishes the call update event to Redis.
+                </li>
+                <li>
+                  Somleng Switch receives the call update event.
+                </li>
+                <li>
+                  Somleng Switch the stop command on <a
+                    href="https://github.com/somleng/somleng-switch/tree/develop/components/freeswitch/src/mod/mod_twilio_stream"
+                    target="_blank" class="link">mod_twilio_stream</a>.
+                </li>
+                <li>
+                  FreeSWITCH sends a <a
+                    href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#stop-message"
+                    target="_blank" class="link">stop message</a> to the AI Voice System disconnects the websocket
+                  connection.
+                  <pre><code class="language-json">{
+    &quot;event&quot;: &quot;stop&quot;,
+    &quot;sequenceNumber&quot;: &quot;5&quot;,
+    &quot;stop&quot;: {
+      &quot;accountSid&quot;: &quot;ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+        &quot;callSid&quot;: &quot;CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+      },
+    &quot;streamSid&quot;: &quot;MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+  }</code></pre>
+
+                </li>
+                <li>
+                  Somleng Switch handles the new TwiML.
+                </li>
+              </ol>
+              </p>
+
+              <h3>
+                Integration Testing with SIPp
+              </h3>
+
+              <p>
+                In order to test the complete setup we wrote some integration tests with <a
+                  href="https://sipp.sourceforge.net/" target="_blank" class="link">SIPp</a> and <a
+                  href="https://docs.docker.com/compose/" target="_blank" class="link">docker compose</a>. These
+                tests are run as part of the
+                <a href="https://github.com/somleng/somleng-switch/blob/develop/.github/workflows/integration_tests.yml"
+                  target="_blank" class="link">Somleng Switch integration
+                  suite</a>
+                on Github Actions.
+              </p>
+
+              <img src="../images/blog-open-source-ai-powered-voice-somleng-sipp-integration-testing.png">
+
+              <p>
+                The sequence diagram below above shows how this <a
+                  href="https://github.com/somleng/somleng-switch/blob/develop/components/testing/tests/public_gateway/connect_stream_test.sh"
+                  target="_blank" class="link">integration test</a> works and is explained in more detail
+                below. Note that SIPp, WSS Server and File Server are all running on the one docker container in the
+                <a href="https://github.com/somleng/somleng-switch/blob/develop/docker-compose.yml" target="_blank"
+                  class="link">docker compose file</a>, but are shown separately in the diagram for clarity.
+              <ol>
+                <li>
+                  Start <a href="https://www.tcpdump.org/" target="_blank" class="link">tcpdump</a>, on the testing
+                  server and run it in the
+                  background. Start SIPp in UAC mode with a custom
+                  <a href="https://github.com/somleng/somleng-switch/blob/develop/components/testing/scenarios/uac_connect.xml"
+                    target="_blank" class="link">connect stream test scenario</a>.
+                </li>
+
+                <li>
+                  SIPp sends a SIP Invite to the gateway container running OpenSIPS.
+                </li>
+
+                <li>
+                  The gateway forwards the SIP Invite to the container running FreeSWITCH.
+                </li>
+
+                <li>
+                  Somleng Switch picks up the call and gets a mock TwiML response from the
+                  <a href="https://github.com/somleng/somleng-switch/blob/develop/components/app/lib/call_platform/fake_client.rb"
+                    target="_blank" class="link">fake client</a> which would normally connect to the Somleng API. We're
+                  not interested in testing the connection to
+                  Somleng API in this test so this part is mocked out. The fake TwiML response contains the following:
+                  <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Response&gt;
+    &lt;Connect&gt;
+      &lt;Stream url=&quot;ws://testing:3001&quot; /&gt;
+    &lt;/Connect&gt;
+    &lt;Play&gt;http://testing:8000/scenarios/files/tone.wav&lt;/Play&gt;
+  &lt;/Response&gt;</code></pre>. We will assert that the Play verb was executed later in the test.
+                </li>
+
+                <li>
+                  Somleng Switch processes the first verb in the TwiML document namely the &lt;Connect&gt; verb.
+                </li>
+
+                <li>
+                  FreeSWITCH responds with a 200 OK to the Gateway container.
+                </li>
+
+                <li>
+                  The Gateway container responds with a 200 OK to the test server running SIPp.
+                </li>
+
+                <li>
+                  Somleng Switch invokes mod_twilio_stream on FreeSWITCH with the URL from the &lt;Connect&gt; verb
+                  obtained from
+                  step 4.
+                </li>
+
+                <li>
+                  FreeSWITCH establishes a Websockets connection to the Websockets Server running on port 3001.
+                </li>
+
+                <li>
+                  The SIPp UAC scenario plays media which is sent to the FreeSWITCH via RTP.
+                </li>
+
+                <li>
+                  mod_twilio_stream encodes the audio and sends it to the Websockets server as a
+                  <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#media-messages"
+                    class="link" target="_blank">Twilio Websockets Media message</a>. The Websockets server decodes the
+                  message and stores it in a buffer.
+                </li>
+
+                <li>
+                  The SIPp UAC scenario plays a DTMF tone which is sent to the FreeSWITCH via RTP.
+                </li>
+
+                <li>
+                  mod_twilio_stream encodes the DTMF tone and sends it to the Websockets server as a
+                  <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#dtmf-message" class="link"
+                    target="_blank">Twilio Websockets DTMF message</a>. The Websockets server
+                  receives the message and stops recording the received audio.
+                </li>
+
+                <li>
+                  The Websockets server starts sending back the previously stored audio
+                  encoded in <a href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#media-messages"
+                    class="link" target="_blank">Twilio Websockets Media messages</a>.
+                </li>
+
+                <li>
+                  mod_twilio_stream decodes the received audio and sends it back to the caller (SIPp UAC) as RTP.
+                </li>
+
+                <li>
+                  mod_twilio_stream sends a <a
+                    href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#mark-message" class="link"
+                    target="_blank">Twilio Websockets Mark message</a> when it's done playing the audio back to the
+                  caller.
+                </li>
+
+                <li>
+                  The Websockets server receives the <a
+                    href="https://www.twilio.com/docs/voice/media-streams/websocket-messages#mark-message" class="link"
+                    target="_blank">Twilio Websockets Mark message</a> and closes the websockets connection.
+                </li>
+
+                <li>
+                  Somleng Switch receives a close event from mod_twilio_stream.
+                </li>
+
+                <li>
+                  Since the Websockets connection has been closed by the remote side, Somleng Switch continues
+                  processing the TwiML in the document from step 4. Now it processes the &lt;Play&gt; verb which will
+                  play
+                  an audio file back to the caller.
+                </li>
+
+                <li>
+                  Somleng Switch invokes the play_audio command on FreeSWITCH with the URL obtained from the TwiML
+                  document.
+                </li>
+
+                <li>
+                  FreeSWITCH fetches the audio file from the File Server which is also running in the test server docker
+                  container.
+                </li>
+
+                <li>
+                  The File Server responds with the audio file.
+                </li>
+
+                <li>
+                  FreeSWITCH plays the audio file back to the caller (SIPp UAC) as RTP.
+                </li>
+
+                <li>
+                  Somleng Switch receives an event from FreeSWITCH that it's done playing the audio, and continues with
+                  the next TwiML verb in the document.
+                </li>
+
+                <li>
+                  Since there are no more TwiML verbs to process Somleng Switch invokes the hangup command on
+                  FreeSWITCH.
+                </li>
+
+                <li>
+                  FreeSWITCH sends a SIP BYE to the Gateway container.
+                </li>
+
+                <li>
+                  The Gateway container sends a SIP Bye to the caller (SIPp UAC).
+                </li>
+
+                <li>
+                  The SIPp scenario is finished and the test continues, stopping tcpdump.
+                </li>
+              </ol>
+              </p>
+
+              <p>
+                After we have captured the a trace with tcpdump we extract the audio using <a href="https://tshark.dev/"
+                  class="link" target="_blank">tshark</a> and <a href="https://www.ffmpeg.org/" class="link"
+                  target="_blank">ffmpeg</a>. We then compare the MD5 checksum of the audio received by the Websockets
+                server
+                as well as the audio received by the SIPp UAC from the &lt;Play&gt; verb and compare it with the MD5
+                checksum of the audio files. If the checksums match then the test passes, otherwise it fails.
+              </p>
+            </div>
+
+            <!-- Back to blog index -->
+            <div class="back-to-blog" style="margin-top:2em;">
+              <a href="../blog.html">&larr; Back to all posts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+</body>
+
+</html>
