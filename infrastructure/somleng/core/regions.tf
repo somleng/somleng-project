@@ -30,7 +30,8 @@ module "hydrogen_region" {
     "zamtel_media"               = "165.57.33.2/32",
     "telecom_cambodia_signaling" = "203.223.42.142/32",
     "telecom_cambodia_media1"    = "203.223.42.132/32",
-    "telecom_cambodia_media2"    = "203.223.42.148/32"
+    "telecom_cambodia_media2"    = "203.223.42.148/32",
+    "lao_telecom_signaling"      = "115.84.121.142/32"
   }
   create_s3_vpc_endpoint = true
 }
