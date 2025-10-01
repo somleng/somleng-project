@@ -35,13 +35,6 @@ jobs:
         env:
           AWS_REGION: us-east-1
 
-      - name: DEBUG (delete me)
-        run: |
-          ls -lat
-          ls -lat tmp/db
-          sudo chown -R 999:999 tmp/db  # Postgres UID in container
-          ls -lat tmp/db
-
       - name: Run docker compose
         run: |
           docker compose up -d
