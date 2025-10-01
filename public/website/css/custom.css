@@ -44,3 +44,61 @@ h6 {
   background: #eee;
   border-radius: 5px;
 }
+
+.blog-list {
+  list-style: none;
+  padding: 0;
+}
+
+.blog-list li {
+  margin-bottom: 2em;
+}
+
+.blog-list a {
+  font-weight: bold;
+  font-size: 1.1em;
+  text-decoration: none;
+  color: #06d19c;
+}
+
+.blog-list a:hover {
+  text-decoration: underline;
+}
+
+.blog-snippet {
+  color: #555;
+  margin-top: 0.3em;
+  font-size: 0.95em;
+}
+
+/* Center the blog content */
+.page__main {
+  display: flex;
+  justify-content: center;
+}
+
+.text-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 1em;
+}
+
+.back-to-blog {
+  text-align: center;
+}
+
+/* Center blog post images */
+.blog-image {
+  display: block;
+  margin: 0 auto 1.5em; /* center horizontally, with bottom spacing */
+  height: auto;          /* maintain aspect ratio */
+  border-radius: 8px;    /* optional: nice rounded corners */
+}
+
+code.inline {
+  background-color: transparent !important; /* remove Prism dark background */
+  color: #e74c3c;                           /* red text for visibility */
+  padding: 0;                                /* inline styling */
+  border-radius: 0;
+  font-weight: bold;                         /* optional: make it stand out */
+}
