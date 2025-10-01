@@ -3,7 +3,7 @@ services:
   db:
     image: public.ecr.aws/docker/library/postgres:alpine
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
       - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     environment:
       POSTGRES_USER: postgres
@@ -154,3 +154,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+
+volumes:
+  - ./tmp/db:/var/lib/postgresql/data
