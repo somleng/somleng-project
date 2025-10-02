@@ -54,17 +54,6 @@ h6 {
   margin-bottom: 2em;
 }
 
-.blog-list a {
-  font-weight: bold;
-  font-size: 1.1em;
-  text-decoration: none;
-  color: #06d19c;
-}
-
-.blog-list a:hover {
-  text-decoration: underline;
-}
-
 .blog-snippet {
   color: #555;
   margin-top: 0.3em;
