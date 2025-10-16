@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "egress" {
 }
 
 resource "aws_route" "nat_instance" {
-  count                  = local.region.nat_instance == null ? 0 : 1
+  count                  = (local.region.nat_instance != null && local.use_nat_instance) ? 1 : 0
   route_table_id         = local.region.vpc.private_route_table_ids[0]
   destination_cidr_block = "${aws_instance.this.public_ip}/32"
   network_interface_id   = local.region.nat_instance.network_interface.id
