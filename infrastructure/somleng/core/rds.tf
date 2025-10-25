@@ -43,8 +43,10 @@ resource "aws_rds_cluster" "db" {
   cluster_identifier              = local.identifier
   engine                          = "aurora-postgresql"
   engine_mode                     = "provisioned"
-  engine_version                  = "16.6"
+  engine_version                  = "17.5"
   master_username                 = "somleng"
+  apply_immediately               = true
+  allow_major_version_upgrade     = true
   master_password                 = aws_ssm_parameter.db_master_password.value
   vpc_security_group_ids          = [aws_security_group.db.id]
   db_subnet_group_name            = aws_db_subnet_group.db.name
@@ -58,6 +60,10 @@ resource "aws_rds_cluster" "db" {
   }
 
   depends_on = [aws_cloudwatch_log_group.this]
+
+  lifecycle {
+    ignore_changes = [engine_version]
+  }
 }
 
 resource "aws_rds_cluster_instance" "db" {
