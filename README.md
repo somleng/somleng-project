@@ -33,7 +33,7 @@ The diagram below shows how each component is connected together.
 
 ### Explanation
 
-On the left hand side, applications such as [RapidPro](https://community.rapidpro.io/), [Somleng SCFM](https://github.com/somleng/somleng-scfm), Early Warning Systems, or your own custom application use [Twilio's libraries](https://www.twilio.com/docs/libraries) to connect to [Somleng's Open Source Implementation of Twilio's REST API](https://www.somleng.org/docs/twilio_api) by updating the endpoint in the helper library from `api.twilio.org` to `api.somleng.org` (or to your own URL running Somleng).
+On the left hand side, applications such as [RapidPro](https://community.rapidpro.io/), [OpenEWS](https://github.com/open-ews/open-ews), or your own custom application use [Twilio's libraries](https://www.twilio.com/docs/libraries) to connect to [Somleng's Open Source Implementation of Twilio's REST API](https://www.somleng.org/docs/twilio_api) by updating the endpoint in the helper library from `api.twilio.org` to `api.somleng.org` (or to your own URL running Somleng).
 
 [Somleng](https://github.com/somleng/somleng) then connects to carriers, aggregators, network providers, VoIP gateways, or SMS gateways in order to make or receive calls/SMS from the telephone network via [SomlengSWITCH](https://github.com/somleng/somleng-switch) which interprets the [TwiML](https://www.twilio.com/docs/voice/twiml) (provided by the connecting application on the left) in order to control a call / SMS.
 
