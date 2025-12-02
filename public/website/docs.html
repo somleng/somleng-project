@@ -578,46 +578,76 @@
 
                 <div id="verify-tutorial-step-5">
                   <h4>
-                    5. Run the Somleng SMS Gateway Application.
+                    5. Run Your SMS Gateway (Node Application or Android App)
                   </h4>
 
                   <p>
-                    In this step you'll run the
-                    <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">Somleng SMS Gateway
-                      Application <i class="fa fa-external-link"></i></a>
-                    on your local machine. This Application connects to the SMS Gateway you created in <a
-                      href="#verify-tutorial-step-4" class="link">Step 4</a>, and allows you to take full control of the
-                    SMS delivery process.
+                    In this step, you'll run the SMS Gateway you created in
+                    <a href="#verify-tutorial-step-3" class="link">Step 3</a>. Somleng provides two options for running
+                    your gateway:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Option A: Somleng SMS Gateway (Node.js Application)</strong> –
+                      <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">
+                        Github Repository <i class="fa fa-external-link"></i></a>.
+                      <br>
+                      This application runs on your local machine or server and allows you to:
+                      <ul>
+                        <li>Run in <strong>dummy mode</strong> for testing</li>
+                        <li>Connect to an external <strong>SMPP server</strong></li>
+                        <li>Use <strong>GoIP</strong> or other local SMS infrastructure</li>
+                      </ul>
+                    </li>
+
+                    <li style="margin-top:1em;">
+                      <strong>Option B: Somleng SMS Gateway Android App</strong> –
+                      <a href="https://github.com/somleng/sms-gateway-app" class="link" target="_blank">
+                        Github Repository <i class="fa fa-external-link"></i></a>.
+                      <br>
+                      Install this app on any Android phone to send <strong>real SMS messages</strong> directly from the
+                      device,
+                      without needing a server or Docker.
+                    </li>
+                  </ul>
+
+                  <p>
+                    Both options require the <em>Device Token</em> you created in
+                    <a href="#verify-tutorial-step-3" class="link">Step 3</a>.
+                    Enter this token during configuration to connect your device to Somleng.
+                  </p>
+
+                  <h5>Running the Node.js SMS Gateway (Option A)</h5>
+
+                  <p>
+                    For this tutorial, we will demonstrate using the Node.js SMS Gateway in <strong>dummy mode</strong>.
+                    Use the following command to run the gateway locally. Replace
+                    <em>&lt;replace-me-with-your-device-token&gt;</em> with the device token from Step 3.
+                  </p>
+
+                  <pre><code class="language-bash">docker run -p 3210:3210 somleng/sms-gateway \
+                  somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy
+                </code></pre>
+
+                  <p>
+                    <em>Note: This option requires Docker to be installed.</em>
+                    See the
+                    <a href="https://github.com/somleng/sms-gateway" target="_blank" class="link">
+                      somleng/sms-gateway repository <i class="fa fa-external-link"></i></a>
+                    for more information.
                   </p>
 
                   <p>
-                    For this tutorial we will be running the SMS Gateway Application in dummy mode, but you could also
-                    run it in another mode (such as smpp or goip) which will allow it to communicate with your local SMS
-                    Gateway infrastructure.
+                    Once your SMS Gateway (Node app or Android app) is connected, the Dashboard will show the status as
+                    <strong>Connected</strong>.
                   </p>
 
                   <p>
-                    Use the following command to run the Somleng SMS Gateway Application on your local
-                    machine. Make sure you replace <em>&lt;replace-me-with-your-device-token&gt;</em>
-                    with the SMS gateway device token you created in <a href="#verify-tutorial-step-4" class="link">Step
-                      4</a>.
+                    If you are using the Node.js Application, you can also check the local status page at:
+                    <a href="http://localhost:3210" class="link" target="_blank">
+                      http://localhost:3210 <i class="fa fa-external-link"></i></a>.
                   </p>
-
-                  <p>
-                    <em>Note: this step requires that you have Docker already installed.</em>
-                    See <a href="https://github.com/somleng/sms-gateway" target="_blank"
-                      class="link">somleng/somleng-sms-gateway <i class="fa fa-external-link"></i></a> for more info.
-                  </p>
-
-                  <p>
-                  <pre><code class="language-bash">docker run -p 3210:3210 somleng/sms-gateway somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy</code></pre>
-                  </p>
-
-                  After your SMS Gateway Application is running on your local machine you should see the connection
-                  status update to <strong>Connected</strong>.
-                  You can also view the connection status on your local machine by visiting <a
-                    href="http://localhost:3210" class="link" target="_blank">http://localhost:3210 <i
-                      class="fa fa-external-link"></i></a>.
 
                   <img src="./images/dashboard-show-sms-gateway.png">
                 </div>
@@ -629,7 +659,7 @@
 
                   <p>
                     In this step you'll register your softphone with the SIP trunk we created in <a
-                      href="#verify-tutorial-step-5" class="link">Step 5</a>. This will allow you to receive
+                      href="#verify-tutorial-step-4" class="link">Step 4</a>. This will allow you to receive
                     verification calls on your local machine. In this tutorial we're using the <a
                       href="https://apps.apple.com/us/app/telephone/id406825478?mt=12" class="link"
                       target="_blank">Telephone Softphone Application <i class="fa fa-external-link"></i></a> for
@@ -651,7 +681,7 @@
                     <li>
                       Copy the <strong>Username</strong>, <strong>Password</strong> and <strong>Domain</strong> fields
                       from the SIP trunk
-                      you created in <a href="#verify-tutorial-step-5" class="link">Step 5</a>.
+                      you created in <a href="#verify-tutorial-step-4" class="link">Step 4</a>.
                     </li>
                     <li>
                       Paste them into the corresponding fields in the account configuration of your softphone.
@@ -672,7 +702,7 @@
 
                   <p>
                     The screenshots below show the SIP registration details from the SIP trunk you created in <a
-                      href="#verify-tutorial-step-5" class="link">Step 5</a> and the
+                      href="#verify-tutorial-step-4" class="link">Step 4</a> and the
                     corresponding fields in account configuration of the SIP phone.
                   </p>
 
@@ -722,7 +752,7 @@
                     </li>
                     <li>
                       Set <strong><code>verificationServiceSid</code></strong> from the verification service you created
-                      in <a href="#verify-tutorial-step-3" class="link">Step 3</a>.
+                      in <a href="#verify-tutorial-step-2" class="link">Step 2</a>.
                     </li>
                   </ul>
 
@@ -825,7 +855,7 @@ client.verify.v2.services(verificationServiceSid)
 
                   <p>
                     After running the code in the previous step, you should receive a call to the softphone you
-                    configured in <a href="#verify-tutorial-step-7" class="link">Step 7</a>.
+                    configured in <a href="#verify-tutorial-step-6" class="link">Step 6</a>.
                     Answer the call to hear the verification code.
                   </p>
 
@@ -861,12 +891,12 @@ client.verify.v2.services(verificationServiceSid)
                     </li>
                     <li>
                       Set <strong><code>verificationServiceSid</code></strong> from the verification service you created
-                      in <a href="#verify-tutorial-step-3" class="link">Step 3</a>.
+                      in <a href="#verify-tutorial-step-2" class="link">Step 2</a>.
                     </li>
                     <li>
                       Set <strong><code>verificationCode</code></strong> from the verification code received via SMS or
-                      call in <a href="#verify-tutorial-step-9" class="link">Step 9</a> or <a
-                        href="#verify-tutorial-step-11" class="link">Step 11</a>.
+                      call in <a href="#verify-tutorial-step-8" class="link">Step 8</a> or <a
+                        href="#verify-tutorial-step-9" class="link">Step 9</a>.
                     </li>
                   </ol>
 
@@ -4578,38 +4608,56 @@ client.calls
 
                 <div id="sms_gateway_configuration_guide_install_sms_gateway_app">
                   <h4>
-                    4. Download and Install the Somleng SMS Gateway App
+                    4. Choose and Install Your SMS Gateway
                   </h4>
 
                   <p>
-                    The
-                    <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">Somleng SMS
-                      Gateway
-                      App <i class="fa fa-external-link"></i></a>.
-                    is as a gateway between Somleng and your SMS infrastructure.
+                    Somleng provides two options for connecting your SMS infrastructure to the platform:
                   </p>
 
+                  <ul>
+                    <li>
+                      <strong>Somleng SMS Gateway (Node.js Application)</strong> –
+                      <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">
+                        Github Repository <i class="fa fa-external-link"></i></a>.
+                      <br>
+                      Use this option if you want to:
+                      <ul>
+                        <li>Connect to an existing <strong>SMPP server</strong></li>
+                        <li>Run the gateway in <strong>dummy mode</strong> for testing</li>
+                        <li>Deploy the gateway on your own server or cloud environment</li>
+                      </ul>
+                    </li>
+
+                    <li style="margin-top: 1em;">
+                      <strong>Somleng SMS Gateway Android App</strong> –
+                      <a href="https://github.com/somleng/sms-gateway-app" class="link" target="_blank">
+                        Github Repository <i class="fa fa-external-link"></i></a>.
+                      <br>
+                      Use this option if you want to:
+                      <ul>
+                        <li>Send <strong>real SMS messages</strong> using any Android phone</li>
+                        <li>Quickly get started without additional hardware or servers</li>
+                      </ul>
+                    </li>
+                  </ul>
+
                   <p>
-                    Detailed instructions on how to install, configure and deploy the app can be found on the
-                    Somleng
-                    SMS Gateway
-                    <a href="https://github.com/somleng/sms-gateway" class="link" target="_blank">Github
-                      repository
-                      <i class="fa fa-external-link"></i></a>.
-                    You'll need the <em>Device Token</em> from
+                    Both gateway options require the <em>Device Token</em> you created in
                     <a href="#sms_gateway_configuration_guide_create_an_sms_gateway" class="link">Step 1</a>.
-                    to connect the SMS Gateway App to Somleng.
+                    Enter this token into the Node app configuration or the Android app to connect your device to
+                    Somleng.
                   </p>
 
                   <p>
-                    Once the SMS Gateway app is configured and successfully connected to Somleng, you should see
-                    the
-                    connection status show <em>Connected</em>
-                    the Dashboard.
+                    Once your gateway is configured and successfully connected, the Dashboard will show its connection
+                    status as
+                    <em>Connected</em>.
                   </p>
 
                   <img src="./images/sms_gateway_connection_status_connected.png">
                 </div>
+
 
                 <div id="sms_gateway_configuration_guide_send_an_outbound_message">
                   <h4>
