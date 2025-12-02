@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Somleng | Blog | Somleng SMS Gateway Android App - Open Source, Twilio-Compatible SMS API</title>
+  <meta name="description"
+    content="Introducing the new open-source Somleng SMS Gateway Android App. Send and receive SMS using a Twilio-compatible API. Achieve redundancy with multiple devices, migrate workloads off Twilio, and deploy cost-effective, scalable SMS infrastructure.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Somleng SMS Gateway Android App - Open Source, Twilio-Compatible SMS API">
+  <meta property="og:description"
+    content="Use the new Somleng SMS Gateway Android App to send and receive SMS via a Twilio-compatible API. Supports redundancy, failover, and multi-device scalability. Fully open source.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://somleng.org/blog/sms-gateway-android-app">
+  <meta property="og:image" content="https://somleng.org/assets/sms-gateway-android-app.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Somleng SMS Gateway Android App - Twilio-Compatible, Open Source">
+  <meta name="twitter:description"
+    content="Send & receive SMS using Somleng's Twilio-compatible API via the new Android SMS Gateway App. Fully open source.">
+
+  <link rel='stylesheet' href='../css/style.min.css' />
+  <link rel='stylesheet' href='../css/custom.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar navbar--extended">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo"><img src="../images/somleng_logo.png" height="75px"></a>
+        <nav class="navbar__menu">
+          <li><a href="../docs.html">Documentation</a></li>
+          <li><a href="../open_source.html">Open Source</a></li>
+          <li><a href="../case_studies.html">Case Studies</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero unit -->
+  <div class="page__header">
+    <div class="hero__overlay hero__overlay--gradient"></div>
+    <div class="hero__mask"></div>
+    <div class="page__header__inner">
+      <div class="container">
+        <div class="page__header__content">
+          <div class="page__header__content__inner">
+            <h1 class="page__header__title">
+              Introducing the Somleng SMS Gateway Android App: Send & Receive SMS Using a Twilio-Compatible API
+            </h1>
+            <h5 class="page__header__title">December 2, 2025</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="container">
+      <div class="page__inner">
+        <div class="page__main">
+          <div class="text-container">
+
+            <article class="blog-post">
+              <img src="../images/somleng-sms-gateway-app-screenshot.png" class="expanded__image blog-image">
+
+              <p>
+                We're excited to announce the release of the <strong>Somleng SMS Gateway Android App</strong>, a
+                lightweight,
+                open-source Android application that allows you to send and receive SMS messages through Somleng—using
+                the
+                <strong>exact same API syntax as Twilio</strong>.
+              </p>
+
+              <p>
+                This new Android Gateway App gives organizations, developers, and operators a fast, affordable, and
+                flexible way
+                to use real mobile devices as SMS gateways. With nothing more than an Android phone and a SIM card, you
+                can
+                immediately begin sending and receiving SMS through <strong>Somleng's Twilio-compatible Messaging
+                  API</strong>.
+              </p>
+
+              <p>
+                ➡️ <strong>GitHub repository:</strong><br>
+                <a href="https://github.com/somleng/sms-gateway-app" target="_blank"
+                  class="link">https://github.com/somleng/sms-gateway-app</a>
+              </p>
+
+              <h2>Why We Built the Android SMS Gateway App</h2>
+
+              <p>
+                Somleng has always focused on making early warning systems, IVR solutions, and messaging infrastructure
+                accessible
+                to everyone—especially where traditional telecom services may be limited or cost-prohibitive.
+              </p>
+
+              <p>The new Android Gateway App was designed to address several common needs:</p>
+
+              <ul>
+                <li><strong>A no-infrastructure SMS gateway:</strong> No servers, no Docker, no SMPP. Just install and
+                  go.</li>
+                <li><strong>Support for real-world deployments:</strong> Send real SMS via the mobile network attached
+                  to your
+                  SIM.</li>
+                <li><strong>Twilio drop-in compatibility:</strong> Use familiar Twilio API calls without modifying your
+                  code.</li>
+                <li><strong>Open-source flexibility:</strong> Extend, fork, or integrate it however you need.</li>
+              </ul>
+
+              <p>
+                And most importantly:<br>
+                <strong>You can connect multiple Android devices to the same gateway on Somleng, providing redundancy,
+                  load
+                  balancing,
+                  and failover.</strong>
+              </p>
+
+              <h2>How the Android SMS Gateway App Works</h2>
+
+              <img src="../images/somleng-gateway-app.png" class="blog-image">
+
+              <p>
+                The app transforms any Android phone into an SMS gateway that communicates with Somleng using your
+                <em>Device Token</em>. Once connected, Somleng routes outgoing and incoming messages through the device.
+              </p>
+
+              <h3>Sending SMS</h3>
+              <img src="../images/somleng-sms-gateway-outbound-message-flow.png" class="blog-image">
+
+              <p>
+                When your application sends a message using Somleng's Twilio-compatible API, Somleng assigns the message
+                to a
+                connected Android device. The device then delivers the SMS via the mobile network.
+              </p>
+
+              <h3>Receiving SMS</h3>
+              <img src="../images/somleng-sms-gateway-inbound-message-flow.png" class="blog-image">
+
+              <p>
+                Incoming SMS messages received by the device's SIM card are automatically forwarded to Somleng, which
+                then relays
+                them to your webhook using Twilio-compatible parameters.
+              </p>
+
+              <h2>Example: Sending an SMS Using Somleng (Twilio-Compatible Syntax)</h2>
+
+              <p>Here's a simple example using <strong>cURL</strong> to send an SMS:</p>
+
+              <pre><code>curl -X POST https://api.somleng.org/2010-04-01/Accounts/&lt;YOUR_ACCOUNT_SID&gt;/Messages.json \
+  -u &lt;YOUR_ACCOUNT_SID&gt;:&lt;YOUR_AUTH_TOKEN&gt; \
+  -d "To=+85512345678" \
+  -d "From=+85500000001" \
+  -d "Body=Hello from Somleng via the Android SMS Gateway!"
+</code></pre>
+
+              <p>
+                If you've used Twilio before, this should look identical—because it is. Somleng's API is
+                <strong>fully Twilio-compatible</strong>.
+              </p>
+
+              <h2>Redundancy, Load Balancing & Failover With Multiple Devices</h2>
+
+              <p>
+                The ability to connect <strong>multiple Android devices</strong> to the same SMS Gateway is one of
+                Somleng's most
+                powerful features. This makes your SMS delivery more reliable and scalable.
+              </p>
+
+              <ul>
+                <li><strong>Redundancy:</strong> If one device loses signal or power, another device takes over
+                  automatically.
+                </li>
+                <li><strong>Load Balancing:</strong> Traffic can be spread across multiple devices for higher
+                  throughput.</li>
+                <li><strong>Failover:</strong> Messages are not lost if a device becomes unreachable.</li>
+                <li><strong>Geographic Diversity:</strong> Deploy devices in different regions or networks.</li>
+              </ul>
+
+              <h2>Use Cases</h2>
+
+              <h3>1. Moving SMS Workloads Off Twilio</h3>
+              <p>
+                Many users choose Somleng to reduce costs or gain greater control. The Android App makes it trivial to
+                route SMS
+                through local devices while using the same Twilio API calls.
+              </p>
+
+              <h3>2. Localized SMS Delivery for Governments & NGOs</h3>
+              <p>
+                Deploy phones in the exact regions where messages need to be delivered—ideal for early warning systems,
+                beneficiary messaging, or disaster communications.
+              </p>
+
+              <h3>3. Telecoms & Startups Building Messaging Products</h3>
+              <p>
+                Combine Somleng's open-source platform with the Android App to build scalable messaging products without
+                SMPP
+                contracts or expensive infrastructure.
+              </p>
+
+              <h3>4. Backup Routing for Mission-Critical Systems</h3>
+              <p>
+                Even if you already use SMPP, Android devices can act as fallback routing to ensure uninterrupted
+                delivery.
+              </p>
+
+              <h3>5. Rapid Prototyping & Testing</h3>
+              <p>
+                Spin up a full SMS gateway in minutes. Perfect for demos, workshops, and development environments.
+              </p>
+
+              <h2>Open Source, Free, and Community-Driven</h2>
+
+              <p>
+                Like all Somleng projects, the Android SMS Gateway App is <strong>100% open source</strong>. You can
+                review the
+                source code, submit improvements, fork the project, or adapt it to specific use cases.
+              </p>
+
+              <h2>Get Started Today</h2>
+
+              <ol>
+                <li>Download the Android app:<br>
+                  <a href="https://github.com/somleng/sms-gateway-app"
+                    target="_blank">https://github.com/somleng/sms-gateway-app</a>
+                </li>
+                <li>Create an SMS Gateway and Device Token in your Somleng dashboard.</li>
+                <li>Enter the Device Token into the Android app.</li>
+                <li>Begin sending and receiving messages using Twilio-compatible API requests.</li>
+              </ol>
+
+              <p>
+                That's it. No servers. No extra infrastructure. Just pure messaging power.
+              </p>
+
+              <h2>Final Thoughts</h2>
+
+              <p>
+                The new Somleng SMS Gateway Android App is the easiest way to deploy your own SMS messaging
+                infrastructure—
+                powered by real mobile networks, fully open source, and compatible with the Twilio API.
+              </p>
+
+              <p>
+                Whether you're reducing costs, scaling communications, building an early warning system, or migrating
+                off Twilio,
+                Somleng gives you the flexibility to build exactly what you need.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
