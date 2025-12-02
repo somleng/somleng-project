@@ -77,8 +77,28 @@ jobs:
 
       - name: Assert SMS Gateway received message
         run: |
-          docker compose logs sms-gateway
-          docker compose logs sms-gateway | grep "Hello World from Integration Test"
+          echo "Waiting for SMS Gateway to receive the message..."
+          MESSAGE="Hello World from Integration Test"
+          MAX_RETRIES=15
+          SLEEP_INTERVAL=2
+          FOUND=0
+
+          for i in $(seq 1 $MAX_RETRIES); do
+            if docker compose logs sms-gateway | grep -q "$MESSAGE"; then
+              echo "✅ Message received in logs!"
+              FOUND=1
+              break
+            fi
+            echo "Attempt $i/$MAX_RETRIES: message not yet in logs, waiting $SLEEP_INTERVAL seconds..."
+            sleep $SLEEP_INTERVAL
+          done
+
+          if [ $FOUND -eq 0 ]; then
+            echo "❌ Message not found in SMS Gateway logs after $((MAX_RETRIES * SLEEP_INTERVAL)) seconds."
+            echo "Dumping full SMS Gateway logs for debugging:"
+            docker compose logs sms-gateway
+            exit 1
+          fi
 
   deploy:
     name: Deploy
