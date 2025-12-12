@@ -6,8 +6,8 @@
 
 set -e
 
-dnf update
-dnf install -y docker
+dnf update -y
+dnf install -y docker wget git
 service docker start
 
 POSTGRES_VERSION=17

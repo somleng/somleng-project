@@ -2,8 +2,44 @@ locals {
   vpc = data.terraform_remote_state.core.outputs.hydrogen_region.vpc
 }
 
-data "aws_ssm_parameter" "arm64_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
+data "aws_ami" "amazon_linux_arm64" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-kernel-*arm64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["arm64"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+}
+
+data "aws_ami" "amazon_linux_x86_64" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-kernel-*x86_64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
 }
 
 data "aws_s3_bucket" "backups" {
@@ -40,8 +76,8 @@ resource "aws_security_group_rule" "egress" {
 }
 
 resource "aws_instance" "this" {
-  ami           = data.aws_ssm_parameter.arm64_ami.value
-  instance_type = "t4g.small"
+  ami           = startswith(var.instance_type, "t4g") ? data.aws_ami.amazon_linux_arm64.id : data.aws_ami.amazon_linux_x86_64.id
+  instance_type = var.instance_type
   security_groups = [
     aws_security_group.this.id,
     data.aws_security_group.db.id
