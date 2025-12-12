@@ -7,13 +7,13 @@ variable "backup_db" {
 }
 
 variable "db_name" {
-  description = "somleng or scfm"
+  description = "somleng, somleng_staging or scfm"
 }
 
 variable "cluster_identifier" {
-  description = "somlengv2 or open-ews"
+  description = "somlengv2, somleng-staging, or open-ews"
 }
 
 variable "db_master_password_parameter_identifier" {
-  description = "somleng or open-ews"
+  description = "somleng, somleng-staging, or open-ews"
 }

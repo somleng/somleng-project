@@ -27,7 +27,7 @@ output "alias" {
 }
 
 output "aws_region" {
-  value = data.aws_region.this.name
+  value = data.aws_region.this.region
 }
 
 output "event_bus" {

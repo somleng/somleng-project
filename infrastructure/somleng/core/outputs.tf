@@ -11,17 +11,13 @@ output "helium_region" {
   value = module.helium_region
 }
 
-output "db_cluster" {
-  value     = aws_rds_cluster.db
+output "db" {
+  value     = module.db
   sensitive = true
 }
 
-output "db_security_group" {
-  value = aws_security_group.db
-}
-
-output "db_master_password_parameter" {
-  value     = aws_ssm_parameter.db_master_password
+output "db_staging" {
+  value     = module.db_staging
   sensitive = true
 }
 

@@ -7,7 +7,7 @@ data "aws_region" "accepter" {
 resource "aws_vpc_peering_connection" "requester" {
   vpc_id      = var.requester_region.vpc.vpc_id
   peer_vpc_id = var.accepter_region.vpc.vpc_id
-  peer_region = data.aws_region.accepter.name
+  peer_region = data.aws_region.accepter.region
 
   tags = {
     Name = "${var.requester_region.alias} <-> ${var.accepter_region.alias}"
