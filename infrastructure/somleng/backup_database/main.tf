@@ -66,6 +66,11 @@ data "aws_security_group" "db" {
   }
 }
 
+data "aws_security_group" "additional_sg" {
+  count = var.additional_sg != "" ? 1 : 0
+  id    = var.additional_sg
+}
+
 resource "aws_security_group_rule" "egress" {
   type              = "egress"
   to_port           = 0
@@ -78,10 +83,14 @@ resource "aws_security_group_rule" "egress" {
 resource "aws_instance" "this" {
   ami           = startswith(var.instance_type, "t4g") ? data.aws_ami.amazon_linux_arm64.id : data.aws_ami.amazon_linux_x86_64.id
   instance_type = var.instance_type
-  security_groups = [
-    aws_security_group.this.id,
-    data.aws_security_group.db.id
-  ]
+  security_groups = compact(concat(
+    [
+      aws_security_group.this.id,
+      data.aws_security_group.db.id,
+    ],
+    data.aws_security_group.additional_sg[*].id
+  ))
+
   subnet_id            = element(local.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = templatefile(

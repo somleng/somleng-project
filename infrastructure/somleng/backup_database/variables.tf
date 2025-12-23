@@ -26,3 +26,7 @@ variable "cluster_identifier" {
 variable "db_master_password_parameter_identifier" {
   description = "somleng, somleng-staging, or open-ews"
 }
+
+variable "additional_sg" {
+  description = "Additional security group to add to the instance"
+}
