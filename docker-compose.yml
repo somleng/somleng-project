@@ -32,6 +32,9 @@ services:
       REDIS_URL: redis://redis:6379/0
       ANYCABLE_SECRET: secret
       ANYCABLE_BROADCAST_ADAPTER: redisx
+      RATING_ENGINE_HOST: http://rating-engine-api:2080
+      RATING_ENGINE_USERNAME: somleng
+      RATING_ENGINE_PASSWORD: password
     ports:
       - "3000:3000"
     depends_on: &somleng_depends_on
