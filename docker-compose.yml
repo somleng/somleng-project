@@ -33,7 +33,7 @@ services:
       ANYCABLE_SECRET: secret
       ANYCABLE_BROADCAST_ADAPTER: redisx
       RATING_ENGINE_HOST: http://rating-engine-api:2080
-      RATING_ENGINE_USERNAME: somleng
+      RATING_ENGINE_USERNAME: cgrates
       RATING_ENGINE_PASSWORD: password
     ports:
       - "3000:3000"
@@ -197,7 +197,7 @@ services:
       HTTP_LISTEN_ADDRESS: "0.0.0.0:2080"
       BOOTSTRAP_DB: "true"
       SERVER_MODE: "api"
-      JSON_RPC_USERNAME: "somleng"
+      JSON_RPC_USERNAME: "cgrates"
       JSON_RPC_PASSWORD: "password"
     expose:
       - "2080/tcp"
