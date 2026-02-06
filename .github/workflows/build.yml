@@ -58,25 +58,52 @@ jobs:
 
       - name: Test an outbound call
         run: |
-          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Calls" \
+          response=$(mktemp)
+
+          http_code=$(curl -s \
+            -o "$response" \
+            -w "%{http_code}" \
+            -X POST "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Calls" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
             -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
             --data-urlencode "Url=https://demo.twilio.com/docs/voice.xml" \
             --data-urlencode "Method=GET" \
             --data-urlencode "To=+299221234" \
             --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
+          )
+
+          if [ "$http_code" -ge 400 ]; then
+            echo "Request failed with HTTP $http_code"
+            echo "Response body:"
+            cat "$response"
+            exit 1
+          fi
 
       - name: Test an outbound SMS
         id: test_outbound_sms
         run: |
-          response=$(curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages" \
+          response_file=$(mktemp)
+
+          http_code=$(curl -s \
+            -o "$response_file" \
+            -w "%{http_code}" \
+            -X POST "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
             -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
             --data-urlencode "To=+299221234" \
             --data-urlencode "Body=Hello World from Integration Test" \
-            --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}")
-          message_sid=$(echo $response | jq -r '.sid')
-          echo "message_sid=$message_sid" >> $GITHUB_OUTPUT
+            --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
+          )
+
+          if [ "$http_code" -ge 400 ]; then
+            echo "Request failed with HTTP $http_code"
+            echo "Response body:"
+            cat "$response_file"
+            exit 1
+          fi
+
+          message_sid=$(jq -r '.sid' "$response_file")
+          echo "message_sid=$message_sid" >> "$GITHUB_OUTPUT"
 
       - name: Assert SMS Gateway received message
         run: |
