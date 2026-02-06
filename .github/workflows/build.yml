@@ -114,8 +114,8 @@ jobs:
           FOUND=0
 
           for i in $(seq 1 $MAX_RETRIES); do
-            response=$(curl --fail -s "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages/${{ steps.test_outbound_sms.outputs.message_sid }} \
-              -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}")
+            response=$(curl --fail -s -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
+              "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages/${{ steps.test_outbound_sms.outputs.message_sid }}")
             price=$(echo $response | jq -r '.price')
 
             if [ "$price" != "null" ]; then
