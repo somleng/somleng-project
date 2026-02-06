@@ -37,7 +37,7 @@ jobs:
 
       - name: Run docker compose
         run: |
-          docker compose up -d
+          docker compose up -d --wait
 
       - name: Bootstrap DB
         id: bootstrap_db
