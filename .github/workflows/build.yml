@@ -146,7 +146,7 @@ jobs:
       - name: Assert SMS Billing
         run: |
           echo "Syncing rating engine transactions..."
-          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call"
+          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call && RefreshCarrierRates.call"
 
           echo "Waiting for pricing to be updated..."
           MAX_RETRIES=15
