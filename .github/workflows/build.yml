@@ -73,9 +73,15 @@ jobs:
           )
 
           if [ "$http_code" -ge 400 ]; then
-            echo "Request failed with HTTP $http_code"
-            echo "Response body:"
-            cat "$response"
+            if [ "$http_code" -lt 500 ]; then
+              echo "Client error (HTTP $http_code)"
+              echo "Response body:"
+              cat "$response_file"
+            else
+              echo "Server error (HTTP $http_code)"
+              echo "Dumping Somleng logs:"
+              docker compose logs somleng
+            fi
             exit 1
           fi
 
@@ -96,9 +102,15 @@ jobs:
           )
 
           if [ "$http_code" -ge 400 ]; then
-            echo "Request failed with HTTP $http_code"
-            echo "Response body:"
-            cat "$response_file"
+            if [ "$http_code" -lt 500 ]; then
+              echo "Client error (HTTP $http_code)"
+              echo "Response body:"
+              cat "$response_file"
+            else
+              echo "Server error (HTTP $http_code)"
+              echo "Dumping Somleng logs:"
+              docker compose logs somleng
+            fi
             exit 1
           fi
 
