@@ -105,15 +105,16 @@ jobs:
 
       - name: Assert SMS Billing
         run: |
-          echo "Syncing rating engine transactions..."
-          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call"
-
           echo "Waiting for pricing to be updated..."
           MAX_RETRIES=15
           SLEEP_INTERVAL=2
           FOUND=0
 
           for i in $(seq 1 $MAX_RETRIES); do
+            echo "Syncing rating engine transactions..."
+            docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call"
+            docker compose exec somleng bundle exec rails runner "puts GetAccountBalance.call(Account.find('${{ steps.bootstrap_db.outputs.account_sid }}'))"
+
             response=$(curl --fail -s -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
               "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages/${{ steps.test_outbound_sms.outputs.message_sid }}")
             price=$(echo $response | jq -r '.price')
