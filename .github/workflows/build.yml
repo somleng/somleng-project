@@ -67,13 +67,16 @@ jobs:
             --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
 
       - name: Test an outbound SMS
+        id: test_outbound_sms
         run: |
-          curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages" \
+          response=$(curl --fail -s -X "POST" "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages" \
             -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
             -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
             --data-urlencode "To=+299221234" \
             --data-urlencode "Body=Hello World from Integration Test" \
-            --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}"
+            --data-urlencode "From=${{ steps.bootstrap_db.outputs.phone_number }}")
+          message_sid=$(echo $response | jq -r '.sid')
+          echo "message_sid=$message_sid" >> $GITHUB_OUTPUT
 
       - name: Assert SMS Gateway received message
         run: |
@@ -97,6 +100,38 @@ jobs:
             echo "❌ Message not found in SMS Gateway logs after $((MAX_RETRIES * SLEEP_INTERVAL)) seconds."
             echo "Dumping full SMS Gateway logs for debugging:"
             docker compose logs sms-gateway
+            exit 1
+          fi
+
+      - name: Assert SMS Billing
+        run: |
+          echo "Syncing rating engine transactions..."
+          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call"
+
+          echo "Waiting for pricing to be updated..."
+          MAX_RETRIES=15
+          SLEEP_INTERVAL=2
+          FOUND=0
+
+          for i in $(seq 1 $MAX_RETRIES); do
+            response=$(curl --fail -s "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages/${{ steps.test_outbound_sms.outputs.message_sid }} \
+              -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}")
+            price=$(echo $response | jq -r '.price')
+
+            if [ "$price" != "null" ]; then
+              echo "✅ Pricing updated!"
+              FOUND=1
+              break
+            fi
+
+            echo "Attempt $i/$MAX_RETRIES: pricing not yet updated, waiting $SLEEP_INTERVAL seconds..."
+            sleep $SLEEP_INTERVAL
+          done
+
+          if [ $FOUND -eq 0 ]; then
+            echo "❌ Pricing not updated after $((MAX_RETRIES * SLEEP_INTERVAL)) seconds."
+            echo "Dumping full response for debugging:"
+            echo $response
             exit 1
           fi
 

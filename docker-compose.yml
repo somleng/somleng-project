@@ -22,7 +22,7 @@ services:
       retries: 5
 
   somleng: &somleng
-    image: ghcr.io/somleng/somleng
+    image: ghcr.io/somleng/somleng:beta
     environment: &somleng_environment
       RAILS_ENV: development
       DATABASE_HOST: db
@@ -35,6 +35,7 @@ services:
       RATING_ENGINE_HOST: http://rating-engine-api:2080
       RATING_ENGINE_USERNAME: cgrates
       RATING_ENGINE_PASSWORD: password
+      STUB_RATING_ENGINE: "false"
     ports:
       - "3000:3000"
     depends_on: &somleng_depends_on
