@@ -35,13 +35,10 @@ jobs:
         env:
           AWS_REGION: us-east-1
 
-      - name: Run docker compose
-        run: |
-          docker compose up -d --wait
-
       - name: Bootstrap DB
         id: bootstrap_db
         run: |
+          docker compose --profile bootstrap up bootstrap
           output=$(docker compose run -T somleng bundle exec rails db:setup)
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
@@ -51,6 +48,10 @@ jobs:
           echo "auth_token=$auth_token" >> $GITHUB_OUTPUT
           echo "phone_number=$phone_number" >> $GITHUB_OUTPUT
           echo "sms_gateway_device_token=$sms_gateway_device_token" >> $GITHUB_OUTPUT
+
+      - name: Run docker compose
+        run: |
+          docker compose up -d --wait
 
       - name: Start SMS Gateway
         run: |

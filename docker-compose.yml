@@ -115,6 +115,18 @@ services:
       timeout: 5s
       retries: 10
 
+  bootstrap:
+    <<: *somleng
+    command: bundle exec rails db:setup
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+      rating-engine-api:
+        condition: service_healthy
+    profiles:
+      - bootstrap
+
   somleng-switch:
     image: ghcr.io/somleng/switch-app
     environment:
