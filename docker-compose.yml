@@ -88,7 +88,11 @@ services:
     depends_on:
       <<: *somleng_depends_on
     ports: []
-    healthcheck: false
+    healthcheck:
+      test: ["CMD-SHELL", "exit 0"]
+      interval: 10s
+      timeout: 5s
+      retries: 1
 
   ws:
     image: anycable/anycable-go:latest-alpine
