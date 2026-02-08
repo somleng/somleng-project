@@ -145,7 +145,6 @@ jobs:
       - name: Assert SMS Billing
         run: |
           echo "Syncing rating engine transactions..."
-          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call"
 
           echo "Waiting for pricing to be updated..."
           MAX_RETRIES=15
@@ -173,6 +172,8 @@ jobs:
             echo "❌ Pricing not updated after $((MAX_RETRIES * SLEEP_INTERVAL)) seconds."
             echo "Dumping full response for debugging:"
             echo $response
+            echo "Dumping scheduler logs"
+            docker compose logs somleng-scheduler
             exit 1
           fi
 

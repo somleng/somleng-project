@@ -4831,31 +4831,36 @@ client.calls
 
               <div id="installation-guide-step-3">
                 <h4>
-                  3. Start Somleng.
+                  3. Boostrap Somleng
                 </h4>
 
-                <pre><code class="language-bash">docker compose up</code></pre>
-              </div>
+                <pre><code class="language-bash">docker compose --profile somleng-bootstrap run somleng-bootstrap</code></pre>
 
-              <div id="installation-guide-step-4">
-                <h4>
-                  4. Seed the Database
-                </h4>
+                You should get some output similar to the following:
 
-                <pre><code class="language-bash">docker compose exec somleng bundle exec rails db:setup</code></pre>
-
-                You should get the following output:
-
-                <pre><code class="line-numbers language-bash">Account SID:              account-sid
-Auth Token:               auth-token
+                <pre><code class="line-numbers language-bash">Account SID:              51fdd492-568d-4439-8684-68c7712c926d
+Auth Token:               w_x8qACQfaf8HroCBcZ6sqtGpaXVrcqVSQs4gb3axXQ
 Phone Number:             1294
-SMS Gateway Device Token: sms-gateway-device-token
+SMS Gateway Device Token: co4nqemf4rej453eqrsdboeb
 ---------------------------------------------
 URL:                      http://my-carrier.app.lvh.me:3000/
 Carrier User Email:       johndoe@carrier.com
 Carrier User Password:    Somleng1234!
-Carrier API Key:          carrier-api-key
-</code></pre>
+Carrier API Key:          K9zlIw0pwJG2unSx890cmwDmRXeQUqYS9U2ial_tZ7A
+---------------------------------------------
+Outbound Calls Rate:      0.10
+Inbound Calls Rate:       0.02
+Outbound Messages Rate:   0.05
+Inbound Messages Rate:    0.01
+---------------------------------------------</code></pre>
+              </div>
+
+              <div id="installation-guide-step-4">
+                <h4>
+                  4. Start Somleng.
+                </h4>
+
+                <pre><code class="language-bash">docker compose up</code></pre>
               </div>
 
               <div id="installation-guide-step-5">
@@ -4874,14 +4879,8 @@ Carrier API Key:          carrier-api-key
 
                 <p>
                   <em>
-                    Note: You'll need to setup two factor authentication (2FA) after the first time you sign in to
-                    the
+                    Note: You'll need to setup two factor authentication (2FA) the first time you sign in to the
                     Dashboard.
-                    You can use the
-                    <a href="https://authenticator.cc" class="link" target="_blank">Authenticator browser
-                      extension <i class="fa fa-external-link"></i>
-                    </a>
-                    if you don't already have another 2FA application.
                   </em>
                 </p>
               </div>
