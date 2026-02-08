@@ -38,7 +38,7 @@ jobs:
       - name: Bootstrap DB
         id: bootstrap_db
         run: |
-          docker compose --profile bootstrap up bootstrap
+          docker compose --profile somleng-bootstrap up somleng-bootstrap
           output=$(docker compose run -T somleng bundle exec rails db:setup)
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
@@ -146,7 +146,7 @@ jobs:
       - name: Assert SMS Billing
         run: |
           echo "Syncing rating engine transactions..."
-          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call && RefreshCarrierRates.call"
+          docker compose exec somleng bundle exec rails runner "SyncRatingEngineTransactions.call"
 
           echo "Waiting for pricing to be updated..."
           MAX_RETRIES=15

@@ -64,6 +64,31 @@ services:
       - "-b"
       - "0.0.0.0"
 
+  somleng-bootstrap:
+    <<: *somleng
+    command: bundle exec rails db:setup
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+      rating-engine-api:
+        condition: service_healthy
+    profiles:
+      - somleng-bootstrap
+
+  somleng-scheduler:
+    <<: *somleng
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo '* * * * * cd /app && bundle exec rails runner "PerMinuteJob.perform_later" >> /proc/1/fd/1 2>&1' \
+          > /etc/crontabs/root
+        crond -f -l 2
+    depends_on:
+      <<: *somleng_depends_on
+    ports: []
+
   ws:
     image: anycable/anycable-go:latest-alpine
     ports:
@@ -114,18 +139,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-
-  bootstrap:
-    <<: *somleng
-    command: bundle exec rails db:setup
-    restart: "no"
-    depends_on:
-      db:
-        condition: service_healthy
-      rating-engine-api:
-        condition: service_healthy
-    profiles:
-      - bootstrap
 
   somleng-switch:
     image: ghcr.io/somleng/switch-app
