@@ -54,7 +54,7 @@ jobs:
 
       - name: Start SMS Gateway
         run: |
-          DEVICE_TOKEN="${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" docker compose up --wait -d sms-gateway
+          DEVICE_TOKEN="${{ steps.bootstrap_db.outputs.sms_gateway_device_token }}" docker compose up --wait -d --profile sms-gateway sms-gateway
 
       - name: Test an outbound call
         run: |
@@ -121,8 +121,8 @@ jobs:
         run: |
           echo "Waiting for SMS Gateway to receive the message..."
           MESSAGE="Hello World from Integration Test"
-          MAX_RETRIES=15
-          SLEEP_INTERVAL=2
+          MAX_RETRIES=21
+          SLEEP_INTERVAL=3
           FOUND=0
 
           for i in $(seq 1 $MAX_RETRIES); do
@@ -144,8 +144,6 @@ jobs:
 
       - name: Assert SMS Billing
         run: |
-          echo "Syncing rating engine transactions..."
-
           echo "Waiting for pricing to be updated..."
           MAX_RETRIES=15
           SLEEP_INTERVAL=2

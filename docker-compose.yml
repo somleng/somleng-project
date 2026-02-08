@@ -82,9 +82,10 @@ services:
       - /bin/sh
       - -c
       - |
-        echo '* * * * * cd /app && bundle exec rails runner "PerMinuteJob.perform_later" >> /proc/1/fd/1 2>&1' \
-          > /etc/crontabs/root
-        crond -f -l 2
+        while true; do
+          bundle exec rails runner "PerMinuteJob.perform_later"
+          sleep 60
+        done
     depends_on:
       <<: *somleng_depends_on
     ports: []
@@ -195,7 +196,7 @@ services:
       ws:
         condition: service_healthy
     profiles:
-      - donotstart
+      - sms-gateway
     healthcheck:
       test:
         [
