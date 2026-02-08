@@ -150,8 +150,6 @@ jobs:
           FOUND=0
 
           for i in $(seq 1 $MAX_RETRIES); do
-            docker compose exec somleng bundle exec rails runner "puts GetAccountBalance.call(Account.find('${{ steps.bootstrap_db.outputs.account_sid }}'))"
-
             response=$(curl --fail -s -u "${{ steps.bootstrap_db.outputs.account_sid }}:${{ steps.bootstrap_db.outputs.auth_token }}" \
               "http://api.lvh.me:3000/2010-04-01/Accounts/${{ steps.bootstrap_db.outputs.account_sid }}/Messages/${{ steps.test_outbound_sms.outputs.message_sid }}")
             price=$(echo $response | jq -r '.price')
@@ -170,8 +168,6 @@ jobs:
             echo "❌ Pricing not updated after $((MAX_RETRIES * SLEEP_INTERVAL)) seconds."
             echo "Dumping full response for debugging:"
             echo $response
-            echo "Dumping scheduler logs"
-            docker compose logs somleng-scheduler
             exit 1
           fi
 
