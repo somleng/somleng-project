@@ -38,8 +38,7 @@ jobs:
       - name: Bootstrap DB
         id: bootstrap_db
         run: |
-          docker compose --profile somleng-bootstrap up somleng-bootstrap
-          output=$(docker compose run -T somleng bundle exec rails db:setup)
+          output=$(docker compose --profile somleng-bootstrap run -T somleng-bootstrap)
           account_sid=$(echo $output | grep -Po 'Account\s+SID:\s+\K\b[a-zA-Z0-9-]+\b')
           auth_token=$(echo $output | grep -Po 'Auth\s+Token:\s+\K\b[a-zA-Z0-9_-]+\b')
           phone_number=$(echo $output | grep -Po 'Phone\s+Number:\s+\K\b[a-zA-Z0-9-]+\b')

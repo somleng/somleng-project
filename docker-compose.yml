@@ -76,18 +76,18 @@ services:
     profiles:
       - somleng-bootstrap
 
-  somleng-scheduler:
-    <<: *somleng
-    command:
-      - /bin/sh
-      - -c
-      - |
-        echo '* * * * * cd /app && bundle exec rails runner "PerMinuteJob.perform_later" >> /proc/1/fd/1 2>&1' \
-          > /etc/crontabs/root
-        crond -f -l 2
-    depends_on:
-      <<: *somleng_depends_on
-    ports: []
+  # somleng-scheduler:
+  #   <<: *somleng
+  #   command:
+  #     - /bin/sh
+  #     - -c
+  #     - |
+  #       echo '* * * * * cd /app && bundle exec rails runner "PerMinuteJob.perform_later" >> /proc/1/fd/1 2>&1' \
+  #         > /etc/crontabs/root
+  #       crond -f -l 2
+  #   depends_on:
+  #     <<: *somleng_depends_on
+  #   ports: []
 
   ws:
     image: anycable/anycable-go:latest-alpine
