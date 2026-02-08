@@ -86,6 +86,9 @@ services:
           bundle exec rails runner "PerMinuteJob.perform_later"
           sleep 60
         done
+    environment:
+      <<: *somleng_environment
+      ACTIVE_JOB_QUEUE_ADAPTER: "inline"
     depends_on:
       <<: *somleng_depends_on
     ports: []
