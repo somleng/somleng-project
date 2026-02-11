@@ -22,7 +22,7 @@ services:
       retries: 5
 
   somleng: &somleng
-    image: ghcr.io/somleng/somleng:beta
+    image: ghcr.io/somleng/somleng
     environment: &somleng_environment
       RAILS_ENV: development
       DATABASE_HOST: db
