@@ -17,7 +17,7 @@ resource "aws_rds_cluster" "this" {
   apply_immediately               = true
   allow_major_version_upgrade     = true
   master_password                 = aws_ssm_parameter.db_master_password.value
-  vpc_security_group_ids          = [aws_security_group.this.id, aws_security_group.cross_region.id]
+  vpc_security_group_ids          = [aws_security_group.this.id]
   db_subnet_group_name            = aws_db_subnet_group.this.name
   skip_final_snapshot             = true
   storage_encrypted               = true
