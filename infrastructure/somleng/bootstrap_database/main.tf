@@ -15,13 +15,6 @@ data "aws_rds_cluster" "db_cluster" {
   cluster_identifier = var.cluster_identifier
 }
 
-data "aws_security_group" "db" {
-  filter {
-    name   = "tag:Name"
-    values = ["aurora-${var.cluster_identifier}"]
-  }
-}
-
 resource "aws_security_group" "this" {
   name   = "bootstrap-database"
   vpc_id = data.terraform_remote_state.core_infrastructure.outputs.vpc.vpc_id
@@ -39,7 +32,7 @@ resource "aws_security_group_rule" "egress" {
 resource "aws_instance" "this" {
   ami                  = data.aws_ssm_parameter.arm64_ami.value
   instance_type        = "t4g.micro"
-  security_groups      = [aws_security_group.this.id, data.aws_security_group.db.id]
+  security_groups      = [aws_security_group.this.id]
   subnet_id            = element(data.terraform_remote_state.core_infrastructure.outputs.vpc.private_subnets, 0)
   iam_instance_profile = aws_iam_instance_profile.this.id
   user_data = templatefile(

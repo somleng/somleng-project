@@ -59,13 +59,6 @@ resource "aws_security_group" "this" {
   vpc_id = local.vpc.vpc_id
 }
 
-data "aws_security_group" "db" {
-  filter {
-    name   = "tag:Name"
-    values = ["aurora-${var.cluster_identifier}"]
-  }
-}
-
 data "aws_security_group" "additional_sg" {
   count = var.additional_sg != "" ? 1 : 0
   id    = var.additional_sg
@@ -85,8 +78,7 @@ resource "aws_instance" "this" {
   instance_type = var.instance_type
   security_groups = compact(concat(
     [
-      aws_security_group.this.id,
-      data.aws_security_group.db.id,
+      aws_security_group.this.id
     ],
     data.aws_security_group.additional_sg[*].id
   ))
