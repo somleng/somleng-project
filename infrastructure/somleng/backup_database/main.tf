@@ -2,44 +2,14 @@ locals {
   vpc = data.terraform_remote_state.core.outputs.hydrogen_region.vpc
 }
 
-data "aws_ami" "amazon_linux_arm64" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-*-kernel-*arm64"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["arm64"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
+# https://aws.amazon.com/ec2/instance-types/t4/
+data "aws_ssm_parameter" "amazon_linux_arm64" {
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
 }
 
-data "aws_ami" "amazon_linux_x86_64" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-*-kernel-*x86_64"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
+# https://aws.amazon.com/ec2/instance-types/t4/
+data "aws_ssm_parameter" "amazon_linux_x86_64" {
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
 }
 
 data "aws_s3_bucket" "backups" {
@@ -74,7 +44,7 @@ resource "aws_security_group_rule" "egress" {
 }
 
 resource "aws_instance" "this" {
-  ami           = startswith(var.instance_type, "t4g") ? data.aws_ami.amazon_linux_arm64.id : data.aws_ami.amazon_linux_x86_64.id
+  ami           = startswith(var.instance_type, "t4g") ? data.aws_ssm_parameter.amazon_linux_arm64.value : data.aws_ssm_parameter.amazon_linux_x86_64.value
   instance_type = var.instance_type
   security_groups = compact(concat(
     [
