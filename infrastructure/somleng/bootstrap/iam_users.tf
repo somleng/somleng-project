@@ -15,6 +15,11 @@ resource "aws_iam_group_policy_attachment" "readonly_admin" {
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
+resource "aws_iam_group_policy_attachment" "amazon_q_developer" {
+  group      = aws_iam_group.readonly_admin.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonQDeveloperAccess"
+}
+
 resource "aws_iam_user_group_membership" "samnang" {
   user = aws_iam_user.samnang.name
 
@@ -30,4 +35,3 @@ resource "aws_iam_user_group_membership" "dwilkie" {
     aws_iam_group.readonly_admin.name,
   ]
 }
-
