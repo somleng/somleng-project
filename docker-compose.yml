@@ -1,6 +1,6 @@
 services:
   db:
-    image: public.ecr.aws/docker/library/postgres:alpine
+    image: public.ecr.aws/docker/library/postgres:17-alpine
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
