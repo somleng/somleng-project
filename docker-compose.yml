@@ -31,7 +31,7 @@ services:
       DB_POOL: 30
       REDIS_URL: redis://redis:6379/0
       ANYCABLE_SECRET: secret
-      ANYCABLE_BROADCAST_ADAPTER: redisx
+      ANYCABLE_BROADCAST_ADAPTER: redis
       RATING_ENGINE_HOST: http://rating-engine-api:2080
       RATING_ENGINE_USERNAME: cgrates
       RATING_ENGINE_PASSWORD: password
@@ -108,7 +108,7 @@ services:
       ANYCABLE_PORT: "8080"
       ANYCABLE_DISABLE_TELEMETRY: "true"
       ANYCABLE_RPC_HOST: anycable:50051
-      ANYCABLE_BROADCAST_ADAPTER: redisx
+      ANYCABLE_BROADCAST_ADAPTER: redis
       ANYCABLE_BROKER: memory
       ANYCABLE_PUBSUB: redis
       ANYCABLE_HEADERS: x-device-key
