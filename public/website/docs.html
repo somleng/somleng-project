@@ -109,6 +109,9 @@
                   <a href="#phone_numbers">Phone Numbers</a>
                 </li>
                 <li>
+                  <a href="#alphanumeric_sender_ids">Alphanumeric Sender IDs</a>
+                </li>
+                <li>
                   <a href="#voice">Voice</a>
                 </li>
                 <li>
@@ -2379,7 +2382,7 @@ client.calls
                         <td>The type of phone number</td>
                         <td>
                           One of either <code>local</code>, <code>mobile</code>, <code>toll_free</code>,
-                          <code>short_code</code>, or <code>alphanumeric_sender_id</code>
+                          or <code>short_code</code>
                         </td>
                         <td>local</td>
                       </tr>
@@ -2500,6 +2503,110 @@ client.calls
 
                   <pre class="line-numbers language-csv"><code>number,marked_for_deletion
 +12505550199,true</code></pre>
+                </div>
+              </div>
+
+              <div id="alphanumeric_sender_ids">
+                <h4>
+                  Alphanumeric Sender IDs
+                </h4>
+
+                <p>
+                  Alphanumeric Sender IDs allow accounts to use a personalized brand name or company name as the sender
+                  ID (the <code>From</code> address) when sending one-way SMS messages via the <a href="docs/twilio_api"
+                    class="link">Account API <i class="fa fa-external-link"></i></a>, instead of using an E.164 phone
+                  number.
+                </p>
+
+                <p>
+                  From the Dashboard, a carrier user or an account user can request an Alphanumeric Sender ID. How the
+                  request is processed depends on whether the account is carrier managed or customer managed:
+                </p>
+
+                <ul>
+                  <li>
+                    <strong>Carrier Managed Accounts:</strong> A carrier admin can create an Alphanumeric Sender ID for
+                    a <a href="#carrier_managed_accounts" class="link">carrier managed account</a>. In this case, the
+                    request is automatically approved.
+                  </li>
+                  <li>
+                    <strong>Customer Managed Accounts:</strong> When an Alphanumeric Sender ID is requested for a <a
+                      href="#customer_managed_accounts" class="link">customer managed account</a>, the status is set to
+                    <strong>Pending Approval</strong>. Users from the carrier who are subscribed to the
+                    <strong>Alphanumeric sender id updates</strong> topic will receive a notification to review the
+                    request. The carrier can then either approve or reject the request.
+                  </li>
+                </ul>
+
+                <p>
+                  Once approved, the account can use the Alphanumeric Sender ID as the <code>From</code> address when
+                  sending messages via the API.
+                </p>
+
+                <p>
+                  Users can manage their notifications from the notification preferences page by clicking on the avatar
+                  in the top right and selecting <strong>Notifications</strong>. Carrier users can subscribe to the
+                  <strong>Alphanumeric sender id updates</strong> topic there to receive notifications when a request is
+                  submitted.
+                </p>
+
+                <div id="request_alphanumeric_sender_id">
+                  <h5>
+                    Requesting an Alphanumeric Sender ID
+                  </h5>
+
+                  <p>
+                    To request or create an Alphanumeric Sender ID via the Dashboard:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Alphanumeric Sender
+                        IDs</strong> under <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to request a new Alphanumeric Sender
+                      ID.
+                    </li>
+                    <li>
+                      Fill out the form, specifying the sender ID (e.g. brand name) and optionally the account (if
+                      creating on behalf of an account as a carrier admin).
+                    </li>
+                    <li>
+                      Choose <strong>Request</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-request-alphanumeric-sender-id.jpg">
+                </div>
+
+                <div id="review_alphanumeric_sender_id">
+                  <h5>
+                    Reviewing Requests (Carrier Admins)
+                  </h5>
+
+                  <p>
+                    When a customer managed account requests an Alphanumeric Sender ID, carrier users subscribed to the
+                    <strong>Alphanumeric sender id updates</strong> topic will receive a notification to review the
+                    request.
+                  </p>
+
+                  <p>
+                    To review, approve, or reject an Alphanumeric Sender ID request:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard as a carrier user and from the side-navigation, click
+                      <strong>Alphanumeric Sender IDs</strong> under <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Select the request with the status <strong>Pending Approval</strong>.
+                    </li>
+                    <li>
+                      Review the details and choose either <strong>Approve</strong> or <strong>Reject</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-show-alphanumeric-sender-id.jpg">
                 </div>
               </div>
 
