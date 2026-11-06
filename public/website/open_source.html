@@ -2,7 +2,7 @@
 <html lang='en'>
 
 <head>
-  <meta class="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Somleng | Open Source</title>
   <link rel='stylesheet' href='css/style.min.css' />
@@ -65,7 +65,8 @@
             <li><a href="#getting-started">Getting Started</a></li>
             <li><a href="#somleng">Somleng</a></li>
             <li><a href="#somleng-switch">SomlengSWITCH</a></li>
-            <li><a href="#somleng-scfm">Somleng SCFM</a></li>
+            <li><a href="#sms-gateway">SMS Gateway</a></li>
+            <li><a href="#sms-gateway-app">SMS Gateway Android App</a></li>
           </ul>
         </div>
         <div class="page__main">
@@ -75,12 +76,12 @@
             <div id="getting-started">
               <h2 class="page__main__title">
                 Open Source
-                </h3>
-                <p>
-                  Somleng is 100% Open Source, and released under the permissive MIT License. Please refer to the
-                  individual
-                  repositories below for more information.
-                </p>
+              </h2>
+              <p>
+                Somleng is 100% Open Source, and released under the permissive MIT License. Please refer to the
+                individual
+                repositories below for more information.
+              </p>
             </div>
 
             <div id="somleng">
@@ -110,14 +111,30 @@
               </a>
             </div>
 
-            <div id="somleng-scfm">
+            <div id="sms-gateway">
               <h3 class="page__main__title">
-                Somleng SCFM
+                Somleng SMS Gateway
               </h3>
               <p>
-                Somleng SCFM is an open source contact center platform and call flow manager.
+                Somleng SMS Gateway is a Node.js application that enables you to control your own SMS infrastructure. It
+                connects to Somleng to handle SMS origination and termination, supporting dummy mode for testing,
+                external SMPP servers, and GSM gateways such as GoIP.
               </p>
-              <a href="https://github.com/somleng/somleng-scfm" target="_blank" class="button button__plain">
+              <a href="https://github.com/somleng/sms-gateway" target="_blank" class="button button__plain">
+                <i class="fa-brands fa-github button-icon"></i> Github
+              </a>
+            </div>
+
+            <div id="sms-gateway-app">
+              <h3 class="page__main__title">
+                Somleng SMS Gateway Android App
+              </h3>
+              <p>
+                Somleng SMS Gateway Android App is an open source mobile application that turns any Android smartphone
+                into a functional SMS gateway. It sends and receives real SMS messages directly through the device's SIM
+                card, without requiring a server or Docker.
+              </p>
+              <a href="https://github.com/somleng/sms-gateway-app" target="_blank" class="button button__plain">
                 <i class="fa-brands fa-github button-icon"></i> Github
               </a>
             </div>
@@ -125,8 +142,9 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <script src='js/app.min.js'></script>
+  <script src='js/app.min.js'></script>
 </body>
 
 </html>
