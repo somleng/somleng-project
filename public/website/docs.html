@@ -109,6 +109,9 @@
                   <a href="#phone_numbers">Phone Numbers</a>
                 </li>
                 <li>
+                  <a href="#alphanumeric_sender_ids">Alphanumeric Sender IDs</a>
+                </li>
+                <li>
                   <a href="#voice">Voice</a>
                 </li>
                 <li>
@@ -200,7 +203,7 @@
                 Audience
               </h3>
               <p>
-                This documentation is intended for Carriers, and BYOC entities, and Independent entities as defined
+                This documentation is intended for Carriers, BYOC entities, and Independent entities as defined
                 above.
               </p>
             </div>
@@ -266,7 +269,7 @@
                   href="https://app.somleng.org/users/sign_up" class="link" target="_blank">free carrier account <i
                     class="fa fa-external-link"></i></a>, then working through the <a href="#tutorials"
                   class="link">tutorials</a>. This will
-                allow you
+                allow you to
                 explore and understand Somleng's features without having
                 to worry about installing the full-stack on your local machine.
               </p>
@@ -277,12 +280,12 @@
               </p>
 
               <p>
-                All users are required to setup two factor authentication (2FA) the first time they sign in to the
+                All users are required to set up two-factor authentication (2FA) the first time they sign in to the
                 Dashboard.
                 We recommend <a href="https://authy.com/" class="link" target="_blank">Authy <i
                     class="fa fa-external-link"></i></a>,
                 <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="link" target="_blank">Google
-                  Authenticator <i class="fa fa-external-link"></i></a> or your password manager to setup 2FA.
+                  Authenticator <i class="fa fa-external-link"></i></a> or your password manager to set up 2FA.
               </p>
             </div>
 
@@ -323,7 +326,7 @@
                     Verify your email address.
                   </li>
                   <li>
-                    Login and setup two factor authentication (2FA).
+                    Log in and set up two-factor authentication (2FA).
                   </li>
                   <li>
                     <a href="https://docs.docker.com/engine/install/" class="link" target="_blank">Install Docker <i
@@ -354,7 +357,7 @@
 
                   <li>
                     <a href="#verify-tutorial-step-3" class="link">
-                      Create a SMS Gateway.
+                      Create an SMS Gateway.
                     </a>
                   </li>
 
@@ -413,7 +416,7 @@
                   </h4>
 
                   <p>
-                    In this step you create a new
+                    In this step, you create a new
                     <a href="#dashboard-accounts" class="link">customer account</a> (not to be confused with your
                     carrier account) which will generate a set of
                     credentials used to authenticate to the Verify API.
@@ -451,7 +454,7 @@
                   </h4>
 
                   <p>
-                    In this step you create a new Verification Service and assign it to the account created in
+                    In this step, you create a new Verification Service and assign it to the account created in
                     <a href="#verify-tutorial-step-1" class="link">Step 1</a>.
                     A Verification Service is the set of common configurations used to create and check verifications.
                   </p>
@@ -491,7 +494,7 @@
                   </h4>
 
                   <p>
-                    In this step you create a new SMS Gateway which will handle the delivery of verification codes via
+                    In this step, you create a new SMS Gateway which will handle the delivery of verification codes via
                     SMS.
                   </p>
 
@@ -534,7 +537,7 @@
                   </h4>
 
                   <p>
-                    In this step you create a new SIP Trunk which will handle the delivery of verification codes via
+                    In this step, you create a new SIP Trunk which will handle the delivery of verification codes via
                     phone call.
                   </p>
 
@@ -566,7 +569,7 @@
                     </li>
                     <li>
                       Enter a <strong>Default sender</strong>. This will be used as the sender id when sending
-                      verification codes via phone call. A default sender can an E.164 number or short code.
+                      verification codes via phone call. A default sender can be an E.164 number or short code.
                     </li>
                     <li>
                       Press <strong>Create SIP trunk</strong>.
@@ -717,11 +720,11 @@
                   </h4>
 
                   <p>
-                    In this step you start a new Verification Flow using the <a
+                    In this step, you start a new Verification Flow using the <a
                       href="https://github.com/somleng/somleng-node" class="link" target="_blank">somleng-node <i
-                        class="fa fa-external-link"></i></a> helper library. In reality this code would be part of you
+                        class="fa fa-external-link"></i></a> helper library. In reality, this code would be part of your
                     or your
-                    customer's application which using your Phone Verification Service.
+                    customer's application which is using your Phone Verification Service.
                   </p>
 
                   <p>
@@ -732,7 +735,7 @@
                         target="_blank">twilio-node <i class="fa fa-external-link"></i></a> helper library which enables
                       it to be used with Somleng. This is possible because
                       Somleng's API is compatible with Twilio's API.
-                      If we don't yet have an official helper library for your programming language, you should be be
+                      If we don't yet have an official helper library for your programming language, you should be
                       able to use the corresponding Twilio helper
                       library with some minimal configuration changes to make it work with Somleng. Alternatively you
                       can connect to Somleng's API directly by following the
@@ -784,7 +787,7 @@ client.verify.v2.services(verificationServiceSid)
                   </h4>
 
                   <p>
-                    In this step you will receive the verification code via the SMS Gateway Application running on your
+                    In this step, you will receive the verification code via the SMS Gateway Application running on your
                     local machine.
                   </p>
 
@@ -811,7 +814,7 @@ client.verify.v2.services(verificationServiceSid)
                   </h4>
 
                   <p>
-                    In this step you resend the verification code via a call.
+                    In this step, you resend the verification code via a call.
                   </p>
 
                   <p>
@@ -850,7 +853,7 @@ client.verify.v2.services(verificationServiceSid)
                   </h4>
 
                   <p>
-                    In this step you will receive the verification code via a call.
+                    In this step, you will receive the verification code via a call.
                   </p>
 
                   <p>
@@ -877,7 +880,7 @@ client.verify.v2.services(verificationServiceSid)
                   </h4>
 
                   <p>
-                    In this step you complete the flow by confirming the verification code.
+                    In this step, you complete the flow by confirming the verification code.
                   </p>
 
                   <p>
@@ -1107,7 +1110,7 @@ client.verify.v2.services(verificationServiceSid)
                               <strong>52.4.242.134/32</strong>
                             </li>
                           </ul>
-                          These are Somleng's public IP address documented <a
+                          These are Somleng's public IP addresses documented <a
                             href="#sip_trunks_ip_address_configuration_outbound_dialing" class="link">here</a>.
                         </li>
                         <li>
@@ -1149,7 +1152,7 @@ client.verify.v2.services(verificationServiceSid)
                   <p>
                     In addition we'll assign this new number to the customer account that you created in the
                     <a href="#verify-tutorial-step-1" class="link">previous tutorial</a>,
-                    so that you can use it can be used to send generic voice calls as well as verification calls.
+                    so that it can be used to send generic voice calls as well as verification calls.
                   </p>
 
                   <p>
@@ -1213,7 +1216,7 @@ client.verify.v2.services(verificationServiceSid)
                   <p>
                     We can simulate this scenario in reverse, by configuring the new SIP trunk to only handle calls with
                     a certain prefix.
-                    All other prefixes will be routed though the default SIP Trunk which points to your local softphone.
+                    All other prefixes will be routed through the default SIP Trunk which points to your local softphone.
                     This way you can test a
                     a call destined to your real phone number, which will be routed though Chime and a call destined to
                     an overseas number, which will be routed
@@ -1270,7 +1273,7 @@ client.verify.v2.services(verificationServiceSid)
                   </h4>
 
                   <p>
-                    In this step you'll test a call to your own phone number which should be routed though Chime.
+                    In this step you'll test a call to your own phone number which should be routed through Chime.
                   </p>
 
                   <p>
@@ -1575,7 +1578,7 @@ client.calls
                         you have access to, so you can explore the dashboard from the customer's perspective. If you
                         only have one email address you can use the following trick:
                         <strong><code>your-email+customer-email@your-domain.tld</code></strong>. For example, if your
-                        real email address is <strong>bob@example.com</strong> and your customer's name is <strong>Elive
+                        real email address is <strong>bob@example.com</strong> and your customer's name is <strong>Elvie
                           Padberg</strong>, enter <strong><code>bob+elvie.padberg@example.com</code></strong>.
                       </em>
                     </li>
@@ -1766,7 +1769,8 @@ client.verify.v2.services(verificationServiceSid)
                   </p>
 
                   <img src="./images/dashboard-new-verification-service-customer-account.png">
-                  <img src="./images/dashboard-show-verification-customer-account.png" </div>
+                  <img src="./images/dashboard-show-verification-customer-account.png">
+                </div>
 
                   <div id="invite-customers-tutorial-step-6">
                     <h4>
@@ -1848,7 +1852,7 @@ client.verify.v2.services(verificationServiceSid)
                       </li>
 
                       <li>
-                        The customer can use the API and helper libraries in his own applications.
+                        The customer can use the API and helper libraries in their own applications.
                       </li>
 
                       <li>
@@ -1862,7 +1866,6 @@ client.verify.v2.services(verificationServiceSid)
                     </ol>
                   </div>
                 </div>
-              </div>
 
               <div id="retell-ai-tutorial">
                 <h3>
@@ -1897,8 +1900,8 @@ client.verify.v2.services(verificationServiceSid)
                         <i class="fa fa-external-link"></i></a> trial account.
                     </li>
                     <li>
-                      Install <a href=https://nodejs.org class="link" target="_blank">Node.js <i
-                          class="fa fa-external-link"></i></a> and <a href=https://ngrok.com/" class="link"
+                      Install <a href="https://nodejs.org" class="link" target="_blank">Node.js <i
+                          class="fa fa-external-link"></i></a> and <a href="https://ngrok.com/" class="link"
                         target="_blank">ngrok <i class="fa fa-external-link"></i></a>.
                     </li>
                   </ol>
@@ -1988,7 +1991,7 @@ client.verify.v2.services(verificationServiceSid)
                     </li>
                     <li>
                       Note the forwarding URL: It should look something like this:
-                      <a href="javascript:;" class="link">https://eb3c-229-14-127-42.ngrok-free.app</a></code>
+                      <a href="javascript:;" class="link">https://eb3c-229-14-127-42.ngrok-free.app</a>
                     </li>
                   </ol>
                 </div>
@@ -2041,7 +2044,6 @@ const client = require('somleng')(accountSid, authToken);
 client.calls
   .create({ to: to, from: from, url: `${url}/connect` })
   .then(call => console.log(call.sid));</code></pre>
-                  </p>
                 </div>
 
                 <div>
@@ -2097,19 +2099,19 @@ client.calls
                 <p>
                   You must sign in to the dashboard <em>via your subdomain</em> to use Somleng.
                   The sign in URL is <code>https://your-subdomain.app.somleng.org/users/sign_in</code>.
-                  If you have setup a <a href="#custom_domains_configuration_guide" class="link"> custom
+                  If you have set up a <a href="#custom_domains_configuration_guide" class="link"> custom
                     domain</a>
                   all
                   users may access
                   the dashboard through your custom domain as well.
                 </p>
                 <p>
-                  All users are required to setup two factor authentication (2FA) the first time they sign in.
+                  All users are required to set up two-factor authentication (2FA) the first time they sign in.
                   We recommend <a href="https://authy.com/" class="link" target="_blank">Authy <i
                       class="fa fa-external-link"></i></a>,
                   <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="link" target="_blank">Google
                     Authenticator <i class="fa fa-external-link"></i></a>
-                  or your password manager to setup 2FA.
+                  or your password manager to set up 2FA.
                 </p>
               </div>
 
@@ -2125,7 +2127,7 @@ client.calls
                     <i class="fa fa-external-link"></i></a> Key,
                   as well as your webhook URL and signing secret for <a href="docs/carrier_api#webhooks" target="_blank"
                     class="link">verifying webhooks <i class="fa fa-external-link"></i></a>.
-                  If you've setup a <a href="#custom_domains_configuration_guide" class="link"> custom domain</a>
+                  If you've set up a <a href="#custom_domains_configuration_guide" class="link"> custom domain</a>
                   this
                   will appear under the Custom Domain section.
                 </p>
@@ -2379,7 +2381,7 @@ client.calls
                         <td>The type of phone number</td>
                         <td>
                           One of either <code>local</code>, <code>mobile</code>, <code>toll_free</code>,
-                          <code>short_code</code>, or <code>alphanumeric_sender_id</code>
+                          or <code>short_code</code>
                         </td>
                         <td>local</td>
                       </tr>
@@ -2503,6 +2505,110 @@ client.calls
                 </div>
               </div>
 
+              <div id="alphanumeric_sender_ids">
+                <h4>
+                  Alphanumeric Sender IDs
+                </h4>
+
+                <p>
+                  Alphanumeric Sender IDs allow accounts to use a personalized brand name or company name as the sender
+                  ID (the <code>From</code> address) when sending one-way SMS messages via the <a href="docs/twilio_api"
+                    class="link">Account API <i class="fa fa-external-link"></i></a>, instead of using an E.164 phone
+                  number.
+                </p>
+
+                <p>
+                  From the Dashboard, a carrier user or an account user can request an Alphanumeric Sender ID. How the
+                  request is processed depends on whether the account is carrier managed or customer managed:
+                </p>
+
+                <ul>
+                  <li>
+                    <strong>Carrier Managed Accounts:</strong> A carrier admin can create an Alphanumeric Sender ID for
+                    a <a href="#carrier_managed_accounts" class="link">carrier managed account</a>. In this case, the
+                    request is automatically approved.
+                  </li>
+                  <li>
+                    <strong>Customer Managed Accounts:</strong> When an Alphanumeric Sender ID is requested for a <a
+                      href="#customer_managed_accounts" class="link">customer managed account</a>, the status is set to
+                    <strong>Pending Approval</strong>. Users from the carrier who are subscribed to the
+                    <strong>Alphanumeric sender id updates</strong> topic will receive a notification to review the
+                    request. The carrier can then either approve or reject the request.
+                  </li>
+                </ul>
+
+                <p>
+                  Once approved, the account can use the Alphanumeric Sender ID as the <code>From</code> address when
+                  sending messages via the API.
+                </p>
+
+                <p>
+                  Users can manage their notifications from the notification preferences page by clicking on the avatar
+                  in the top right and selecting <strong>Notifications</strong>. Carrier users can subscribe to the
+                  <strong>Alphanumeric sender id updates</strong> topic there to receive notifications when a request is
+                  submitted.
+                </p>
+
+                <div id="request_alphanumeric_sender_id">
+                  <h5>
+                    Requesting an Alphanumeric Sender ID
+                  </h5>
+
+                  <p>
+                    To request or create an Alphanumeric Sender ID via the Dashboard:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, click <strong>Alphanumeric Sender
+                        IDs</strong> under <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to request a new Alphanumeric Sender
+                      ID.
+                    </li>
+                    <li>
+                      Fill out the form, specifying the sender ID (e.g. brand name) and optionally the account (if
+                      creating on behalf of an account as a carrier admin).
+                    </li>
+                    <li>
+                      Choose <strong>Request</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-request-alphanumeric-sender-id.jpg">
+                </div>
+
+                <div id="review_alphanumeric_sender_id">
+                  <h5>
+                    Reviewing Requests (Carrier Admins)
+                  </h5>
+
+                  <p>
+                    When a customer managed account requests an Alphanumeric Sender ID, carrier users subscribed to the
+                    <strong>Alphanumeric sender id updates</strong> topic will receive a notification to review the
+                    request.
+                  </p>
+
+                  <p>
+                    To review, approve, or reject an Alphanumeric Sender ID request:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard as a carrier user and from the side-navigation, click
+                      <strong>Alphanumeric Sender IDs</strong> under <strong>Phone Numbers</strong>.
+                    </li>
+                    <li>
+                      Select the request with the status <strong>Pending Approval</strong>.
+                    </li>
+                    <li>
+                      Review the details and choose either <strong>Approve</strong> or <strong>Reject</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-show-alphanumeric-sender-id.jpg">
+                </div>
+              </div>
+
               <div id="voice">
                 <h4>
                   Voice
@@ -2520,8 +2626,6 @@ client.calls
                     We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by
                     Somleng,
                     and outbound dialing as calls originated by Somleng.
-                  <p>
-                  </p>
                   When you create a SIP Trunk you first choose the authentication mode. There are two
                   authentication
                   modes available described below:
@@ -2567,9 +2671,9 @@ client.calls
                     </p>
 
                     <div id="sip_trunks_ip_address_configuration_inbound_dialing">
-                      <h7>
+                      <h6>
                         Inbound Dialing
-                      </h7>
+                      </h6>
 
                       <p>
                         When you configure a SIP trunk for <strong>inbound dialing</strong> via <strong>IP address
@@ -2596,9 +2700,9 @@ client.calls
                     </div>
 
                     <div id="sip_trunks_ip_address_configuration_outbound_dialing">
-                      <h7>
+                      <h6>
                         Outbound Dialing
-                      </h7>
+                      </h6>
 
                       <p>
                         When you configure a SIP trunk for <strong>outbound dialing</strong> via <strong>IP
@@ -2672,7 +2776,7 @@ client.calls
                     <p>
                       When you configure a SIP trunk via <strong>client credentials authentication</strong> you
                       <em>don't need</em> a public
-                      status IP address. Instead you authenticate with Somleng via SIP registration. After you
+                      static IP address. Instead you authenticate with Somleng via SIP registration. After you
                       configure
                       a SIP trunk in this mode
                       you will be given a unique set of client credentials which can be used to authenticate with
@@ -2697,7 +2801,7 @@ client.calls
                         Under Inbound Dialing, it's recommended to select the default country code of the caller.
                         This allows your VoIP gateway to work with national dialing numbers. Somleng will try to
                         normalize
-                        number into E.164 format using this setting.
+                        numbers into E.164 format using this setting.
                       </li>
                       <li>
                         Choose <strong>Create SIP Trunk</strong>.
@@ -2758,7 +2862,6 @@ client.calls
 &lt;/Response&gt;
 </code></pre>
                 </p>
-              </div>
 
               <p>
                 The language attribute of <code>&lt;Say&gt;</code> also allows you to override the default voice
@@ -2802,13 +2905,13 @@ client.calls
                 As well as setting the default TTS voice to a premium voice in the dashboard, you can also use the
                 <code>voice</code> attribute to override a premium voice.
                 For example:
+              </p>
 
-              <p>
               <pre><code class="language-xml">&lt;Response&gt;
 &lt;Say voice=&quot;Polly.Danielle-Neural&quot;&gt;Hello. I am Danielle!&lt;/Say&gt;
 &lt;/Response&gt;
 </code></pre>
-              </p>
+              </div>
 
               <div id="messaging">
                 <h4>
@@ -2836,9 +2939,9 @@ client.calls
                       Gateway
                       App <i class="fa fa-external-link"></i></a>
                     on your on-premise or cloud infrastructure.
-                    Normally, you'll only need to configure a single SMS Gateway, however if you require multiple
+                    Normally, you'll only need to configure a single SMS Gateway; however, if you require multiple
                     SMS
-                    gateways, you'll need to run an instance of the
+                    gateways, you'll need to run an instance of the SMS Gateway Application
                     for each one. Once the app is running on your local infrastructure and connected to Somleng,
                     the SMS Gateway will show <em>Connected</em> on the Dashboard.
                   </p>
@@ -2887,7 +2990,7 @@ client.calls
 
                   <p>
                     For example let's assume your GSM Gateway has 4 available channels.
-                    Now, let's assume you insert 2 SIM cards belong to a carrier called "Smart", 1 SIM card
+                    Now, let's assume you insert 2 SIM cards belonging to a carrier called "Smart", 1 SIM card
                     belonging
                     to
                     a carrier called "Metfone", and
@@ -2951,14 +3054,14 @@ client.calls
                   </h5>
 
                   <p>
-                    Messaging services allow you to apply messaging configuration to of a group of phone numbers,
+                    Messaging services allow you to apply messaging configuration to a group of phone numbers,
                     rather
                     than having to configure each
                     one individually.
                   </p>
 
                   <p>
-                    To configure an Messaging Service:
+                    To configure a Messaging Service:
                   <ol>
                     <li>
                       Sign in to the Dashboard and from the side-navigation, click <strong>Messaging
@@ -3004,10 +3107,10 @@ client.calls
                       </ul>
                     </li>
                     <li>
-                      If you chose <em>Send a webhook</em> in the previous step you must enter a Inbound Request
+                      If you chose <em>Send a webhook</em> in the previous step you must enter an Inbound Request
                       URL
                       and
-                      Inbound request method to request for incoming messages.
+                      Inbound Request Method for incoming messages.
                     </li>
                     <li>
                       Optionally configure a Status Callback URL for all outbound messages in the sender pool.
@@ -3054,9 +3157,9 @@ client.calls
                 </ol>
                 </p>
                 <p>
-                  The team member will receive an email inviting him to use the dashboard. Team members with the
+                  The team member will receive an email inviting them to use the dashboard. Team members with the
                   <code>owner</code>
-                  role can manage another team member including updating his role and resetting his 2FA.
+                  role can manage another team member including updating their role and resetting their 2FA.
                 </p>
               </div>
             </div>
@@ -3079,27 +3182,27 @@ client.calls
                 </h4>
 
                 <p>
-                  When you setup a custom domain you need to setup proxy between your domain and Somleng
+                  When you set up a custom domain, you need to set up a proxy between your domain and Somleng
                   in order for SSL termination to work correctly.
                   Below we describe two methods for doing this via
                   <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a>
                   or
                   <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>.
-                  We recommend using AWS Cloudfront unless your have specific custom
+                  We recommend using AWS Cloudfront unless you have specific custom
                   requirements or you cannot use AWS.
                 </p>
               </div>
 
               <div>
                 <h4>
-                  Setup your custom domain
+                  Set up your custom domain
                 </h4>
 
                 <p>
                   Follow the steps below to configure your custom domain:
                 <ol>
                   <li>
-                    Setup a reverse proxy via <a href="#custom_domains_configuration_guide_aws_cloudfront"
+                    Set up a reverse proxy via <a href="#custom_domains_configuration_guide_aws_cloudfront"
                       class="link">AWS Cloudfront</a> (recommended)
                     or <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>.
                   </li>
@@ -3129,7 +3232,7 @@ client.calls
                   In order to make this step easier, we've created a
                   <a href="https://github.com/somleng/terraform-aws-cloudfront-reverse-proxy" class="link"
                     target="_blank">Terraform module <i class="fa fa-external-link"></i></a>
-                  automates the configuration and management of your AWS Cloudfront distributions via
+                  that automates the configuration and management of your AWS Cloudfront distributions via
                   <a href="https://www.terraform.io" class="link" target="_blank">Terraform <i
                       class="fa fa-external-link"></i></a>.
                 </p>
@@ -3141,7 +3244,7 @@ client.calls
                 </h4>
 
                 <p>
-                  In order to use the terraform module you need to setup and install Terraform first.
+                  In order to use the terraform module you need to set up and install Terraform first.
                   We recommend following the
                   <a href="https://learn.hashicorp.com/collections/terraform/aws-get-started" class="link"
                     target="_blank">Terraform AWS tutorial <i class="fa fa-external-link"></i></a>
@@ -3486,7 +3589,7 @@ client.calls
                 </p>
 
                 <p>
-                  The following Nginx configuration can be used to setup an Nginx reverse proxy to Somleng.
+                  The following Nginx configuration can be used to set up an Nginx reverse proxy to Somleng.
                 </p>
 
                 <p>
@@ -3526,7 +3629,7 @@ client.calls
                 </h4>
 
                 <p>
-                  After you have setup your reverse proxy via
+                  After you have set up your reverse proxy via
                   <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a> or
                   <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>
                   you can test it out by going to <strong>your-domain.example.com</strong>.
@@ -3546,7 +3649,7 @@ client.calls
 
                 <p>
                   The final step is to configure your custom domain via the Somleng Dashboard.
-                  Note: This step should only be done after you have setup and tested your reverse proxy via
+                  Note: This step should only be done after you have set up and tested your reverse proxy via
                   <a href="#custom_domains_configuration_guide_aws_cloudfront" class="link">AWS Cloudfront</a> or
                   <a href="#custom_domains_configuration_guide_nginx" class="link">Nginx</a>.
                 </p>
@@ -3571,7 +3674,7 @@ client.calls
                   After configuring the custom dashboard host, <em>customer</em> transactional emails (such as
                   forgot
                   password, account invitations, etc)
-                  will link to <strong>your-domain.example.com</strong>. <em>Carrier user</em> transaction emails
+                  will link to <strong>your-domain.example.com</strong>. <em>Carrier user</em> transactional emails
                   are still linked to <strong>your-subdomain.app.somleng.org</strong>.
                 </p>
 
@@ -3579,7 +3682,7 @@ client.calls
                   You should also have branded API customer documentation
                   available at <strong>your-domain.example.com/docs/api</strong>.
                   Setting the custom API endpoint will additionally update the API documentation examples with
-                  your <strong>your-api.domain.example.com</strong>.
+                  your <strong>your-api-domain.example.com</strong>.
                 </p>
 
                 <p>
@@ -3603,7 +3706,7 @@ client.calls
                 to use Somleng with their own
                 <a href="https://en.wikipedia.org/wiki/VoIP_gateway" class="link" target="_blank">VoIP gateway <i
                     class="fa fa-external-link"></i></a>
-                which provides access the PSTN, thereby removing the need for a commercial agreement with a
+                which provides access to the PSTN, thereby removing the need for a commercial agreement with a
                 carrier.
               </p>
 
@@ -3638,7 +3741,7 @@ client.calls
                   <em>
                     Note: You can still follow along with these instructions even if you don't have a VoIP gateway
                     yet.
-                    Instead of configuring you VoIP gateway,
+                    Instead of configuring your VoIP gateway,
                     you can configure a softphone such as
                     <a href="https://apps.apple.com/us/app/telephone/id406825478?mt=12" class="link"
                       target="_blank">Telephone <i class="fa fa-external-link"></i></a>.
@@ -3700,7 +3803,7 @@ client.calls
                   </h4>
 
                   <p>
-                    Create a new <a href="#sip_trunks" class="link">SIP Trunk</i></a> and configure it with client
+                    Create a new <a href="#sip_trunks" class="link">SIP Trunk</a> and configure it with client
                     credentials authentication.
                   </p>
 
@@ -3715,7 +3818,7 @@ client.calls
                       Under General, select <strong>Client credentials</strong> for the authentication mode.
                     </li>
                     <li>
-                      Set <strong>Max channels</strong> to the number of channels (or SIM cards) your have
+                      Set <strong>Max channels</strong> to the number of channels (or SIM cards) you have
                       available
                       on
                       your VoIP Gateway.
@@ -3774,7 +3877,7 @@ client.calls
 
                   <p>
                     <em>
-                      Note: You don't need explicity associate the account with the SIP trunk you created in the
+                      Note: You don't need to explicitly associate the account with the SIP trunk you created in the
                       previous step. Somleng
                       will automatically select the SIP trunk when a call is created or received.
                     </em>
@@ -3809,7 +3912,7 @@ client.calls
                       Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
                     </li>
                     <li>
-                      Enter the phone number including he country code in E.164 format.
+                      Enter the phone number including the country code in E.164 format.
                     </li>
                     <li>
                       Link the phone number to the account by selecting the account created in the previous step.
@@ -3852,7 +3955,7 @@ client.calls
                   </h4>
 
                   <p>
-                    After you have completed the previous steps, you can now configure you VoIP gateway
+                    After you have completed the previous steps, you can now configure your VoIP gateway
                     to connect to Somleng. Below is the configuration instructions for the following VoIP
                     gateways:
 
@@ -4393,7 +4496,7 @@ client.calls
                 <img src="./images/sms_gateway_diagram.png">
 
                 <p>
-                  independent entities connect to Somleng via Somleng's SMS Gateway App installed on-premise, or
+                  Independent entities connect to Somleng via Somleng's SMS Gateway App installed on-premise, or
                   on
                   the
                   cloud
@@ -4403,7 +4506,7 @@ client.calls
                 <p>
                   Customers can then use the
                   <a href="docs/twilio_api" class="link">Account API <i class="fa fa-external-link"></i></a>
-                  to send and receive SMS though the independent entity's SMS infrastructure.
+                  to send and receive SMS through the independent entity's SMS infrastructure.
                 </p>
               </div>
 
@@ -4560,7 +4663,7 @@ client.calls
                       Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new phone number.
                     </li>
                     <li>
-                      Enter the phone number including he country code in E.164 format.
+                      Enter the phone number including the country code in E.164 format.
                     </li>
                     <li>
                       Link the phone number to the account by selecting the account created in the previous step.
@@ -4831,7 +4934,7 @@ client.calls
 
               <div id="installation-guide-step-3">
                 <h4>
-                  3. Boostrap Somleng
+                  3. Bootstrap Somleng
                 </h4>
 
                 <pre><code class="language-bash">docker compose --profile somleng-bootstrap run somleng-bootstrap</code></pre>
@@ -4863,17 +4966,17 @@ Carrier API Key:          K9zlIw0pwJG2unSx890cmwDmRXeQUqYS9U2ial_tZ7A</code></pr
                 </h4>
 
                 <p>
-                  You should be now able to log in to the Somleng dashboard at
+                  You should now be able to log in to the Somleng dashboard at
                   <a href="http://my-carrier.app.lvh.me:3000" class="link"
                     target="_blank">http://my-carrier.app.lvh.me:3000 <i class="fa fa-external-link"></i></a> with
                   the
                   credentials from the
-                  output of the <a href="#installation-guide-step-4" class="link">previous step.</a>
+                  output of <a href="#installation-guide-step-3" class="link">Step 3.</a>
                 </p>
 
                 <p>
                   <em>
-                    Note: You'll need to setup two factor authentication (2FA) the first time you sign in to the
+                    Note: You'll need to set up two-factor authentication (2FA) the first time you sign in to the
                     Dashboard.
                   </em>
                 </p>
@@ -4928,7 +5031,6 @@ Carrier API Key:          K9zlIw0pwJG2unSx890cmwDmRXeQUqYS9U2ial_tZ7A</code></pr
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js">
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
   <script
