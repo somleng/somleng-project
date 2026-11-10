@@ -118,6 +118,9 @@
                   <a href="#messaging">Messaging</a>
                 </li>
                 <li>
+                  <a href="#carrier_billing">Carrier Billing</a>
+                </li>
+                <li>
                   <a href="#team">Team</a>
                 </li>
               </ul>
@@ -630,8 +633,7 @@
                   </p>
 
                   <pre><code class="language-bash">docker run -p 3210:3210 somleng/sms-gateway \
-                  somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy
-                </code></pre>
+  somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy</code></pre>
 
                   <p>
                     <em>Note: This option requires Docker to be installed.</em>
@@ -775,10 +777,9 @@ const channel = "sms";
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verifications
-      .create({to: to, channel: channel})
-      .then(verification => console.log(verification.sid));</code>
-                  </pre>
+  .verifications
+  .create({to: to, channel: channel})
+  .then(verification => console.log(verification.sid));</code></pre>
                 </div>
 
                 <div id="verify-tutorial-step-8">
@@ -842,9 +843,9 @@ const channel = "call";
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verifications
-      .create({to: to, channel: channel})
-      .then(verification => console.log(verification.sid));</code></pre>
+  .verifications
+  .create({to: to, channel: channel})
+  .then(verification => console.log(verification.sid));</code></pre>
                 </div>
 
                 <div id="verify-tutorial-step-10">
@@ -919,9 +920,9 @@ const verificationCode = "change-me"
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verificationChecks
-      .create({to: to, code: verificationCode})
-      .then(verification_check => console.log(verification_check.status));</code></pre>
+  .verificationChecks
+  .create({to: to, code: verificationCode})
+  .then(verification_check => console.log(verification_check.status));</code></pre>
 
                   <p>
                     After you complete the flow you can view the Verification and the associated logs from the
@@ -1216,7 +1217,8 @@ client.verify.v2.services(verificationServiceSid)
                   <p>
                     We can simulate this scenario in reverse, by configuring the new SIP trunk to only handle calls with
                     a certain prefix.
-                    All other prefixes will be routed through the default SIP Trunk which points to your local softphone.
+                    All other prefixes will be routed through the default SIP Trunk which points to your local
+                    softphone.
                     This way you can test a
                     a call destined to your real phone number, which will be routed though Chime and a call destined to
                     an overseas number, which will be routed
@@ -1747,9 +1749,9 @@ const channel = "call";
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verifications
-      .create({to: to, channel: channel})
-      .then(verification => console.log(verification.sid));</code></pre>
+  .verifications
+  .create({to: to, channel: channel})
+  .then(verification => console.log(verification.sid));</code></pre>
 
                   <p>
                     You can now view the verification from the customer's perspective from the <strong>Verify</strong>
@@ -1772,100 +1774,100 @@ client.verify.v2.services(verificationServiceSid)
                   <img src="./images/dashboard-show-verification-customer-account.png">
                 </div>
 
-                  <div id="invite-customers-tutorial-step-6">
-                    <h4>
-                      6. Control API Access for your customer.
-                    </h4>
+                <div id="invite-customers-tutorial-step-6">
+                  <h4>
+                    6. Control API Access for your customer.
+                  </h4>
 
-                    <p>
-                      To finish up this tutorial, we'll show you how to control your customer's access from the Carrier
-                      Dashboard.
-                      To do this you'll first need to log out of your customer's account, and login again to your
-                      carrier account.
-                    </p>
+                  <p>
+                    To finish up this tutorial, we'll show you how to control your customer's access from the Carrier
+                    Dashboard.
+                    To do this you'll first need to log out of your customer's account, and login again to your
+                    carrier account.
+                  </p>
 
-                    <p>
-                      Perform the following steps:
-                    </p>
+                  <p>
+                    Perform the following steps:
+                  </p>
 
-                    <ol type="a">
-                      <li>
-                        Click on your customer's avatar in the top right corner and select
-                        <strong>Logout</strong> from the dropdown.
-                      </li>
+                  <ol type="a">
+                    <li>
+                      Click on your customer's avatar in the top right corner and select
+                      <strong>Logout</strong> from the dropdown.
+                    </li>
 
-                      <li>
-                        Log in to your carrier account.
-                      </li>
+                    <li>
+                      Log in to your carrier account.
+                    </li>
 
-                      <li>
-                        Under the <strong>Accounts</strong> menu, click the SID of the Account belonging to your
-                        customer.
-                      </li>
+                    <li>
+                      Under the <strong>Accounts</strong> menu, click the SID of the Account belonging to your
+                      customer.
+                    </li>
 
-                      <li>Click the <strong><i class="fas fa-edit"></i></strong> button.</li>
+                    <li>Click the <strong><i class="fas fa-edit"></i></strong> button.</li>
 
-                      <li>
-                        Notice that most of the fields are disabled, but you can toggle the <strong>Enabled</strong>
-                        switch.
-                      </li>
+                    <li>
+                      Notice that most of the fields are disabled, but you can toggle the <strong>Enabled</strong>
+                      switch.
+                    </li>
 
-                      <li>
-                        Press <strong>Update Account</strong> to save your changes.
-                      </li>
-                    </ol>
+                    <li>
+                      Press <strong>Update Account</strong> to save your changes.
+                    </li>
+                  </ol>
 
-                    <p>
-                      <em>Note: Disabling the account, will prevent your customer from accessing the API, but your
-                        customer will still have access to the Dashboard in order for them to view their data.</em>
-                    </p>
+                  <p>
+                    <em>Note: Disabling the account, will prevent your customer from accessing the API, but your
+                      customer will still have access to the Dashboard in order for them to view their data.</em>
+                  </p>
 
-                    <img src="images/dashboard-edit-customer-account.png">
-                  </div>
-
-                  <div>
-                    <h4>🎉 Congratulations!</h4>
-
-                    <p>
-                      Congratulations! You have successfully completed this tutorial and invited your first customer to
-                      use your CPaaS.
-                    </p>
-
-                    <p>
-                      What we learned:
-                    </p>
-
-                    <ol>
-                      <li>
-                        Customer managed accounts (as opposed to Carrier managed accounts) are used by your customers.
-                        When you create a customer managed account,
-                        you specify an owner's name and email address. The owner will then receive an invitation email
-                        and
-                        can then sign-in to the dashboard and
-                        manage their own Account.
-                      </li>
-
-                      <li>
-                        When your customer signs in to the Dashboard, he will see your company's branding and logo both
-                        on
-                        the Dashboard and in the API Docs.
-                      </li>
-
-                      <li>
-                        The customer can use the API and helper libraries in their own applications.
-                      </li>
-
-                      <li>
-                        The customer can only see the data (phone calls, messages, verifications etc) that belongs to
-                        him.
-                      </li>
-
-                      <li>
-                        You can control the customer's API access from the carrier dashboard.
-                      </li>
-                    </ol>
-                  </div>
+                  <img src="images/dashboard-edit-customer-account.png">
                 </div>
+
+                <div>
+                  <h4>🎉 Congratulations!</h4>
+
+                  <p>
+                    Congratulations! You have successfully completed this tutorial and invited your first customer to
+                    use your CPaaS.
+                  </p>
+
+                  <p>
+                    What we learned:
+                  </p>
+
+                  <ol>
+                    <li>
+                      Customer managed accounts (as opposed to Carrier managed accounts) are used by your customers.
+                      When you create a customer managed account,
+                      you specify an owner's name and email address. The owner will then receive an invitation email
+                      and
+                      can then sign-in to the dashboard and
+                      manage their own Account.
+                    </li>
+
+                    <li>
+                      When your customer signs in to the Dashboard, he will see your company's branding and logo both
+                      on
+                      the Dashboard and in the API Docs.
+                    </li>
+
+                    <li>
+                      The customer can use the API and helper libraries in their own applications.
+                    </li>
+
+                    <li>
+                      The customer can only see the data (phone calls, messages, verifications etc) that belongs to
+                      him.
+                    </li>
+
+                    <li>
+                      You can control the customer's API access from the carrier dashboard.
+                    </li>
+                  </ol>
+                </div>
+              </div>
 
               <div id="retell-ai-tutorial">
                 <h3>
@@ -2575,7 +2577,7 @@ client.calls
                   </ol>
                   </p>
 
-                  <img src="./images/dashboard-request-alphanumeric-sender-id.jpg">
+                  <img src="./images/dashboard-request-alphanumeric-sender-id.png">
                 </div>
 
                 <div id="review_alphanumeric_sender_id">
@@ -2605,7 +2607,7 @@ client.calls
                   </ol>
                   </p>
 
-                  <img src="./images/dashboard-show-alphanumeric-sender-id.jpg">
+                  <img src="./images/dashboard-show-alphanumeric-sender-id.png">
                 </div>
               </div>
 
@@ -2626,9 +2628,9 @@ client.calls
                     We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by
                     Somleng,
                     and outbound dialing as calls originated by Somleng.
-                  When you create a SIP Trunk you first choose the authentication mode. There are two
-                  authentication
-                  modes available described below:
+                    When you create a SIP Trunk you first choose the authentication mode. There are two
+                    authentication
+                    modes available described below:
                   </p>
                   <p>
                   <table>
@@ -2843,9 +2845,8 @@ client.calls
 
                   <p>
                   <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say&gt;Hello world!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
+  &lt;Say&gt;Hello world!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
                   </p>
 
                 </div>
@@ -2858,59 +2859,56 @@ client.calls
                 </p>
                 <p>
                 <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say language=&quot;en-US&quot; voice=&quot;Polly.Joanna&quot;&gt;Hello. I am Joanna and I speak American English!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
+  &lt;Say language=&quot;en-US&quot; voice=&quot;Polly.Joanna&quot;&gt;Hello. I am Joanna and I speak American English!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
                 </p>
 
-              <p>
-                The language attribute of <code>&lt;Say&gt;</code> also allows you to override the default voice
-                that
-                is
-                configured for the Somleng Account.
-                For example, if the account's default TTS voice is <code>Polly.Joanna (Female, en-US)</code>, but
-                wish
-                to use German for a specific call, set the <code>language</code> attribute to <code>de-DE</code>
-                in
-                your
-                TwiML.
-                This will choose another voice from the Polly provider which supports German.
-              </p>
+                <p>
+                  The language attribute of <code>&lt;Say&gt;</code> also allows you to override the default voice
+                  that
+                  is
+                  configured for the Somleng Account.
+                  For example, if the account's default TTS voice is <code>Polly.Joanna (Female, en-US)</code>, but
+                  wish
+                  to use German for a specific call, set the <code>language</code> attribute to <code>de-DE</code>
+                  in
+                  your
+                  TwiML.
+                  This will choose another voice from the Polly provider which supports German.
+                </p>
 
-              <p>
-              <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say language=&quot;de-DE&quot;&gt;Hallo. Ich spreche Deutsch!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
-              </p>
+                <p>
+                <pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say language=&quot;de-DE&quot;&gt;Hallo. Ich spreche Deutsch!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
+                </p>
 
-              <p>
-                Note: the TTS provider is always preserved when using this feature.
-                For example if the account's default TTS voice is <code>Basic.Kal (Male, en-US)</code>, using the
-                TwiML
-                above won't have any effect
-                because German is not available in the Basic provider.
-              </p>
+                <p>
+                  Note: the TTS provider is always preserved when using this feature.
+                  For example if the account's default TTS voice is <code>Basic.Kal (Male, en-US)</code>, using the
+                  TwiML
+                  above won't have any effect
+                  because German is not available in the Basic provider.
+                </p>
 
-              <p>
-                You can also use Premium voices which are generated using the latest technology and innovation in
-                synthesized speech,
-                providing the most human-like, expressive and natural-sounding text-to-speech voices possible,
-                with
-                higher quality than Standard voices.
-                The voices in this tier are currently provided by Amazon (Amazon Polly Neural).
-              </p>
+                <p>
+                  You can also use Premium voices which are generated using the latest technology and innovation in
+                  synthesized speech,
+                  providing the most human-like, expressive and natural-sounding text-to-speech voices possible,
+                  with
+                  higher quality than Standard voices.
+                  The voices in this tier are currently provided by Amazon (Amazon Polly Neural).
+                </p>
 
-              <p>
-                As well as setting the default TTS voice to a premium voice in the dashboard, you can also use the
-                <code>voice</code> attribute to override a premium voice.
-                For example:
-              </p>
+                <p>
+                  As well as setting the default TTS voice to a premium voice in the dashboard, you can also use the
+                  <code>voice</code> attribute to override a premium voice.
+                  For example:
+                </p>
 
-              <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say voice=&quot;Polly.Danielle-Neural&quot;&gt;Hello. I am Danielle!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
+                <pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say voice=&quot;Polly.Danielle-Neural&quot;&gt;Hello. I am Danielle!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
               </div>
 
               <div id="messaging">
@@ -3133,6 +3131,348 @@ client.calls
                   <img src="./images/messaging_service.png">
                 </div>
               </div>
+
+              <div id="carrier_billing">
+                <h4>
+                  Carrier Billing
+                </h4>
+
+                <p>
+                  Carrier Billing allows you to define flexible pricing and tariffs for your carrier services,
+                  including voice calls and SMS messages. Somleng uses a hierarchical billing model composed of four
+                  core resources:
+                </p>
+
+                <ul>
+                  <li>
+                    <strong>Destination Groups:</strong> Define prefix patterns or catch-all rules to identify destinations.
+                  </li>
+                  <li>
+                    <strong>Tariff Schedules:</strong> Assign unit rates (per minute or per message) in your billing currency to destination groups for a specific category.
+                  </li>
+                  <li>
+                    <strong>Tariff Plans:</strong> Layer multiple tariff schedules into prioritized tiers with custom weights.
+                  </li>
+                  <li>
+                    <strong>Tariff Packages:</strong> Bundle plans across different categories into a single package for easy assignment to accounts.
+                  </li>
+                </ul>
+
+                <div id="destination_groups">
+                  <h5>
+                    Destination Groups
+                  </h5>
+
+                  <p>
+                    A <strong>Destination Group</strong> is a prefix or a list of prefixes used to bill usage according to the destination phone number.
+                  </p>
+
+                  <p>
+                    When creating a destination group:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Prefixes:</strong> Prefixes must start with the country code (refer to the <a href="https://en.wikipedia.org/wiki/List_of_telephone_country_codes" class="link" target="_blank">List of telephone country codes <i class="fa fa-external-link"></i></a>). You can specify a single prefix or a comma-separated list of prefixes.
+                    </li>
+                    <li>
+                      <strong>Catch all:</strong> You can toggle the <strong>Catch all</strong> switch to match all destination prefixes.
+                    </li>
+                    <li>
+                      <strong>Name:</strong> Give the destination group a descriptive name (e.g. <em>Cambodia</em>).
+                    </li>
+                  </ul>
+
+                  <p>
+                    To create a Destination Group:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, choose <strong>Destination Groups</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new destination group.
+                    </li>
+                    <li>
+                      Enter a name and either specify a comma-separated list of prefixes or toggle <strong>Catch all</strong>.
+                    </li>
+                    <li>
+                      Choose <strong>Create Destination group</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-destination-group.png">
+                </div>
+
+                <div id="tariff_schedules">
+                  <h5>
+                    Tariff Schedules
+                  </h5>
+
+                  <p>
+                    A <strong>Tariff Schedule</strong> holds multiple tariffs for a specific traffic category.
+                  </p>
+
+                  <p>
+                    When defining a Tariff Schedule, configure the following:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Category:</strong> One of <em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>.
+                    </li>
+                    <li>
+                      <strong>Name:</strong> A descriptive name for the schedule (e.g. <em>Outbound messages Standard</em>).
+                    </li>
+                    <li>
+                      <strong>Description:</strong> An optional description explaining the purpose of the schedule.
+                    </li>
+                    <li>
+                      <strong>Tariffs:</strong> Add one or more tariffs to the schedule. Each tariff associates a <strong>Destination Group</strong> with a <strong>Rate</strong> specified in the carrier's configured billing currency.
+                    </li>
+                  </ul>
+
+                  <p>
+                    Depending on the category, the rate is charged per message (for SMS) or per minute (for calls). When evaluating rates for a destination number, Somleng uses the <strong>most specific match</strong> (longest prefix match) first. For example, a destination group matching prefix <code>855</code> takes precedence over a broader prefix like <code>8</code> or a catch-all group.
+                  </p>
+
+                  <p>
+                    To create a Tariff Schedule:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Schedules</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new tariff schedule.
+                    </li>
+                    <li>
+                      Select the category, enter the schedule name, and click <strong>Add Tariff</strong> to add destination groups and their respective rates.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff schedule</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-tariff-schedule.png">
+                </div>
+
+                <div id="tariff_plans">
+                  <h5>
+                    Tariff Plans
+                  </h5>
+
+                  <p>
+                    A <strong>Tariff Plan</strong> groups multiple tariff schedules together for a given category (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>).
+                  </p>
+
+                  <p>
+                    Unlike a tariff schedule, a tariff plan organizes schedules into <strong>tiers</strong>, where each tier is assigned a <strong>weight</strong>. Higher weight values take precedence.
+                  </p>
+
+                  <p>
+                    This tiered structure allows you to layer specialized pricing over baseline rates. For example, suppose you have two tariff schedules: a standard schedule with default pricing for all destinations, and a promo schedule with special discounted rates for select destinations. You can combine both schedules into a single tariff plan, assigning a higher weight (e.g. <code>20</code>) to the promo schedule and a lower weight (e.g. <code>10</code>) to the standard schedule. Somleng will prioritize the promo schedule whenever a destination matches, and automatically fall back to the standard schedule for all other destinations.
+                  </p>
+
+                  <p>
+                    To create a Tariff Plan:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Plans</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new tariff plan.
+                    </li>
+                    <li>
+                      Select the category, provide a name, and add your tariff schedule tiers along with their priority weights.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff plan</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-tariff-plan.png">
+
+                  <h6>
+                    Tariff Calculator
+                  </h6>
+
+                  <p>
+                    After configuring a plan, you can use the built-in <strong>Tariff Calculator</strong> on the plan details page to test and verify the price for a particular destination number. Enter a destination number or prefix (for example, <code>855</code>) and choose <strong>Calculate Tariff</strong> to see the matched destination group and the resolved rate.
+                  </p>
+
+                  <img src="./images/dashboard-tariff-calculator.png">
+
+                  <h6>
+                    Assigning a Tariff Plan to an Account
+                  </h6>
+
+                  <p>
+                    After creating a plan, you can assign it to an account from the account's details page under the <strong>Billing</strong> section. Enable billing, select the billing mode (such as <em>Prepaid</em>), and toggle on the desired service categories (Calls and Messages) to assign your tariff plans.
+                  </p>
+
+                  <img src="./images/dashboard-account-billing.png">
+                </div>
+
+                <div id="tariff_packages">
+                  <h5>
+                    Tariff Packages
+                  </h5>
+
+                  <p>
+                    A <strong>Tariff Package</strong> groups plans of different categories together into a single, cohesive bundle. For example, you can define a standard messaging package that includes the standard plans for both inbound and outbound messages.
+                  </p>
+
+                  <p>
+                    When creating a tariff package:
+                  </p>
+
+                  <ul>
+                    <li>
+                      Specify a name and an optional description.
+                    </li>
+                    <li>
+                      Choose which categories (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>) are enabled.
+                    </li>
+                    <li>
+                      Select the corresponding tariff plan for each enabled category.
+                    </li>
+                  </ul>
+
+                  <p>
+                    To create a Tariff Package:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Packages</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new tariff package.
+                    </li>
+                    <li>
+                      Enter a name and optional description, enable the desired categories, and select their respective tariff plans.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff package</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-tariff-package.png">
+
+                  <h6>
+                    Tariff Package Wizard
+                  </h6>
+
+                  <p>
+                    Instead of manually creating destination groups, tariff schedules, and tariff plans individually, Somleng provides a <strong>Tariff Package Wizard</strong> that automates the entire process in a single unified step.
+                  </p>
+
+                  <p>
+                    When you run the wizard, it automatically generates the underlying destination groups, tariff schedules, and tariff plans, and bundles them into the final tariff package.
+                  </p>
+
+                  <p>
+                    To use the Tariff Package Wizard:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Packages</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-magic"></i></strong> (Wizard) icon to launch the wizard.
+                    </li>
+                    <li>
+                      Enter a name (e.g. <em>Promo</em>) and an optional description for the package.
+                    </li>
+                    <li>
+                      Toggle on the categories you want to enable (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>) and specify the unit rate for each enabled category.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff package</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-tariff-package-wizard.png">
+
+                  <h6>
+                    Default Tariff Package in Carrier Settings
+                  </h6>
+
+                  <p>
+                    After creating a tariff package, you can set it as the default package in <a href="#carrier_settings" class="link">Carrier Settings</a>. When configured, this default package is automatically preselected whenever a new account is created and billing is enabled.
+                  </p>
+
+                  <img src="./images/dashboard-carrier-settings-default-tariff-package.png">
+                </div>
+
+                <div id="balance_transactions">
+                  <h5>
+                    Balance Transactions
+                  </h5>
+
+                  <p>
+                    <strong>Balance Transactions</strong> record all credit and debit movements on an account's balance. Carriers can manually credit or adjust customer balances, while service usage (such as completed calls and sent messages) automatically deducts funds based on configured tariff plans.
+                  </p>
+
+                  <p>
+                    There are currently two types of balance transactions that carriers can manually create:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Topup:</strong> Credits an account with additional funds (for example, when a prepaid customer recharges their account).
+                    </li>
+                    <li>
+                      <strong>Adjustment:</strong> Applies a manual credit or debit correction to an account's balance.
+                    </li>
+                  </ul>
+
+                  <p>
+                    To create a Balance Transaction:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Balance Transactions</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to record a new transaction.
+                    </li>
+                    <li>
+                      Select the target <strong>Account</strong>.
+                    </li>
+                    <li>
+                      Choose the transaction <strong>Type</strong> (<em>Topup</em> or <em>Adjustment</em>).
+                    </li>
+                    <li>
+                      Enter the <strong>Amount</strong> in the carrier's billing currency.
+                    </li>
+                    <li>
+                      Optionally enter a <strong>Description</strong> to provide context for the transaction.
+                    </li>
+                    <li>
+                      Choose <strong>Create Balance transaction</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <p>
+                    All balance transactions are listed on the index page, providing a complete audit trail of balance activity. You can filter the transactions by:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Account:</strong> View transactions for a specific customer account.
+                    </li>
+                    <li>
+                      <strong>Type:</strong> Filter by transaction type (such as <em>Topup</em> or <em>Adjustment</em>).
+                    </li>
+                    <li>
+                      <strong>Charge category:</strong> Filter usage charges by category (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>).
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
               <div id="team">
                 <h4>
                   Team
@@ -3252,39 +3592,39 @@ client.calls
                 </p>
                 <p>
                 <pre class="line-numbers"><code class="language-hcl"># somleng_proxy.tf
-  module "somleng_proxy_dashboard" {
+module "somleng_proxy_dashboard" {
   source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
-  host = "your-domain.example.com" # Replace this with your custom domain
+  host   = "your-domain.example.com" # Replace this with your custom domain
   origin = "your-domain.app.somleng.org" # Replace this with your Somleng subdomain
   origin_custom_headers = [
-  {
-  "name" = "X-Forwarded-Host",
-  "value" = "your-domain.example.com" # Replace with your custom domain
-  }
+    {
+      "name"  = "X-Forwarded-Host",
+      "value" = "your-domain.example.com" # Replace with your custom domain
+    }
   ]
 
   allowed_origin_request_headers = [
-  "X-CSRF-Token",
-  "X-Requested-With"
+    "X-CSRF-Token",
+    "X-Requested-With"
   ]
 
-  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
-  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
-  }
+  zone_id         = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn"           # Optional. Leave blank to create a new certificate.
+}
 
-  # Optionally configure a custom API endpoint
-  module "somleng_proxy_api" {
+# Optionally configure a custom API endpoint
+module "somleng_proxy_api" {
   source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
-  host = "your-api-domain.example.com" # Replace this with your custom API domain
+  host   = "your-api-domain.example.com" # Replace this with your custom API domain
   origin = "api.somleng.org"
 
   # DO NOT set X-Forwarded-Host
 
-  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
-  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
-  }</code></pre>
+  zone_id         = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn"           # Optional. Leave blank to create a new certificate.
+}</code></pre>
                 </p>
                 <p>
                   The terraform configuration above will configure two AWS cloudfront distributions (one for the
@@ -3356,7 +3696,7 @@ client.calls
                           </li>
                           <li>
                             Enter <strong>your-domain.example.com</strong> for the Value.
-                            Remember to replace <strong>your-domain.example.com</strong>with your actual domain.
+                            Remember to replace <strong>your-domain.example.com</strong> with your actual domain.
                           </li>
                         </ul>
                       </li>
@@ -3593,8 +3933,7 @@ client.calls
                 </p>
 
                 <p>
-                <pre>
-  <code class="line-numbers language-nginx">server {
+                <pre><code class="line-numbers language-nginx">server {
   listen 443;
   server_name dashboard.example.com; # replace this with your dashboard domain
 
@@ -3602,14 +3941,14 @@ client.calls
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-  proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your dashboard domain
-  proxy_pass "https://your-subdomain.app.somleng.org:443";
+    proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your dashboard domain
+    proxy_pass "https://your-subdomain.app.somleng.org:443";
   }
-  }
+}
 
-  # Optionally configure a custom API endpoint
-  # Note: DO NOT set X-Forwarded-Host for your custom API endpoint
-  server {
+# Optionally configure a custom API endpoint
+# Note: DO NOT set X-Forwarded-Host for your custom API endpoint
+server {
   listen 443;
   server_name api.example.com; # replace this with your api domain
 
@@ -3617,9 +3956,9 @@ client.calls
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-  proxy_pass "https://api.somleng.org:443";
+    proxy_pass "https://api.somleng.org:443";
   }
-  }</code></pre>
+}</code></pre>
                 </p>
               </div>
 
@@ -4783,11 +5122,10 @@ client.calls
                     send an SMS:
 
                   <pre><code class="language-bash">curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X POST \
---data-urlencode 'To=+855715100860' \
---data-urlencode 'From=+85568308531' \
---data-urlencode 'Body=Hello from Somleng' \
--u ACCOUNT-SID:AUTH-TOKEN
-</code></pre>
+  --data-urlencode 'To=+855715100860' \
+  --data-urlencode 'From=+85568308531' \
+  --data-urlencode 'Body=Hello from Somleng' \
+  -u ACCOUNT-SID:AUTH-TOKEN</code></pre>
 
                   <em>
                     Note: The <code>From</code> parameter must match the phone number you created in
