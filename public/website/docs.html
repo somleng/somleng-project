@@ -630,8 +630,7 @@
                   </p>
 
                   <pre><code class="language-bash">docker run -p 3210:3210 somleng/sms-gateway \
-                  somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy
-                </code></pre>
+  somleng-sms-gateway -k &lt;replace-me-with-your-device-token&gt; dummy</code></pre>
 
                   <p>
                     <em>Note: This option requires Docker to be installed.</em>
@@ -775,10 +774,9 @@ const channel = "sms";
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verifications
-      .create({to: to, channel: channel})
-      .then(verification => console.log(verification.sid));</code>
-                  </pre>
+  .verifications
+  .create({to: to, channel: channel})
+  .then(verification => console.log(verification.sid));</code></pre>
                 </div>
 
                 <div id="verify-tutorial-step-8">
@@ -842,9 +840,9 @@ const channel = "call";
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verifications
-      .create({to: to, channel: channel})
-      .then(verification => console.log(verification.sid));</code></pre>
+  .verifications
+  .create({to: to, channel: channel})
+  .then(verification => console.log(verification.sid));</code></pre>
                 </div>
 
                 <div id="verify-tutorial-step-10">
@@ -919,9 +917,9 @@ const verificationCode = "change-me"
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verificationChecks
-      .create({to: to, code: verificationCode})
-      .then(verification_check => console.log(verification_check.status));</code></pre>
+  .verificationChecks
+  .create({to: to, code: verificationCode})
+  .then(verification_check => console.log(verification_check.status));</code></pre>
 
                   <p>
                     After you complete the flow you can view the Verification and the associated logs from the
@@ -1216,7 +1214,8 @@ client.verify.v2.services(verificationServiceSid)
                   <p>
                     We can simulate this scenario in reverse, by configuring the new SIP trunk to only handle calls with
                     a certain prefix.
-                    All other prefixes will be routed through the default SIP Trunk which points to your local softphone.
+                    All other prefixes will be routed through the default SIP Trunk which points to your local
+                    softphone.
                     This way you can test a
                     a call destined to your real phone number, which will be routed though Chime and a call destined to
                     an overseas number, which will be routed
@@ -1747,9 +1746,9 @@ const channel = "call";
 const client = require('somleng')(accountSid, authToken);
 
 client.verify.v2.services(verificationServiceSid)
-      .verifications
-      .create({to: to, channel: channel})
-      .then(verification => console.log(verification.sid));</code></pre>
+  .verifications
+  .create({to: to, channel: channel})
+  .then(verification => console.log(verification.sid));</code></pre>
 
                   <p>
                     You can now view the verification from the customer's perspective from the <strong>Verify</strong>
@@ -1772,100 +1771,100 @@ client.verify.v2.services(verificationServiceSid)
                   <img src="./images/dashboard-show-verification-customer-account.png">
                 </div>
 
-                  <div id="invite-customers-tutorial-step-6">
-                    <h4>
-                      6. Control API Access for your customer.
-                    </h4>
+                <div id="invite-customers-tutorial-step-6">
+                  <h4>
+                    6. Control API Access for your customer.
+                  </h4>
 
-                    <p>
-                      To finish up this tutorial, we'll show you how to control your customer's access from the Carrier
-                      Dashboard.
-                      To do this you'll first need to log out of your customer's account, and login again to your
-                      carrier account.
-                    </p>
+                  <p>
+                    To finish up this tutorial, we'll show you how to control your customer's access from the Carrier
+                    Dashboard.
+                    To do this you'll first need to log out of your customer's account, and login again to your
+                    carrier account.
+                  </p>
 
-                    <p>
-                      Perform the following steps:
-                    </p>
+                  <p>
+                    Perform the following steps:
+                  </p>
 
-                    <ol type="a">
-                      <li>
-                        Click on your customer's avatar in the top right corner and select
-                        <strong>Logout</strong> from the dropdown.
-                      </li>
+                  <ol type="a">
+                    <li>
+                      Click on your customer's avatar in the top right corner and select
+                      <strong>Logout</strong> from the dropdown.
+                    </li>
 
-                      <li>
-                        Log in to your carrier account.
-                      </li>
+                    <li>
+                      Log in to your carrier account.
+                    </li>
 
-                      <li>
-                        Under the <strong>Accounts</strong> menu, click the SID of the Account belonging to your
-                        customer.
-                      </li>
+                    <li>
+                      Under the <strong>Accounts</strong> menu, click the SID of the Account belonging to your
+                      customer.
+                    </li>
 
-                      <li>Click the <strong><i class="fas fa-edit"></i></strong> button.</li>
+                    <li>Click the <strong><i class="fas fa-edit"></i></strong> button.</li>
 
-                      <li>
-                        Notice that most of the fields are disabled, but you can toggle the <strong>Enabled</strong>
-                        switch.
-                      </li>
+                    <li>
+                      Notice that most of the fields are disabled, but you can toggle the <strong>Enabled</strong>
+                      switch.
+                    </li>
 
-                      <li>
-                        Press <strong>Update Account</strong> to save your changes.
-                      </li>
-                    </ol>
+                    <li>
+                      Press <strong>Update Account</strong> to save your changes.
+                    </li>
+                  </ol>
 
-                    <p>
-                      <em>Note: Disabling the account, will prevent your customer from accessing the API, but your
-                        customer will still have access to the Dashboard in order for them to view their data.</em>
-                    </p>
+                  <p>
+                    <em>Note: Disabling the account, will prevent your customer from accessing the API, but your
+                      customer will still have access to the Dashboard in order for them to view their data.</em>
+                  </p>
 
-                    <img src="images/dashboard-edit-customer-account.png">
-                  </div>
-
-                  <div>
-                    <h4>🎉 Congratulations!</h4>
-
-                    <p>
-                      Congratulations! You have successfully completed this tutorial and invited your first customer to
-                      use your CPaaS.
-                    </p>
-
-                    <p>
-                      What we learned:
-                    </p>
-
-                    <ol>
-                      <li>
-                        Customer managed accounts (as opposed to Carrier managed accounts) are used by your customers.
-                        When you create a customer managed account,
-                        you specify an owner's name and email address. The owner will then receive an invitation email
-                        and
-                        can then sign-in to the dashboard and
-                        manage their own Account.
-                      </li>
-
-                      <li>
-                        When your customer signs in to the Dashboard, he will see your company's branding and logo both
-                        on
-                        the Dashboard and in the API Docs.
-                      </li>
-
-                      <li>
-                        The customer can use the API and helper libraries in their own applications.
-                      </li>
-
-                      <li>
-                        The customer can only see the data (phone calls, messages, verifications etc) that belongs to
-                        him.
-                      </li>
-
-                      <li>
-                        You can control the customer's API access from the carrier dashboard.
-                      </li>
-                    </ol>
-                  </div>
+                  <img src="images/dashboard-edit-customer-account.png">
                 </div>
+
+                <div>
+                  <h4>🎉 Congratulations!</h4>
+
+                  <p>
+                    Congratulations! You have successfully completed this tutorial and invited your first customer to
+                    use your CPaaS.
+                  </p>
+
+                  <p>
+                    What we learned:
+                  </p>
+
+                  <ol>
+                    <li>
+                      Customer managed accounts (as opposed to Carrier managed accounts) are used by your customers.
+                      When you create a customer managed account,
+                      you specify an owner's name and email address. The owner will then receive an invitation email
+                      and
+                      can then sign-in to the dashboard and
+                      manage their own Account.
+                    </li>
+
+                    <li>
+                      When your customer signs in to the Dashboard, he will see your company's branding and logo both
+                      on
+                      the Dashboard and in the API Docs.
+                    </li>
+
+                    <li>
+                      The customer can use the API and helper libraries in their own applications.
+                    </li>
+
+                    <li>
+                      The customer can only see the data (phone calls, messages, verifications etc) that belongs to
+                      him.
+                    </li>
+
+                    <li>
+                      You can control the customer's API access from the carrier dashboard.
+                    </li>
+                  </ol>
+                </div>
+              </div>
 
               <div id="retell-ai-tutorial">
                 <h3>
@@ -2626,9 +2625,9 @@ client.calls
                     We define inbound dialing (also known as Direct Inbound Dialing (DID)) as calls terminated by
                     Somleng,
                     and outbound dialing as calls originated by Somleng.
-                  When you create a SIP Trunk you first choose the authentication mode. There are two
-                  authentication
-                  modes available described below:
+                    When you create a SIP Trunk you first choose the authentication mode. There are two
+                    authentication
+                    modes available described below:
                   </p>
                   <p>
                   <table>
@@ -2843,9 +2842,8 @@ client.calls
 
                   <p>
                   <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say&gt;Hello world!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
+  &lt;Say&gt;Hello world!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
                   </p>
 
                 </div>
@@ -2858,59 +2856,56 @@ client.calls
                 </p>
                 <p>
                 <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say language=&quot;en-US&quot; voice=&quot;Polly.Joanna&quot;&gt;Hello. I am Joanna and I speak American English!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
+  &lt;Say language=&quot;en-US&quot; voice=&quot;Polly.Joanna&quot;&gt;Hello. I am Joanna and I speak American English!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
                 </p>
 
-              <p>
-                The language attribute of <code>&lt;Say&gt;</code> also allows you to override the default voice
-                that
-                is
-                configured for the Somleng Account.
-                For example, if the account's default TTS voice is <code>Polly.Joanna (Female, en-US)</code>, but
-                wish
-                to use German for a specific call, set the <code>language</code> attribute to <code>de-DE</code>
-                in
-                your
-                TwiML.
-                This will choose another voice from the Polly provider which supports German.
-              </p>
+                <p>
+                  The language attribute of <code>&lt;Say&gt;</code> also allows you to override the default voice
+                  that
+                  is
+                  configured for the Somleng Account.
+                  For example, if the account's default TTS voice is <code>Polly.Joanna (Female, en-US)</code>, but
+                  wish
+                  to use German for a specific call, set the <code>language</code> attribute to <code>de-DE</code>
+                  in
+                  your
+                  TwiML.
+                  This will choose another voice from the Polly provider which supports German.
+                </p>
 
-              <p>
-              <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say language=&quot;de-DE&quot;&gt;Hallo. Ich spreche Deutsch!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
-              </p>
+                <p>
+                <pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say language=&quot;de-DE&quot;&gt;Hallo. Ich spreche Deutsch!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
+                </p>
 
-              <p>
-                Note: the TTS provider is always preserved when using this feature.
-                For example if the account's default TTS voice is <code>Basic.Kal (Male, en-US)</code>, using the
-                TwiML
-                above won't have any effect
-                because German is not available in the Basic provider.
-              </p>
+                <p>
+                  Note: the TTS provider is always preserved when using this feature.
+                  For example if the account's default TTS voice is <code>Basic.Kal (Male, en-US)</code>, using the
+                  TwiML
+                  above won't have any effect
+                  because German is not available in the Basic provider.
+                </p>
 
-              <p>
-                You can also use Premium voices which are generated using the latest technology and innovation in
-                synthesized speech,
-                providing the most human-like, expressive and natural-sounding text-to-speech voices possible,
-                with
-                higher quality than Standard voices.
-                The voices in this tier are currently provided by Amazon (Amazon Polly Neural).
-              </p>
+                <p>
+                  You can also use Premium voices which are generated using the latest technology and innovation in
+                  synthesized speech,
+                  providing the most human-like, expressive and natural-sounding text-to-speech voices possible,
+                  with
+                  higher quality than Standard voices.
+                  The voices in this tier are currently provided by Amazon (Amazon Polly Neural).
+                </p>
 
-              <p>
-                As well as setting the default TTS voice to a premium voice in the dashboard, you can also use the
-                <code>voice</code> attribute to override a premium voice.
-                For example:
-              </p>
+                <p>
+                  As well as setting the default TTS voice to a premium voice in the dashboard, you can also use the
+                  <code>voice</code> attribute to override a premium voice.
+                  For example:
+                </p>
 
-              <pre><code class="language-xml">&lt;Response&gt;
-&lt;Say voice=&quot;Polly.Danielle-Neural&quot;&gt;Hello. I am Danielle!&lt;/Say&gt;
-&lt;/Response&gt;
-</code></pre>
+                <pre><code class="language-xml">&lt;Response&gt;
+  &lt;Say voice=&quot;Polly.Danielle-Neural&quot;&gt;Hello. I am Danielle!&lt;/Say&gt;
+&lt;/Response&gt;</code></pre>
               </div>
 
               <div id="messaging">
@@ -3252,39 +3247,39 @@ client.calls
                 </p>
                 <p>
                 <pre class="line-numbers"><code class="language-hcl"># somleng_proxy.tf
-  module "somleng_proxy_dashboard" {
+module "somleng_proxy_dashboard" {
   source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
-  host = "your-domain.example.com" # Replace this with your custom domain
+  host   = "your-domain.example.com" # Replace this with your custom domain
   origin = "your-domain.app.somleng.org" # Replace this with your Somleng subdomain
   origin_custom_headers = [
-  {
-  "name" = "X-Forwarded-Host",
-  "value" = "your-domain.example.com" # Replace with your custom domain
-  }
+    {
+      "name"  = "X-Forwarded-Host",
+      "value" = "your-domain.example.com" # Replace with your custom domain
+    }
   ]
 
   allowed_origin_request_headers = [
-  "X-CSRF-Token",
-  "X-Requested-With"
+    "X-CSRF-Token",
+    "X-Requested-With"
   ]
 
-  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
-  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
-  }
+  zone_id         = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn"           # Optional. Leave blank to create a new certificate.
+}
 
-  # Optionally configure a custom API endpoint
-  module "somleng_proxy_api" {
+# Optionally configure a custom API endpoint
+module "somleng_proxy_api" {
   source = "github.com/somleng/terraform-aws-cloudfront-reverse-proxy"
 
-  host = "your-api-domain.example.com" # Replace this with your custom API domain
+  host   = "your-api-domain.example.com" # Replace this with your custom API domain
   origin = "api.somleng.org"
 
   # DO NOT set X-Forwarded-Host
 
-  zone_id = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
-  certificate_arn = "existing-certificate-arn" # Optional. Leave blank to create a new certificate.
-  }</code></pre>
+  zone_id         = aws_route53_zone.example_com.zone_id # Optional. Leave blank if not using route53.
+  certificate_arn = "existing-certificate-arn"           # Optional. Leave blank to create a new certificate.
+}</code></pre>
                 </p>
                 <p>
                   The terraform configuration above will configure two AWS cloudfront distributions (one for the
@@ -3593,8 +3588,7 @@ client.calls
                 </p>
 
                 <p>
-                <pre>
-  <code class="line-numbers language-nginx">server {
+                <pre><code class="line-numbers language-nginx">server {
   listen 443;
   server_name dashboard.example.com; # replace this with your dashboard domain
 
@@ -3602,14 +3596,14 @@ client.calls
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-  proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your dashboard domain
-  proxy_pass "https://your-subdomain.app.somleng.org:443";
+    proxy_set_header X-Forwarded-Host dashboard.example.com; # replace this with your dashboard domain
+    proxy_pass "https://your-subdomain.app.somleng.org:443";
   }
-  }
+}
 
-  # Optionally configure a custom API endpoint
-  # Note: DO NOT set X-Forwarded-Host for your custom API endpoint
-  server {
+# Optionally configure a custom API endpoint
+# Note: DO NOT set X-Forwarded-Host for your custom API endpoint
+server {
   listen 443;
   server_name api.example.com; # replace this with your api domain
 
@@ -3617,9 +3611,9 @@ client.calls
   ssl_certificate_key /path/to/your/privatekey.pem;
 
   location / {
-  proxy_pass "https://api.somleng.org:443";
+    proxy_pass "https://api.somleng.org:443";
   }
-  }</code></pre>
+}</code></pre>
                 </p>
               </div>
 
@@ -4783,11 +4777,10 @@ client.calls
                     send an SMS:
 
                   <pre><code class="language-bash">curl 'https://api.somleng.org/2010-04-01/Accounts/ACCOUNT-SID/Messages.json' -X POST \
---data-urlencode 'To=+855715100860' \
---data-urlencode 'From=+85568308531' \
---data-urlencode 'Body=Hello from Somleng' \
--u ACCOUNT-SID:AUTH-TOKEN
-</code></pre>
+  --data-urlencode 'To=+855715100860' \
+  --data-urlencode 'From=+85568308531' \
+  --data-urlencode 'Body=Hello from Somleng' \
+  -u ACCOUNT-SID:AUTH-TOKEN</code></pre>
 
                   <em>
                     Note: The <code>From</code> parameter must match the phone number you created in
