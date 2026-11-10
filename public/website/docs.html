@@ -118,6 +118,9 @@
                   <a href="#messaging">Messaging</a>
                 </li>
                 <li>
+                  <a href="#carrier_billing">Carrier Billing</a>
+                </li>
+                <li>
                   <a href="#team">Team</a>
                 </li>
               </ul>
@@ -2574,7 +2577,7 @@ client.calls
                   </ol>
                   </p>
 
-                  <img src="./images/dashboard-request-alphanumeric-sender-id.jpg">
+                  <img src="./images/dashboard-request-alphanumeric-sender-id.png">
                 </div>
 
                 <div id="review_alphanumeric_sender_id">
@@ -2604,7 +2607,7 @@ client.calls
                   </ol>
                   </p>
 
-                  <img src="./images/dashboard-show-alphanumeric-sender-id.jpg">
+                  <img src="./images/dashboard-show-alphanumeric-sender-id.png">
                 </div>
               </div>
 
@@ -3128,6 +3131,282 @@ client.calls
                   <img src="./images/messaging_service.png">
                 </div>
               </div>
+
+              <div id="carrier_billing">
+                <h4>
+                  Carrier Billing
+                </h4>
+
+                <p>
+                  Carrier Billing allows you to define flexible pricing and tariffs for your carrier services,
+                  including voice calls and SMS messages. Somleng uses a hierarchical billing model composed of four
+                  core resources:
+                </p>
+
+                <ul>
+                  <li>
+                    <strong>Destination Groups:</strong> Define prefix patterns or catch-all rules to identify destinations.
+                  </li>
+                  <li>
+                    <strong>Tariff Schedules:</strong> Assign unit rates (per minute or per message) in your billing currency to destination groups for a specific category.
+                  </li>
+                  <li>
+                    <strong>Tariff Plans:</strong> Layer multiple tariff schedules into prioritized tiers with custom weights.
+                  </li>
+                  <li>
+                    <strong>Tariff Packages:</strong> Bundle plans across different categories into a single package for easy assignment to accounts.
+                  </li>
+                </ul>
+
+                <div id="destination_groups">
+                  <h5>
+                    Destination Groups
+                  </h5>
+
+                  <p>
+                    A <strong>Destination Group</strong> is a prefix or a list of prefixes used to bill usage according to the destination phone number.
+                  </p>
+
+                  <p>
+                    When creating a destination group:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Prefixes:</strong> Prefixes must start with the country code (refer to the <a href="https://en.wikipedia.org/wiki/List_of_telephone_country_codes" class="link" target="_blank">List of telephone country codes <i class="fa fa-external-link"></i></a>). You can specify a single prefix or a comma-separated list of prefixes.
+                    </li>
+                    <li>
+                      <strong>Catch all:</strong> You can toggle the <strong>Catch all</strong> switch to match all destination prefixes.
+                    </li>
+                    <li>
+                      <strong>Name:</strong> Give the destination group a descriptive name (e.g. <em>Cambodia</em>).
+                    </li>
+                  </ul>
+
+                  <p>
+                    To create a Destination Group:
+                  <ol>
+                    <li>
+                      Sign in to the Dashboard and from the side-navigation, choose <strong>Destination Groups</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new destination group.
+                    </li>
+                    <li>
+                      Enter a name and either specify a comma-separated list of prefixes or toggle <strong>Catch all</strong>.
+                    </li>
+                    <li>
+                      Choose <strong>Create Destination group</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-destination-group.png">
+                </div>
+
+                <div id="tariff_schedules">
+                  <h5>
+                    Tariff Schedules
+                  </h5>
+
+                  <p>
+                    A <strong>Tariff Schedule</strong> holds multiple tariffs for a specific traffic category.
+                  </p>
+
+                  <p>
+                    When defining a Tariff Schedule, configure the following:
+                  </p>
+
+                  <ul>
+                    <li>
+                      <strong>Category:</strong> One of <em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>.
+                    </li>
+                    <li>
+                      <strong>Name:</strong> A descriptive name for the schedule (e.g. <em>Outbound messages Standard</em>).
+                    </li>
+                    <li>
+                      <strong>Description:</strong> An optional description explaining the purpose of the schedule.
+                    </li>
+                    <li>
+                      <strong>Tariffs:</strong> Add one or more tariffs to the schedule. Each tariff associates a <strong>Destination Group</strong> with a <strong>Rate</strong> specified in the carrier's configured billing currency.
+                    </li>
+                  </ul>
+
+                  <p>
+                    Depending on the category, the rate is charged per message (for SMS) or per minute (for calls). When evaluating rates for a destination number, Somleng uses the <strong>most specific match</strong> (longest prefix match) first. For example, a destination group matching prefix <code>855</code> takes precedence over a broader prefix like <code>8</code> or a catch-all group.
+                  </p>
+
+                  <p>
+                    To create a Tariff Schedule:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Schedules</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new tariff schedule.
+                    </li>
+                    <li>
+                      Select the category, enter the schedule name, and click <strong>Add Tariff</strong> to add destination groups and their respective rates.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff schedule</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-tariff-schedule.png">
+                </div>
+
+                <div id="tariff_plans">
+                  <h5>
+                    Tariff Plans
+                  </h5>
+
+                  <p>
+                    A <strong>Tariff Plan</strong> groups multiple tariff schedules together for a given category (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>).
+                  </p>
+
+                  <p>
+                    Unlike a tariff schedule, a tariff plan organizes schedules into <strong>tiers</strong>, where each tier is assigned a <strong>weight</strong>. Higher weight values take precedence.
+                  </p>
+
+                  <p>
+                    This tiered structure allows you to layer specialized pricing over baseline rates. For example, suppose you have two tariff schedules: a standard schedule with default pricing for all destinations, and a promo schedule with special discounted rates for select destinations. You can combine both schedules into a single tariff plan, assigning a higher weight (e.g. <code>20</code>) to the promo schedule and a lower weight (e.g. <code>10</code>) to the standard schedule. Somleng will prioritize the promo schedule whenever a destination matches, and automatically fall back to the standard schedule for all other destinations.
+                  </p>
+
+                  <p>
+                    To create a Tariff Plan:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Plans</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new tariff plan.
+                    </li>
+                    <li>
+                      Select the category, provide a name, and add your tariff schedule tiers along with their priority weights.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff plan</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-tariff-plan.png">
+
+                  <h6>
+                    Tariff Calculator
+                  </h6>
+
+                  <p>
+                    After configuring a plan, you can use the built-in <strong>Tariff Calculator</strong> on the plan details page to test and verify the price for a particular destination number. Enter a destination number or prefix (for example, <code>855</code>) and choose <strong>Calculate Tariff</strong> to see the matched destination group and the resolved rate.
+                  </p>
+
+                  <img src="./images/dashboard-tariff-calculator.png">
+
+                  <h6>
+                    Assigning a Tariff Plan to an Account
+                  </h6>
+
+                  <p>
+                    After creating a plan, you can assign it to an account from the account's details page under the <strong>Billing</strong> section. Enable billing, select the billing mode (such as <em>Prepaid</em>), and toggle on the desired service categories (Calls and Messages) to assign your tariff plans.
+                  </p>
+
+                  <img src="./images/dashboard-account-billing.png">
+                </div>
+
+                <div id="tariff_packages">
+                  <h5>
+                    Tariff Packages
+                  </h5>
+
+                  <p>
+                    A <strong>Tariff Package</strong> groups plans of different categories together into a single, cohesive bundle. For example, you can define a standard messaging package that includes the standard plans for both inbound and outbound messages.
+                  </p>
+
+                  <p>
+                    When creating a tariff package:
+                  </p>
+
+                  <ul>
+                    <li>
+                      Specify a name and an optional description.
+                    </li>
+                    <li>
+                      Choose which categories (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>) are enabled.
+                    </li>
+                    <li>
+                      Select the corresponding tariff plan for each enabled category.
+                    </li>
+                  </ul>
+
+                  <p>
+                    To create a Tariff Package:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Packages</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-plus"></i></strong> icon to create a new tariff package.
+                    </li>
+                    <li>
+                      Enter a name and optional description, enable the desired categories, and select their respective tariff plans.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff package</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-new-tariff-package.png">
+
+                  <h6>
+                    Tariff Package Wizard
+                  </h6>
+
+                  <p>
+                    Instead of manually creating destination groups, tariff schedules, and tariff plans individually, Somleng provides a <strong>Tariff Package Wizard</strong> that automates the entire process in a single unified step.
+                  </p>
+
+                  <p>
+                    When you run the wizard, it automatically generates the underlying destination groups, tariff schedules, and tariff plans, and bundles them into the final tariff package.
+                  </p>
+
+                  <p>
+                    To use the Tariff Package Wizard:
+                  <ol>
+                    <li>
+                      From the side-navigation, choose <strong>Tariff Packages</strong> under <strong>Billing</strong>.
+                    </li>
+                    <li>
+                      Click the <strong><i class="fas fa-magic"></i></strong> (Wizard) icon to launch the wizard.
+                    </li>
+                    <li>
+                      Enter a name (e.g. <em>Promo</em>) and an optional description for the package.
+                    </li>
+                    <li>
+                      Toggle on the categories you want to enable (<em>Outbound calls</em>, <em>Inbound calls</em>, <em>Outbound messages</em>, or <em>Inbound messages</em>) and specify the unit rate for each enabled category.
+                    </li>
+                    <li>
+                      Choose <strong>Create Tariff package</strong>.
+                    </li>
+                  </ol>
+                  </p>
+
+                  <img src="./images/dashboard-tariff-package-wizard.png">
+
+                  <h6>
+                    Default Tariff Package in Carrier Settings
+                  </h6>
+
+                  <p>
+                    After creating a tariff package, you can set it as the default package in <a href="#carrier_settings" class="link">Carrier Settings</a>. When configured, this default package is automatically preselected whenever a new account is created and billing is enabled.
+                  </p>
+
+                  <img src="./images/dashboard-carrier-settings-default-tariff-package.png">
+                </div>
+              </div>
+
               <div id="team">
                 <h4>
                   Team
@@ -3351,7 +3630,7 @@ module "somleng_proxy_api" {
                           </li>
                           <li>
                             Enter <strong>your-domain.example.com</strong> for the Value.
-                            Remember to replace <strong>your-domain.example.com</strong>with your actual domain.
+                            Remember to replace <strong>your-domain.example.com</strong> with your actual domain.
                           </li>
                         </ul>
                       </li>
